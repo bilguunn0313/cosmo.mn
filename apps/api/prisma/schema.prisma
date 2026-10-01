@@ -8,10 +8,241 @@ datasource db {
   provider = "postgresql"
 }
 
-model ContactMessage {
+enum Locale {
+  mn
+  en
+  zh
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum BrandCategory {
+  FOOD
+  BEAUTY
+  HOUSEHOLD
+}
+
+enum NewsType {
+  NEWS
+  CAMPAIGN
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Media {
+  id           Int       @id @default(autoincrement())
+  type         MediaType @default(IMAGE)
+  url          String
+  originalName String
+  mimeType     String
+  size         Int
+  width        Int?
+  height       Int?
+  duration     Int?
+  createdAt    DateTime  @default(now())
+
+  slides        Slide[]        @relation("SlideMedia")
+  slidePosters  Slide[]        @relation("SlidePoster")
+  brandLogos    Brand[]        @relation("BrandLogo")
+  brandCovers   Brand[]        @relation("BrandCover")
+  brandSections BrandSection[]
+  sections      Section[]
+  newsCovers    News[]
+}
+
+model Slide {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  message   String
+  mediaId   Int
+  media     Media    @relation("SlideMedia", fields: [mediaId], references: [id])
+  posterId  Int?
+  poster    Media?   @relation("SlidePoster", fields: [posterId], references: [id])
+  linkUrl   String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations SlideTranslation[]
+}
+
+model SlideTranslation {
+  id         Int     @id @default(autoincrement())
+  slideId    Int
+  slide      Slide   @relation(fields: [slideId], references: [id], onDelete: Cascade)
+  locale     Locale
+  title      String
+  subtitle   String?
+  buttonText String?
+
+  @@unique([slideId, locale])
+}
+
+model Brand {
+  id          Int             @id @default(autoincrement())
+  slug        String          @unique
+  categories  BrandCategory[]
+  logoId      Int?
+  logo        Media?          @relation("BrandLogo", fields: [logoId], references: [id])
+  coverId     Int?
+  cover       Media?          @relation("BrandCover", fields: [coverId], references: [id])
+  websiteUrl  String?
+  order       Int             @default(0)
+  isPublished Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  translations BrandTranslation[]
+  sections     BrandSection[]
+
+  @@index([isPublished, order])
+}
+
+model BrandTranslation {
+  id      Int     @id @default(autoincrement())
+  brandId Int
+  brand   Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale  Locale
+  name    String
+  summary String?
+
+  @@unique([brandId, locale])
+}
+
+model BrandSection {
+  id        Int      @id @default(autoincrement())
+  brandId   Int
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  imageId   Int?
+  image     Media?   @relation(fields: [imageId], references: [id])
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations BrandSectionTranslation[]
+
+  @@index([brandId, order])
+}
+
+model BrandSectionTranslation {
+  id        Int          @id @default(autoincrement())
+  sectionId Int
+  section   BrandSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  locale    Locale
+  title     String
+  body      String
+
+  @@unique([sectionId, locale])
+}
+
+model Section {
+  id        Int      @id @default(autoincrement())
+  page      String
+  linkUrl   String?
+  imageId   Int?
+  image     Media?   @relation(fields: [imageId], references: [id])
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations SectionTranslation[]
+
+  @@index([page, order])
+}
+
+model SectionTranslation {
+  id        Int     @id @default(autoincrement())
+  sectionId Int
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  locale    Locale
+  title     String
+  body      String
+
+  @@unique([sectionId, locale])
+}
+
+model News {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  type         NewsType  @default(NEWS)
+  coverImageId Int?
+  coverImage   Media?    @relation(fields: [coverImageId], references: [id])
+  videoUrl     String?
+  isPublished  Boolean   @default(false)
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  translations NewsTranslation[]
+
+  @@index([type, isPublished, publishedAt])
+}
+
+model NewsTranslation {
+  id      Int     @id @default(autoincrement())
+  newsId  Int
+  news    News    @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  locale  Locale
+  title   String
+  summary String?
+  content String
+
+  @@unique([newsId, locale])
+}
+
+model SiteSetting {
+  id           Int      @id @default(1)
+  phone        String?
+  email        String?
+  facebookUrl  String?
+  instagramUrl String?
+  youtubeUrl   String?
+  linkedinUrl  String?
+  mapEmbedUrl  String?
+  updatedAt    DateTime @updatedAt
+
+  translations SiteSettingTranslation[]
+}
+
+model SiteSettingTranslation {
+  id            Int         @id @default(autoincrement())
+  siteSettingId Int
+  siteSetting   SiteSetting @relation(fields: [siteSettingId], references: [id], onDelete: Cascade)
+  locale        Locale
+  address       String?
+  workingHours  String?
+
+  @@unique([siteSettingId, locale])
+}
+
+model ContactDepartment {
+  id        Int      @id @default(autoincrement())
+  email     String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations ContactDepartmentTranslation[]
+}
+
+model ContactDepartmentTranslation {
+  id           Int               @id @default(autoincrement())
+  departmentId Int
+  department   ContactDepartment @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  locale       Locale
+  name         String
+
+  @@unique([departmentId, locale])
 }
