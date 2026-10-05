@@ -83,7 +83,11 @@ export class NewsService {
         coverImageId: input.coverImageId,
         videoUrl: input.videoUrl,
         isPublished: input.isPublished,
-        publishedAt: resolvePublishedAt(input.isPublished, input.publishedAt, null),
+        publishedAt: resolvePublishedAt(
+          input.isPublished,
+          input.publishedAt,
+          null,
+        ),
         translations: { create: sanitizeTranslations(input.translations) },
       },
       include: newsInclude,

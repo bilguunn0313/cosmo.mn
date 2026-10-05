@@ -58,7 +58,10 @@ export class AuthService {
     await this.prisma.admin.update({
       where: { id: adminId },
       data: {
-        passwordHash: await bcrypt.hash(input.newPassword, PASSWORD_SALT_ROUNDS),
+        passwordHash: await bcrypt.hash(
+          input.newPassword,
+          PASSWORD_SALT_ROUNDS,
+        ),
       },
     });
   }

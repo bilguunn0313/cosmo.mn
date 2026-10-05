@@ -19,7 +19,11 @@ const options: sanitizeHtml.IOptions = {
       'text-align': [/^(left|right|center|justify)$/],
     },
   },
-  allowedIframeHostnames: ['www.youtube.com', 'youtube.com', 'www.youtube-nocookie.com'],
+  allowedIframeHostnames: [
+    'www.youtube.com',
+    'youtube.com',
+    'www.youtube-nocookie.com',
+  ],
 };
 
 export function sanitizeRichText(html: string): string {

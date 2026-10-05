@@ -45,7 +45,8 @@ export class ContactService {
     }
 
     return {
-      name: pickTranslation(department.translations, DEFAULT_LOCALE)?.name ?? '',
+      name:
+        pickTranslation(department.translations, DEFAULT_LOCALE)?.name ?? '',
       email: department.email,
     };
   }

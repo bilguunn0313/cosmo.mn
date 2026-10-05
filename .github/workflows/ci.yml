@@ -9,7 +9,23 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgresql://cosmo:cosmo@localhost:5432/cosmo
+      DATABASE_URL: postgresql://cosmo:cosmo@localhost:5432/cosmo_test
+      TEST_DATABASE_URL: postgresql://cosmo:cosmo@localhost:5432/cosmo_test
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cosmo
+          POSTGRES_PASSWORD: cosmo
+          POSTGRES_DB: cosmo_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cosmo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
 
     steps:
       - uses: actions/checkout@v4
@@ -35,8 +51,11 @@ jobs:
       - name: Lint api
         run: npm run lint -w apps/api
 
-      - name: Test api
+      - name: Unit tests (api)
         run: npm test -w apps/api
+
+      - name: E2E tests (api)
+        run: npm run test:e2e -w apps/api
 
       - name: Build api
         run: npm run build -w apps/api

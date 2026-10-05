@@ -47,7 +47,9 @@ export class BrandSectionsService {
   }
 
   async create(brandId: number, input: CreateBrandSectionInput) {
-    const brand = await this.prisma.brand.findUnique({ where: { id: brandId } });
+    const brand = await this.prisma.brand.findUnique({
+      where: { id: brandId },
+    });
 
     if (!brand) {
       throw new NotFoundException('Брэнд олдсонгүй');

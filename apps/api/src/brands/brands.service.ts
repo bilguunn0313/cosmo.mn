@@ -145,7 +145,10 @@ export class BrandsService {
       coverUrl: brand.cover?.url ?? null,
       websiteUrl: brand.websiteUrl,
       sections: brand.sections.map((section) => {
-        const sectionTranslation = pickTranslation(section.translations, locale);
+        const sectionTranslation = pickTranslation(
+          section.translations,
+          locale,
+        );
 
         return {
           id: section.id,

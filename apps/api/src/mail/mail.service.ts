@@ -43,7 +43,9 @@ export class MailService {
     });
 
     if (error) {
-      this.logger.error(`Имэйл илгээж чадсангүй (${message.to}): ${error.message}`);
+      this.logger.error(
+        `Имэйл илгээж чадсангүй (${message.to}): ${error.message}`,
+      );
       throw new ServiceUnavailableException(
         'Мессеж илгээхэд алдаа гарлаа. Дахин оролдоно уу',
       );
