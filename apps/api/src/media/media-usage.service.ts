@@ -1,0 +1,90 @@
+import { Injectable } from '@nestjs/common';
+import { DEFAULT_LOCALE } from '@cosmo/shared';
+import { pickTranslation } from '../common/pick-translation';
+import { PrismaService } from '../prisma/prisma.service';
+
+export type MediaUsageType =
+  'slide' | 'brand' | 'brandSection' | 'section' | 'news';
+
+export interface MediaUsage {
+  type: MediaUsageType;
+  id: number;
+  title: string;
+}
+
+@Injectable()
+export class MediaUsageService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findUsages(media: { id: number; url: string }): Promise<MediaUsage[]> {
+    const { id, url } = media;
+
+    const [slides, brands, brandSections, sections, news] = await Promise.all([
+      this.prisma.slide.findMany({
+        where: { OR: [{ mediaId: id }, { posterId: id }] },
+        include: { translations: true },
+      }),
+      this.prisma.brand.findMany({
+        where: { OR: [{ logoId: id }, { coverId: id }] },
+        include: { translations: true },
+      }),
+      this.prisma.brandSection.findMany({
+        where: {
+          OR: [
+            { imageId: id },
+            { translations: { some: { body: { contains: url } } } },
+          ],
+        },
+        include: { translations: true },
+      }),
+      this.prisma.section.findMany({
+        where: {
+          OR: [
+            { imageId: id },
+            { translations: { some: { body: { contains: url } } } },
+          ],
+        },
+        include: { translations: true },
+      }),
+      this.prisma.news.findMany({
+        where: {
+          OR: [
+            { coverImageId: id },
+            { translations: { some: { content: { contains: url } } } },
+          ],
+        },
+        include: { translations: true },
+      }),
+    ]);
+
+    return [
+      ...slides.map((slide) => ({
+        type: 'slide' as const,
+        id: slide.id,
+        title: pickTranslation(slide.translations, DEFAULT_LOCALE)?.title ?? '',
+      })),
+      ...brands.map((brand) => ({
+        type: 'brand' as const,
+        id: brand.id,
+        title: pickTranslation(brand.translations, DEFAULT_LOCALE)?.name ?? '',
+      })),
+      ...brandSections.map((section) => ({
+        type: 'brandSection' as const,
+        id: section.id,
+        title:
+          pickTranslation(section.translations, DEFAULT_LOCALE)?.title ?? '',
+      })),
+      ...sections.map((section) => ({
+        type: 'section' as const,
+        id: section.id,
+        title:
+          pickTranslation(section.translations, DEFAULT_LOCALE)?.title ?? '',
+      })),
+      ...news.map((item) => ({
+        type: 'news' as const,
+        id: item.id,
+        title: pickTranslation(item.translations, DEFAULT_LOCALE)?.title ?? '',
+      })),
+    ];
+  }
+}

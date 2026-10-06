@@ -69,6 +69,11 @@ export class AdminMediaController {
     return this.mediaService.upload(file);
   }
 
+  @Get(':id/usages')
+  findUsages(@Param('id', ParseIntPipe) id: number) {
+    return this.mediaService.findUsages(id);
+  }
+
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id', ParseIntPipe) id: number) {

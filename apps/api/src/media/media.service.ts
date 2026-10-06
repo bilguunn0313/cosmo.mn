@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { MediaUsageService } from './media-usage.service';
 import { StorageService } from './storage.service';
 
 export interface UploadedFileData {
@@ -47,6 +49,7 @@ export class MediaService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storage: StorageService,
+    private readonly mediaUsageService: MediaUsageService,
   ) {}
 
   async findAll(query: AdminMediaQuery) {
@@ -79,15 +82,35 @@ export class MediaService {
     );
   }
 
+  async findUsages(id: number) {
+    const media = await this.findOne(id);
+    return this.mediaUsageService.findUsages(media);
+  }
+
   async remove(id: number) {
+    const media = await this.findOne(id);
+    const usages = await this.mediaUsageService.findUsages(media);
+
+    if (usages.length > 0) {
+      throw new ConflictException({
+        statusCode: 409,
+        message: 'Энэ файл ашиглагдаж байгаа тул устгах боломжгүй',
+        usages,
+      });
+    }
+
+    await this.prisma.media.delete({ where: { id } });
+    await this.storage.remove(media.url);
+  }
+
+  private async findOne(id: number) {
     const media = await this.prisma.media.findUnique({ where: { id } });
 
     if (!media) {
       throw new NotFoundException('Файл олдсонгүй');
     }
 
-    await this.prisma.media.delete({ where: { id } });
-    await this.storage.remove(media.url);
+    return media;
   }
 
   private async saveImage(file: UploadedFileData) {
