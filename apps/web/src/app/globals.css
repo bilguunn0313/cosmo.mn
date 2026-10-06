@@ -119,6 +119,20 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer components {
+  .glass {
+    background-color: color-mix(in oklch, var(--background) 75%, transparent);
+    backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      background-color: var(--background);
+      backdrop-filter: none;
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
