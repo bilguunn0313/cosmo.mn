@@ -29,14 +29,14 @@ import {
   isHtmlEmpty,
   plainTextToHtml,
 } from "@/lib/plain-text";
-import { useSaveSection } from "@/lib/queries/sections";
+import { useSaveSection, type SectionsSource } from "@/lib/queries/sections";
 import { isValidLink, toStoredLink } from "@/lib/site-links";
 import {
   emptyTranslations,
   formToTranslations,
   translationsToForm,
 } from "@/lib/translations";
-import type { Locale, Media, Section, SectionPage } from "@/lib/types";
+import type { Locale, Media, Section } from "@/lib/types";
 
 export type SectionBodyMode = "plain" | "rich";
 
@@ -164,7 +164,7 @@ function toInput(
 }
 
 interface SectionFormProps {
-  page: SectionPage;
+  source: SectionsSource;
   section: Section | null;
   showLink: boolean;
   bodyMode: SectionBodyMode;
@@ -172,13 +172,13 @@ interface SectionFormProps {
 }
 
 function SectionForm({
-  page,
+  source,
   section,
   showLink,
   bodyMode,
   onDone,
 }: SectionFormProps) {
-  const saveSection = useSaveSection(page);
+  const saveSection = useSaveSection(source);
   const {
     control,
     register,
@@ -342,7 +342,7 @@ function SectionForm({
 }
 
 interface SectionFormDialogProps {
-  page: SectionPage;
+  source: SectionsSource;
   section: Section | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -351,7 +351,7 @@ interface SectionFormDialogProps {
 }
 
 export function SectionFormDialog({
-  page,
+  source,
   section,
   open,
   onOpenChange,
@@ -367,7 +367,7 @@ export function SectionFormDialog({
         {open && (
           <SectionForm
             key={section?.id ?? "new"}
-            page={page}
+            source={source}
             section={section}
             showLink={showLink}
             bodyMode={bodyMode}

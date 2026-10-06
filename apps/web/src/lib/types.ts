@@ -27,7 +27,7 @@ export interface Media {
 }
 
 export type MediaUsageType =
-  "slide" | "brand" | "brandSection" | "section" | "news";
+  "slide" | "brand" | "brandSection" | "product" | "section" | "news";
 
 export type Locale = "mn" | "en" | "zh";
 
@@ -62,13 +62,52 @@ export interface SectionTranslation {
 
 export interface Section {
   id: number;
-  page: SectionPage;
   imageId: number | null;
   image: Media | null;
-  linkUrl: string | null;
+  linkUrl?: string | null;
   order: number;
   isVisible: boolean;
   translations: SectionTranslation[];
+}
+
+export type BrandCategory = "FOOD" | "BEAUTY" | "HOUSEHOLD";
+
+export interface BrandTranslation {
+  id: number;
+  locale: Locale;
+  name: string;
+  summary: string | null;
+}
+
+export interface Brand {
+  id: number;
+  slug: string;
+  categories: BrandCategory[];
+  logoId: number | null;
+  logo: Media | null;
+  coverId: number | null;
+  cover: Media | null;
+  websiteUrl: string | null;
+  order: number;
+  isPublished: boolean;
+  translations: BrandTranslation[];
+}
+
+export interface ProductTranslation {
+  id: number;
+  locale: Locale;
+  name: string;
+  description: string | null;
+}
+
+export interface Product {
+  id: number;
+  brandId: number;
+  imageId: number;
+  image: Media;
+  order: number;
+  isVisible: boolean;
+  translations: ProductTranslation[];
 }
 
 export interface MediaUsage {

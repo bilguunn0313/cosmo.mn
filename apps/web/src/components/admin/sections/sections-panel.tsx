@@ -16,11 +16,12 @@ import {
   useSections,
 } from "@/lib/queries/sections";
 import { pickDefaultTranslation } from "@/lib/translations";
-import type { Section, SectionPage } from "@/lib/types";
+import type { SectionsSource } from "@/lib/queries/sections";
+import type { Section } from "@/lib/types";
 import { SectionFormDialog, type SectionBodyMode } from "./section-form-dialog";
 
 interface SectionsPanelProps {
-  page: SectionPage;
+  source: SectionsSource;
   step?: number;
   title: string;
   description: string;
@@ -42,7 +43,7 @@ function SectionThumbnail({ section }: { section: Section }) {
 }
 
 export function SectionsPanel({
-  page,
+  source,
   step,
   title,
   description,
@@ -50,10 +51,10 @@ export function SectionsPanel({
   showLink = false,
   bodyMode = "plain",
 }: SectionsPanelProps) {
-  const sections = useSections(page);
-  const saveSection = useSaveSection(page);
-  const deleteSection = useDeleteSection(page);
-  const reorderSections = useReorderSections(page);
+  const sections = useSections(source);
+  const saveSection = useSaveSection(source);
+  const deleteSection = useDeleteSection(source);
+  const reorderSections = useReorderSections(source);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSection, setEditingSection] = useState<Section | null>(null);
@@ -124,7 +125,7 @@ export function SectionsPanel({
       />
 
       <SectionFormDialog
-        page={page}
+        source={source}
         section={editingSection}
         open={isFormOpen}
         onOpenChange={setIsFormOpen}

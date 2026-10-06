@@ -13,7 +13,7 @@ export default function AboutPageAdmin() {
       />
 
       <SectionsPanel
-        page="about"
+        source={{ page: "about" }}
         title="Хэсгүүд"
         description="Хэсэг бүр гарчиг, текст, зурагтай. Жишээ нь «Компанийн танилцуулга», «Алсын хараа», «Түүх»."
         emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Компанийн танилцуулга» хэсгээс эхэлнэ үү."

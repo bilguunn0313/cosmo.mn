@@ -177,4 +177,122 @@ describe('Brands', () => {
       expect(remaining).toBe(0);
     });
   });
+
+  describe('Брэндийн бүтээгдэхүүн', () => {
+    let brandId: number;
+
+    beforeAll(async () => {
+      const brand = await createBrand('brand-products').expect(201);
+      brandId = brand.body.id;
+    });
+
+    function createProduct(name: string, isVisible = true) {
+      return context.admin
+        .post(`/admin/brands/${brandId}/products`)
+        .send({
+          imageId: logoId,
+          isVisible,
+          translations: [
+            { locale: 'mn', name, description: `${name} тайлбар` },
+            { locale: 'en', name: `${name} EN` },
+          ],
+        })
+        .expect(201);
+    }
+
+    it('бүтээгдэхүүнийг зурагтай нь нэмнэ', async () => {
+      const response = await createProduct('Крем');
+
+      expect(response.body.image.id).toBe(logoId);
+      expect(response.body.translations).toHaveLength(2);
+    });
+
+    it('зураггүй бүтээгдэхүүнийг хүлээж авахгүй', async () => {
+      await context.admin
+        .post(`/admin/brands/${brandId}/products`)
+        .send({ translations: [{ locale: 'mn', name: 'Зураггүй' }] })
+        .expect(400);
+    });
+
+    it('брэндийн хуудсанд зөвхөн харагдах бүтээгдэхүүнийг дарааллаар нь сонгосон хэлээр харуулна', async () => {
+      await createProduct('Шампунь');
+      await createProduct('Нуусан бүтээгдэхүүн', false);
+
+      const response = await context.guest
+        .get('/public/brands/brand-products?locale=en')
+        .expect(200);
+
+      expect(
+        response.body.products.map((product: { name: string }) => product.name),
+      ).toEqual(['Крем EN', 'Шампунь EN']);
+      expect(response.body.products[0]).toMatchObject({
+        description: null,
+        imageUrl: expect.stringMatching(/^\/uploads\//),
+      });
+
+      const mongolian = await context.guest
+        .get('/public/brands/brand-products?locale=mn')
+        .expect(200);
+      expect(mongolian.body.products[0].description).toBe('Крем тайлбар');
+    });
+
+    it('дарааллыг сольж чадна', async () => {
+      const list = await context.admin
+        .get(`/admin/brands/${brandId}/products`)
+        .expect(200);
+      const ids = list.body.map((product: { id: number }) => product.id);
+
+      await context.admin
+        .patch(`/admin/brands/${brandId}/products/reorder`)
+        .send({ ids: [...ids].reverse() })
+        .expect(204);
+
+      const reordered = await context.admin
+        .get(`/admin/brands/${brandId}/products`)
+        .expect(200);
+      expect(
+        reordered.body.map((product: { id: number }) => product.id),
+      ).toEqual([...ids].reverse());
+    });
+
+    it('өөр брэндийн бүтээгдэхүүнийг энэ брэндээр дамжуулж засахгүй', async () => {
+      const other = await createBrand('brand-products-other').expect(201);
+      const product = await createProduct('Миний бүтээгдэхүүн');
+
+      await context.admin
+        .patch(`/admin/brands/${other.body.id}/products/${product.body.id}`)
+        .send({ isVisible: false })
+        .expect(404);
+    });
+
+    it('бүтээгдэхүүнд ашиглагдаж байгаа зургийг устгахгүй', async () => {
+      const response = await context.admin
+        .get(`/admin/media/${logoId}/usages`)
+        .expect(200);
+
+      expect(
+        response.body.some(
+          (usage: { type: string }) => usage.type === 'product',
+        ),
+      ).toBe(true);
+    });
+
+    it('брэндийг устгахад бүтээгдэхүүнүүд нь хамт устана', async () => {
+      const brand = await createBrand('brand-products-cascade').expect(201);
+      await context.admin
+        .post(`/admin/brands/${brand.body.id}/products`)
+        .send({
+          imageId: logoId,
+          translations: [{ locale: 'mn', name: 'x' }],
+        })
+        .expect(201);
+
+      await context.admin.delete(`/admin/brands/${brand.body.id}`).expect(204);
+
+      const remaining = await context.prisma.product.count({
+        where: { brandId: brand.body.id },
+      });
+      expect(remaining).toBe(0);
+    });
+  });
 });

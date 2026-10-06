@@ -30,6 +30,7 @@ const USAGE_LABELS: Record<MediaUsageType, string> = {
   slide: "Нүүр хуудасны carousel",
   brand: "Брэнд",
   brandSection: "Брэндийн хэсэг",
+  product: "Брэндийн бүтээгдэхүүн",
   section: "Хуудасны хэсэг",
   news: "Медиа",
 };

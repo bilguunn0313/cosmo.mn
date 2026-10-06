@@ -56,6 +56,7 @@ model Media {
   brandLogos    Brand[]        @relation("BrandLogo")
   brandCovers   Brand[]        @relation("BrandCover")
   brandSections BrandSection[]
+  products      Product[]
   sections      Section[]
   newsCovers    News[]
 }
@@ -103,6 +104,7 @@ model Brand {
 
   translations BrandTranslation[]
   sections     BrandSection[]
+  products     Product[]
 
   @@index([isPublished, order])
 }
@@ -143,6 +145,33 @@ model BrandSectionTranslation {
   body      String
 
   @@unique([sectionId, locale])
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  brandId   Int
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  imageId   Int
+  image     Media    @relation(fields: [imageId], references: [id])
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations ProductTranslation[]
+
+  @@index([brandId, order])
+}
+
+model ProductTranslation {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  locale      Locale
+  name        String
+  description String?
+
+  @@unique([productId, locale])
 }
 
 model Section {

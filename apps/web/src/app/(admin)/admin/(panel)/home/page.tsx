@@ -23,7 +23,7 @@ export default function HomePageAdmin() {
       <SlidesPanel />
 
       <SectionsPanel
-        page="home"
+        source={{ page: "home" }}
         step={2}
         title="Тойм хэсгүүд"
         description="Гүйлгэхэд гарч ирэх товч хэсгүүд. Жишээ нь «Бидний тухай», «Хүний нөөц». Бүтэн хуудас руу нь хөтлөх «Цааш үзэх» хаягийг заана уу."

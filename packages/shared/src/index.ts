@@ -9,3 +9,4 @@ export * from "./section";
 export * from "./site-setting";
 export * from "./slide";
 export * from "./zod-mn";
+export * from "./slugify";

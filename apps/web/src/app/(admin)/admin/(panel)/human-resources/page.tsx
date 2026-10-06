@@ -13,7 +13,7 @@ export default function HumanResourcesPageAdmin() {
       />
 
       <SectionsPanel
-        page="human-resources"
+        source={{ page: "human-resources" }}
         title="Хэсгүүд"
         description="Жишээ нь «Хүний нөөцийн бодлого», «Байгууллагын соёл», «Сургалт, хөгжил»."
         emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Хүний нөөцийн бодлого» хэсгээс эхэлнэ үү."

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { moveItem } from "@/lib/queries/reorder";
+import { cn } from "@/lib/utils";
 import { ReorderButtons } from "./reorder-buttons";
 
 export interface ContentListItemView {
@@ -23,7 +24,11 @@ interface ContentListProps<T extends { id: number }> {
   onDelete: (item: T) => void;
   onToggleVisible: (item: T, isVisible: boolean) => void;
   onReorder: (items: T[]) => void;
+  reorderable?: boolean;
+  visibilityLabels?: { on: string; off: string };
 }
+
+const DEFAULT_VISIBILITY_LABELS = { on: "Харагдана", off: "Нуугдсан" };
 
 const ROW_TRANSITION = { duration: 0.2, ease: [0.23, 1, 0.32, 1] } as const;
 
@@ -35,6 +40,8 @@ export function ContentList<T extends { id: number }>({
   onDelete,
   onToggleVisible,
   onReorder,
+  reorderable = true,
+  visibilityLabels = DEFAULT_VISIBILITY_LABELS,
 }: ContentListProps<T>) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -67,14 +74,18 @@ export function ContentList<T extends { id: number }>({
             transition={ROW_TRANSITION}
             className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-2 pr-3 sm:flex-nowrap"
           >
-            <ReorderButtons
-              isFirst={index === 0}
-              isLast={index === items.length - 1}
-              onMove={(direction) =>
-                onReorder(moveItem(items, index, direction))
-              }
-            />
-            <div className="w-28 shrink-0">{thumbnail}</div>
+            {reorderable && (
+              <ReorderButtons
+                isFirst={index === 0}
+                isLast={index === items.length - 1}
+                onMove={(direction) =>
+                  onReorder(moveItem(items, index, direction))
+                }
+              />
+            )}
+            <div className={cn("w-28 shrink-0", !reorderable && "ml-1")}>
+              {thumbnail}
+            </div>
             <div className="grid min-w-0 flex-1 gap-0.5">
               <span className="truncate font-medium">{title}</span>
               {subtitle && (
@@ -88,10 +99,10 @@ export function ContentList<T extends { id: number }>({
                 size="sm"
                 checked={isVisible}
                 onCheckedChange={(checked) => onToggleVisible(item, checked)}
-                aria-label="Сайт дээр харуулах"
+                aria-label={visibilityLabels.on}
               />
-              <span className="w-16">
-                {isVisible ? "Харагдана" : "Нуугдсан"}
+              <span className="w-20">
+                {isVisible ? visibilityLabels.on : visibilityLabels.off}
               </span>
             </label>
             <div className="flex items-center">

@@ -7,12 +7,14 @@ interface MediaThumbnailProps {
   media: Media;
   className?: string;
   sizes?: string;
+  fit?: "cover" | "contain";
 }
 
 export function MediaThumbnail({
   media,
   className,
   sizes = "200px",
+  fit = "cover",
 }: MediaThumbnailProps) {
   return (
     <div
@@ -28,7 +30,7 @@ export function MediaThumbnail({
           fill
           unoptimized
           sizes={sizes}
-          className="object-cover"
+          className={fit === "contain" ? "object-contain p-2" : "object-cover"}
         />
       ) : (
         <>

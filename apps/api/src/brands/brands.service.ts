@@ -127,6 +127,11 @@ export class BrandsService {
           orderBy: { order: 'asc' },
           include: { image: true, translations: true },
         },
+        products: {
+          where: { isVisible: true },
+          orderBy: { order: 'asc' },
+          include: { image: true, translations: true },
+        },
       },
     });
 
@@ -155,6 +160,19 @@ export class BrandsService {
           title: sectionTranslation?.title ?? '',
           body: sectionTranslation?.body ?? '',
           imageUrl: section.image?.url ?? null,
+        };
+      }),
+      products: brand.products.map((product) => {
+        const productTranslation = pickTranslation(
+          product.translations,
+          locale,
+        );
+
+        return {
+          id: product.id,
+          name: productTranslation?.name ?? '',
+          description: productTranslation?.description ?? null,
+          imageUrl: product.image.url,
         };
       }),
     };

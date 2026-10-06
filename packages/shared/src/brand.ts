@@ -1,5 +1,6 @@
 import { z } from "zod";
 import {
+  idSchema,
   optionalIdSchema,
   optionalUrlSchema,
   slugSchema,
@@ -49,6 +50,21 @@ export const createBrandSectionSchema = brandSectionFields.extend({
 
 export const updateBrandSectionSchema = brandSectionFields.partial();
 
+const productFields = z.object({
+  imageId: idSchema,
+  isVisible: z.boolean(),
+  translations: translationsSchema({
+    name: z.string().trim().min(1).max(200),
+    description: z.string().trim().max(1000).optional(),
+  }),
+});
+
+export const createProductSchema = productFields.extend({
+  isVisible: z.boolean().default(true),
+});
+
+export const updateProductSchema = productFields.partial();
+
 export const publicBrandsQuerySchema = z.object({
   locale: localeSchema,
   category: z.enum(BRAND_CATEGORIES).optional(),
@@ -58,4 +74,6 @@ export type CreateBrandInput = z.infer<typeof createBrandSchema>;
 export type UpdateBrandInput = z.infer<typeof updateBrandSchema>;
 export type CreateBrandSectionInput = z.infer<typeof createBrandSectionSchema>;
 export type UpdateBrandSectionInput = z.infer<typeof updateBrandSectionSchema>;
+export type CreateProductInput = z.infer<typeof createProductSchema>;
+export type UpdateProductInput = z.infer<typeof updateProductSchema>;
 export type PublicBrandsQuery = z.infer<typeof publicBrandsQuerySchema>;
