@@ -9,7 +9,7 @@ export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
 
     if (!result.success) {
       throw new BadRequestException({
-        message: 'Validation failed',
+        message: 'Оруулсан мэдээлэл буруу байна',
         errors: z.flattenError(result.error).fieldErrors,
       });
     }

@@ -8,3 +8,4 @@ export * from "./news";
 export * from "./section";
 export * from "./site-setting";
 export * from "./slide";
+export * from "./zod-mn";
