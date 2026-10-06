@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/admin/coming-soon";
+import { PageHeader } from "@/components/admin/page-header";
+import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 
 export const metadata: Metadata = { title: "Хүний нөөц" };
 
-export default function Page() {
+export default function HumanResourcesPageAdmin() {
   return (
-    <ComingSoon
-      title="Хүний нөөц"
-      description="Хүний нөөц хуудасны хэсгүүд"
-      step={5}
-    />
+    <div className="grid gap-12">
+      <PageHeader
+        title="Хүний нөөц"
+        description="Сайтын «Хүний нөөц» хуудас. Хэсгүүд дээрээс доош энэ дарааллаар харагдана."
+      />
+
+      <SectionsPanel
+        page="human-resources"
+        title="Хэсгүүд"
+        description="Жишээ нь «Хүний нөөцийн бодлого», «Байгууллагын соёл», «Сургалт, хөгжил»."
+        emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Хүний нөөцийн бодлого» хэсгээс эхэлнэ үү."
+        bodyMode="rich"
+      />
+    </div>
   );
 }

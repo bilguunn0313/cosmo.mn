@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/admin/coming-soon";
+import { PageHeader } from "@/components/admin/page-header";
+import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 
 export const metadata: Metadata = { title: "Бидний тухай" };
 
-export default function Page() {
+export default function AboutPageAdmin() {
   return (
-    <ComingSoon
-      title="Бидний тухай"
-      description="Бидний тухай хуудасны хэсгүүд"
-      step={5}
-    />
+    <div className="grid gap-12">
+      <PageHeader
+        title="Бидний тухай"
+        description="Сайтын «Бидний тухай» хуудас. Хэсгүүд дээрээс доош энэ дарааллаар харагдана."
+      />
+
+      <SectionsPanel
+        page="about"
+        title="Хэсгүүд"
+        description="Хэсэг бүр гарчиг, текст, зурагтай. Жишээ нь «Компанийн танилцуулга», «Алсын хараа», «Түүх»."
+        emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Компанийн танилцуулга» хэсгээс эхэлнэ үү."
+        bodyMode="rich"
+      />
+    </div>
   );
 }

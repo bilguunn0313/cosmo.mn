@@ -29,7 +29,7 @@ function StatCard({ title, value, detail, href, icon: Icon }: StatCardProps) {
       href={href}
       className="group rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <Card className="h-full transition-shadow duration-200 ease-(--ease-out) group-hover:shadow-md">
+      <Card className="h-full transition-shadow duration-200 ease-[ease] group-hover:shadow-md">
         <CardContent className="grid gap-3">
           <div className="flex items-center justify-between text-muted-foreground">
             <span className="text-sm font-medium">{title}</span>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
                   {link.description}
                 </span>
               </div>
-              <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 ease-(--ease-out) group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 ease-[ease] motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
             </Link>
           ))}
         </div>

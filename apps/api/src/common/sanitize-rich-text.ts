@@ -10,6 +10,7 @@ const options: sanitizeHtml.IOptions = {
   ],
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
+    a: ['href', 'name', 'target', 'rel'],
     img: ['src', 'alt', 'width', 'height'],
     iframe: ['src', 'width', 'height', 'allow', 'allowfullscreen'],
     '*': ['style'],
@@ -18,6 +19,15 @@ const options: sanitizeHtml.IOptions = {
     '*': {
       'text-align': [/^(left|right|center|justify)$/],
     },
+  },
+  transformTags: {
+    a: (tagName, attribs) => ({
+      tagName,
+      attribs:
+        attribs.target === '_blank'
+          ? { ...attribs, rel: 'noopener noreferrer' }
+          : attribs,
+    }),
   },
   allowedIframeHostnames: [
     'www.youtube.com',

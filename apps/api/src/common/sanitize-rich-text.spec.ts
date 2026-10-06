@@ -29,4 +29,14 @@ describe('sanitizeRichText', () => {
       '<h2>Гарчиг</h2><ul><li>Нэг</li></ul><a href="https://cosmo.mn">холбоос</a>';
     expect(sanitizeRichText(html)).toBe(html);
   });
+
+  it('шинэ табд нээгдэх холбоост хамгаалалтын rel нэмнэ', () => {
+    expect(
+      sanitizeRichText(
+        '<a href="https://x.mn" target="_blank" rel="opener">x</a>',
+      ),
+    ).toBe(
+      '<a href="https://x.mn" target="_blank" rel="noopener noreferrer">x</a>',
+    );
+  });
 });
