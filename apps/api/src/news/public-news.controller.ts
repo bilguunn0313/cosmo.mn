@@ -1,11 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import {
-  LOCALES,
-  localeSchema,
-  NEWS_TYPES,
-  publicNewsQuerySchema,
-} from '@cosmo/shared';
+import { LOCALES, localeSchema, publicNewsQuerySchema } from '@cosmo/shared';
 import type { Locale, PublicNewsQuery } from '@cosmo/shared';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
 import { NewsService } from './news.service';
@@ -17,7 +12,6 @@ export class PublicNewsController {
 
   @Get()
   @ApiQuery({ name: 'locale', enum: LOCALES, required: false })
-  @ApiQuery({ name: 'type', enum: NEWS_TYPES, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   @ApiQuery({ name: 'limit', type: Number, required: false })
   findPublished(

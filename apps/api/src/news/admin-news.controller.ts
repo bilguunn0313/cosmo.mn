@@ -15,7 +15,6 @@ import { ApiCookieAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   adminNewsQuerySchema,
   createNewsSchema,
-  NEWS_TYPES,
   updateNewsSchema,
 } from '@cosmo/shared';
 import type {
@@ -37,7 +36,6 @@ export class AdminNewsController {
   constructor(private readonly newsService: NewsService) {}
 
   @Get()
-  @ApiQuery({ name: 'type', enum: NEWS_TYPES, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   @ApiQuery({ name: 'limit', type: Number, required: false })
   findAll(

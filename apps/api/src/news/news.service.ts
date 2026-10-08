@@ -13,6 +13,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 const newsInclude = {
   coverImage: true,
+  video: true,
   translations: true,
 } satisfies Prisma.NewsInclude;
 
@@ -46,17 +47,14 @@ export class NewsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(query: AdminNewsQuery) {
-    const where: Prisma.NewsWhereInput = { type: query.type };
-
     const [items, total] = await Promise.all([
       this.prisma.news.findMany({
-        where,
         orderBy: { createdAt: 'desc' },
         skip: (query.page - 1) * query.limit,
         take: query.limit,
         include: newsInclude,
       }),
-      this.prisma.news.count({ where }),
+      this.prisma.news.count(),
     ]);
 
     return { items, total, page: query.page, limit: query.limit };
@@ -79,9 +77,8 @@ export class NewsService {
     return this.prisma.news.create({
       data: {
         slug: input.slug,
-        type: input.type,
         coverImageId: input.coverImageId,
-        videoUrl: input.videoUrl,
+        videoId: input.videoId,
         isPublished: input.isPublished,
         publishedAt: resolvePublishedAt(
           input.isPublished,
@@ -128,7 +125,6 @@ export class NewsService {
 
   async findPublished(query: PublicNewsQuery) {
     const where: Prisma.NewsWhereInput = {
-      type: query.type,
       isPublished: true,
       publishedAt: { lte: new Date() },
     };
@@ -150,11 +146,10 @@ export class NewsService {
 
         return {
           slug: news.slug,
-          type: news.type,
           title: translation?.title ?? '',
           summary: translation?.summary ?? null,
           coverUrl: news.coverImage?.url ?? null,
-          videoUrl: news.videoUrl,
+          videoUrl: news.video?.url ?? null,
           publishedAt: news.publishedAt,
         };
       }),
@@ -181,12 +176,11 @@ export class NewsService {
 
     return {
       slug: news.slug,
-      type: news.type,
       title: translation?.title ?? '',
       summary: translation?.summary ?? null,
       content: translation?.content ?? '',
       coverUrl: news.coverImage?.url ?? null,
-      videoUrl: news.videoUrl,
+      videoUrl: news.video?.url ?? null,
       publishedAt: news.publishedAt,
     };
   }

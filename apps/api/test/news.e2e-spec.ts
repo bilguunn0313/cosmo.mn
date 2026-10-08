@@ -1,3 +1,4 @@
+import { createTestVideo } from './helpers/fixtures';
 import { createTestApp, TestContext } from './helpers/test-app';
 
 describe('News', () => {
@@ -56,40 +57,42 @@ describe('News', () => {
     );
   });
 
-  it('кампанит ажлыг нийтлэхэд төрөл нь хэвээр үлдэнэ', async () => {
-    const campaign = await createNews('campaign', {
-      type: 'CAMPAIGN',
-      videoUrl: 'https://www.youtube.com/watch?v=abc',
-    });
+  it('нооргийг дараа нь нийтлэхэд огноо тавигдаж, нийтэд харагдана', async () => {
+    const draft = await createNews('later-news');
 
     const response = await context.admin
-      .patch(`/admin/news/${campaign.body.id}`)
+      .patch(`/admin/news/${draft.body.id}`)
       .send({ isPublished: true })
       .expect(200);
 
-    expect(response.body.type).toBe('CAMPAIGN');
     expect(response.body.publishedAt).not.toBeNull();
 
-    const detail = await context.guest.get('/public/news/campaign').expect(200);
-    expect(detail.body).toMatchObject({
-      type: 'CAMPAIGN',
-      videoUrl: 'https://www.youtube.com/watch?v=abc',
-    });
+    const detail = await context.guest
+      .get('/public/news/later-news')
+      .expect(200);
+    expect(detail.body).toMatchObject({ title: 'Мэдээ', videoUrl: null });
   });
 
-  it('төрлөөр шүүж, хуудаслаж жагсаана', async () => {
-    const all = await context.guest.get('/public/news?limit=1').expect(200);
-    const campaigns = await context.guest
-      .get('/public/news?type=CAMPAIGN')
+  it('зургийн сангийн видеог нийтэд хаягаар нь өгч, устгахыг хориглоно', async () => {
+    const videoId = await createTestVideo(context);
+
+    await createNews('video-news', { isPublished: true, videoId });
+
+    const detail = await context.guest
+      .get('/public/news/video-news')
+      .expect(200);
+    expect(detail.body.videoUrl).toMatch(/^\/uploads\/.+\.mp4$/);
+
+    await context.admin.delete(`/admin/media/${videoId}`).expect(409);
+  });
+
+  it('хуудаслаж жагсаана', async () => {
+    const response = await context.guest
+      .get('/public/news?limit=1')
       .expect(200);
 
-    expect(all.body.items).toHaveLength(1);
-    expect(all.body.total).toBeGreaterThan(1);
-    expect(
-      campaigns.body.items.every(
-        (item: { type: string }) => item.type === 'CAMPAIGN',
-      ),
-    ).toBe(true);
+    expect(response.body.items).toHaveLength(1);
+    expect(response.body.total).toBeGreaterThan(1);
   });
 
   it('ирээдүйн огноотой мэдээ тэр өдөр хүртэл харагдахгүй', async () => {

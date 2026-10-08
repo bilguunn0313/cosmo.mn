@@ -1,3 +1,4 @@
+import { uploadTestImage } from './helpers/fixtures';
 import { createTestApp, TestContext } from './helpers/test-app';
 
 describe('Site settings', () => {
@@ -62,6 +63,30 @@ describe('Site settings', () => {
       email: 'info@cosmo.mn',
       address: 'Улаанбаатар',
     });
+  });
+
+  it('байршлын зургийг хаягаар нь өгч, зургийн сангаас устгахыг хориглоно', async () => {
+    const mapImageId = await uploadTestImage(context);
+
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ mapImageId, mapUrl: 'https://maps.app.goo.gl/abc' })
+      .expect(200);
+
+    const response = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(response.body).toMatchObject({
+      mapUrl: 'https://maps.app.goo.gl/abc',
+      mapImageUrl: expect.stringMatching(/^\/uploads\//),
+    });
+
+    const deletion = await context.admin
+      .delete(`/admin/media/${mapImageId}`)
+      .expect(409);
+    expect(deletion.body.usages).toEqual([
+      expect.objectContaining({ type: 'siteSetting' }),
+    ]);
   });
 
   it('буруу имэйлийг хүлээж авахгүй', async () => {

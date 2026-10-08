@@ -6,6 +6,11 @@ import { PrismaService } from '../prisma/prisma.service';
 
 const SITE_SETTING_ID = 1;
 
+const siteSettingInclude = {
+  mapImage: true,
+  translations: true,
+} satisfies Prisma.SiteSettingInclude;
+
 @Injectable()
 export class SiteSettingsService {
   constructor(private readonly prisma: PrismaService) {}
@@ -15,7 +20,7 @@ export class SiteSettingsService {
       where: { id: SITE_SETTING_ID },
       update: {},
       create: { id: SITE_SETTING_ID },
-      include: { translations: true },
+      include: siteSettingInclude,
     });
   }
 
@@ -23,7 +28,7 @@ export class SiteSettingsService {
     await this.get();
 
     const { translations, ...fields } = input;
-    const data: Prisma.SiteSettingUpdateInput = { ...fields };
+    const data: Prisma.SiteSettingUncheckedUpdateInput = { ...fields };
 
     if (translations) {
       data.translations = {
@@ -35,7 +40,7 @@ export class SiteSettingsService {
     return this.prisma.siteSetting.update({
       where: { id: SITE_SETTING_ID },
       data,
-      include: { translations: true },
+      include: siteSettingInclude,
     });
   }
 
@@ -50,7 +55,8 @@ export class SiteSettingsService {
       instagramUrl: setting.instagramUrl,
       youtubeUrl: setting.youtubeUrl,
       linkedinUrl: setting.linkedinUrl,
-      mapEmbedUrl: setting.mapEmbedUrl,
+      mapUrl: setting.mapUrl,
+      mapImageUrl: setting.mapImage?.url ?? null,
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

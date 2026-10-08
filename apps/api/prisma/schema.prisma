@@ -25,11 +25,6 @@ enum BrandCategory {
   HOUSEHOLD
 }
 
-enum NewsType {
-  NEWS
-  CAMPAIGN
-}
-
 model Admin {
   id           Int      @id @default(autoincrement())
   email        String   @unique
@@ -58,7 +53,9 @@ model Media {
   brandSections BrandSection[]
   products      Product[]
   sections      Section[]
-  newsCovers    News[]
+  newsCovers    News[]         @relation("NewsCover")
+  newsVideos    News[]         @relation("NewsVideo")
+  siteSettings  SiteSetting[]
 }
 
 model Slide {
@@ -204,10 +201,10 @@ model SectionTranslation {
 model News {
   id           Int       @id @default(autoincrement())
   slug         String    @unique
-  type         NewsType  @default(NEWS)
   coverImageId Int?
-  coverImage   Media?    @relation(fields: [coverImageId], references: [id])
-  videoUrl     String?
+  coverImage   Media?    @relation("NewsCover", fields: [coverImageId], references: [id])
+  videoId      Int?
+  video        Media?    @relation("NewsVideo", fields: [videoId], references: [id])
   isPublished  Boolean   @default(false)
   publishedAt  DateTime?
   createdAt    DateTime  @default(now())
@@ -215,7 +212,7 @@ model News {
 
   translations NewsTranslation[]
 
-  @@index([type, isPublished, publishedAt])
+  @@index([isPublished, publishedAt])
 }
 
 model NewsTranslation {
@@ -238,7 +235,9 @@ model SiteSetting {
   instagramUrl String?
   youtubeUrl   String?
   linkedinUrl  String?
-  mapEmbedUrl  String?
+  mapUrl       String?
+  mapImageId   Int?
+  mapImage     Media?   @relation(fields: [mapImageId], references: [id])
   updatedAt    DateTime @updatedAt
 
   translations SiteSettingTranslation[]
