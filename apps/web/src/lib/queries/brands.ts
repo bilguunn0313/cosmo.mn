@@ -3,6 +3,7 @@ import type { CreateBrandInput, UpdateBrandInput } from "@cosmo/shared";
 import { api } from "@/lib/api";
 import type { Brand } from "@/lib/types";
 import { useReorder } from "./reorder";
+import { useToggle } from "./toggle";
 
 export const brandsQueryKey = ["brands"];
 
@@ -62,6 +63,10 @@ export function useDeleteBrand() {
       api<void>(`/admin/brands/${id}`, { method: "DELETE" }),
     onSuccess: invalidateBrands,
   });
+}
+
+export function useToggleBrand() {
+  return useToggle<Brand>(brandsQueryKey, "/admin/brands");
 }
 
 export function useReorderBrands() {

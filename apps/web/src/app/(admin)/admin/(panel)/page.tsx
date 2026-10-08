@@ -50,8 +50,8 @@ function StatCard({ title, value, detail, href, icon: Icon }: StatCardProps) {
 const QUICK_LINKS = [
   {
     title: "Мэдээ нэмэх",
-    href: "/admin/news",
-    description: "Медиа хэсэгт шинэ мэдээ, кампанит ажил",
+    href: "/admin/news/new",
+    description: "Медиа хэсэгт шинэ мэдээ нийтлэх",
   },
   {
     title: "Зураг, видео оруулах",

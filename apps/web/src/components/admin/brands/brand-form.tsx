@@ -7,15 +7,15 @@ import {
   slugSchema,
   type CreateBrandInput,
 } from "@cosmo/shared";
-import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
 import { MediaField } from "@/components/admin/media/media-field";
+import { PrefixedInput } from "@/components/admin/prefixed-input";
+import { SaveBar } from "@/components/admin/save-bar";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -152,7 +152,8 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
     handleSubmit,
     setError,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { errors, isDirty },
   } = useForm<BrandFormValues>({
     resolver: zodResolver(brandFormSchema),
     defaultValues: defaultValues(brand),
@@ -175,7 +176,13 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
     if (brand) {
       updateBrand.mutate(
         { id: brand.id, input },
-        { onSuccess: () => toast.success("Брэнд хадгалагдлаа"), onError },
+        {
+          onSuccess: () => {
+            reset(values);
+            toast.success("Брэнд хадгалагдлаа");
+          },
+          onError,
+        },
       );
       return;
     }
@@ -243,17 +250,12 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
         }
         error={errors.slug?.message}
       >
-        <div className="flex items-center overflow-hidden rounded-lg border focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 has-aria-invalid:border-destructive">
-          <span className="shrink-0 border-r bg-muted px-3 py-1.5 text-sm text-muted-foreground">
-            cosmo.mn/brands/
-          </span>
-          <input
-            id="brand-slug"
-            aria-invalid={Boolean(errors.slug)}
-            className="h-8 min-w-0 flex-1 bg-transparent px-3 text-sm outline-none"
-            {...register("slug", { onChange: () => setIsSlugEdited(true) })}
-          />
-        </div>
+        <PrefixedInput
+          id="brand-slug"
+          prefix="cosmo.mn/brands/"
+          aria-invalid={Boolean(errors.slug)}
+          {...register("slug", { onChange: () => setIsSlugEdited(true) })}
+        />
       </FormField>
 
       <FormField
@@ -366,12 +368,12 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
         )}
       />
 
-      <div className="flex justify-end">
-        <Button type="submit" disabled={isPending}>
-          {isPending && <Loader2 className="animate-spin" />}
-          {brand ? "Хадгалах" : "Брэнд үүсгэх"}
-        </Button>
-      </div>
+      <SaveBar
+        isNew={brand === null}
+        isDirty={isDirty}
+        isPending={isPending}
+        createLabel="Брэнд үүсгэх"
+      />
     </form>
   );
 }

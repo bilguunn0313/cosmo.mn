@@ -22,3 +22,28 @@ const dateFormatter = new Intl.DateTimeFormat("mn-MN", {
 export function formatDate(isoDate: string) {
   return dateFormatter.format(new Date(isoDate));
 }
+
+const MINUTE_MS = 60_000;
+
+export function toDateTimeInput(isoDate: string | null) {
+  if (!isoDate) {
+    return "";
+  }
+
+  const date = new Date(isoDate);
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * MINUTE_MS);
+  return local.toISOString().slice(0, 16);
+}
+
+export function fromDateTimeInput(value: string) {
+  return new Date(value).toISOString();
+}
+
+export function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((part) => part.charAt(0))
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}

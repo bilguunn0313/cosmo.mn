@@ -23,8 +23,7 @@ interface ContentListProps<T extends { id: number }> {
   onEdit: (item: T) => void;
   onDelete: (item: T) => void;
   onToggleVisible: (item: T, isVisible: boolean) => void;
-  onReorder: (items: T[]) => void;
-  reorderable?: boolean;
+  onReorder?: (items: T[]) => void;
   visibilityLabels?: { on: string; off: string };
 }
 
@@ -40,7 +39,6 @@ export function ContentList<T extends { id: number }>({
   onDelete,
   onToggleVisible,
   onReorder,
-  reorderable = true,
   visibilityLabels = DEFAULT_VISIBILITY_LABELS,
 }: ContentListProps<T>) {
   const shouldReduceMotion = useReducedMotion();
@@ -74,7 +72,7 @@ export function ContentList<T extends { id: number }>({
             transition={ROW_TRANSITION}
             className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-2 pr-3 sm:flex-nowrap"
           >
-            {reorderable && (
+            {onReorder && (
               <ReorderButtons
                 isFirst={index === 0}
                 isLast={index === items.length - 1}
@@ -83,7 +81,7 @@ export function ContentList<T extends { id: number }>({
                 }
               />
             )}
-            <div className={cn("w-28 shrink-0", !reorderable && "ml-1")}>
+            <div className={cn("w-28 shrink-0", !onReorder && "ml-1")}>
               {thumbnail}
             </div>
             <div className="grid min-w-0 flex-1 gap-0.5">

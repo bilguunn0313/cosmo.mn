@@ -16,6 +16,16 @@ interface MediaFieldProps {
   invalid?: boolean;
 }
 
+function chooseLabelFor(allowedTypes: MediaType[]) {
+  if (!allowedTypes.includes("IMAGE")) {
+    return "Видео сонгох";
+  }
+
+  return allowedTypes.includes("VIDEO")
+    ? "Видео эсвэл зураг сонгох"
+    : "Зураг сонгох";
+}
+
 export function MediaField({
   value,
   onChange,
@@ -25,9 +35,7 @@ export function MediaField({
   invalid = false,
 }: MediaFieldProps) {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const chooseLabel = allowedTypes.includes("VIDEO")
-    ? "Видео эсвэл зураг сонгох"
-    : "Зураг сонгох";
+  const chooseLabel = chooseLabelFor(allowedTypes);
 
   return (
     <>

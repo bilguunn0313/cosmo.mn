@@ -3,11 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@cosmo/shared";
 import type { LoginInput } from "@cosmo/shared";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormField } from "@/components/admin/form-field";
+import { PasswordInput } from "@/components/admin/password-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -40,7 +40,6 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const login = useLogin();
-  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -84,33 +83,13 @@ export function LoginForm() {
             htmlFor="password"
             error={errors.password?.message}
           >
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                className="pr-10"
-                aria-invalid={Boolean(errors.password)}
-                aria-describedby={
-                  errors.password ? "password-error" : undefined
-                }
-                {...register("password")}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((visible) => !visible)}
-                aria-label={
-                  showPassword ? "Нууц үгийг нуух" : "Нууц үгийг харуулах"
-                }
-                className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground hover:text-foreground"
-              >
-                {showPassword ? (
-                  <EyeOff className="size-4" />
-                ) : (
-                  <Eye className="size-4" />
-                )}
-              </button>
-            </div>
+            <PasswordInput
+              id="password"
+              autoComplete="current-password"
+              aria-invalid={Boolean(errors.password)}
+              aria-describedby={errors.password ? "password-error" : undefined}
+              {...register("password")}
+            />
           </FormField>
 
           {login.error && (

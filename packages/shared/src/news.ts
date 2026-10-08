@@ -1,21 +1,16 @@
 import { z } from "zod";
 import {
   optionalIdSchema,
-  optionalUrlSchema,
   paginationSchema,
   slugSchema,
   translationsSchema,
 } from "./common";
 import { localeSchema } from "./locales";
 
-export const NEWS_TYPES = ["NEWS", "CAMPAIGN"] as const;
-export type NewsType = (typeof NEWS_TYPES)[number];
-
 const newsFields = z.object({
   slug: slugSchema,
-  type: z.enum(NEWS_TYPES),
   coverImageId: optionalIdSchema,
-  videoUrl: optionalUrlSchema,
+  videoId: optionalIdSchema,
   isPublished: z.boolean(),
   publishedAt: z.iso.datetime().nullable().optional(),
   translations: translationsSchema({
@@ -26,18 +21,14 @@ const newsFields = z.object({
 });
 
 export const createNewsSchema = newsFields.extend({
-  type: z.enum(NEWS_TYPES).default("NEWS"),
   isPublished: z.boolean().default(false),
 });
 
 export const updateNewsSchema = newsFields.partial();
 
-export const adminNewsQuerySchema = paginationSchema.extend({
-  type: z.enum(NEWS_TYPES).optional(),
-});
+export const adminNewsQuerySchema = paginationSchema;
 
 export const publicNewsQuerySchema = paginationSchema.extend({
-  type: z.enum(NEWS_TYPES).optional(),
   locale: localeSchema,
 });
 

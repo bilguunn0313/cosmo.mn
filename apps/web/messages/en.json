@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "title": "Cosmo",
+    "description": "Cosmo brings international food, beauty and household brands to customers in Mongolia."
+  },
+  "nav": {
+    "about": "About us",
+    "brands": "Brands",
+    "careers": "Careers",
+    "media": "Media",
+    "contact": "Contact"
+  },
+  "header": {
+    "menu": "Menu",
+    "homeLabel": "Cosmo home page",
+    "openMenu": "Open menu",
+    "language": "Choose language"
+  },
+  "footer": {
+    "description": "We bring international food, beauty and household brands to customers in Mongolia.",
+    "menu": "Menu",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "learnMore": "Learn more",
+    "carousel": "Highlights",
+    "slideLabel": "{current} of {total}",
+    "goToSlide": "Go to slide {number}",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

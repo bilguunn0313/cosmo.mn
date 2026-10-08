@@ -11,7 +11,7 @@ import {
   useDeleteSlide,
   useReorderSlides,
   useSlides,
-  useUpdateSlide,
+  useToggleSlide,
 } from "@/lib/queries/slides";
 import { pickDefaultTranslation } from "@/lib/translations";
 import type { Slide } from "@/lib/types";
@@ -20,7 +20,7 @@ import { SlideFormDialog } from "./slide-form-dialog";
 
 export function SlidesPanel() {
   const slides = useSlides();
-  const updateSlide = useUpdateSlide();
+  const toggleSlide = useToggleSlide();
   const deleteSlide = useDeleteSlide();
   const reorderSlides = useReorderSlides();
 
@@ -78,8 +78,8 @@ export function SlidesPanel() {
         onEdit={openForm}
         onDelete={setDeletingSlide}
         onToggleVisible={(slide, isActive) =>
-          updateSlide.mutate(
-            { id: slide.id, input: { isActive } },
+          toggleSlide.mutate(
+            { id: slide.id, patch: { isActive } },
             { onError: (error) => toast.error(error.message) },
           )
         }

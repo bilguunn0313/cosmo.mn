@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { optionalUrlSchema, translationsSchema } from "./common";
+import {
+  optionalIdSchema,
+  optionalUrlSchema,
+  translationsSchema,
+} from "./common";
 
 export const updateSiteSettingSchema = z.object({
   phone: z.string().trim().max(50).nullable().optional(),
@@ -8,7 +12,8 @@ export const updateSiteSettingSchema = z.object({
   instagramUrl: optionalUrlSchema,
   youtubeUrl: optionalUrlSchema,
   linkedinUrl: optionalUrlSchema,
-  mapEmbedUrl: z.string().trim().max(2000).nullable().optional(),
+  mapUrl: optionalUrlSchema,
+  mapImageId: optionalIdSchema,
   translations: translationsSchema({
     address: z.string().trim().max(500).optional(),
     workingHours: z.string().trim().max(200).optional(),

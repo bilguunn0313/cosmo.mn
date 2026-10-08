@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateSlideInput, UpdateSlideInput } from "@cosmo/shared";
+import type { CreateSlideInput } from "@cosmo/shared";
 import { api } from "@/lib/api";
 import type { Slide } from "@/lib/types";
 import { useReorder } from "./reorder";
+import { useToggle } from "./toggle";
 
 export const slidesQueryKey = ["slides"];
 
@@ -26,15 +27,8 @@ export function useSaveSlide() {
   });
 }
 
-export function useUpdateSlide() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ id, input }: { id: number; input: UpdateSlideInput }) =>
-      api<Slide>(`/admin/slides/${id}`, { method: "PATCH", body: input }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: slidesQueryKey }),
-  });
+export function useToggleSlide() {
+  return useToggle<Slide>(slidesQueryKey, "/admin/slides");
 }
 
 export function useDeleteSlide() {

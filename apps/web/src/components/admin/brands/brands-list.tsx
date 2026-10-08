@@ -17,7 +17,7 @@ import {
   useBrands,
   useDeleteBrand,
   useReorderBrands,
-  useUpdateBrand,
+  useToggleBrand,
 } from "@/lib/queries/brands";
 import { pickDefaultTranslation } from "@/lib/translations";
 import type { Brand, BrandCategory } from "@/lib/types";
@@ -45,7 +45,7 @@ function BrandLogo({ brand, name }: { brand: Brand; name: string }) {
 export function BrandsList() {
   const router = useRouter();
   const brands = useBrands();
-  const updateBrand = useUpdateBrand();
+  const toggleBrand = useToggleBrand();
   const deleteBrand = useDeleteBrand();
   const reorderBrands = useReorderBrands();
 
@@ -116,7 +116,6 @@ export function BrandsList() {
               ? "Одоогоор брэнд алга. «Брэнд нэмэх» дээр дарж эхэлнэ үү."
               : "Энэ ангилалд брэнд алга."
           }
-          reorderable={category === "ALL"}
           visibilityLabels={{ on: "Нийтлэгдсэн", off: "Ноорог" }}
           view={(brand) => {
             const name =
@@ -132,15 +131,18 @@ export function BrandsList() {
           onEdit={(brand) => router.push(`/admin/brands/${brand.id}`)}
           onDelete={setDeletingBrand}
           onToggleVisible={(brand, isPublished) =>
-            updateBrand.mutate(
-              { id: brand.id, input: { isPublished } },
+            toggleBrand.mutate(
+              { id: brand.id, patch: { isPublished } },
               { onError: (error) => toast.error(error.message) },
             )
           }
-          onReorder={(items) =>
-            reorderBrands.mutate(items, {
-              onError: (error) => toast.error(error.message),
-            })
+          onReorder={
+            category === "ALL"
+              ? (items) =>
+                  reorderBrands.mutate(items, {
+                    onError: (error) => toast.error(error.message),
+                  })
+              : undefined
           }
         />
       </div>

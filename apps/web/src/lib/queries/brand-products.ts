@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateProductInput, UpdateProductInput } from "@cosmo/shared";
+import type { CreateProductInput } from "@cosmo/shared";
 import { api } from "@/lib/api";
 import type { Product } from "@/lib/types";
 import { useReorder } from "./reorder";
+import { useToggle } from "./toggle";
 
 function productsPath(brandId: number) {
   return `/admin/brands/${brandId}/products`;
@@ -35,18 +36,8 @@ export function useSaveProduct(brandId: number) {
   });
 }
 
-export function useUpdateProduct(brandId: number) {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ id, input }: { id: number; input: UpdateProductInput }) =>
-      api<Product>(`${productsPath(brandId)}/${id}`, {
-        method: "PATCH",
-        body: input,
-      }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: productsQueryKey(brandId) }),
-  });
+export function useToggleProduct(brandId: number) {
+  return useToggle<Product>(productsQueryKey(brandId), productsPath(brandId));
 }
 
 export function useDeleteProduct(brandId: number) {

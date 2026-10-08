@@ -33,6 +33,7 @@ const USAGE_LABELS: Record<MediaUsageType, string> = {
   product: "Брэндийн бүтээгдэхүүн",
   section: "Хуудасны хэсэг",
   news: "Медиа",
+  siteSetting: "Холбоо барих",
 };
 
 interface MediaDetailsDialogProps {

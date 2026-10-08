@@ -27,17 +27,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { initials } from "@/lib/format";
 import { useLogout, useMe } from "@/lib/queries/auth";
 import { isNavItemActive, NAV_GROUPS } from "./nav";
-
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .map((part) => part.charAt(0))
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
 
 function SidebarNav() {
   const pathname = usePathname();
@@ -118,7 +110,7 @@ function AccountMenu() {
           {me.data.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem render={<Link href="/admin/admins" />}>
+        <DropdownMenuItem render={<Link href="/admin/admins#password" />}>
           <KeyRound />
           Нууц үг солих
         </DropdownMenuItem>

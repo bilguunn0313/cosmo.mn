@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { LoginInput } from "@cosmo/shared";
+import type { ChangePasswordInput, LoginInput } from "@cosmo/shared";
 import { api } from "@/lib/api";
 import type { AuthAdmin } from "@/lib/types";
 
@@ -32,5 +32,12 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.clear();
     },
+  });
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: (input: ChangePasswordInput) =>
+      api<void>("/auth/password", { method: "PATCH", body: input }),
   });
 }

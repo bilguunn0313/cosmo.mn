@@ -3,6 +3,7 @@ import type { UpdateSectionInput } from "@cosmo/shared";
 import { api } from "@/lib/api";
 import type { Section, SectionPage } from "@/lib/types";
 import { useReorder } from "./reorder";
+import { useToggle } from "./toggle";
 
 export type SectionsSource = { page: SectionPage } | { brandId: number };
 
@@ -57,6 +58,10 @@ export function useDeleteSection(source: SectionsSource) {
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: sectionsQueryKey(source) }),
   });
+}
+
+export function useToggleSection(source: SectionsSource) {
+  return useToggle<Section>(sectionsQueryKey(source), basePath(source));
 }
 
 export function useReorderSections(source: SectionsSource) {

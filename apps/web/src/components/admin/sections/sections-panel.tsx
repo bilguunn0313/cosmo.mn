@@ -12,8 +12,8 @@ import { htmlToPlainText } from "@/lib/plain-text";
 import {
   useDeleteSection,
   useReorderSections,
-  useSaveSection,
   useSections,
+  useToggleSection,
 } from "@/lib/queries/sections";
 import { pickDefaultTranslation } from "@/lib/translations";
 import type { SectionsSource } from "@/lib/queries/sections";
@@ -52,7 +52,7 @@ export function SectionsPanel({
   bodyMode = "plain",
 }: SectionsPanelProps) {
   const sections = useSections(source);
-  const saveSection = useSaveSection(source);
+  const toggleSection = useToggleSection(source);
   const deleteSection = useDeleteSection(source);
   const reorderSections = useReorderSections(source);
 
@@ -112,8 +112,8 @@ export function SectionsPanel({
         onEdit={openForm}
         onDelete={setDeletingSection}
         onToggleVisible={(section, isVisible) =>
-          saveSection.mutate(
-            { id: section.id, input: { isVisible } },
+          toggleSection.mutate(
+            { id: section.id, patch: { isVisible } },
             { onError: (error) => toast.error(error.message) },
           )
         }

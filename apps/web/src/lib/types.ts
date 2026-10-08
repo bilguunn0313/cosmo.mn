@@ -4,6 +4,10 @@ export interface AuthAdmin {
   name: string;
 }
 
+export interface Admin extends AuthAdmin {
+  createdAt: string;
+}
+
 export interface Paginated<T> {
   items: T[];
   total: number;
@@ -27,7 +31,13 @@ export interface Media {
 }
 
 export type MediaUsageType =
-  "slide" | "brand" | "brandSection" | "product" | "section" | "news";
+  | "slide"
+  | "brand"
+  | "brandSection"
+  | "product"
+  | "section"
+  | "news"
+  | "siteSetting";
 
 export type Locale = "mn" | "en" | "zh";
 
@@ -108,6 +118,62 @@ export interface Product {
   order: number;
   isVisible: boolean;
   translations: ProductTranslation[];
+}
+
+export interface NewsTranslation {
+  id: number;
+  locale: Locale;
+  title: string;
+  summary: string | null;
+  content: string;
+}
+
+export interface News {
+  id: number;
+  slug: string;
+  coverImageId: number | null;
+  coverImage: Media | null;
+  videoId: number | null;
+  video: Media | null;
+  isPublished: boolean;
+  publishedAt: string | null;
+  createdAt: string;
+  translations: NewsTranslation[];
+}
+
+export interface SiteSettingTranslation {
+  id: number;
+  locale: Locale;
+  address: string | null;
+  workingHours: string | null;
+}
+
+export interface SiteSetting {
+  id: number;
+  phone: string | null;
+  email: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
+  youtubeUrl: string | null;
+  linkedinUrl: string | null;
+  mapUrl: string | null;
+  mapImageId: number | null;
+  mapImage: Media | null;
+  translations: SiteSettingTranslation[];
+}
+
+export interface ContactDepartmentTranslation {
+  id: number;
+  locale: Locale;
+  name: string;
+}
+
+export interface ContactDepartment {
+  id: number;
+  email: string;
+  order: number;
+  isActive: boolean;
+  translations: ContactDepartmentTranslation[];
 }
 
 export interface MediaUsage {

@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "title": "Cosmo",
+    "description": "Cosmo 将国际食品、美妆和家居品牌带给蒙古消费者。"
+  },
+  "nav": {
+    "about": "关于我们",
+    "brands": "品牌",
+    "careers": "人才招聘",
+    "media": "新闻中心",
+    "contact": "联系我们"
+  },
+  "header": {
+    "menu": "菜单",
+    "homeLabel": "Cosmo 首页",
+    "openMenu": "打开菜单",
+    "language": "选择语言"
+  },
+  "footer": {
+    "description": "我们将国际食品、美妆和家居品牌带给蒙古消费者。",
+    "menu": "菜单",
+    "contact": "联系我们",
+    "rights": "版权所有。"
+  },
+  "home": {
+    "learnMore": "了解更多",
+    "carousel": "精选内容",
+    "slideLabel": "第 {current} 张，共 {total} 张",
+    "goToSlide": "第 {number} 张",
+    "previous": "上一张",
+    "next": "下一张"
+  }
+}

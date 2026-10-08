@@ -12,7 +12,7 @@ import {
   useDeleteProduct,
   useProducts,
   useReorderProducts,
-  useUpdateProduct,
+  useToggleProduct,
 } from "@/lib/queries/brand-products";
 import { pickDefaultTranslation } from "@/lib/translations";
 import type { Product } from "@/lib/types";
@@ -25,7 +25,7 @@ interface ProductsPanelProps {
 
 export function ProductsPanel({ brandId, step }: ProductsPanelProps) {
   const products = useProducts(brandId);
-  const updateProduct = useUpdateProduct(brandId);
+  const toggleProduct = useToggleProduct(brandId);
   const deleteProduct = useDeleteProduct(brandId);
   const reorderProducts = useReorderProducts(brandId);
 
@@ -88,8 +88,8 @@ export function ProductsPanel({ brandId, step }: ProductsPanelProps) {
         onEdit={openForm}
         onDelete={setDeletingProduct}
         onToggleVisible={(product, isVisible) =>
-          updateProduct.mutate(
-            { id: product.id, input: { isVisible } },
+          toggleProduct.mutate(
+            { id: product.id, patch: { isVisible } },
             { onError: (error) => toast.error(error.message) },
           )
         }

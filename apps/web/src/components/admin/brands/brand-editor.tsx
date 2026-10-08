@@ -1,5 +1,6 @@
 "use client";
 
+import { BackLink } from "@/components/admin/back-link";
 import { PageHeader } from "@/components/admin/page-header";
 import { PanelHeader } from "@/components/admin/panel-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
@@ -7,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBrand } from "@/lib/queries/brands";
 import { pickDefaultTranslation } from "@/lib/translations";
-import { BackToBrands } from "./back-link";
 import { BrandForm } from "./brand-form";
 import { ProductsPanel } from "./products-panel";
 
@@ -21,7 +21,7 @@ export function BrandEditor({ brandId }: BrandEditorProps) {
   if (brand.isError) {
     return (
       <div className="grid gap-3">
-        <BackToBrands />
+        <BackLink href="/admin/brands" label="Брэндүүд" />
         <p className="rounded-xl border border-dashed px-6 py-10 text-center text-sm text-muted-foreground">
           {brand.error.message}
         </p>
@@ -43,7 +43,7 @@ export function BrandEditor({ brandId }: BrandEditorProps) {
   return (
     <div className="grid gap-12">
       <div className="grid gap-3">
-        <BackToBrands />
+        <BackLink href="/admin/brands" label="Брэндүүд" />
         <PageHeader
           title={name ?? brand.data.slug}
           description="Брэндийн хуудас дээрээс доош энэ дарааллаар харагдана."
