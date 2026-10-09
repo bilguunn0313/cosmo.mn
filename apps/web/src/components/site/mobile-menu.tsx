@@ -52,7 +52,7 @@ export function MobileMenu() {
               href={item.href}
               onClick={close}
               aria-current={pathname.startsWith(item.href) ? "page" : undefined}
-              className="rounded-2xl px-4 py-3 text-2xl font-semibold tracking-tight text-foreground/75 transition-colors duration-150 hover:bg-muted hover:text-foreground aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary"
+              className="rounded-2xl px-4 py-3 text-2xl font-semibold tracking-tight text-foreground/75 transition-[background-color,color,scale] duration-150 ease-(--ease-out) hover:bg-muted motion-safe:active:scale-[0.98] hover:text-foreground aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary"
             >
               {t(`nav.${item.key}`)}
             </Link>
@@ -76,7 +76,7 @@ export function MobileMenu() {
                   router.replace(pathname, { locale });
                 }}
                 className={cn(
-                  "rounded-full py-2 text-sm font-medium transition-colors duration-150",
+                  "rounded-full py-2 text-sm font-medium transition-[background-color,color,scale] duration-150 ease-(--ease-out) motion-safe:active:scale-[0.97]",
                   locale === currentLocale
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground",

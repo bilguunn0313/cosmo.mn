@@ -74,7 +74,16 @@ export class MediaUsageService {
         },
         include: { translations: true },
       }),
-      this.prisma.siteSetting.findMany({ where: { mapImageId: id } }),
+      this.prisma.siteSetting.findMany({
+        where: {
+          OR: [
+            { mapImageId: id },
+            { foodImageId: id },
+            { beautyImageId: id },
+            { householdImageId: id },
+          ],
+        },
+      }),
     ]);
 
     return [
@@ -114,7 +123,7 @@ export class MediaUsageService {
       ...siteSettings.map((setting) => ({
         type: 'siteSetting' as const,
         id: setting.id,
-        title: 'Байршлын зураг',
+        title: setting.mapImageId === id ? 'Байршлын зураг' : 'Ангиллын зураг',
       })),
     ];
   }

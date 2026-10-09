@@ -28,6 +28,25 @@
     "slideLabel": "第 {current} 张，共 {total} 张",
     "goToSlide": "第 {number} 张",
     "previous": "上一张",
-    "next": "下一张"
+    "next": "下一张",
+    "brandsTitle": "我们的品牌",
+    "mapTitle": "从 {count} 个国家来到蒙古",
+    "mapDescription": "我们的品牌来自这些国家。",
+    "brandCount": "{count} 个品牌",
+    "statsTitle": "关键数据",
+    "statYears": "年行业经验",
+    "statEmployees": "团队成员",
+    "statBrands": "品牌",
+    "statPartners": "合作伙伴",
+    "categoriesTitle": "按品类浏览品牌",
+    "allBrands": "全部品牌",
+    "newsTitle": "最新动态",
+    "allNews": "全部新闻",
+    "video": "视频"
+  },
+  "categories": {
+    "FOOD": "食品",
+    "BEAUTY": "美妆",
+    "HOUSEHOLD": "家居用品"
   }
 }

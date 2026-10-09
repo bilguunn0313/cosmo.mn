@@ -28,6 +28,25 @@
     "slideLabel": "{current} of {total}",
     "goToSlide": "Go to slide {number}",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "brandsTitle": "Our brands",
+    "mapTitle": "From {count, plural, one {# country} other {# countries}} to Mongolia",
+    "mapDescription": "Our brands come from these countries.",
+    "brandCount": "{count, plural, one {# brand} other {# brands}}",
+    "statsTitle": "Key figures",
+    "statYears": "Years in business",
+    "statEmployees": "Team members",
+    "statBrands": "Brands",
+    "statPartners": "Partners",
+    "categoriesTitle": "Brands by category",
+    "allBrands": "All brands",
+    "newsTitle": "Latest news",
+    "allNews": "All news",
+    "video": "Video"
+  },
+  "categories": {
+    "FOOD": "Food",
+    "BEAUTY": "Beauty",
+    "HOUSEHOLD": "Household"
   }
 }

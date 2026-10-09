@@ -2,8 +2,8 @@ import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
+import { ACCESS_TOKEN_COOKIE } from "./lib/auth-cookie";
 
-const ACCESS_TOKEN_COOKIE = "access_token";
 const LOGIN_PATH = "/admin/login";
 
 const handleLocaleRouting = createMiddleware(routing);

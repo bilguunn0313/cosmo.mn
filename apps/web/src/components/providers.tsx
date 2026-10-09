@@ -16,9 +16,14 @@ import { ApiError } from "@/lib/api";
 enableMongolianZodErrors();
 
 const LOGIN_PATH = "/admin/login";
+const PUBLIC_SITE_REVALIDATE_PATH = "/admin/revalidate";
 
 function isUnauthorized(error: Error) {
   return error instanceof ApiError && error.status === 401;
+}
+
+function refreshPublicSite() {
+  fetch(PUBLIC_SITE_REVALIDATE_PATH, { method: "POST" }).catch(() => undefined);
 }
 
 function shouldRetry(failureCount: number, error: Error) {
@@ -45,7 +50,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     const client = new QueryClient({
       queryCache: new QueryCache({ onError: handleError }),
-      mutationCache: new MutationCache({ onError: handleError }),
+      mutationCache: new MutationCache({
+        onError: handleError,
+        onSuccess: refreshPublicSite,
+      }),
       defaultOptions: {
         queries: { staleTime: 60 * 1000, retry: shouldRetry },
       },

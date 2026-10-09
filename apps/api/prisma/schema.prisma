@@ -46,16 +46,19 @@ model Media {
   duration     Int?
   createdAt    DateTime  @default(now())
 
-  slides        Slide[]        @relation("SlideMedia")
-  slidePosters  Slide[]        @relation("SlidePoster")
-  brandLogos    Brand[]        @relation("BrandLogo")
-  brandCovers   Brand[]        @relation("BrandCover")
-  brandSections BrandSection[]
-  products      Product[]
-  sections      Section[]
-  newsCovers    News[]         @relation("NewsCover")
-  newsVideos    News[]         @relation("NewsVideo")
-  siteSettings  SiteSetting[]
+  slides                Slide[]        @relation("SlideMedia")
+  slidePosters          Slide[]        @relation("SlidePoster")
+  brandLogos            Brand[]        @relation("BrandLogo")
+  brandCovers           Brand[]        @relation("BrandCover")
+  brandSections         BrandSection[]
+  products              Product[]
+  sections              Section[]
+  newsCovers            News[]         @relation("NewsCover")
+  newsVideos            News[]         @relation("NewsVideo")
+  siteSettingMaps       SiteSetting[]  @relation("SiteSettingMap")
+  siteSettingFoods      SiteSetting[]  @relation("SiteSettingFood")
+  siteSettingBeauties   SiteSetting[]  @relation("SiteSettingBeauty")
+  siteSettingHouseholds SiteSetting[]  @relation("SiteSettingHousehold")
 }
 
 model Slide {
@@ -86,18 +89,19 @@ model SlideTranslation {
 }
 
 model Brand {
-  id          Int             @id @default(autoincrement())
-  slug        String          @unique
-  categories  BrandCategory[]
-  logoId      Int?
-  logo        Media?          @relation("BrandLogo", fields: [logoId], references: [id])
-  coverId     Int?
-  cover       Media?          @relation("BrandCover", fields: [coverId], references: [id])
-  websiteUrl  String?
-  order       Int             @default(0)
-  isPublished Boolean         @default(false)
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  id            Int             @id @default(autoincrement())
+  slug          String          @unique
+  categories    BrandCategory[]
+  logoId        Int?
+  logo          Media?          @relation("BrandLogo", fields: [logoId], references: [id])
+  coverId       Int?
+  cover         Media?          @relation("BrandCover", fields: [coverId], references: [id])
+  websiteUrl    String?
+  originCountry String?
+  order         Int             @default(0)
+  isPublished   Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   translations BrandTranslation[]
   sections     BrandSection[]
@@ -228,17 +232,26 @@ model NewsTranslation {
 }
 
 model SiteSetting {
-  id           Int      @id @default(1)
-  phone        String?
-  email        String?
-  facebookUrl  String?
-  instagramUrl String?
-  youtubeUrl   String?
-  linkedinUrl  String?
-  mapUrl       String?
-  mapImageId   Int?
-  mapImage     Media?   @relation(fields: [mapImageId], references: [id])
-  updatedAt    DateTime @updatedAt
+  id               Int      @id @default(1)
+  phone            String?
+  email            String?
+  facebookUrl      String?
+  instagramUrl     String?
+  youtubeUrl       String?
+  linkedinUrl      String?
+  mapUrl           String?
+  mapImageId       Int?
+  mapImage         Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
+  foodImageId      Int?
+  foodImage        Media?   @relation("SiteSettingFood", fields: [foodImageId], references: [id])
+  beautyImageId    Int?
+  beautyImage      Media?   @relation("SiteSettingBeauty", fields: [beautyImageId], references: [id])
+  householdImageId Int?
+  householdImage   Media?   @relation("SiteSettingHousehold", fields: [householdImageId], references: [id])
+  foundedYear      Int?
+  employeeCount    Int?
+  partnerCount     Int?
+  updatedAt        DateTime @updatedAt
 
   translations SiteSettingTranslation[]
 }

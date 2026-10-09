@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BRAND_CATEGORIES,
+  COUNTRY_CODES,
   slugify,
   slugSchema,
   type CreateBrandInput,
@@ -32,6 +33,7 @@ import {
   translationsToForm,
 } from "@/lib/translations";
 import type { Brand, BrandCategory, Media } from "@/lib/types";
+import { CountrySelect } from "./country-select";
 
 type BrandTranslationValues = {
   name: string;
@@ -56,6 +58,7 @@ const brandFormSchema = z.object({
     .min(1, "Дор хаяж нэг ангилал сонгоно уу"),
   logo: z.custom<Media | null>(),
   cover: z.custom<Media | null>(),
+  originCountry: z.union([z.literal(""), z.enum(COUNTRY_CODES)]),
   websiteUrl: z
     .string()
     .trim()
@@ -93,6 +96,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
       categories: [],
       logo: null,
       cover: null,
+      originCountry: "",
       websiteUrl: "",
       isPublished: false,
       translations: emptyTranslations(EMPTY_TRANSLATION),
@@ -104,6 +108,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
     categories: brand.categories,
     logo: brand.logo,
     cover: brand.cover,
+    originCountry: brand.originCountry ?? "",
     websiteUrl: brand.websiteUrl ?? "",
     isPublished: brand.isPublished,
     translations: translationsToForm(brand.translations, EMPTY_TRANSLATION),
@@ -116,6 +121,7 @@ function toInput(values: BrandFormValues): CreateBrandInput {
     categories: values.categories,
     logoId: values.logo?.id ?? null,
     coverId: values.cover?.id ?? null,
+    originCountry: values.originCountry || null,
     websiteUrl: values.websiteUrl === "" ? null : values.websiteUrl,
     isPublished: values.isPublished,
     translations: formToTranslations(
@@ -288,6 +294,24 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
                 </div>
               ))}
             </div>
+          )}
+        />
+      </FormField>
+
+      <FormField
+        label="Гарал үүслийн улс"
+        htmlFor="brand-country"
+        hint="Нүүр хуудасны газрын зураг дээр энэ улсаас Монгол руу шугам татагдана"
+      >
+        <Controller
+          control={control}
+          name="originCountry"
+          render={({ field }) => (
+            <CountrySelect
+              id="brand-country"
+              value={field.value}
+              onChange={field.onChange}
+            />
           )}
         />
       </FormField>

@@ -6,6 +6,7 @@ import {
   slugSchema,
   translationsSchema,
 } from "./common";
+import { COUNTRY_CODES } from "./countries";
 import { localeSchema } from "./locales";
 
 export const BRAND_CATEGORIES = ["FOOD", "BEAUTY", "HOUSEHOLD"] as const;
@@ -22,6 +23,7 @@ const brandFields = z.object({
   logoId: optionalIdSchema,
   coverId: optionalIdSchema,
   websiteUrl: optionalUrlSchema,
+  originCountry: z.enum(COUNTRY_CODES).nullable().optional(),
   isPublished: z.boolean(),
   translations: translationsSchema({
     name: z.string().trim().min(1).max(200),

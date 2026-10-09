@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
+import { CategoryImagesPanel } from "@/components/admin/home/category-images-panel";
 import { SlidesPanel } from "@/components/admin/home/slides-panel";
+import { StatsPanel } from "@/components/admin/home/stats-panel";
 import { PageHeader } from "@/components/admin/page-header";
-import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 
 export const metadata: Metadata = { title: "Нүүр хуудас" };
 
 const AUTOMATIC_SECTIONS = [
-  "Брэндүүд: нийтлэгдсэн брэндүүдийн эхний 8 лого",
-  "Мэдээ: сүүлд нийтлэгдсэн 3 мэдээ",
-  "Холбоо барих: «Холбоо барих» хэсгийн утас, имэйл",
+  "Брэндийн тууз: нийтлэгдсэн брэндүүдийн лого",
+  "Дэлхийн газрын зураг: брэндүүдийн «Гарал үүслийн улс»",
+  "Мэдээ: сүүлд нийтлэгдсэн мэдээнүүд",
 ];
 
 export default function HomePageAdmin() {
@@ -22,14 +23,9 @@ export default function HomePageAdmin() {
 
       <SlidesPanel />
 
-      <SectionsPanel
-        source={{ page: "home" }}
-        step={2}
-        title="Тойм хэсгүүд"
-        description="Гүйлгэхэд гарч ирэх товч хэсгүүд. Жишээ нь «Бидний тухай», «Хүний нөөц». Бүтэн хуудас руу нь хөтлөх «Цааш үзэх» хаягийг заана уу."
-        emptyText="Одоогоор тойм хэсэг алга. «Хэсэг нэмэх» дээр дарж «Бидний тухай» хэсгээс эхэлнэ үү."
-        showLink
-      />
+      <StatsPanel step={2} />
+
+      <CategoryImagesPanel step={3} />
 
       <aside className="flex gap-3 rounded-xl bg-muted/50 p-4 text-sm">
         <Sparkles className="mt-0.5 size-4 shrink-0 text-muted-foreground" />

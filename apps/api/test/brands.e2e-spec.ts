@@ -48,6 +48,20 @@ describe('Brands', () => {
     await createBrand('Bad Slug').expect(400);
   });
 
+  it('гарал үүслийн улсыг хадгалж нийтэд өгнө', async () => {
+    await createBrand('brand-german', { originCountry: 'DE' }).expect(201);
+
+    const response = await context.guest.get('/public/brands').expect(200);
+    const brand = response.body.find(
+      (item: { slug: string }) => item.slug === 'brand-german',
+    );
+    expect(brand.originCountry).toBe('DE');
+  });
+
+  it('жагсаалтад байхгүй улсын кодыг хүлээж авахгүй', async () => {
+    await createBrand('brand-bad-country', { originCountry: 'XX' }).expect(400);
+  });
+
   it('байхгүй зургийн id-г хүлээж авахгүй', async () => {
     await createBrand('brand-no-logo', { logoId: 999999 }).expect(400);
   });

@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   experimental: {
     proxyClientMaxBodySize: "60mb",
+    serverComponentsHmrCache: false,
   },
   async rewrites() {
     return [

@@ -35,12 +35,11 @@
 }
 
 @theme inline {
-  --animate-hero-text-in: hero-text-in 700ms var(--ease-out) both;
+  --animate-marquee: marquee 40s linear infinite;
 
-  @keyframes hero-text-in {
-    from {
-      opacity: 0;
-      translate: 0 16px;
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
     }
   }
 
@@ -59,6 +58,8 @@
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --color-brand: var(--brand);
   --color-brand-deep: var(--brand-deep);
+  --color-brand-night: var(--brand-night);
+  --color-brand-glow: var(--brand-glow);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -125,6 +126,8 @@
   --radius: 0.625rem;
   --brand-deep: oklch(0.34 0.15 268);
   --brand: oklch(0.54 0.15 250);
+  --brand-night: oklch(0.2 0.05 265);
+  --brand-glow: oklch(0.72 0.14 240);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.54 0.15 250);

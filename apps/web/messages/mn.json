@@ -28,6 +28,25 @@
     "slideLabel": "{current} / {total}",
     "goToSlide": "{number}-р слайд",
     "previous": "Өмнөх",
-    "next": "Дараах"
+    "next": "Дараах",
+    "brandsTitle": "Манай брэндүүд",
+    "mapTitle": "Дэлхийн {count} орноос Монголд",
+    "mapDescription": "Манай брэндүүд эдгээр орноос ирдэг.",
+    "brandCount": "{count} брэнд",
+    "statsTitle": "Тоон үзүүлэлт",
+    "statYears": "Зах зээлд ажилласан жил",
+    "statEmployees": "Хамт олон",
+    "statBrands": "Брэнд",
+    "statPartners": "Харилцагч",
+    "categoriesTitle": "Брэндүүд",
+    "allBrands": "Бүх брэнд",
+    "newsTitle": "Сүүлийн мэдээ",
+    "allNews": "Бүх мэдээ",
+    "video": "Видео"
+  },
+  "categories": {
+    "FOOD": "Хүнс",
+    "BEAUTY": "Гоо сайхан",
+    "HOUSEHOLD": "Ахуй бараа"
   }
 }

@@ -8,6 +8,9 @@ const SITE_SETTING_ID = 1;
 
 const siteSettingInclude = {
   mapImage: true,
+  foodImage: true,
+  beautyImage: true,
+  householdImage: true,
   translations: true,
 } satisfies Prisma.SiteSettingInclude;
 
@@ -57,6 +60,14 @@ export class SiteSettingsService {
       linkedinUrl: setting.linkedinUrl,
       mapUrl: setting.mapUrl,
       mapImageUrl: setting.mapImage?.url ?? null,
+      foundedYear: setting.foundedYear,
+      employeeCount: setting.employeeCount,
+      partnerCount: setting.partnerCount,
+      categoryImages: {
+        FOOD: setting.foodImage?.url ?? null,
+        BEAUTY: setting.beautyImage?.url ?? null,
+        HOUSEHOLD: setting.householdImage?.url ?? null,
+      },
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

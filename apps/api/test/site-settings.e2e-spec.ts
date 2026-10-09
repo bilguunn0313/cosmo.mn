@@ -89,6 +89,58 @@ describe('Site settings', () => {
     ]);
   });
 
+  it('ангиллын зургийг нийтэд өгч, зургийн сангаас устгахыг хориглоно', async () => {
+    const foodImageId = await uploadTestImage(context);
+
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ foodImageId })
+      .expect(200);
+
+    const response = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(response.body.categoryImages).toEqual({
+      FOOD: expect.stringMatching(/^\/uploads\//),
+      BEAUTY: null,
+      HOUSEHOLD: null,
+    });
+
+    const deletion = await context.admin
+      .delete(`/admin/media/${foodImageId}`)
+      .expect(409);
+    expect(deletion.body.usages).toEqual([
+      expect.objectContaining({ type: 'siteSetting', title: 'Ангиллын зураг' }),
+    ]);
+  });
+
+  it('тоон үзүүлэлтүүдийг хадгалж нийтэд өгнө', async () => {
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ foundedYear: 2008, employeeCount: 350, partnerCount: 2500 })
+      .expect(200);
+
+    const response = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(response.body).toMatchObject({
+      foundedYear: 2008,
+      employeeCount: 350,
+      partnerCount: 2500,
+    });
+  });
+
+  it('сөрөг тоо болон бутархай оныг хүлээж авахгүй', async () => {
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ employeeCount: -5 })
+      .expect(400);
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ foundedYear: 2008.5 })
+      .expect(400);
+  });
+
   it('буруу имэйлийг хүлээж авахгүй', async () => {
     await context.admin
       .put('/admin/site-settings')

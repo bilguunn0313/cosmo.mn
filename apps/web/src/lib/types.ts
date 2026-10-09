@@ -1,3 +1,5 @@
+import type { CountryCode } from "@cosmo/shared";
+
 export interface AuthAdmin {
   id: number;
   email: string;
@@ -98,6 +100,7 @@ export interface Brand {
   coverId: number | null;
   cover: Media | null;
   websiteUrl: string | null;
+  originCountry: CountryCode | null;
   order: number;
   isPublished: boolean;
   translations: BrandTranslation[];
@@ -159,6 +162,16 @@ export interface SiteSetting {
   mapUrl: string | null;
   mapImageId: number | null;
   mapImage: Media | null;
+  foodImageId: number | null;
+  foodImage: Media | null;
+  beautyImageId: number | null;
+  beautyImage: Media | null;
+  householdImageId: number | null;
+  householdImage: Media | null;
+  foundedYear: number | null;
+  employeeCount: number | null;
+  partnerCount: number | null;
+  updatedAt: string;
   translations: SiteSettingTranslation[];
 }
 

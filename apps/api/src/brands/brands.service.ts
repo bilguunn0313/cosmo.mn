@@ -52,6 +52,7 @@ export class BrandsService {
         logoId: input.logoId,
         coverId: input.coverId,
         websiteUrl: input.websiteUrl,
+        originCountry: input.originCountry,
         isPublished: input.isPublished,
         order: nextOrder,
         translations: { create: input.translations },
@@ -113,6 +114,7 @@ export class BrandsService {
         summary: translation?.summary ?? null,
         logoUrl: brand.logo?.url ?? null,
         coverUrl: brand.cover?.url ?? null,
+        originCountry: brand.originCountry,
       };
     });
   }
@@ -149,6 +151,7 @@ export class BrandsService {
       logoUrl: brand.logo?.url ?? null,
       coverUrl: brand.cover?.url ?? null,
       websiteUrl: brand.websiteUrl,
+      originCountry: brand.originCountry,
       sections: brand.sections.map((section) => {
         const sectionTranslation = pickTranslation(
           section.translations,
