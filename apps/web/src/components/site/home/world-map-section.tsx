@@ -28,7 +28,7 @@ export async function WorldMapSection({
   return (
     <section
       aria-labelledby="world-map-title"
-      className="site-container-wide py-14 md:py-24"
+      className="site-container-wide pt-4 md:pt-6"
     >
       <div className="grid gap-10 rounded-3xl bg-brand-night px-4 py-10 text-white sm:px-8 md:gap-14 md:rounded-[2rem] md:py-16 lg:px-14">
         <div className="grid max-w-2xl gap-4 px-2 sm:px-0">

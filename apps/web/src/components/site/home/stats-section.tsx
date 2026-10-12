@@ -69,28 +69,34 @@ export async function StatsSection({ setting, brands }: StatsSectionProps) {
   return (
     <section
       aria-labelledby="stats-title"
-      className="site-container-wide py-6 md:py-10"
+      className="site-container-wide pt-4 md:pt-6"
     >
       <h2 id="stats-title" className="sr-only">
         {t("statsTitle")}
       </h2>
-      <dl
-        className={cn(
-          "grid gap-y-12 lg:divide-x",
-          COLUMN_CLASSES[stats.length],
-        )}
-      >
-        {stats.map((stat) => (
-          <div key={stat.key} className="grid gap-2 px-4 text-center lg:px-8">
-            <dt className="order-2 text-base text-muted-foreground md:text-lg">
-              {stat.label}
-            </dt>
-            <dd className="order-1 text-5xl font-semibold tracking-tight text-primary tabular-nums md:text-6xl">
-              <StatNumber value={stat.value} suffix={stat.suffix} />
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <div className="relative overflow-hidden rounded-3xl bg-card py-12 md:rounded-[2rem] md:py-16">
+        <span
+          aria-hidden
+          className="bg-brand-gradient absolute inset-x-0 top-0 h-1"
+        />
+        <dl
+          className={cn(
+            "grid gap-y-12 lg:divide-x",
+            COLUMN_CLASSES[stats.length],
+          )}
+        >
+          {stats.map((stat) => (
+            <div key={stat.key} className="grid gap-2 px-4 text-center lg:px-8">
+              <dt className="order-2 text-base text-muted-foreground md:text-lg">
+                {stat.label}
+              </dt>
+              <dd className="order-1 text-5xl font-semibold tracking-tight text-primary tabular-nums md:text-6xl">
+                <StatNumber value={stat.value} suffix={stat.suffix} />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import type { BrandCategory, CountryCode } from "@cosmo/shared";
+import type { BrandCategory, CountryCode, SectionPage } from "@cosmo/shared";
 import type { Locale } from "./types";
 
 export const API_URL = process.env.API_URL ?? "http://localhost:4000";
@@ -70,6 +70,40 @@ export function fetchBrands(locale: Locale) {
   );
 }
 
+export interface PublicSection {
+  id: number;
+  title: string;
+  body: string;
+  imageUrl: string | null;
+}
+
+export function fetchSections(page: SectionPage, locale: Locale) {
+  return fetchPublic<PublicSection[]>(
+    `/public/sections?page=${page}`,
+    locale,
+  ).catch((): PublicSection[] => []);
+}
+
+export interface PublicProduct {
+  id: number;
+  name: string;
+  description: string | null;
+  imageUrl: string;
+}
+
+export interface PublicBrandDetail extends PublicBrand {
+  websiteUrl: string | null;
+  sections: PublicSection[];
+  products: PublicProduct[];
+}
+
+export function fetchBrand(slug: string, locale: Locale) {
+  return fetchPublic<PublicBrandDetail>(
+    `/public/brands/${encodeURIComponent(slug)}`,
+    locale,
+  ).catch(() => null);
+}
+
 export interface PublicNewsItem {
   slug: string;
   title: string;
@@ -79,15 +113,43 @@ export interface PublicNewsItem {
   publishedAt: string;
 }
 
-interface PublicNewsPage {
+export interface PublicNewsPage {
   items: PublicNewsItem[];
   total: number;
 }
 
+export function fetchNewsPage(locale: Locale, page: number, limit: number) {
+  return fetchPublic<PublicNewsPage>(
+    `/public/news?page=${page}&limit=${limit}`,
+    locale,
+  ).catch((): PublicNewsPage => ({ items: [], total: 0 }));
+}
+
 export function fetchLatestNews(locale: Locale, limit: number) {
-  return fetchPublic<PublicNewsPage>(`/public/news?limit=${limit}`, locale)
-    .then((page) => page.items)
-    .catch((): PublicNewsItem[] => []);
+  return fetchNewsPage(locale, 1, limit).then((page) => page.items);
+}
+
+export interface PublicNewsDetail extends PublicNewsItem {
+  content: string;
+}
+
+export function fetchNews(slug: string, locale: Locale) {
+  return fetchPublic<PublicNewsDetail>(
+    `/public/news/${encodeURIComponent(slug)}`,
+    locale,
+  ).catch(() => null);
+}
+
+export interface PublicDepartment {
+  id: number;
+  name: string;
+}
+
+export function fetchDepartments(locale: Locale) {
+  return fetchPublic<PublicDepartment[]>(
+    "/public/contact/departments",
+    locale,
+  ).catch((): PublicDepartment[] => []);
 }
 
 export function fetchSiteSetting(locale: Locale) {

@@ -44,6 +44,62 @@
     "allNews": "全部新闻",
     "video": "视频"
   },
+  "brands": {
+    "description": "国际食品、美妆与家居用品品牌。",
+    "filterLabel": "按品类筛选",
+    "all": "全部",
+    "empty": "该品类暂无品牌。",
+    "showAll": "查看全部品牌",
+    "website": "官方网站",
+    "products": "产品",
+    "related": "更多品牌"
+  },
+  "media": {
+    "description": "公司新闻、活动及新品发布。",
+    "empty": "暂无新闻。",
+    "pagination": "分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "pageOf": "第 {page} 页，共 {total} 页",
+    "related": "更多新闻",
+    "allNews": "全部新闻"
+  },
+  "contact": {
+    "description": "欢迎与我们洽谈合作或提出建议。",
+    "address": "地址",
+    "phone": "电话",
+    "email": "邮箱",
+    "hours": "工作时间",
+    "openMap": "在地图中打开",
+    "socials": "社交媒体",
+    "formTitle": "给我们留言",
+    "nameLabel": "姓名",
+    "emailLabel": "邮箱",
+    "phoneLabel": "电话",
+    "optional": "选填",
+    "departmentLabel": "联系部门",
+    "general": "综合",
+    "messageLabel": "留言内容",
+    "submit": "发送",
+    "sending": "发送中",
+    "sentTitle": "谢谢！",
+    "sentText": "我们已收到您的留言，会尽快与您联系。",
+    "sendAnother": "再写一条",
+    "errors": {
+      "name": "请输入姓名",
+      "email": "邮箱格式不正确",
+      "phone": "电话号码过长",
+      "message": "留言至少需要 10 个字符",
+      "tooMany": "发送次数过多，请稍后再试。",
+      "failed": "发送失败，请重试。"
+    }
+  },
+  "careers": {
+    "description": "了解我们的团队、工作环境与招聘流程。",
+    "joinTitle": "加入我们",
+    "joinText": "请通过邮件发送您的简历。有合适的职位时，我们会与您联系。",
+    "sendCv": "发送简历"
+  },
   "categories": {
     "FOOD": "食品",
     "BEAUTY": "美妆",

@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { fetchSiteSetting } from "@/lib/public-api";
+import { phoneHref } from "@/lib/site-links";
 import type { Locale } from "@/lib/types";
 import { CONTACT_HREF, SITE_NAV } from "./site-nav";
 import { Wordmark } from "./wordmark";
@@ -21,10 +22,6 @@ function FooterColumn({ title, children }: FooterColumnProps) {
 }
 
 const footerLinkClass = "w-fit transition-colors duration-150 hover:text-white";
-
-function phoneHref(phone: string) {
-  return `tel:${phone.replace(/[^\d+]/g, "")}`;
-}
 
 interface SiteFooterProps {
   locale: Locale;

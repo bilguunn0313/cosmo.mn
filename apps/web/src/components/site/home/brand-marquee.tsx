@@ -30,14 +30,16 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   return (
     <section
       aria-labelledby="brands-marquee-title"
-      className="site-container-wide grid gap-8 py-14 md:py-20"
+      className="site-container-wide pt-4 md:pt-6"
     >
       <h2 id="brands-marquee-title" className="sr-only">
         {t("brandsTitle")}
       </h2>
-      {rows.map((row, index) => (
-        <MarqueeRow key={index} brands={row} reverse={index === 1} />
-      ))}
+      <div className="grid gap-8 rounded-3xl bg-card py-10 md:rounded-[2rem] md:py-14">
+        {rows.map((row, index) => (
+          <MarqueeRow key={index} brands={row} reverse={index === 1} />
+        ))}
+      </div>
     </section>
   );
 }

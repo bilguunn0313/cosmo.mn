@@ -17,6 +17,10 @@ export function newsPath(slug: string) {
   return `/media/${slug}`;
 }
 
+export function phoneHref(phone: string) {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
+
 export function isExternalUrl(value: string) {
   return /^https?:\/\//i.test(value);
 }

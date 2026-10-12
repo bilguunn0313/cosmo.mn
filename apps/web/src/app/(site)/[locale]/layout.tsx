@@ -37,7 +37,7 @@ export default async function SiteLayout({
 
   return (
     <html lang={locale} className={`${geist.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col bg-canvas">
         <NextIntlClientProvider>
           <SiteHeader />
           <main className="flex-1">{children}</main>

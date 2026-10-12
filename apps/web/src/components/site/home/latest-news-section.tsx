@@ -1,35 +1,14 @@
-import { ArrowRight, ArrowUpRight, Play } from "lucide-react";
-import { getFormatter, getTranslations } from "next-intl/server";
+import { ArrowUpRight, Play } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
+import { NewsDate } from "@/components/site/media/news-date";
 import { Reveal } from "@/components/site/reveal";
+import { SectionHeader } from "@/components/site/section-header";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
-
-const DATE_FORMAT = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-} as const;
-
-interface NewsDateProps {
-  publishedAt: string;
-}
-
-async function NewsDate({ publishedAt }: NewsDateProps) {
-  const format = await getFormatter();
-
-  return (
-    <time
-      dateTime={publishedAt}
-      className="text-sm text-muted-foreground tabular-nums"
-    >
-      {format.dateTime(new Date(publishedAt), DATE_FORMAT)}
-    </time>
-  );
-}
 
 interface FeaturedNewsProps {
   news: PublicNewsItem;
@@ -128,23 +107,13 @@ export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
   return (
     <section
       aria-labelledby="latest-news-title"
-      className="site-container-wide grid gap-8 py-10 md:gap-10 md:py-16"
+      className="site-container-wide grid gap-8 pt-16 md:gap-10 md:pt-24"
     >
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <h2
-          id="latest-news-title"
-          className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl"
-        >
-          {t("newsTitle")}
-        </h2>
-        <Link
-          href="/media"
-          className="group inline-flex items-center gap-2 text-[15px] font-medium text-primary"
-        >
-          {t("allNews")}
-          <ArrowRight className="size-4 transition-[translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5" />
-        </Link>
-      </div>
+      <SectionHeader
+        id="latest-news-title"
+        title={t("newsTitle")}
+        link={{ href: "/media", label: t("allNews") }}
+      />
 
       <div
         className={cn(

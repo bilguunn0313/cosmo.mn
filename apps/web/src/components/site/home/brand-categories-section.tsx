@@ -1,9 +1,10 @@
 import { BRAND_CATEGORIES, type BrandCategory } from "@cosmo/shared";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
 import { Reveal } from "@/components/site/reveal";
+import { SectionHeader } from "@/components/site/section-header";
 import { Link } from "@/i18n/navigation";
 import type { PublicBrand, PublicSiteSetting } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
@@ -130,23 +131,13 @@ export async function BrandCategoriesSection({
   return (
     <section
       aria-labelledby="brand-categories-title"
-      className="site-container-wide grid gap-8 py-10 md:gap-10 md:py-16"
+      className="site-container-wide grid gap-8 pt-16 md:gap-10 md:pt-24"
     >
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <h2
-          id="brand-categories-title"
-          className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl"
-        >
-          {t("categoriesTitle")}
-        </h2>
-        <Link
-          href="/brands"
-          className="group inline-flex items-center gap-2 text-[15px] font-medium text-primary"
-        >
-          {t("allBrands")}
-          <ArrowRight className="size-4 transition-[translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5" />
-        </Link>
-      </div>
+      <SectionHeader
+        id="brand-categories-title"
+        title={t("categoriesTitle")}
+        link={{ href: "/brands", label: t("allBrands") }}
+      />
 
       <div className={GRID_CLASSES[tiles.length]}>
         {tiles.map((tile, index) => (
