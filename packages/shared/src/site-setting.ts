@@ -27,7 +27,7 @@ export const updateSiteSettingSchema = z.object({
   householdImageId: optionalIdSchema,
   foundedYear: z.number().int().min(1900).max(2100).nullable().optional(),
   employeeCount: statCountSchema,
-  partnerCount: statCountSchema,
+  salesPointCount: statCountSchema,
   translations: translationsSchema({
     address: z.string().trim().max(500).optional(),
     workingHours: z.string().trim().max(200).optional(),

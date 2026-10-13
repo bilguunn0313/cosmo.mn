@@ -7,6 +7,7 @@ import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchSections, fetchSiteSetting } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -15,10 +16,12 @@ export async function generateMetadata({
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale });
 
-  return {
-    title: t("nav.careers"),
-    description: t("careers.description"),
-  };
+  return pageMetadata({
+    locale,
+    path: "/human-resources",
+    title: t("seo.careersTitle"),
+    description: t("seo.careersDescription"),
+  });
 }
 
 export default async function HumanResourcesPage({

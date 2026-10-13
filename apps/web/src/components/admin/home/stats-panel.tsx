@@ -31,7 +31,7 @@ const statsFormSchema = z.object({
     `1900-${CURRENT_YEAR} оны хооронд байх ёстой`,
   ),
   employeeCount: wholeNumber,
-  partnerCount: wholeNumber,
+  salesPointCount: wholeNumber,
 });
 
 type StatsFormValues = z.infer<typeof statsFormSchema>;
@@ -48,7 +48,7 @@ function defaultValues(setting: SiteSetting): StatsFormValues {
   return {
     foundedYear: toFormValue(setting.foundedYear),
     employeeCount: toFormValue(setting.employeeCount),
-    partnerCount: toFormValue(setting.partnerCount),
+    salesPointCount: toFormValue(setting.salesPointCount),
   };
 }
 
@@ -78,7 +78,7 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
       {
         foundedYear: toNumberOrNull(values.foundedYear),
         employeeCount: toNumberOrNull(values.employeeCount),
-        partnerCount: toNumberOrNull(values.partnerCount),
+        salesPointCount: toNumberOrNull(values.salesPointCount),
       },
       {
         onSuccess: (savedSetting) => {
@@ -126,17 +126,17 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
           />
         </FormField>
         <FormField
-          label="Харилцагч"
-          htmlFor="stat-partners"
-          hint="Хамтран ажилладаг байгууллага, дэлгүүрийн тоо"
-          error={errors.partnerCount?.message}
+          label="Борлуулалтын цэг"
+          htmlFor="stat-sales-points"
+          hint="Бүтээгдэхүүн зарагддаг дэлгүүр, цэгийн тоо"
+          error={errors.salesPointCount?.message}
         >
           <Input
-            id="stat-partners"
+            id="stat-sales-points"
             inputMode="numeric"
-            placeholder="2500"
-            aria-invalid={Boolean(errors.partnerCount)}
-            {...register("partnerCount")}
+            placeholder="4500"
+            aria-invalid={Boolean(errors.salesPointCount)}
+            {...register("salesPointCount")}
           />
         </FormField>
       </div>

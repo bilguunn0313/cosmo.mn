@@ -5,17 +5,29 @@ import { ContactInfo } from "@/components/site/contact/contact-info";
 import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
 import { fetchDepartments, fetchSiteSetting } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/contact">): Promise<Metadata> {
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale });
+  const setting = await fetchSiteSetting(locale);
 
-  return {
+  const description =
+    setting?.address && setting.phone
+      ? t("seo.contactDescription", {
+          address: setting.address.replace(/\s*\n\s*/g, ", "),
+          phone: setting.phone,
+        })
+      : t("contact.description");
+
+  return pageMetadata({
+    locale,
+    path: "/contact",
     title: t("nav.contact"),
-    description: t("contact.description"),
-  };
+    description,
+  });
 }
 
 export default async function ContactPage({

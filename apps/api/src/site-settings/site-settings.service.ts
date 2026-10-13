@@ -62,7 +62,7 @@ export class SiteSettingsService {
       mapImageUrl: setting.mapImage?.url ?? null,
       foundedYear: setting.foundedYear,
       employeeCount: setting.employeeCount,
-      partnerCount: setting.partnerCount,
+      salesPointCount: setting.salesPointCount,
       categoryImages: {
         FOOD: setting.foodImage?.url ?? null,
         BEAUTY: setting.beautyImage?.url ?? null,

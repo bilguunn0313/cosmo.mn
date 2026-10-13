@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getPageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
+import { SITE_URL, siteNameFor } from "@/lib/seo";
 
 const geist = Geist({
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
@@ -21,11 +22,15 @@ export async function generateMetadata({
   params,
 }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const locale = await getPageLocale(params);
-  const t = await getTranslations({ locale, namespace: "metadata" });
+  const t = await getTranslations({ locale });
+
+  const siteName = siteNameFor(locale);
 
   return {
-    title: { default: t("title"), template: `%s | ${t("title")}` },
-    description: t("description"),
+    metadataBase: new URL(SITE_URL),
+    applicationName: siteName,
+    title: { default: t("seo.homeTitle"), template: `%s | ${siteName}` },
+    description: t("seo.homeDescription"),
   };
 }
 

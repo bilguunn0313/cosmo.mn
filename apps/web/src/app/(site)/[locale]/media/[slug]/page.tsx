@@ -10,6 +10,8 @@ import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchLatestNews, fetchNews } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
+import { newsPath } from "@/lib/site-links";
 
 const MAX_RELATED = 3;
 
@@ -18,16 +20,21 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/media/[slug]">): Promise<Metadata> {
   const locale = await getPageLocale(params);
   const { slug } = await params;
+  const t = await getTranslations({ locale });
   const news = await fetchNews(slug, locale);
 
   if (!news) {
     return {};
   }
 
-  return {
+  return pageMetadata({
+    locale,
+    path: newsPath(news.slug),
     title: news.title,
-    description: news.summary ?? undefined,
-  };
+    description: news.summary ?? t("seo.mediaDescription"),
+    image: news.coverUrl,
+    publishedTime: news.publishedAt,
+  });
 }
 
 export default async function NewsPage({

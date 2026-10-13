@@ -31,7 +31,7 @@ export interface PublicSiteSetting {
   mapImageUrl: string | null;
   foundedYear: number | null;
   employeeCount: number | null;
-  partnerCount: number | null;
+  salesPointCount: number | null;
   categoryImages: Record<BrandCategory, string | null>;
   address: string | null;
   workingHours: string | null;

@@ -276,7 +276,7 @@ model SiteSetting {
   householdImage   Media?   @relation("SiteSettingHousehold", fields: [householdImageId], references: [id])
   foundedYear      Int?
   employeeCount    Int?
-  partnerCount     Int?
+  salesPointCount  Int?
   updatedAt        DateTime @updatedAt
 
   translations SiteSettingTranslation[]

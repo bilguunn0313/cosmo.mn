@@ -1,7 +1,19 @@
 {
   "metadata": {
-    "title": "Cosmo",
     "description": "Cosmo 将国际食品、美妆和家居品牌带给蒙古消费者。"
+  },
+  "seo": {
+    "homeTitle": "Cosmo Trade | 蒙古快消品进口与分销商",
+    "homeDescription": "Cosmo Trade 自1993年起从10多个国家进口食品、美妆及家居用品品牌，并分销至蒙古全国4500多个销售网点。",
+    "brandsTitle": "我们的品牌：食品、美妆、家居用品",
+    "brandsDescription": "由 Cosmo Trade 在蒙古官方进口和分销的国际食品、美妆及家居用品品牌。",
+    "brandTitle": "{name} 蒙古官方经销商",
+    "brandDescription": "Cosmo Trade 是 {name} 在蒙古的官方经销商，产品覆盖全国4500多个销售网点。",
+    "aboutDescription": "Cosmo Trade 自1993年起将国际品牌带给蒙古消费者。了解我们的历程、使命与价值观。",
+    "careersTitle": "招聘信息",
+    "careersDescription": "加入 Cosmo Trade，了解我们的团队、工作环境与招聘职位。",
+    "mediaDescription": "Cosmo Trade 的新闻、活动及新品发布。",
+    "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。"
   },
   "nav": {
     "about": "关于我们",
@@ -37,7 +49,7 @@
     "statYears": "年行业经验",
     "statEmployees": "团队成员",
     "statBrands": "品牌",
-    "statPartners": "合作伙伴",
+    "statSalesPoints": "销售网点",
     "categoriesTitle": "按品类浏览品牌",
     "allBrands": "全部品牌",
     "newsTitle": "最新动态",

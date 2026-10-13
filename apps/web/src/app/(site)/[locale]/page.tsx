@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { BrandCategoriesSection } from "@/components/site/home/brand-categories-section";
 import { BrandMarquee } from "@/components/site/home/brand-marquee";
@@ -13,12 +14,28 @@ import {
   fetchSiteSetting,
   fetchSlides,
 } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 
 const HOME_NEWS_COUNT = 4;
 
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]">): Promise<Metadata> {
+  const locale = await getPageLocale(params);
+  const t = await getTranslations({ locale, namespace: "seo" });
+
+  return pageMetadata({
+    locale,
+    path: "/",
+    title: t("homeTitle"),
+    description: t("homeDescription"),
+    isHome: true,
+  });
+}
+
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = await getPageLocale(params);
-  const t = await getTranslations("metadata");
+  const t = await getTranslations();
   const [slides, brands, setting, news] = await Promise.all([
     fetchSlides(locale),
     fetchBrands(locale),
@@ -28,9 +45,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <>
-      <h1 className="sr-only">
-        {t("title")}. {t("description")}
-      </h1>
+      <h1 className="sr-only">{t("seo.homeTitle")}</h1>
       <div className="site-container-wide pt-2">
         {slides.length > 0 ? (
           <HeroCarousel slides={slides} />

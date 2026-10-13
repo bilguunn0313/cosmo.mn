@@ -8,6 +8,7 @@ import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchBrands } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 
 const REVEAL_COLUMNS = 4;
 
@@ -21,10 +22,12 @@ export async function generateMetadata({
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale });
 
-  return {
-    title: t("nav.brands"),
-    description: t("brands.description"),
-  };
+  return pageMetadata({
+    locale,
+    path: "/brands",
+    title: t("seo.brandsTitle"),
+    description: t("seo.brandsDescription"),
+  });
 }
 
 export default async function BrandsPage({

@@ -187,7 +187,7 @@ export interface SiteSetting {
   householdImage: Media | null;
   foundedYear: number | null;
   employeeCount: number | null;
-  partnerCount: number | null;
+  salesPointCount: number | null;
   updatedAt: string;
   translations: SiteSettingTranslation[];
 }

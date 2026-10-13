@@ -11,6 +11,8 @@ import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchBrand, fetchBrands } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
+import { brandPath } from "@/lib/site-links";
 
 const MAX_RELATED = 4;
 
@@ -19,16 +21,20 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/brands/[slug]">): Promise<Metadata> {
   const locale = await getPageLocale(params);
   const { slug } = await params;
+  const t = await getTranslations({ locale, namespace: "seo" });
   const brand = await fetchBrand(slug, locale);
 
   if (!brand) {
     return {};
   }
 
-  return {
-    title: brand.name,
-    description: brand.summary ?? undefined,
-  };
+  return pageMetadata({
+    locale,
+    path: brandPath(brand.slug),
+    title: t("brandTitle", { name: brand.name }),
+    description: brand.summary ?? t("brandDescription", { name: brand.name }),
+    image: brand.coverUrl ?? brand.logoUrl,
+  });
 }
 
 export default async function BrandPage({

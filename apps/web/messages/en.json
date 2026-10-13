@@ -1,7 +1,19 @@
 {
   "metadata": {
-    "title": "Cosmo",
     "description": "Cosmo brings international food, beauty and household brands to customers in Mongolia."
+  },
+  "seo": {
+    "homeTitle": "Cosmo Trade LLC | FMCG importer and distributor in Mongolia",
+    "homeDescription": "Since 1993, Cosmo Trade has imported food, beauty and household brands from over 10 countries and delivered them to 4,500+ points of sale across Mongolia.",
+    "brandsTitle": "Our brands: food, beauty and household",
+    "brandsDescription": "International food, beauty and household brands officially imported and distributed in Mongolia by Cosmo Trade LLC.",
+    "brandTitle": "{name}: official distributor in Mongolia",
+    "brandDescription": "Cosmo Trade LLC is the official distributor of {name} in Mongolia, supplying over 4,500 points of sale nationwide.",
+    "aboutDescription": "Since 1993, Cosmo Trade LLC has brought international brands to consumers in Mongolia. Our history, mission and values.",
+    "careersTitle": "Careers",
+    "careersDescription": "Work at Cosmo Trade LLC. Learn about our team, workplace and open positions.",
+    "mediaDescription": "News, events and new product launches from Cosmo Trade LLC.",
+    "contactDescription": "Cosmo Trade LLC address: {address}. Phone: {phone}."
   },
   "nav": {
     "about": "About us",
@@ -37,7 +49,7 @@
     "statYears": "Years in business",
     "statEmployees": "Team members",
     "statBrands": "Brands",
-    "statPartners": "Partners",
+    "statSalesPoints": "Points of sale",
     "categoriesTitle": "Brands by category",
     "allBrands": "All brands",
     "newsTitle": "Latest news",

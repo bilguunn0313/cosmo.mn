@@ -51,12 +51,12 @@ export async function StatsSection({ setting, brands }: StatsSectionProps) {
           label: t("statBrands"),
         }
       : null,
-    setting?.partnerCount
+    setting?.salesPointCount
       ? {
-          key: "partners",
-          value: setting.partnerCount,
+          key: "salesPoints",
+          value: setting.salesPointCount,
           suffix: "+",
-          label: t("statPartners"),
+          label: t("statSalesPoints"),
         }
       : null,
   ];

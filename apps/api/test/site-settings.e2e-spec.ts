@@ -117,7 +117,7 @@ describe('Site settings', () => {
   it('тоон үзүүлэлтүүдийг хадгалж нийтэд өгнө', async () => {
     await context.admin
       .put('/admin/site-settings')
-      .send({ foundedYear: 2008, employeeCount: 350, partnerCount: 2500 })
+      .send({ foundedYear: 2008, employeeCount: 350, salesPointCount: 2500 })
       .expect(200);
 
     const response = await context.guest
@@ -126,7 +126,7 @@ describe('Site settings', () => {
     expect(response.body).toMatchObject({
       foundedYear: 2008,
       employeeCount: 350,
-      partnerCount: 2500,
+      salesPointCount: 2500,
     });
   });
 

@@ -15,6 +15,7 @@ import {
   fetchSections,
   fetchSiteSetting,
 } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -23,10 +24,12 @@ export async function generateMetadata({
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale });
 
-  return {
+  return pageMetadata({
+    locale,
+    path: "/about",
     title: t("nav.about"),
-    description: t("about.description"),
-  };
+    description: t("seo.aboutDescription"),
+  });
 }
 
 export default async function AboutPage({

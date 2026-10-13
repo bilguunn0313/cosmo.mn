@@ -7,6 +7,7 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
 import { fetchNewsPage } from "@/lib/public-api";
+import { pageMetadata } from "@/lib/seo";
 
 const NEWS_PER_PAGE = 10;
 const REVEAL_COLUMNS = 3;
@@ -18,14 +19,18 @@ function parsePage(value: unknown) {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: PageProps<"/[locale]/media">): Promise<Metadata> {
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale });
+  const page = parsePage((await searchParams).page);
 
-  return {
-    title: t("nav.media"),
-    description: t("media.description"),
-  };
+  return pageMetadata({
+    locale,
+    path: page > 1 ? `/media?page=${page}` : "/media",
+    title: page > 1 ? `${t("nav.media")} ${page}` : t("nav.media"),
+    description: t("seo.mediaDescription"),
+  });
 }
 
 export default async function MediaPage({
