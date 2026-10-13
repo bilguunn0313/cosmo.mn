@@ -32,6 +32,7 @@ const USAGE_LABELS: Record<MediaUsageType, string> = {
   brandSection: "Брэндийн хэсэг",
   product: "Брэндийн бүтээгдэхүүн",
   section: "Хуудасны хэсэг",
+  milestone: "Компанийн түүх",
   news: "Медиа",
   siteSetting: "Холбоо барих",
 };

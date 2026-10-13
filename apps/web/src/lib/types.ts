@@ -38,6 +38,7 @@ export type MediaUsageType =
   | "brandSection"
   | "product"
   | "section"
+  | "milestone"
   | "news"
   | "siteSetting";
 
@@ -80,6 +81,22 @@ export interface Section {
   order: number;
   isVisible: boolean;
   translations: SectionTranslation[];
+}
+
+export interface MilestoneTranslation {
+  id: number;
+  locale: Locale;
+  title: string;
+  description: string | null;
+}
+
+export interface Milestone {
+  id: number;
+  year: number;
+  imageId: number | null;
+  image: Media | null;
+  isVisible: boolean;
+  translations: MilestoneTranslation[];
 }
 
 export type BrandCategory = "FOOD" | "BEAUTY" | "HOUSEHOLD";

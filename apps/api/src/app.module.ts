@@ -8,6 +8,7 @@ import { BrandsModule } from './brands/brands.module';
 import { ContactModule } from './contact/contact.module';
 import { HealthModule } from './health/health.module';
 import { MediaModule } from './media/media.module';
+import { MilestonesModule } from './milestones/milestones.module';
 import { NewsModule } from './news/news.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SectionsModule } from './sections/sections.module';
@@ -26,6 +27,7 @@ import { SlidesModule } from './slides/slides.module';
     SlidesModule,
     BrandsModule,
     SectionsModule,
+    MilestonesModule,
     NewsModule,
     SiteSettingsModule,
     ContactModule,

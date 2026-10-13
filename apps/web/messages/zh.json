@@ -94,6 +94,12 @@
       "failed": "发送失败，请重试。"
     }
   },
+  "about": {
+    "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
+    "historyTitle": "发展历程",
+    "partnerTitle": "期待与您合作",
+    "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。"
+  },
   "careers": {
     "description": "了解我们的团队、工作环境与招聘流程。",
     "joinTitle": "加入我们",

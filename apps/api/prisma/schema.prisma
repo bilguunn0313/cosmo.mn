@@ -53,6 +53,7 @@ model Media {
   brandSections         BrandSection[]
   products              Product[]
   sections              Section[]
+  milestones            Milestone[]
   newsCovers            News[]         @relation("NewsCover")
   newsVideos            News[]         @relation("NewsVideo")
   siteSettingMaps       SiteSetting[]  @relation("SiteSettingMap")
@@ -200,6 +201,31 @@ model SectionTranslation {
   body      String
 
   @@unique([sectionId, locale])
+}
+
+model Milestone {
+  id        Int      @id @default(autoincrement())
+  year      Int
+  imageId   Int?
+  image     Media?   @relation(fields: [imageId], references: [id])
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations MilestoneTranslation[]
+
+  @@index([isVisible, year])
+}
+
+model MilestoneTranslation {
+  id          Int       @id @default(autoincrement())
+  milestoneId Int
+  milestone   Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+  locale      Locale
+  title       String
+  description String?
+
+  @@unique([milestoneId, locale])
 }
 
 model News {

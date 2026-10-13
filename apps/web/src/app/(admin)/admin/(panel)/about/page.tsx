@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MilestonesPanel } from "@/components/admin/about/milestones-panel";
 import { PageHeader } from "@/components/admin/page-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 
@@ -14,11 +15,14 @@ export default function AboutPageAdmin() {
 
       <SectionsPanel
         source={{ page: "about" }}
+        step={1}
         title="Хэсгүүд"
-        description="Хэсэг бүр гарчиг, текст, зурагтай. Жишээ нь «Компанийн танилцуулга», «Алсын хараа», «Түүх»."
+        description="Хэсэг бүр гарчиг, текст, зурагтай. Жишээ нь «Компанийн танилцуулга», «Эрхэм зорилго», «Үнэт зүйлс»."
         emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Компанийн танилцуулга» хэсгээс эхэлнэ үү."
         bodyMode="rich"
       />
+
+      <MilestonesPanel step={2} />
     </div>
   );
 }

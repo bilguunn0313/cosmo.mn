@@ -94,6 +94,12 @@
       "failed": "Could not send. Please try again."
     }
   },
+  "about": {
+    "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
+    "historyTitle": "Our history",
+    "partnerTitle": "Let's work together",
+    "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us."
+  },
   "careers": {
     "description": "About our team, workplace and hiring process.",
     "joinTitle": "Join our team",

@@ -91,6 +91,20 @@ export interface PublicProduct {
   imageUrl: string;
 }
 
+export interface PublicMilestone {
+  id: number;
+  year: number;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+}
+
+export function fetchMilestones(locale: Locale) {
+  return fetchPublic<PublicMilestone[]>("/public/milestones", locale).catch(
+    (): PublicMilestone[] => [],
+  );
+}
+
 export interface PublicBrandDetail extends PublicBrand {
   websiteUrl: string | null;
   sections: PublicSection[];

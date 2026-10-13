@@ -5,6 +5,7 @@ export * from "./contact";
 export * from "./countries";
 export * from "./locales";
 export * from "./media";
+export * from "./milestone";
 export * from "./news";
 export * from "./section";
 export * from "./site-setting";

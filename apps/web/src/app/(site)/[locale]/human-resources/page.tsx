@@ -1,14 +1,13 @@
 import { ArrowUpRight, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { CtaCard, ctaButtonClass } from "@/components/site/cta-card";
 import { SectionHeader } from "@/components/site/section-header";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchSections, fetchSiteSetting } from "@/lib/public-api";
-
-const buttonClass =
-  "inline-flex h-12 items-center gap-2 rounded-full px-6 text-[15px] font-medium transition-[background-color,scale] duration-150 ease-(--ease-out) motion-safe:active:scale-[0.97]";
+import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -43,44 +42,34 @@ export default async function HumanResourcesPage({
 
       {sections.length > 0 && <StorySections sections={sections} />}
 
-      <section
-        aria-labelledby="join-title"
-        className="relative grid gap-6 overflow-hidden rounded-3xl bg-card p-6 sm:p-10 md:rounded-[2rem] lg:grid-cols-[1fr_auto] lg:items-center lg:p-14"
+      <CtaCard
+        id="join-title"
+        title={t("careers.joinTitle")}
+        text={t("careers.joinText")}
       >
-        <span
-          aria-hidden
-          className="bg-brand-gradient absolute inset-x-0 top-0 h-1"
-        />
-        <div className="grid max-w-2xl gap-3">
-          <h2
-            id="join-title"
-            className="text-2xl leading-[1.15] font-semibold tracking-tight md:text-4xl"
+        {setting?.email && (
+          <a
+            href={`mailto:${setting.email}`}
+            className={cn(
+              ctaButtonClass,
+              "bg-primary text-primary-foreground hover:bg-primary/90",
+            )}
           >
-            {t("careers.joinTitle")}
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            {t("careers.joinText")}
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          {setting?.email && (
-            <a
-              href={`mailto:${setting.email}`}
-              className={`${buttonClass} bg-primary text-primary-foreground hover:bg-primary/90`}
-            >
-              <Mail className="size-4" />
-              {t("careers.sendCv")}
-            </a>
+            <Mail className="size-4" />
+            {t("careers.sendCv")}
+          </a>
+        )}
+        <Link
+          href="/contact"
+          className={cn(
+            ctaButtonClass,
+            "bg-canvas text-foreground hover:bg-muted",
           )}
-          <Link
-            href="/contact"
-            className={`${buttonClass} bg-canvas text-foreground hover:bg-muted`}
-          >
-            {t("nav.contact")}
-            <ArrowUpRight className="size-4" />
-          </Link>
-        </div>
-      </section>
+        >
+          {t("nav.contact")}
+          <ArrowUpRight className="size-4" />
+        </Link>
+      </CtaCard>
     </div>
   );
 }
