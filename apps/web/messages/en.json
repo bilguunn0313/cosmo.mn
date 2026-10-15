@@ -32,9 +32,40 @@
     "description": "We bring international food, beauty and household brands to customers in Mongolia.",
     "menu": "Menu",
     "contact": "Contact",
+    "socials": "Social",
     "rights": "All rights reserved."
   },
   "home": {
+    "featured": "Featured",
+    "heroTitle": "World brands for every Mongolian home",
+    "officialDistributor": "Official distributor",
+    "aboutTitle": "Bringing world brands to Mongolia since 1993",
+    "aboutText": "Cosmo Trade LLC officially imports food, beauty and household brands from over 10 countries and distributes them across Mongolia.",
+    "originEyebrow": "Origins",
+    "valuesTitle": "Our values",
+    "values": {
+      "people": {
+        "title": "People",
+        "text": "We strive to build a passionate, team-oriented workplace."
+      },
+      "satisfaction": {
+        "title": "Satisfaction",
+        "text": "We put the satisfaction of our customers and partners first."
+      },
+      "quality": {
+        "title": "Quality",
+        "text": "We follow international standards for warehousing, storage and distribution in our daily operations."
+      },
+      "responsibility": {
+        "title": "Social responsibility",
+        "text": "We value law and ethics in everything we do and aim to be a socially responsible company."
+      }
+    },
+    "newsLabel": "News",
+    "partnerEyebrow": "Partnership",
+    "contactUs": "Get in touch",
+    "mute": "Mute",
+    "unmute": "Unmute",
     "learnMore": "Learn more",
     "carousel": "Highlights",
     "slideLabel": "{current} of {total}",
@@ -107,7 +138,25 @@
     }
   },
   "about": {
+    "heroTitle": "Cosmo Trade",
     "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
+    "missionLabel": "Our mission",
+    "missionText": "Our customers' satisfaction and happiness is our purpose.",
+    "nationalLabel": "Recognized nationwide",
+    "awards": {
+      "taxpayer": {
+        "count": "7×",
+        "text": "Best taxpayer organization"
+      },
+      "top100": {
+        "count": "3×",
+        "text": "Mongolia's “TOP-100” enterprises"
+      },
+      "top150": {
+        "count": "2×",
+        "text": "Mongolia's “TOP-150” enterprises"
+      }
+    },
     "historyTitle": "Our history",
     "partnerTitle": "Let's work together",
     "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us."

@@ -43,7 +43,11 @@ export default async function HumanResourcesPage({
         </p>
       </div>
 
-      {sections.length > 0 && <StorySections sections={sections} />}
+      {sections.length > 0 && (
+        <div className="border-b-2 border-rule">
+          <StorySections sections={sections} />
+        </div>
+      )}
 
       <CtaCard
         id="join-title"

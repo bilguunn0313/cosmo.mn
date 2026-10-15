@@ -7,22 +7,8 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionHeader } from "@/components/site/section-header";
 import { Link } from "@/i18n/navigation";
 import type { PublicBrand, PublicSiteSetting } from "@/lib/public-api";
-import { cn } from "@/lib/utils";
 
-const TILE_STAGGER_SECONDS = 0.12;
-const TEXT_AFTER_IMAGE_SECONDS = 0.35;
-
-const GRID_CLASSES: Record<number, string> = {
-  1: "grid",
-  2: "grid gap-4 md:h-[32rem] md:grid-cols-2",
-  3: "grid gap-4 lg:h-[44rem] lg:grid-cols-[1.3fr_1fr] lg:grid-rows-2",
-};
-
-const TILE_HEIGHT_CLASSES: Record<number, string> = {
-  1: "h-80 sm:h-[28rem]",
-  2: "h-80 sm:h-96 md:h-auto",
-  3: "h-80 sm:h-96 lg:h-auto",
-};
+const TILE_STAGGER_SECONDS = 0.07;
 
 interface CategoryTile {
   category: BrandCategory;
@@ -53,60 +39,48 @@ function buildTiles(
 interface CategoryCardProps {
   tile: CategoryTile;
   index: number;
-  isFeatured: boolean;
-  heightClass: string;
 }
 
-async function CategoryCard({
-  tile,
-  index,
-  isFeatured,
-  heightClass,
-}: CategoryCardProps) {
-  const t = await getTranslations();
+async function CategoryCard({ tile, index }: CategoryCardProps) {
+  const t = await getTranslations("categories");
   const delay = index * TILE_STAGGER_SECONDS;
 
   return (
     <Link
       href={{ pathname: "/brands", query: { category: tile.category } }}
-      className={cn(
-        "group relative isolate flex overflow-hidden rounded-3xl bg-muted outline-offset-4 outline-primary transition-[scale] duration-150 ease-(--ease-out) focus-visible:outline-2 motion-safe:active:scale-[0.99] md:rounded-[2rem]",
-        heightClass,
-        isFeatured && "lg:row-span-2",
-      )}
+      className="group flex flex-col outline-offset-4 outline-brand focus-visible:outline-2"
     >
-      <ImageReveal delay={delay}>
-        {tile.imageUrl ? (
-          <Image
-            src={tile.imageUrl}
-            alt=""
-            fill
-            unoptimized
-            loading="eager"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover transition-[scale] duration-700 ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:transition-none"
-          />
-        ) : (
-          <div className="bg-brand-gradient absolute inset-0" />
-        )}
-        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
-      </ImageReveal>
+      <div className="relative h-[clamp(320px,35vw,500px)] overflow-hidden bg-surface">
+        <ImageReveal delay={delay}>
+          {tile.imageUrl ? (
+            <Image
+              src={tile.imageUrl}
+              alt=""
+              fill
+              unoptimized
+              loading="eager"
+              sizes="(min-width: 768px) 33vw, 100vw"
+              className="object-cover transition-[scale] duration-800 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-brand" />
+          )}
+        </ImageReveal>
+      </div>
 
       <Reveal
-        delay={delay + TEXT_AFTER_IMAGE_SECONDS}
-        className="relative mt-auto flex w-full items-end justify-between gap-6 p-6 text-white sm:p-8 lg:p-10"
+        delay={delay}
+        className="flex items-center justify-between gap-4 border-b-2 border-rule py-5"
       >
-        <h3
-          className={cn(
-            "leading-[1.05] font-semibold tracking-tight",
-            isFeatured ? "text-4xl md:text-6xl" : "text-3xl md:text-4xl",
-          )}
-        >
-          {t(`categories.${tile.category}`)}
-        </h3>
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md transition-[background-color,color,border-color,translate] duration-300 ease-(--ease-out) group-hover:translate-x-1 group-hover:border-white group-hover:bg-white group-hover:text-primary">
-          <ArrowUpRight className="size-5" />
+        <span className="flex items-baseline gap-4">
+          <span className="text-sm font-semibold text-brand tabular-nums">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="text-[clamp(26px,2.4vw,34px)] leading-tight font-semibold tracking-heading transition-colors duration-150 group-hover:text-brand-700">
+            {t(tile.category)}
+          </span>
         </span>
+        <ArrowUpRight className="size-6 shrink-0 transition-[translate,color] duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-700" />
       </Reveal>
     </Link>
   );
@@ -131,7 +105,7 @@ export async function BrandCategoriesSection({
   return (
     <section
       aria-labelledby="brand-categories-title"
-      className="site-container-wide grid gap-8 pt-16 md:gap-10 md:pt-24"
+      className="site-container pt-20 md:pt-28"
     >
       <SectionHeader
         id="brand-categories-title"
@@ -139,15 +113,9 @@ export async function BrandCategoriesSection({
         link={{ href: "/brands", label: t("allBrands") }}
       />
 
-      <div className={GRID_CLASSES[tiles.length]}>
+      <div className="mt-6 grid gap-x-6 gap-y-10 md:grid-cols-3">
         {tiles.map((tile, index) => (
-          <CategoryCard
-            key={tile.category}
-            tile={tile}
-            index={index}
-            isFeatured={tiles.length === 3 && index === 0}
-            heightClass={TILE_HEIGHT_CLASSES[tiles.length]}
-          />
+          <CategoryCard key={tile.category} tile={tile} index={index} />
         ))}
       </div>
     </section>

@@ -4,50 +4,55 @@ import { Reveal } from "@/components/site/reveal";
 import type { PublicSection } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
-interface StoryBlockProps {
-  section: PublicSection;
-  isFlipped: boolean;
+interface StoryRowProps {
+  index: number;
+  label: string;
+  imageUrl: string | null;
+  children: React.ReactNode;
 }
 
-function StoryBlock({ section, isFlipped }: StoryBlockProps) {
+export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
+  const isTextFirst = index % 2 === 1;
+  const number = String(index + 1).padStart(2, "0");
+
   return (
-    <article
-      className={cn(
-        "grid gap-8 rounded-3xl bg-card p-5 sm:p-8 md:rounded-[2rem] lg:items-center lg:gap-14 lg:p-12",
-        section.imageUrl && "lg:grid-cols-2",
-      )}
-    >
-      {section.imageUrl && (
-        <div
-          className={cn(
-            "relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted md:rounded-3xl",
-            isFlipped && "lg:order-2",
-          )}
-        >
+    <article className="grid border-t-2 border-rule md:grid-cols-2">
+      <div
+        className={cn(
+          "relative h-[min(60vh,520px)] overflow-hidden",
+          isTextFirst && "md:order-2",
+        )}
+      >
+        {imageUrl ? (
           <ImageReveal>
             <Image
-              src={section.imageUrl}
+              src={imageUrl}
               alt=""
               fill
               unoptimized
               loading="eager"
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
             />
           </ImageReveal>
-        </div>
-      )}
-
-      <Reveal delay={0.2} className="grid max-w-3xl gap-5">
-        {section.title && (
-          <h2 className="text-2xl leading-[1.15] font-semibold tracking-tight md:text-4xl">
-            {section.title}
-          </h2>
+        ) : (
+          <div className="absolute inset-0 flex items-end bg-brand p-6 text-white md:p-8">
+            <span className="text-[clamp(120px,15vw,220px)] leading-[0.82] font-semibold tracking-[-0.06em]">
+              {number}
+            </span>
+          </div>
         )}
-        <div
-          className="rich-text text-foreground/80 md:text-lg"
-          dangerouslySetInnerHTML={{ __html: section.body }}
-        />
+      </div>
+
+      <Reveal
+        className={cn(
+          "flex flex-col justify-end gap-4.5 py-10 md:py-12",
+          isTextFirst ? "md:pr-12" : "md:pl-12",
+        )}
+      >
+        <span className="text-sm font-semibold text-brand">{number}</span>
+        <h2 className="eyebrow text-[15px] text-ink-3">{label}</h2>
+        {children}
       </Reveal>
     </article>
   );
@@ -55,18 +60,21 @@ function StoryBlock({ section, isFlipped }: StoryBlockProps) {
 
 interface StorySectionsProps {
   sections: PublicSection[];
+  startIndex?: number;
 }
 
-export function StorySections({ sections }: StorySectionsProps) {
-  return (
-    <div className="grid gap-4 md:gap-6">
-      {sections.map((section, index) => (
-        <StoryBlock
-          key={section.id}
-          section={section}
-          isFlipped={index % 2 === 1}
-        />
-      ))}
-    </div>
-  );
+export function StorySections({ sections, startIndex = 0 }: StorySectionsProps) {
+  return sections.map((section, index) => (
+    <StoryRow
+      key={section.id}
+      index={startIndex + index}
+      label={section.title}
+      imageUrl={section.imageUrl}
+    >
+      <div
+        className="rich-text max-w-150 text-lg text-ink-2 md:text-xl"
+        dangerouslySetInnerHTML={{ __html: section.body }}
+      />
+    </StoryRow>
+  ));
 }

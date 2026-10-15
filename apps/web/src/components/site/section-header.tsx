@@ -1,10 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { siteButtonClass } from "./site-button";
 
 interface SectionHeaderProps {
   id: string;
   title: string;
   as?: "h1" | "h2";
+  eyebrow?: string;
   link?: { href: string; label: string };
 }
 
@@ -12,29 +14,26 @@ export function SectionHeader({
   id,
   title,
   as: Heading = "h2",
+  eyebrow,
   link,
 }: SectionHeaderProps) {
   return (
-    <div className="relative flex flex-wrap items-end justify-between gap-4 border-b border-foreground/10 pb-5 md:pb-6">
-      <Heading
-        id={id}
-        className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl"
-      >
-        {title}
-      </Heading>
-      {link && (
-        <Link
-          href={link.href}
-          className="group inline-flex items-center gap-2 text-[15px] font-medium text-primary"
+    <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-rule pb-5 md:pb-6">
+      <div className="grid gap-4 md:gap-5">
+        {eyebrow && <p className="eyebrow text-ink-3">{eyebrow}</p>}
+        <Heading
+          id={id}
+          className="text-[clamp(40px,4.8vw,72px)] leading-[0.98] font-semibold tracking-heading text-balance"
         >
+          {title}
+        </Heading>
+      </div>
+      {link && (
+        <Link href={link.href} className={siteButtonClass("ghost", "group")}>
           {link.label}
-          <ArrowRight className="size-4 transition-[translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5" />
+          <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
         </Link>
       )}
-      <span
-        aria-hidden
-        className="bg-brand-gradient absolute -bottom-px left-0 h-0.5 w-24 rounded-full md:w-32"
-      />
     </div>
   );
 }

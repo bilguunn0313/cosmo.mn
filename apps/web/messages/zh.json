@@ -32,9 +32,40 @@
     "description": "我们将国际食品、美妆和家居品牌带给蒙古消费者。",
     "menu": "菜单",
     "contact": "联系我们",
+    "socials": "社交媒体",
     "rights": "版权所有。"
   },
   "home": {
+    "featured": "精选",
+    "heroTitle": "将世界品牌带进每个蒙古家庭",
+    "officialDistributor": "官方经销商",
+    "aboutTitle": "自1993年起将世界品牌带到蒙古",
+    "aboutText": "Cosmo Trade 官方进口来自10多个国家的食品、美妆及家居用品品牌，并分销至蒙古全国。",
+    "originEyebrow": "品牌来源",
+    "valuesTitle": "核心价值观",
+    "values": {
+      "people": {
+        "title": "以人为本",
+        "text": "我们致力于营造充满热情、团结协作的工作环境。"
+      },
+      "satisfaction": {
+        "title": "客户满意",
+        "text": "我们始终把客户与合作伙伴的满意放在首位。"
+      },
+      "quality": {
+        "title": "品质",
+        "text": "我们在日常运营中遵循国际仓储、保管与配送标准。"
+      },
+      "responsibility": {
+        "title": "社会责任",
+        "text": "我们在一切经营活动中恪守法律与道德，致力于成为有社会责任感的企业。"
+      }
+    },
+    "newsLabel": "新闻",
+    "partnerEyebrow": "商务合作",
+    "contactUs": "联系我们",
+    "mute": "静音",
+    "unmute": "取消静音",
     "learnMore": "了解更多",
     "carousel": "精选内容",
     "slideLabel": "第 {current} 张，共 {total} 张",
@@ -107,7 +138,25 @@
     }
   },
   "about": {
+    "heroTitle": "Cosmo Trade",
     "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
+    "missionLabel": "使命",
+    "missionText": "让顾客满意与快乐是我们的目标。",
+    "nationalLabel": "全国荣誉",
+    "awards": {
+      "taxpayer": {
+        "count": "7×",
+        "text": "优秀纳税企业"
+      },
+      "top100": {
+        "count": "3×",
+        "text": "蒙古“百强”企业"
+      },
+      "top150": {
+        "count": "2×",
+        "text": "蒙古“150强”企业"
+      }
+    },
     "historyTitle": "发展历程",
     "partnerTitle": "期待与您合作",
     "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。"

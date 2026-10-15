@@ -1,27 +1,30 @@
-import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { fetchSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
 import type { Locale } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "./language-switcher";
 import { CONTACT_HREF, SITE_NAV } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
 interface FooterColumnProps {
   title: string;
+  className?: string;
   children: React.ReactNode;
 }
 
-function FooterColumn({ title, children }: FooterColumnProps) {
+function FooterColumn({ title, className, children }: FooterColumnProps) {
   return (
-    <div className="grid content-start gap-4">
-      <h2 className="text-base font-semibold text-white">{title}</h2>
-      <div className="grid gap-3 text-[15px] text-white/85">{children}</div>
+    <div className={cn("grid content-start gap-2.5", className)}>
+      <h2 className="eyebrow mb-1.5 text-ink-3">{title}</h2>
+      <div className="grid gap-2.5 text-[15px]">{children}</div>
     </div>
   );
 }
 
-const footerLinkClass = "w-fit transition-colors duration-150 hover:text-white";
+const footerLinkClass =
+  "w-fit transition-colors duration-150 hover:text-brand-700";
 
 interface SiteFooterProps {
   locale: Locale;
@@ -40,19 +43,19 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   ].filter((social) => social.url);
 
   return (
-    <footer className="site-container-wide pt-20 pb-4 md:pb-6">
-      <div className="bg-brand-gradient rounded-3xl px-8 pt-14 pb-8 text-white md:rounded-[2rem] md:px-16 md:pt-20 md:pb-10">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr]">
-          <div className="grid content-start gap-4">
+    <footer className="mt-20 border-t-2 border-rule md:mt-32">
+      <div className="site-container pt-14 pb-7">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-6">
+          <div className="grid content-start gap-4 sm:col-span-2 lg:col-span-4">
             <Link href="/" className="w-fit">
-              <Wordmark className="text-3xl text-white" />
+              <Wordmark />
             </Link>
-            <p className="max-w-sm text-[15px] leading-relaxed text-white/85">
+            <p className="max-w-85 text-[15px] text-ink-2">
               {t("description")}
             </p>
           </div>
 
-          <FooterColumn title={t("menu")}>
+          <FooterColumn title={t("menu")} className="lg:col-span-2 lg:col-start-6">
             {SITE_NAV.map((item) => (
               <Link
                 key={item.href}
@@ -67,7 +70,7 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
             </Link>
           </FooterColumn>
 
-          <FooterColumn title={t("contact")}>
+          <FooterColumn title={t("contact")} className="lg:col-span-3">
             {setting?.address && (
               <p className="whitespace-pre-line">{setting.address}</p>
             )}
@@ -83,28 +86,29 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
             )}
             {setting?.workingHours && <p>{setting.workingHours}</p>}
           </FooterColumn>
-        </div>
 
-        <div className="mt-14 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/20 pt-8 text-sm text-white/75 sm:flex-row md:mt-16">
-          <p>
-            © {new Date().getFullYear()} Cosmo. {t("rights")}
-          </p>
           {socials.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2">
+            <FooterColumn title={t("socials")} className="lg:col-span-2">
               {socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.url ?? undefined}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-full border border-white/25 px-3 py-1.5 text-white/85 transition-colors duration-150 hover:border-white/60 hover:text-white"
+                  className={footerLinkClass}
                 >
                   {social.label}
-                  <ArrowUpRight className="size-3.5" />
                 </a>
               ))}
-            </div>
+            </FooterColumn>
           )}
+        </div>
+
+        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t-2 border-rule pt-4 text-[13px] text-ink-3 sm:flex-row sm:items-center">
+          <p>
+            © {new Date().getFullYear()} Cosmo. {t("rights")}
+          </p>
+          <LanguageSwitcher className="-mx-1.5" />
         </div>
       </div>
     </footer>

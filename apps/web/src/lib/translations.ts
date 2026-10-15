@@ -7,6 +7,12 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   zh: "中文",
 };
 
+export const LOCALE_SHORT_LABELS: Record<Locale, string> = {
+  mn: "MN",
+  en: "EN",
+  zh: "中文",
+};
+
 export type TranslationsForm<T> = Record<Locale, T>;
 
 export function emptyTranslations<T>(empty: T): TranslationsForm<T> {

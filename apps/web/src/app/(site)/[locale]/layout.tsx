@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Onest } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import "../../globals.css";
@@ -9,7 +9,7 @@ import { getPageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, siteNameFor } from "@/lib/seo";
 
-const geist = Geist({
+const onest = Onest({
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
   variable: "--font-sans",
 });
@@ -41,8 +41,8 @@ export default async function SiteLayout({
   const locale = await getPageLocale(params);
 
   return (
-    <html lang={locale} className={`${geist.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-canvas">
+    <html lang={locale} className={`${onest.variable} h-full antialiased`}>
+      <body className="site flex min-h-full flex-col bg-paper text-ink">
         <NextIntlClientProvider>
           <SiteHeader />
           <main className="flex-1">{children}</main>

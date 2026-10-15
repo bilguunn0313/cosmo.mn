@@ -6,3 +6,5 @@ export const SITE_NAV = [
 ] as const;
 
 export const CONTACT_HREF = "/contact";
+
+export const HERO_MEDIA_ID = "hero-media";

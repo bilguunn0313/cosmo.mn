@@ -36,7 +36,7 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
       tabIndex={isRepeat ? -1 : undefined}
       aria-hidden={isRepeat || undefined}
       className={cn(
-        "flex h-14 w-32 shrink-0 items-center justify-center opacity-55 grayscale transition-[opacity,filter] duration-200 ease-(--ease-out) hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0",
+        "flex h-28 w-44 shrink-0 items-center justify-center border-r-2 border-rule bg-white px-6 py-5 transition-colors duration-150 hover:bg-brand-100 md:h-40 md:w-60 md:px-8 md:py-6",
         isRepeat && "motion-reduce:hidden",
       )}
     >
@@ -47,12 +47,12 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
             alt={brand.name}
             fill
             unoptimized
-            sizes="128px"
+            sizes="240px"
             className="object-contain"
           />
         </span>
       ) : (
-        <span className="text-xl font-semibold tracking-tight">
+        <span className="text-xl font-semibold tracking-heading">
           {brand.name}
         </span>
       )}
@@ -62,10 +62,9 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
 
 interface MarqueeRowProps {
   brands: PublicBrand[];
-  reverse?: boolean;
 }
 
-export function MarqueeRow({ brands, reverse = false }: MarqueeRowProps) {
+export function MarqueeRow({ brands }: MarqueeRowProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const speedChangeRef = useRef<AnimationPlaybackControls | null>(null);
 
@@ -100,17 +99,14 @@ export function MarqueeRow({ brands, reverse = false }: MarqueeRowProps) {
           changeSpeed(1);
         }
       }}
-      className="overflow-hidden mask-x-from-90% mask-x-to-100% motion-reduce:mask-none"
+      className="min-w-0 flex-1 overflow-hidden"
     >
       <div
         ref={trackRef}
-        style={{
-          animationDuration: `${items.length * SECONDS_PER_ITEM}s`,
-          animationDirection: reverse ? "reverse" : "normal",
-        }}
+        style={{ animationDuration: `${items.length * SECONDS_PER_ITEM}s` }}
         className="flex w-max animate-marquee motion-reduce:w-full motion-reduce:animate-none"
       >
-        <div className="flex shrink-0 items-center gap-10 pr-10 motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:pr-0">
+        <div className="flex shrink-0 motion-reduce:w-full motion-reduce:flex-wrap">
           {items.map((brand, index) => (
             <BrandLogo
               key={`${brand.slug}-${index}`}
@@ -119,10 +115,7 @@ export function MarqueeRow({ brands, reverse = false }: MarqueeRowProps) {
             />
           ))}
         </div>
-        <div
-          aria-hidden
-          className="flex shrink-0 items-center gap-10 pr-10 motion-reduce:hidden"
-        >
+        <div aria-hidden className="flex shrink-0 motion-reduce:hidden">
           {items.map((brand, index) => (
             <BrandLogo
               key={`${brand.slug}-copy-${index}`}

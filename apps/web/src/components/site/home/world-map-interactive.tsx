@@ -68,11 +68,9 @@ function CountryTooltip({
         translate: `${tooltipShift(xRatio)} calc(-100% - 12px)`,
         transformOrigin: "bottom center",
       }}
-      className="absolute z-10 flex items-center gap-3 rounded-full border border-white/15 bg-brand-night/85 py-1.5 pr-4 pl-1.5 text-sm whitespace-nowrap text-white shadow-lg backdrop-blur-md"
+      className="absolute z-10 flex items-center gap-3 border-2 border-white/28 bg-brand-night py-1.5 pr-4 pl-1.5 text-sm whitespace-nowrap text-white"
     >
-      <span className="rounded-full bg-white/10 px-3 py-1 font-medium">
-        {countryName}
-      </span>
+      <span className="bg-brand px-3 py-1 font-semibold">{countryName}</span>
       {shownBrands.map((brand) => (
         <Link
           key={brand.slug}
@@ -80,7 +78,7 @@ function CountryTooltip({
           className="flex items-center gap-1.5 text-white/85 transition-colors duration-150 hover:text-white"
         >
           {brand.logoUrl && (
-            <span className="relative size-5 overflow-hidden rounded-full bg-white">
+            <span className="relative size-5 overflow-hidden bg-white">
               <Image
                 src={brand.logoUrl}
                 alt=""
@@ -162,7 +160,7 @@ export function WorldMapInteractive({
               x2={mongolia.pin.x}
               y2={mongolia.pin.y}
             >
-              <stop offset="0%" stopColor="var(--color-brand-glow)" />
+              <stop offset="0%" stopColor="var(--color-brand-400)" />
               <stop offset="100%" stopColor="white" />
             </linearGradient>
           ))}
@@ -209,8 +207,8 @@ export function WorldMapInteractive({
               {origin.shape && (
                 <path
                   d={origin.shape}
-                  fill="var(--color-brand-glow)"
-                  stroke={isActive ? "white" : "var(--color-brand-glow)"}
+                  fill="var(--color-brand-400)"
+                  stroke={isActive ? "white" : "var(--color-brand-400)"}
                   strokeWidth={isActive ? 1.2 : 0.6}
                   className="transition-[stroke] duration-150"
                 />
@@ -220,7 +218,7 @@ export function WorldMapInteractive({
                 fill="none"
                 stroke={`url(#arc-${origin.code})`}
                 strokeWidth={isActive ? 2.4 : 1.6}
-                strokeLinecap="round"
+                strokeLinecap="butt"
                 initial={
                   shouldReduceMotion ? false : { pathLength: 0, opacity: 0 }
                 }
@@ -253,7 +251,7 @@ export function WorldMapInteractive({
           cx={mongolia.pin.x}
           cy={mongolia.pin.y}
           r={16}
-          fill="var(--color-brand-glow)"
+          fill="var(--color-brand-400)"
           opacity={0.6}
           filter="url(#mongolia-glow)"
         />
@@ -262,7 +260,7 @@ export function WorldMapInteractive({
           cy={mongolia.pin.y}
           r={5}
           fill="white"
-          stroke="var(--color-brand-glow)"
+          stroke="var(--color-brand-400)"
           strokeWidth={2}
         />
       </svg>

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { AboutIntroSection } from "@/components/site/home/about-intro-section";
 import { BrandCategoriesSection } from "@/components/site/home/brand-categories-section";
 import { BrandMarquee } from "@/components/site/home/brand-marquee";
 import { HeroCarousel } from "@/components/site/home/hero-carousel";
 import { HeroFallback } from "@/components/site/home/hero-fallback";
+import { HomeCtaSection } from "@/components/site/home/home-cta-section";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
-import { StatsSection } from "@/components/site/home/stats-section";
+import { ValuesSection } from "@/components/site/home/values-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
 import {
@@ -16,7 +18,7 @@ import {
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const HOME_NEWS_COUNT = 4;
+const HOME_NEWS_COUNT = 5;
 
 export async function generateMetadata({
   params,
@@ -46,18 +48,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <h1 className="sr-only">{t("seo.homeTitle")}</h1>
-      <div className="site-container-wide pt-2">
-        {slides.length > 0 ? (
-          <HeroCarousel slides={slides} />
-        ) : (
-          <HeroFallback />
-        )}
-      </div>
+      {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
+      <AboutIntroSection setting={setting} brands={brands} />
       <BrandMarquee brands={brands} />
-      <StatsSection setting={setting} brands={brands} />
       <WorldMapSection brands={brands} locale={locale} />
       <BrandCategoriesSection brands={brands} setting={setting} />
+      <ValuesSection />
       <LatestNewsSection news={news} />
+      <HomeCtaSection setting={setting} />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Reveal } from "@/components/site/reveal";
 import type { PublicBrand } from "@/lib/public-api";
 import type { Locale } from "@/lib/types";
 import { buildWorldMapLayout } from "@/lib/world-map";
@@ -28,20 +29,23 @@ export async function WorldMapSection({
   return (
     <section
       aria-labelledby="world-map-title"
-      className="site-container-wide pt-4 md:pt-6"
+      className="bg-brand-night text-white"
     >
-      <div className="grid gap-10 rounded-3xl bg-brand-night px-4 py-10 text-white sm:px-8 md:gap-14 md:rounded-[2rem] md:py-16 lg:px-14">
-        <div className="grid max-w-2xl gap-4 px-2 sm:px-0">
+      <div className="site-container grid gap-y-10 py-16 md:py-22 lg:grid-cols-12 lg:gap-x-6">
+        <Reveal className="grid content-start gap-5 lg:col-span-4">
+          <p className="eyebrow text-brand-300">{t("originEyebrow")}</p>
           <h2
             id="world-map-title"
-            className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl"
+            className="text-[clamp(40px,4vw,58px)] leading-[1.02] font-semibold tracking-heading text-balance"
           >
             {t("mapTitle", { count: layout.origins.length })}
           </h2>
-          <p className="text-lg text-white/70">{t("mapDescription")}</p>
-        </div>
+          <p className="text-lg text-night-text">{t("mapDescription")}</p>
+        </Reveal>
 
-        <WorldMapInteractive layout={layout} countryNames={countryNames} />
+        <div className="border-2 border-white/28 p-3 md:p-6 lg:col-span-8">
+          <WorldMapInteractive layout={layout} countryNames={countryNames} />
+        </div>
       </div>
     </section>
   );

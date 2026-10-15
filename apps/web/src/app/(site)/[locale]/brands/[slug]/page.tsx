@@ -96,7 +96,7 @@ export default async function BrandPage({
       )}
 
       {brand.sections.length > 0 && (
-        <div className="pt-8 md:pt-14">
+        <div className="mt-8 border-b-2 border-rule md:mt-14">
           <StorySections sections={brand.sections} />
         </div>
       )}

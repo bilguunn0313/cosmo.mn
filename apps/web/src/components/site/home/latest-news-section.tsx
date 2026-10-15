@@ -1,4 +1,4 @@
-import { ArrowUpRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
@@ -10,6 +10,29 @@ import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 
+interface NewsMetaProps {
+  news: PublicNewsItem;
+}
+
+async function NewsMeta({ news }: NewsMetaProps) {
+  const t = await getTranslations("home");
+
+  return (
+    <div className="flex gap-2.5 text-[13px] font-semibold text-ink-3">
+      <NewsDate
+        publishedAt={news.publishedAt}
+        className="text-[13px] text-ink-3"
+      />
+      <span aria-hidden>·</span>
+      {news.videoUrl ? (
+        <span className="text-brand-700">{t("video")}</span>
+      ) : (
+        <span>{t("newsLabel")}</span>
+      )}
+    </div>
+  );
+}
+
 interface FeaturedNewsProps {
   news: PublicNewsItem;
 }
@@ -20,9 +43,9 @@ async function FeaturedNews({ news }: FeaturedNewsProps) {
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group grid content-start gap-6 rounded-3xl outline-offset-4 outline-primary focus-visible:outline-2 md:rounded-[2rem]"
+      className="group flex flex-col gap-4.5 outline-offset-4 outline-brand focus-visible:outline-2 lg:col-span-7"
     >
-      <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-muted transition-[scale] duration-150 ease-(--ease-out) motion-safe:group-active:scale-[0.99] md:rounded-[2rem]">
+      <div className="relative aspect-16/10 overflow-hidden bg-surface lg:aspect-auto lg:h-110">
         <ImageReveal>
           {news.coverUrl ? (
             <Image
@@ -32,30 +55,25 @@ async function FeaturedNews({ news }: FeaturedNewsProps) {
               unoptimized
               loading="eager"
               sizes="(min-width: 1024px) 55vw, 100vw"
-              className="object-cover transition-[scale] duration-700 ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:transition-none"
+              className="object-cover transition-[scale] duration-800 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
             />
           ) : (
-            <div className="bg-brand-gradient absolute inset-0" />
+            <div className="absolute inset-0 bg-brand" />
           )}
         </ImageReveal>
         {news.videoUrl && (
-          <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-md sm:top-6 sm:left-6">
+          <span className="absolute top-0 left-0 inline-flex items-center gap-2 bg-brand px-3.5 py-2 text-[13px] font-semibold text-white">
             <Play className="size-3.5 fill-current" />
             {t("video")}
           </span>
         )}
       </div>
 
-      <Reveal delay={0.35} className="grid max-w-2xl gap-3">
-        <NewsDate publishedAt={news.publishedAt} />
-        <h3 className="text-2xl leading-[1.15] font-semibold tracking-tight text-balance transition-colors duration-150 group-hover:text-primary md:text-4xl">
+      <Reveal delay={0.35} className="grid gap-4.5">
+        <NewsMeta news={news} />
+        <h3 className="text-[clamp(28px,2.5vw,36px)] leading-[1.1] font-semibold tracking-[-0.03em] text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
         </h3>
-        {news.summary && (
-          <p className="line-clamp-2 text-base text-muted-foreground md:text-lg">
-            {news.summary}
-          </p>
-        )}
       </Reveal>
     </Link>
   );
@@ -63,31 +81,22 @@ async function FeaturedNews({ news }: FeaturedNewsProps) {
 
 interface NewsRowProps {
   news: PublicNewsItem;
+  isFirst: boolean;
 }
 
-async function NewsRow({ news }: NewsRowProps) {
-  const t = await getTranslations("home");
-
+function NewsRow({ news, isFirst }: NewsRowProps) {
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group flex items-start justify-between gap-6 py-6 outline-offset-4 outline-primary focus-visible:outline-2 md:py-8"
+      className={cn(
+        "group grid gap-2.5 pb-6 outline-offset-4 outline-brand focus-visible:outline-2",
+        !isFirst && "border-t-2 border-rule pt-6",
+      )}
     >
-      <div className="grid gap-2">
-        <div className="flex items-center gap-3">
-          <NewsDate publishedAt={news.publishedAt} />
-          {news.videoUrl && (
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
-              <Play className="size-3 fill-current" />
-              {t("video")}
-            </span>
-          )}
-        </div>
-        <h3 className="line-clamp-2 text-xl leading-snug font-semibold tracking-tight transition-colors duration-150 group-hover:text-primary md:text-2xl">
-          {news.title}
-        </h3>
-      </div>
-      <ArrowUpRight className="mt-1 size-5 shrink-0 text-muted-foreground transition-[color,translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+      <NewsMeta news={news} />
+      <h3 className="line-clamp-2 text-xl leading-[1.2] font-semibold tracking-[-0.015em] transition-colors duration-150 group-hover:text-brand-700 md:text-2xl">
+        {news.title}
+      </h3>
     </Link>
   );
 }
@@ -107,7 +116,7 @@ export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
   return (
     <section
       aria-labelledby="latest-news-title"
-      className="site-container-wide grid gap-8 pt-16 md:gap-10 md:pt-24"
+      className="site-container pt-20 md:pt-32"
     >
       <SectionHeader
         id="latest-news-title"
@@ -115,20 +124,15 @@ export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
         link={{ href: "/media", label: t("allNews") }}
       />
 
-      <div
-        className={cn(
-          "grid gap-10",
-          rest.length > 0 && "lg:grid-cols-[1.4fr_1fr] lg:gap-16",
-        )}
-      >
+      <div className="mt-8 grid gap-y-12 lg:grid-cols-12 lg:gap-x-6">
         <FeaturedNews news={featured} />
 
         {rest.length > 0 && (
-          <ul className="divide-y border-y lg:self-start">
+          <ul className="lg:col-span-5">
             {rest.map((item, index) => (
               <li key={item.slug}>
                 <Reveal index={index}>
-                  <NewsRow news={item} />
+                  <NewsRow news={item} isFirst={index === 0} />
                 </Reveal>
               </li>
             ))}

@@ -1,0 +1,79 @@
+/* Append to apps/web/src/app/globals.css */
+
+@utility hairline-grid {
+  /* Square cells separated by 2px rules; empty trailing cells stay page-coloured. */
+  border-top: 2px solid var(--color-rule);
+  border-left: 2px solid var(--color-rule);
+  & > * {
+    border-right: 2px solid var(--color-rule);
+    border-bottom: 2px solid var(--color-rule);
+  }
+}
+
+@layer components {
+  .leaf-next {
+    animation: leaf-next 0.7s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+  }
+  .leaf-prev {
+    animation: leaf-prev 0.7s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+  }
+
+  .hero-zoom {
+    animation: hero-zoom 1.6s var(--ease-out) both;
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 1.8s var(--ease-out) infinite;
+  }
+
+  @supports (animation-timeline: view()) {
+    .book-cover-open {
+      animation: book-open linear both;
+      animation-timeline: view();
+      animation-range: entry 70% cover 50%;
+    }
+    .hero-drift {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 600px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .leaf-next,
+    .leaf-prev,
+    .hero-zoom,
+    .pulse-ring,
+    .hero-drift {
+      animation: none;
+    }
+    .book-cover-open {
+      display: none;
+    }
+  }
+}
+
+@keyframes leaf-next {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-180deg); }
+}
+@keyframes leaf-prev {
+  from { transform: rotateY(-180deg); }
+  to { transform: rotateY(0deg); }
+}
+@keyframes book-open {
+  0% { transform: rotateY(0deg); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: rotateY(-180deg); opacity: 0; }
+}
+@keyframes hero-zoom {
+  from { transform: scale(1.12); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes hero-drift {
+  to { transform: translateY(8%); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
