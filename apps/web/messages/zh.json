@@ -95,7 +95,25 @@
     "showAll": "查看全部品牌",
     "website": "官方网站",
     "products": "产品",
-    "related": "更多品牌"
+    "related": "更多品牌",
+    "count": "{brands} 个品牌 · {categories} 个品类",
+    "partnerTitle": "想将您的品牌引入蒙古吗？",
+    "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
+    "partnerButton": "洽谈合作",
+    "origin": "原产地",
+    "productCount": "{count} 款产品",
+    "wholesaleEyebrow": "零售商或经销商？",
+    "wholesaleTitle": "批量订购 {name} 产品",
+    "wholesaleText": "关于批发价格、配送及订购条件，请联系我们的销售部门。",
+    "wholesaleButton": "获取报价"
+  },
+  "catalog": {
+    "title": "产品目录",
+    "view": "查看目录",
+    "hint": "翻页浏览全部产品",
+    "previous": "上一页",
+    "next": "下一页",
+    "fullscreen": "全屏查看"
   },
   "media": {
     "description": "公司新闻、活动及新品发布。",

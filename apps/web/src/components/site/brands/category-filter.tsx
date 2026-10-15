@@ -19,8 +19,11 @@ export async function CategoryFilter({
   const t = await getTranslations();
 
   return (
-    <nav aria-label={t("brands.filterLabel")}>
-      <ul className="flex flex-wrap gap-2">
+    <nav
+      aria-label={t("brands.filterLabel")}
+      className="no-scrollbar -mx-4 overflow-x-auto border-b-2 border-rule px-4 md:mx-0 md:px-0"
+    >
+      <ul className="flex gap-1">
         {options.map(({ category, count }) => (
           <li key={category ?? "all"}>
             <Link
@@ -30,10 +33,12 @@ export async function CategoryFilter({
               }}
               scroll={false}
               aria-current={category === activeCategory ? "page" : undefined}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-card px-5 text-[15px] font-medium text-foreground/75 transition-[background-color,color,scale] duration-150 ease-(--ease-out) hover:text-foreground motion-safe:active:scale-[0.97] aria-[current=page]:bg-primary aria-[current=page]:text-primary-foreground"
+              className="-mb-0.5 inline-flex items-baseline gap-2 border-b-4 border-transparent px-3 pt-4 pb-3.5 text-base font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:text-brand-700 aria-[current=page]:border-brand aria-[current=page]:text-brand-700 md:px-4 md:text-[17px]"
             >
               {category ? t(`categories.${category}`) : t("brands.all")}
-              <span className="text-sm tabular-nums opacity-60">{count}</span>
+              <span className="text-[13px] font-semibold text-ink-3 tabular-nums">
+                {count}
+              </span>
             </Link>
           </li>
         ))}

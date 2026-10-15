@@ -1,20 +1,34 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { BrandCard } from "@/components/site/brands/brand-card";
-import { BrandHero } from "@/components/site/brands/brand-hero";
-import { ProductGrid } from "@/components/site/brands/product-grid";
+import { BrandHead } from "@/components/site/brands/brand-head";
+import { BrandMiniCard } from "@/components/site/brands/brand-mini-card";
+import { BrandProducts } from "@/components/site/brands/brand-products";
+import { BrandWholesaleBand } from "@/components/site/brands/brand-wholesale-band";
+import { GridFillers } from "@/components/site/grid-fillers";
 import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
+import { siteButtonClass } from "@/components/site/site-button";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { fetchBrand, fetchBrands } from "@/lib/public-api";
+import type { PublicBrand } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 import { brandPath } from "@/lib/site-links";
 
 const MAX_RELATED = 4;
+
+function pickRelatedBrands(current: PublicBrand, allBrands: PublicBrand[]) {
+  const others = allBrands.filter((brand) => brand.slug !== current.slug);
+  const sharesCategory = (brand: PublicBrand) =>
+    brand.categories.some((category) => current.categories.includes(category));
+
+  return [
+    ...others.filter(sharesCategory),
+    ...others.filter((brand) => !sharesCategory(brand)),
+  ].slice(0, MAX_RELATED);
+}
 
 export async function generateMetadata({
   params,
@@ -53,81 +67,61 @@ export default async function BrandPage({
   }
 
   const countryNames = new Intl.DisplayNames([locale], { type: "region" });
-  const countryNameOf = (code: string | null) =>
-    code ? (countryNames.of(code) ?? null) : null;
-
-  const mainCategory = brand.categories[0];
-  const relatedBrands = allBrands
-    .filter(
-      (other) =>
-        other.slug !== brand.slug &&
-        other.categories.some((category) =>
-          brand.categories.includes(category),
-        ),
-    )
-    .slice(0, MAX_RELATED);
+  const countryName = brand.originCountry
+    ? (countryNames.of(brand.originCountry) ?? null)
+    : null;
+  const relatedBrands = pickRelatedBrands(brand, allBrands);
 
   return (
-    <div className="site-container-wide grid gap-4 pt-4 md:gap-6 md:pt-6">
-      <Link
-        href="/brands"
-        className="group inline-flex w-fit items-center gap-2 rounded-full px-1 py-1 text-[15px] font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground"
-      >
-        <ArrowLeft className="size-4 transition-[translate] duration-200 ease-(--ease-out) group-hover:-translate-x-0.5" />
-        {t("nav.brands")}
-      </Link>
-
-      <BrandHero
-        brand={brand}
-        countryName={countryNameOf(brand.originCountry)}
-      />
+    <>
+      <BrandHead brand={brand} countryName={countryName} />
 
       {brand.products.length > 0 && (
-        <section
-          aria-labelledby="brand-products-title"
-          className="grid gap-8 pt-12 md:gap-10 md:pt-20"
-        >
-          <SectionHeader
-            id="brand-products-title"
-            title={t("brands.products")}
-          />
-          <ProductGrid products={brand.products} />
-        </section>
+        <BrandProducts products={brand.products} summary={brand.summary} />
       )}
 
       {brand.sections.length > 0 && (
-        <div className="mt-8 border-b-2 border-rule md:mt-14">
-          <StorySections sections={brand.sections} />
+        <div className="site-container pt-20 md:pt-28">
+          <div className="border-b-2 border-rule">
+            <StorySections sections={brand.sections} />
+          </div>
         </div>
       )}
+
+      <BrandWholesaleBand brandName={brand.name} />
 
       {relatedBrands.length > 0 && (
         <section
           aria-labelledby="related-brands-title"
-          className="grid gap-8 pt-12 md:gap-10 md:pt-20"
+          className="site-container pt-20 md:pt-28"
         >
-          <SectionHeader
-            id="related-brands-title"
-            title={t("brands.related")}
-            link={{
-              href: `/brands?category=${mainCategory}`,
-              label: t("home.allBrands"),
-            }}
-          />
-          <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-rule pb-5">
+            <h2
+              id="related-brands-title"
+              className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"
+            >
+              {t("brands.related")}
+            </h2>
+            <Link href="/brands" className={siteButtonClass("ghost", "group")}>
+              {t("home.allBrands")}
+              <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+          <ul className="mt-6 grid grid-cols-2 gap-0.5 border-2 border-rule bg-rule xl:grid-cols-4">
             {relatedBrands.map((other, index) => (
-              <li key={other.slug}>
-                <Reveal index={index}>
-                  <BrandCard
-                    brand={other}
-                    countryName={countryNameOf(other.originCountry)}
-                  />
+              <li key={other.slug} className="bg-paper">
+                <Reveal index={index} className="h-full">
+                  <BrandMiniCard brand={other} />
                 </Reveal>
               </li>
             ))}
+            <GridFillers
+              itemCount={relatedBrands.length}
+              columns={{ base: 2, md: 2, xl: 4 }}
+            />
           </ul>
         </section>
       )}
-    </div>
+    </>
   );
 }

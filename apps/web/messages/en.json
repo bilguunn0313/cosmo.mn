@@ -95,7 +95,25 @@
     "showAll": "View all brands",
     "website": "Website",
     "products": "Products",
-    "related": "More brands"
+    "related": "More brands",
+    "count": "{brands, plural, one {# brand} other {# brands}} · {categories, plural, one {# category} other {# categories}}",
+    "partnerTitle": "Bring your brand to Mongolia?",
+    "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
+    "partnerButton": "Partner with us",
+    "origin": "Origin",
+    "productCount": "{count, plural, one {# product} other {# products}}",
+    "wholesaleEyebrow": "Retailer or reseller?",
+    "wholesaleTitle": "Order {name} products wholesale",
+    "wholesaleText": "Contact our sales team about wholesale prices, delivery and ordering terms.",
+    "wholesaleButton": "Request a quote"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "view": "View catalog",
+    "hint": "Turn the pages to see all our products",
+    "previous": "Previous page",
+    "next": "Next page",
+    "fullscreen": "Full screen"
   },
   "media": {
     "description": "Company news, events and new product launches.",

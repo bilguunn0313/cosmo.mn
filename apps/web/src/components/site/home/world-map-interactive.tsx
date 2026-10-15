@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { CountryFlag } from "@/components/site/country-flag";
 import { Link } from "@/i18n/navigation";
 import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
@@ -70,7 +71,10 @@ function CountryTooltip({
       }}
       className="absolute z-10 flex items-center gap-3 border-2 border-white/28 bg-brand-night py-1.5 pr-4 pl-1.5 text-sm whitespace-nowrap text-white"
     >
-      <span className="bg-brand px-3 py-1 font-semibold">{countryName}</span>
+      <span className="inline-flex items-center gap-2 bg-brand px-3 py-1 font-semibold">
+        <CountryFlag code={origin.code} className="shadow-none" />
+        {countryName}
+      </span>
       {shownBrands.map((brand) => (
         <Link
           key={brand.slug}

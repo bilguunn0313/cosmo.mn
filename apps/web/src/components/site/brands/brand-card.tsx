@@ -1,69 +1,61 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
-import { cn } from "@/lib/utils";
 
 interface BrandCardProps {
   brand: PublicBrand;
   countryName: string | null;
 }
 
-export function BrandCard({ brand, countryName }: BrandCardProps) {
+export async function BrandCard({ brand, countryName }: BrandCardProps) {
+  const t = await getTranslations("categories");
+  const categoryNames = brand.categories.map((category) => t(category));
+  const meta = [categoryNames.join(", "), countryName]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <Link
       href={brandPath(brand.slug)}
-      className="group grid overflow-hidden rounded-3xl bg-card outline-offset-4 outline-primary transition-[scale] duration-150 ease-(--ease-out) focus-visible:outline-2 motion-safe:active:scale-[0.99] md:rounded-[2rem]"
+      className="group flex h-full flex-col bg-paper outline-offset-[-2px] outline-brand focus-visible:outline-2"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
-        {brand.coverUrl && (
+      <div className="relative h-32 bg-white sm:h-40 lg:h-50">
+        {brand.logoUrl ? (
           <Image
-            src={brand.coverUrl}
-            alt=""
+            src={brand.logoUrl}
+            alt={brand.name}
             fill
             unoptimized
             sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-            className="scale-[1.04] object-cover opacity-0 transition-[opacity,scale] duration-500 ease-(--ease-out) group-hover:scale-100 group-hover:opacity-100 motion-reduce:scale-100"
+            className="object-contain p-6 transition-[scale] duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none sm:p-8 lg:px-10 lg:py-9"
           />
+        ) : (
+          <span className="absolute inset-0 grid place-items-center text-2xl font-semibold tracking-heading text-ink-3">
+            {brand.name}
+          </span>
         )}
-        <div
-          className={cn(
-            "absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-300 ease-(--ease-out) sm:p-12",
-            brand.coverUrl && "group-hover:opacity-0",
-          )}
-        >
-          {brand.logoUrl ? (
-            <span className="relative size-full">
-              <Image
-                src={brand.logoUrl}
-                alt={brand.name}
-                fill
-                unoptimized
-                sizes="(min-width: 768px) 20vw, 40vw"
-                className="object-contain"
-              />
-            </span>
-          ) : (
-            <span className="text-2xl font-semibold tracking-tight">
-              {brand.name}
-            </span>
-          )}
-        </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 border-t border-foreground/5 px-5 py-4 md:px-6 md:py-5">
-        <div className="grid min-w-0 gap-0.5">
-          <h2 className="truncate text-base font-semibold tracking-tight md:text-lg">
+      <div className="flex flex-1 flex-col gap-2 border-t-2 border-rule p-4 transition-colors duration-200 group-hover:bg-brand-100 sm:gap-2.5 sm:px-6 sm:pt-5 sm:pb-6">
+        <span className="flex items-center justify-between gap-3">
+          <span className="min-w-0 text-lg leading-tight font-semibold tracking-heading wrap-anywhere sm:text-[clamp(19px,1.9vw,26px)]">
             {brand.name}
-          </h2>
-          {countryName && (
-            <p className="truncate text-sm text-muted-foreground">
-              {countryName}
-            </p>
-          )}
-        </div>
-        <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-[color,translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+          </span>
+          <ArrowRight className="size-5 shrink-0 text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-0.5 sm:size-5.5" />
+        </span>
+        {meta && (
+          <span className="text-xs font-semibold tracking-[0.04em] text-brand-700 sm:text-[13px]">
+            {meta}
+          </span>
+        )}
+        {brand.summary && (
+          <span className="hidden text-[15px] leading-[1.45] text-ink-2 sm:line-clamp-2">
+            {brand.summary}
+          </span>
+        )}
       </div>
     </Link>
   );

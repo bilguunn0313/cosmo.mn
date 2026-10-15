@@ -228,6 +228,50 @@
     stroke-linejoin: miter;
   }
 
+  .cover-zoom {
+    animation: cover-zoom 1.6s var(--ease-out) both;
+  }
+
+  .page-turn-next {
+    animation: page-turn-next 0.7s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+  }
+
+  .page-turn-prev {
+    animation: page-turn-prev 0.7s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+  }
+
+  .book-cover {
+    display: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    .cover-drift {
+      animation: cover-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 600px;
+    }
+
+    .book-cover {
+      display: block;
+      animation: book-open linear both;
+      animation-timeline: view();
+      animation-range: entry 70% cover 50%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cover-zoom,
+    .cover-drift,
+    .page-turn-next,
+    .page-turn-prev {
+      animation: none;
+    }
+
+    .book-cover {
+      display: none;
+    }
+  }
+
   .glass {
     background-color: color-mix(in oklch, var(--background) 75%, transparent);
     backdrop-filter: blur(16px) saturate(180%);
@@ -352,6 +396,54 @@
 
 ::view-transition-new(site-header) {
   animation: none;
+}
+
+@keyframes cover-zoom {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes cover-drift {
+  to {
+    transform: translateY(8%);
+  }
+}
+
+@keyframes page-turn-next {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes page-turn-prev {
+  from {
+    transform: rotateY(-180deg);
+  }
+
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes book-open {
+  49.9% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0;
+    transform: rotateY(-180deg);
+  }
 }
 
 @keyframes page-exit {
