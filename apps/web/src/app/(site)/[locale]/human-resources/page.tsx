@@ -10,6 +10,7 @@ import { PrinciplesBand } from "@/components/site/careers/principles-band";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { totalEmployees } from "@/lib/hr-facts";
+import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchSections, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
@@ -39,7 +40,7 @@ export default async function HumanResourcesPage({
 
   return (
     <>
-      <CareersIntro />
+      <CareersIntro imageUrl={pageBannerUrl(setting, "careers")} />
       <CareersStats employeeCount={totalEmployees()} />
       <DepartmentChart />
       <GrowthSection />

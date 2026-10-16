@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageBannerPanel } from "@/components/admin/page-banner-panel";
 import { PageHeader } from "@/components/admin/page-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 
@@ -12,8 +13,11 @@ export default function HumanResourcesPageAdmin() {
         description="Сайтын «Хүний нөөц» хуудас. Хэсгүүд дээрээс доош энэ дарааллаар харагдана."
       />
 
+      <PageBannerPanel page="careers" step={1} />
+
       <SectionsPanel
         source={{ page: "human-resources" }}
+        step={2}
         title="Хэсгүүд"
         description="Жишээ нь «Хүний нөөцийн бодлого», «Байгууллагын соёл», «Сургалт, хөгжил»."
         emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Хүний нөөцийн бодлого» хэсгээс эхэлнэ үү."

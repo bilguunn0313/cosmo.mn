@@ -2,15 +2,22 @@ import Image from "next/image";
 
 interface PageBannerProps {
   title: string;
-  imageUrl: string | null;
+  description?: string;
+  imageUrl: string;
+  children?: React.ReactNode;
 }
 
-export function PageBanner({ title, imageUrl }: PageBannerProps) {
+export function PageBanner({
+  title,
+  description,
+  imageUrl,
+  children,
+}: PageBannerProps) {
   return (
-    <section className="relative h-[clamp(320px,58vh,640px)] overflow-hidden bg-brand-night">
-      {imageUrl && (
-        <>
-          <div className="cover-zoom absolute inset-0">
+    <section className="site-container pt-6 md:pt-10">
+      <div className="relative h-[clamp(420px,66vh,720px)] overflow-hidden bg-brand-night">
+        <div className="cover-zoom absolute inset-x-0 -inset-y-[6%]">
+          <div className="cover-drift absolute inset-0">
             <Image
               src={imageUrl}
               alt=""
@@ -21,17 +28,26 @@ export function PageBanner({ title, imageUrl }: PageBannerProps) {
               className="object-cover"
             />
           </div>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-linear-to-t from-brand-night/70 to-transparent"
-          />
-        </>
-      )}
-      <div className="absolute inset-x-0 bottom-0">
-        <div className="site-container pb-8 md:pb-12 xl:pb-16">
-          <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(44px,6vw,96px)] leading-[0.95] font-semibold tracking-heading text-white duration-1000 ease-(--ease-out) fill-mode-both delay-300">
+        </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-4/5 bg-linear-to-t from-brand-night/85 via-brand-night/45 to-transparent md:h-3/5"
+        />
+
+        <div className="absolute inset-x-4 bottom-6 grid gap-6 text-white md:inset-x-8 md:bottom-10 lg:grid-cols-12 lg:items-end lg:gap-x-6 xl:inset-x-12 xl:bottom-12">
+          <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(52px,8vw,136px)] leading-[0.88] font-semibold tracking-heading text-balance duration-900 ease-(--ease-out) fill-mode-both delay-250 lg:col-span-8">
             {title}
           </h1>
+          {(description || children) && (
+            <div className="animate-in fade-in slide-in-from-bottom-6 grid justify-items-start gap-5 duration-900 ease-(--ease-out) fill-mode-both delay-400 lg:col-span-4">
+              {description && (
+                <p className="max-w-120 text-lg leading-normal text-pretty md:text-[19px]">
+                  {description}
+                </p>
+              )}
+              {children}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -8,6 +8,7 @@ const VARIANT_CLASSES = {
   secondary:
     "border border-ink-3 text-ink hover:bg-ink/7 active:bg-ink/14",
   white: "bg-white text-brand-700 hover:bg-brand-100",
+  outlineWhite: "border border-white/70 text-white hover:bg-white/12",
   ghost: "h-auto gap-2 px-1 py-2 text-brand-700 hover:bg-brand-100",
 } as const;
 

@@ -11,7 +11,6 @@ export async function PartnerBand() {
   return (
     <section aria-labelledby="partner-title" className="bg-brand text-white">
       <div className="site-container flex flex-col items-start gap-7 pt-20 pb-18 md:pt-28 md:pb-24">
-        <p className="eyebrow">{t("home.partnerEyebrow")}</p>
         <Reveal>
           <h2
             id="partner-title"

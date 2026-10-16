@@ -6,8 +6,8 @@ import { PartnerBand } from "@/components/site/about/partner-band";
 import { ValuesList } from "@/components/site/about/values-list";
 import { PageBanner } from "@/components/site/page-banner";
 import { getPageLocale } from "@/i18n/locale";
-import { ABOUT_CONTENT } from "@/lib/about";
-import { fetchMilestones } from "@/lib/public-api";
+import { pageBannerUrl } from "@/lib/page-banners";
+import { fetchMilestones, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -29,13 +29,17 @@ export default async function AboutPage({
 }: PageProps<"/[locale]/about">) {
   const locale = await getPageLocale(params);
   const t = await getTranslations();
-  const milestones = await fetchMilestones(locale);
+  const [milestones, setting] = await Promise.all([
+    fetchMilestones(locale),
+    fetchSiteSetting(locale),
+  ]);
 
   return (
     <>
       <PageBanner
         title={t("nav.about")}
-        imageUrl={ABOUT_CONTENT.bannerImageUrl}
+        description={t("about.description")}
+        imageUrl={pageBannerUrl(setting, "about")}
       />
       <CeoMessage />
       <HistoryTimeline

@@ -96,7 +96,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
           href={setting.mapUrl ?? undefined}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative block aspect-16/10 overflow-hidden bg-white/10"
+          className="group relative block aspect-16/10 overflow-hidden rounded-card bg-white/10"
         >
           <Image
             src={setting.mapImageUrl}

@@ -22,7 +22,7 @@ export async function FeaturedNews({ news }: FeaturedNewsProps) {
       href={newsPath(news.slug)}
       className="group grid gap-6 border-b border-rule pb-10 outline-offset-4 outline-brand focus-visible:outline-2 md:pb-14 lg:grid-cols-12 lg:items-end lg:gap-x-6"
     >
-      <div className="relative aspect-16/10 overflow-hidden bg-surface lg:col-span-7 lg:aspect-auto lg:h-[min(62vh,560px)]">
+      <div className="relative aspect-16/10 overflow-hidden rounded-card bg-surface lg:col-span-7 lg:aspect-auto lg:h-[min(62vh,560px)]">
         <ImageReveal>
           {news.coverUrl ? (
             <Image

@@ -187,6 +187,14 @@ export interface SiteSetting {
   beautyImage: Media | null;
   householdImageId: number | null;
   householdImage: Media | null;
+  aboutBannerImageId: number | null;
+  aboutBannerImage: Media | null;
+  careersBannerImageId: number | null;
+  careersBannerImage: Media | null;
+  mediaBannerImageId: number | null;
+  mediaBannerImage: Media | null;
+  brandsBannerImageId: number | null;
+  brandsBannerImage: Media | null;
   foundedYear: number | null;
   employeeCount: number | null;
   salesPointCount: number | null;

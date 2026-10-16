@@ -138,7 +138,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
 
       {brand.coverUrl && (
         <div className="site-container mt-10 md:mt-14">
-          <div className="relative h-[min(60vh,540px)] overflow-hidden bg-surface">
+          <div className="relative h-[min(60vh,540px)] overflow-hidden rounded-card bg-surface">
             <ImageReveal delay={0.2}>
               <Image
                 src={brand.coverUrl}

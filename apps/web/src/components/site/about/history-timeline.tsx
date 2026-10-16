@@ -91,16 +91,16 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
     <section
       id="history"
       aria-labelledby="history-title"
-      className="mx-auto max-w-300 scroll-mt-24 px-4 pt-24 md:px-6 md:pt-32 xl:px-12 xl:pt-40"
+      className="site-container scroll-mt-24 overflow-x-clip pt-24 md:pt-32 xl:pt-40"
     >
       <h2
         id="history-title"
-        className="pb-10 text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-16"
+        className="border-b border-ink pb-6 text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-10"
       >
         {title}
       </h2>
 
-      <div ref={trackRef} className="relative">
+      <div ref={trackRef} className="relative mx-auto mt-10 max-w-300 md:mt-16">
         <div
           aria-hidden
           className="absolute inset-y-0 left-3.5 w-0.5 -translate-x-1/2 bg-rule md:left-1/2"

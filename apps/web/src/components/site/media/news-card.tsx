@@ -15,9 +15,9 @@ export function NewsCard({ news }: NewsCardProps) {
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group flex h-full flex-col bg-paper outline-offset-[-2px] outline-brand focus-visible:outline-2"
+      className="group flex h-full flex-col bg-paper transition-colors duration-200 outline-offset-[-2px] hover:bg-brand-100 outline-brand focus-visible:outline-2"
     >
-      <div className="relative aspect-16/10 overflow-hidden bg-surface">
+      <div className="relative mx-3 mt-3 aspect-16/10 overflow-hidden rounded-card bg-surface md:mx-4 md:mt-4">
         {news.coverUrl ? (
           <Image
             src={news.coverUrl}
@@ -33,7 +33,7 @@ export function NewsCard({ news }: NewsCardProps) {
         {news.videoUrl && <VideoBadge />}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 border-t border-rule p-5 transition-colors duration-200 group-hover:bg-brand-100 md:px-6 md:pt-5 md:pb-7">
+      <div className="flex flex-1 flex-col gap-3 p-5 md:px-6 md:pt-5 md:pb-7">
         <NewsMeta news={news} />
         <h3 className="line-clamp-3 text-[clamp(21px,1.7vw,26px)] leading-[1.15] font-semibold tracking-heading text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}

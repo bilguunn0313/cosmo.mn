@@ -31,35 +31,33 @@ export async function ValuesList() {
       </div>
 
       <ul>
-        {VALUE_KEYS.map((key, index) => {
+        {VALUE_KEYS.map((key) => {
           const imageUrl = ABOUT_CONTENT.valueImageUrls[key];
 
           return (
             <li
               key={key}
-              className="flex flex-col gap-5 border-b border-rule py-8 sm:flex-row sm:items-center sm:gap-12 md:py-14 lg:gap-24"
+              className="grid gap-4 border-b border-rule py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-12"
             >
-              <Reveal className="relative flex aspect-square w-28 shrink-0 items-end overflow-hidden rounded-card bg-brand-100 p-4 sm:w-[clamp(120px,14vw,200px)]">
-                {imageUrl ? (
-                  <Image
-                    src={imageUrl}
-                    alt=""
-                    fill
-                    unoptimized
-                    sizes="200px"
-                    className="object-cover"
-                  />
-                ) : (
-                  <span className="text-[clamp(40px,4vw,64px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+              <Reveal className="flex items-center gap-6 md:col-span-4">
+                {imageUrl && (
+                  <div className="relative aspect-square w-24 shrink-0 overflow-hidden rounded-card bg-brand-100 md:w-[clamp(96px,8vw,144px)]">
+                    <Image
+                      src={imageUrl}
+                      alt=""
+                      fill
+                      unoptimized
+                      sizes="144px"
+                      className="object-cover"
+                    />
+                  </div>
                 )}
+                <h3 className="text-[clamp(28px,2.6vw,40px)] leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-brand">
+                  {t(`home.values.${key}.title`)}
+                </h3>
               </Reveal>
-              <Reveal delay={0.08} className="min-w-0 flex-1">
-                <p className="text-[clamp(24px,2.6vw,40px)] leading-tight font-medium tracking-[-0.025em] text-pretty">
-                  <strong className="font-semibold text-brand">
-                    {t(`home.values.${key}.title`)}.
-                  </strong>{" "}
+              <Reveal delay={0.08} className="md:col-span-7 md:col-start-6">
+                <p className="max-w-180 text-[clamp(20px,1.7vw,26px)] leading-snug tracking-[-0.01em] text-pretty text-ink-2">
                   {t(`home.values.${key}.text`)}
                 </p>
               </Reveal>

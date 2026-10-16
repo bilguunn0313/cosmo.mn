@@ -61,6 +61,10 @@ model Media {
   siteSettingFoods      SiteSetting[]  @relation("SiteSettingFood")
   siteSettingBeauties   SiteSetting[]  @relation("SiteSettingBeauty")
   siteSettingHouseholds SiteSetting[]  @relation("SiteSettingHousehold")
+  siteSettingAbouts     SiteSetting[]  @relation("SiteSettingAboutBanner")
+  siteSettingCareers    SiteSetting[]  @relation("SiteSettingCareersBanner")
+  siteSettingMedias     SiteSetting[]  @relation("SiteSettingMediaBanner")
+  siteSettingBrands     SiteSetting[]  @relation("SiteSettingBrandsBanner")
 }
 
 model Slide {
@@ -261,26 +265,34 @@ model NewsTranslation {
 }
 
 model SiteSetting {
-  id               Int      @id @default(1)
-  phone            String?
-  email            String?
-  facebookUrl      String?
-  instagramUrl     String?
-  youtubeUrl       String?
-  linkedinUrl      String?
-  mapUrl           String?
-  mapImageId       Int?
-  mapImage         Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
-  foodImageId      Int?
-  foodImage        Media?   @relation("SiteSettingFood", fields: [foodImageId], references: [id])
-  beautyImageId    Int?
-  beautyImage      Media?   @relation("SiteSettingBeauty", fields: [beautyImageId], references: [id])
-  householdImageId Int?
-  householdImage   Media?   @relation("SiteSettingHousehold", fields: [householdImageId], references: [id])
-  foundedYear      Int?
-  employeeCount    Int?
-  salesPointCount  Int?
-  updatedAt        DateTime @updatedAt
+  id                   Int      @id @default(1)
+  phone                String?
+  email                String?
+  facebookUrl          String?
+  instagramUrl         String?
+  youtubeUrl           String?
+  linkedinUrl          String?
+  mapUrl               String?
+  mapImageId           Int?
+  mapImage             Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
+  foodImageId          Int?
+  foodImage            Media?   @relation("SiteSettingFood", fields: [foodImageId], references: [id])
+  beautyImageId        Int?
+  beautyImage          Media?   @relation("SiteSettingBeauty", fields: [beautyImageId], references: [id])
+  householdImageId     Int?
+  householdImage       Media?   @relation("SiteSettingHousehold", fields: [householdImageId], references: [id])
+  aboutBannerImageId   Int?
+  aboutBannerImage     Media?   @relation("SiteSettingAboutBanner", fields: [aboutBannerImageId], references: [id])
+  careersBannerImageId Int?
+  careersBannerImage   Media?   @relation("SiteSettingCareersBanner", fields: [careersBannerImageId], references: [id])
+  mediaBannerImageId   Int?
+  mediaBannerImage     Media?   @relation("SiteSettingMediaBanner", fields: [mediaBannerImageId], references: [id])
+  brandsBannerImageId  Int?
+  brandsBannerImage    Media?   @relation("SiteSettingBrandsBanner", fields: [brandsBannerImageId], references: [id])
+  foundedYear          Int?
+  employeeCount        Int?
+  salesPointCount      Int?
+  updatedAt            DateTime @updatedAt
 
   translations SiteSettingTranslation[]
 }

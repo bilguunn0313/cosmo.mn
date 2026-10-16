@@ -11,6 +11,10 @@ const siteSettingInclude = {
   foodImage: true,
   beautyImage: true,
   householdImage: true,
+  aboutBannerImage: true,
+  careersBannerImage: true,
+  mediaBannerImage: true,
+  brandsBannerImage: true,
   translations: true,
 } satisfies Prisma.SiteSettingInclude;
 
@@ -67,6 +71,12 @@ export class SiteSettingsService {
         FOOD: setting.foodImage?.url ?? null,
         BEAUTY: setting.beautyImage?.url ?? null,
         HOUSEHOLD: setting.householdImage?.url ?? null,
+      },
+      pageBanners: {
+        about: setting.aboutBannerImage?.url ?? null,
+        careers: setting.careersBannerImage?.url ?? null,
+        media: setting.mediaBannerImage?.url ?? null,
+        brands: setting.brandsBannerImage?.url ?? null,
       },
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,

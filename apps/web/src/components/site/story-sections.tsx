@@ -16,10 +16,10 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
   const number = String(index + 1).padStart(2, "0");
 
   return (
-    <article className="grid border-t border-rule md:grid-cols-2">
+    <article className="grid border-t border-rule pt-6 md:grid-cols-2 md:pt-8">
       <div
         className={cn(
-          "relative h-[min(60vh,520px)] overflow-hidden",
+          "relative h-[min(60vh,520px)] overflow-hidden rounded-card",
           isTextFirst && "md:order-2",
         )}
       >
@@ -50,7 +50,6 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
           isTextFirst ? "md:pr-12" : "md:pl-12",
         )}
       >
-        <span className="text-sm font-semibold text-brand">{number}</span>
         <h2 className="eyebrow text-[15px] text-ink-3">{label}</h2>
         {children}
       </Reveal>

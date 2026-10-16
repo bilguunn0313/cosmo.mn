@@ -1,19 +1,20 @@
 import { BRAND_CATEGORIES, type BrandCategory } from "@cosmo/shared";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { BrandCard } from "@/components/site/brands/brand-card";
-import { BrandsCover } from "@/components/site/brands/brands-cover";
 import { CatalogBook } from "@/components/site/brands/catalog-book";
 import { CategoryFilter } from "@/components/site/brands/category-filter";
 import { GridFillers } from "@/components/site/grid-fillers";
+import { PageBanner } from "@/components/site/page-banner";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { CONTACT_HREF } from "@/components/site/site-nav";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { CATALOG } from "@/lib/catalog";
-import { fetchBrands } from "@/lib/public-api";
+import { pageBannerUrl } from "@/lib/page-banners";
+import { fetchBrands, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
 const GRID_COLUMNS = { base: 2, md: 3, xl: 4 };
@@ -43,7 +44,10 @@ export default async function BrandsPage({
   const locale = await getPageLocale(params);
   const t = await getTranslations();
   const activeCategory = parseCategory((await searchParams).category);
-  const brands = await fetchBrands(locale);
+  const [brands, setting] = await Promise.all([
+    fetchBrands(locale),
+    fetchSiteSetting(locale),
+  ]);
 
   const inCategory = (category: BrandCategory) =>
     brands.filter((brand) => brand.categories.includes(category));
@@ -62,19 +66,31 @@ export default async function BrandsPage({
   const shownBrands = activeCategory ? inCategory(activeCategory) : brands;
   const countryNames = new Intl.DisplayNames([locale], { type: "region" });
   const hasCatalog = CATALOG.pages.length > 0;
-  const coverUrl = brands.find((brand) => brand.coverUrl)?.coverUrl ?? null;
 
   return (
     <>
-      <BrandsCover
+      <PageBanner
         title={t("nav.brands")}
-        countLabel={t("brands.count", {
-          brands: brands.length,
-          categories: categories.length,
-        })}
-        catalogLabel={hasCatalog ? t("catalog.view") : null}
-        imageUrl={coverUrl}
-      />
+        imageUrl={pageBannerUrl(setting, "brands")}
+      >
+        <div className="flex flex-wrap items-center gap-4">
+          <span className="text-[15px] font-semibold">
+            {t("brands.count", {
+              brands: brands.length,
+              categories: categories.length,
+            })}
+          </span>
+          {hasCatalog && (
+            <a
+              href="#catalog"
+              className={siteButtonClass("white", "min-w-52.5")}
+            >
+              {t("catalog.view")}
+              <ArrowDown className="size-4.5" />
+            </a>
+          )}
+        </div>
+      </PageBanner>
 
       <div className="site-container grid gap-6 pt-8 md:gap-8 md:pt-12">
         <CategoryFilter
