@@ -30,7 +30,7 @@ export async function DepartmentChart() {
         </p>
       </div>
 
-      <ul className="grid gap-1 border-t border-rule pt-3 lg:col-span-7 lg:col-start-6">
+      <ul className="grid gap-1 pt-3 lg:col-span-7 lg:col-start-6">
         {DEPARTMENT_KEYS.map((key, index) => (
           <li
             key={key}

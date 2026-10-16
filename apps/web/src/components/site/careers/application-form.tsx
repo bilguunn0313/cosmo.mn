@@ -439,7 +439,7 @@ export function ApplicationForm() {
           )}
         </div>
 
-        <div className="flex justify-between gap-3 border-t border-rule pt-6">
+        <div className="flex justify-between gap-3 pt-6">
           {step > 1 ? (
             <button
               type="button"
@@ -489,7 +489,7 @@ function ExperienceFields({
   const duties = `duties${jobNumber}` as const;
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-2 grid gap-4 border-t border-rule pt-5 duration-500 ease-(--ease-out)">
+    <div className="animate-in fade-in slide-in-from-bottom-2 grid gap-4 pt-5 duration-500 ease-(--ease-out)">
       <div className="flex items-center justify-between">
         <span className="text-[13px] font-semibold tracking-[0.06em] text-brand uppercase">
           {t("jobLabel", { number: jobNumber })}

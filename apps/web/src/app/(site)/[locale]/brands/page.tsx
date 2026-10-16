@@ -1,5 +1,5 @@
 import { BRAND_CATEGORIES, type BrandCategory } from "@cosmo/shared";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { BrandCard } from "@/components/site/brands/brand-card";
@@ -9,7 +9,6 @@ import { GridFillers } from "@/components/site/grid-fillers";
 import { PageBanner } from "@/components/site/page-banner";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
-import { CONTACT_HREF } from "@/components/site/site-nav";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
 import { CATALOG } from "@/lib/catalog";
@@ -120,7 +119,7 @@ export default async function BrandsPage({
             />
           </ul>
         ) : (
-          <div className="grid justify-items-start gap-5 border-b border-rule py-20">
+          <div className="grid justify-items-start gap-5 py-20">
             <p className="text-2xl font-semibold tracking-heading md:text-[32px]">
               {t("brands.empty")}
             </p>
@@ -162,32 +161,6 @@ export default async function BrandsPage({
           </Reveal>
         </section>
       )}
-
-      <section
-        aria-labelledby="brand-partner-title"
-        className="site-container pt-20 md:pt-32"
-      >
-        <div className="grid gap-6 border-y border-rule py-12 md:py-14 lg:grid-cols-12 lg:items-end lg:gap-x-6">
-          <h2
-            id="brand-partner-title"
-            className="text-[clamp(36px,4.6vw,68px)] leading-none font-semibold tracking-heading text-balance lg:col-span-7"
-          >
-            {t("brands.partnerTitle")}
-          </h2>
-          <div className="grid justify-items-start gap-5 lg:col-span-5 lg:col-start-8">
-            <p className="text-[17px] leading-normal text-pretty text-ink-2">
-              {t("brands.partnerText")}
-            </p>
-            <Link
-              href={CONTACT_HREF}
-              className={siteButtonClass("primary", "w-full max-w-75")}
-            >
-              {t("brands.partnerButton")}
-              <ArrowUpRight className="size-4.5" />
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

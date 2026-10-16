@@ -14,7 +14,7 @@ export async function ValuesList() {
       aria-labelledby="values-title"
       className="site-container pt-24 md:pt-32 xl:pt-40"
     >
-      <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-ink pb-6 md:pb-10">
+      <div className="flex flex-wrap items-baseline justify-between gap-4 pb-4 md:pb-6">
         <h2
           id="values-title"
           className="text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em]"
@@ -37,7 +37,7 @@ export async function ValuesList() {
           return (
             <li
               key={key}
-              className="grid gap-4 border-b border-rule py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-12"
+              className="grid gap-4 py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-12"
             >
               <Reveal className="flex items-center gap-6 md:col-span-4">
                 {imageUrl && (

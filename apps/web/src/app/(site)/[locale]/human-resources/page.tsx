@@ -47,9 +47,7 @@ export default async function HumanResourcesPage({
 
       {sections.length > 0 && (
         <div className="site-container pt-20 md:pt-32">
-          <div className="border-b border-rule">
-            <StorySections sections={sections} />
-          </div>
+          <StorySections sections={sections} />
         </div>
       )}
 

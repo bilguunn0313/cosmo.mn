@@ -36,7 +36,7 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
       tabIndex={isRepeat ? -1 : undefined}
       aria-hidden={isRepeat || undefined}
       className={cn(
-        "flex h-28 w-44 shrink-0 items-center justify-center border-r border-rule bg-white px-6 py-5 transition-colors duration-150 hover:bg-brand-100 md:h-40 md:w-60 md:px-8 md:py-6",
+        "flex h-28 w-44 shrink-0 items-center justify-center bg-white px-6 py-5 transition-colors duration-150 hover:bg-brand-100 md:h-40 md:w-60 md:px-8 md:py-6",
         isRepeat && "motion-reduce:hidden",
       )}
     >

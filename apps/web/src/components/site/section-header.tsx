@@ -18,7 +18,7 @@ export function SectionHeader({
   link,
 }: SectionHeaderProps) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5 md:pb-6">
+    <div className="flex flex-wrap items-end justify-between gap-4 pb-5 md:pb-6">
       <div className="grid gap-4 md:gap-5">
         {eyebrow && <p className="eyebrow text-ink-3">{eyebrow}</p>}
         <Heading

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CeoMessage } from "@/components/site/about/ceo-message";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
-import { PartnerBand } from "@/components/site/about/partner-band";
 import { ValuesList } from "@/components/site/about/values-list";
 import { PageBanner } from "@/components/site/page-banner";
 import { getPageLocale } from "@/i18n/locale";
@@ -47,9 +46,6 @@ export default async function AboutPage({
         milestones={milestones}
       />
       <ValuesList />
-      <div className="mt-24 md:mt-32 xl:mt-40">
-        <PartnerBand />
-      </div>
     </>
   );
 }

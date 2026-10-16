@@ -113,7 +113,7 @@ export default async function NewsPage({
         )}
 
         <div className="site-container grid gap-8 pt-10 md:pt-16 lg:grid-cols-12 lg:gap-x-6">
-          <dl className="grid content-start gap-1 border-t border-rule pt-4 lg:sticky lg:top-30 lg:col-span-3 lg:self-start">
+          <dl className="grid content-start gap-1 pt-4 lg:sticky lg:top-30 lg:col-span-3 lg:self-start">
             <dt className="text-[13px] text-ink-3">{t("media.published")}</dt>
             <dd className="text-[22px] font-medium">
               <NewsDate publishedAt={news.publishedAt} />

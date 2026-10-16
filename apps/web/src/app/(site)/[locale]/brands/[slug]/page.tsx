@@ -82,9 +82,7 @@ export default async function BrandPage({
 
       {brand.sections.length > 0 && (
         <div className="site-container pt-20 md:pt-28">
-          <div className="border-b border-rule">
-            <StorySections sections={brand.sections} />
-          </div>
+          <StorySections sections={brand.sections} />
         </div>
       )}
 
@@ -95,7 +93,7 @@ export default async function BrandPage({
           aria-labelledby="related-brands-title"
           className="site-container pt-20 md:pt-28"
         >
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
+          <div className="flex flex-wrap items-end justify-between gap-4 pb-5">
             <h2
               id="related-brands-title"
               className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"

@@ -20,7 +20,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
       aria-labelledby="brand-products-title"
       className="site-container pt-20 md:pt-28"
     >
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-4 pb-5">
         <h2
           id="brand-products-title"
           className="text-[clamp(40px,4.4vw,64px)] leading-none font-semibold tracking-heading"
@@ -32,7 +32,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
         </span>
       </div>
 
-      <div className="grid gap-8 border-b border-rule pt-10 pb-12 md:pt-12 md:pb-16 lg:grid-cols-12 lg:gap-x-6">
+      <div className="grid gap-8 pt-10 pb-12 md:pt-12 md:pb-16 lg:grid-cols-12 lg:gap-x-6">
         {summary && (
           <p className="text-base leading-relaxed text-pretty text-ink-2 lg:sticky lg:top-28 lg:col-span-4 lg:self-start lg:pr-4">
             {summary}

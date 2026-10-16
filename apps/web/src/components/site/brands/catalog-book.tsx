@@ -211,7 +211,7 @@ export function CatalogBook({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-rule py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 py-4">
         <div className="flex items-center gap-4">
           <span className="text-sm font-semibold whitespace-nowrap tabular-nums">
             {pageLabel}

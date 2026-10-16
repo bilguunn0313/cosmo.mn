@@ -233,7 +233,7 @@ export function ContactForm({ departments }: ContactFormProps) {
         />
       </Field>
 
-      <div className="grid justify-items-start gap-3 border-t border-rule pt-6">
+      <div className="grid justify-items-start gap-3 pt-6">
         <button
           type="submit"
           disabled={isSubmitting}

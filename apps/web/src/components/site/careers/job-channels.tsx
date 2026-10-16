@@ -62,7 +62,7 @@ export async function JobChannels({ setting }: JobChannelsProps) {
       aria-labelledby="jobs-title"
       className="site-container scroll-mt-28 pt-20 md:pt-36"
     >
-      <div className="grid gap-3 border-b border-rule pb-5">
+      <div className="grid gap-3 pb-5">
         <h2
           id="jobs-title"
           className="text-[clamp(40px,4.4vw,64px)] leading-none font-semibold tracking-[-0.04em]"

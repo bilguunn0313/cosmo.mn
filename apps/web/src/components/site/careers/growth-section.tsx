@@ -25,11 +25,11 @@ export async function GrowthSection() {
               {t(`${item.key}.text`)}
             </p>
           </div>
-          <ul className="mt-auto border-y border-rule">
+          <ul className="mt-auto">
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-5 py-5 not-first:border-t not-first:border-rule"
+                className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-5 py-5"
               >
                 <span className="text-[clamp(48px,5vw,80px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">
                   {t(`highlights.${highlight}.value`)}

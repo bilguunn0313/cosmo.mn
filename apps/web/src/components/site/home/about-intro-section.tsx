@@ -45,12 +45,12 @@ export async function AboutIntroSection({
       </Reveal>
 
       {stats.length > 0 && (
-        <dl className="self-end border-b border-rule lg:col-span-4 lg:col-start-9">
+        <dl className="self-end lg:col-span-4 lg:col-start-9">
           {stats.map((stat, index) => (
             <Reveal
               key={stat.key}
               index={index}
-              className="flex flex-col gap-1.5 border-t border-rule pt-5 pb-6"
+              className="flex flex-col gap-1.5 pt-5 pb-6"
             >
               <dt className="order-2 text-base text-ink-3">{stat.label}</dt>
               <dd className="order-1 text-[clamp(56px,5vw,72px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">

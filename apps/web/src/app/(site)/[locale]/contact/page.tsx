@@ -41,7 +41,7 @@ export default async function ContactPage({
 
   return (
     <div className="site-container pt-12 md:pt-24">
-      <header className="grid gap-5 border-b border-rule pb-8 md:pb-10">
+      <header className="grid gap-5 pb-8 md:pb-10">
         <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(56px,9vw,144px)] leading-[0.9] font-semibold tracking-heading duration-900 ease-(--ease-out) fill-mode-both">
           {t("nav.contact")}
         </h1>

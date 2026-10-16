@@ -95,7 +95,7 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
     >
       <h2
         id="history-title"
-        className="border-b border-ink pb-6 text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-10"
+        className="text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-10"
       >
         {title}
       </h2>
