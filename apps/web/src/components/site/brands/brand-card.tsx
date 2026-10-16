@@ -39,7 +39,7 @@ export async function BrandCard({ brand, countryName }: BrandCardProps) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 border-t-2 border-rule p-4 transition-colors duration-200 group-hover:bg-brand-100 sm:gap-2.5 sm:px-6 sm:pt-5 sm:pb-6">
+      <div className="flex flex-1 flex-col gap-2 border-t border-rule p-4 transition-colors duration-200 group-hover:bg-brand-100 sm:gap-2.5 sm:px-6 sm:pt-5 sm:pb-6">
         <span className="flex items-center justify-between gap-3">
           <span className="min-w-0 text-lg leading-tight font-semibold tracking-heading wrap-anywhere sm:text-[clamp(19px,1.9vw,26px)]">
             {brand.name}

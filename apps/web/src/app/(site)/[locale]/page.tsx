@@ -50,8 +50,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <h1 className="sr-only">{t("seo.homeTitle")}</h1>
       {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
       <AboutIntroSection setting={setting} brands={brands} />
-      <BrandMarquee brands={brands} />
       <WorldMapSection brands={brands} locale={locale} />
+      <BrandMarquee brands={brands} />
       <BrandCategoriesSection brands={brands} setting={setting} />
       <ValuesSection />
       <LatestNewsSection news={news} />

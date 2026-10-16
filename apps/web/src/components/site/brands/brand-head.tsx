@@ -91,7 +91,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
         </nav>
 
         <div className="mt-8 grid items-end gap-8 md:mt-10 lg:grid-cols-12 lg:gap-x-6">
-          <Reveal className="relative aspect-square w-40 border-2 border-rule bg-white sm:w-56 lg:col-span-3 lg:w-auto">
+          <Reveal className="relative aspect-square w-40 border border-rule bg-white sm:w-56 lg:col-span-3 lg:w-auto">
             {brand.logoUrl ? (
               <Image
                 src={brand.logoUrl}
@@ -123,7 +123,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
               {brand.name}
             </h1>
             {facts.length > 0 && (
-              <dl className="grid grid-cols-2 border-t-2 border-rule sm:grid-cols-3">
+              <dl className="grid grid-cols-2 border-t border-rule sm:grid-cols-3">
                 {facts.map((fact) => (
                   <div key={fact.label} className="grid gap-1 pt-4 pr-4">
                     <dt className="text-[13px] text-ink-3">{fact.label}</dt>

@@ -12,6 +12,7 @@ import { PrismaService } from '../prisma/prisma.service';
 const brandInclude = {
   logo: true,
   cover: true,
+  showcaseImage: true,
   translations: true,
 } satisfies Prisma.BrandInclude;
 
@@ -51,6 +52,7 @@ export class BrandsService {
         categories: input.categories,
         logoId: input.logoId,
         coverId: input.coverId,
+        showcaseImageId: input.showcaseImageId,
         websiteUrl: input.websiteUrl,
         originCountry: input.originCountry,
         isPublished: input.isPublished,
@@ -114,6 +116,7 @@ export class BrandsService {
         summary: translation?.summary ?? null,
         logoUrl: brand.logo?.url ?? null,
         coverUrl: brand.cover?.url ?? null,
+        showcaseImageUrl: brand.showcaseImage?.url ?? null,
         originCountry: brand.originCountry,
       };
     });
@@ -150,6 +153,7 @@ export class BrandsService {
       summary: translation?.summary ?? null,
       logoUrl: brand.logo?.url ?? null,
       coverUrl: brand.cover?.url ?? null,
+      showcaseImageUrl: brand.showcaseImage?.url ?? null,
       websiteUrl: brand.websiteUrl,
       originCountry: brand.originCountry,
       sections: brand.sections.map((section) => {

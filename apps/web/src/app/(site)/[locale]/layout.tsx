@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Onest } from "next/font/google";
+import { Noto_Sans_SC, Onest } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import "../../globals.css";
@@ -12,6 +12,11 @@ import { SITE_URL, siteNameFor } from "@/lib/seo";
 const onest = Onest({
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
   variable: "--font-sans",
+});
+
+const notoSansSc = Noto_Sans_SC({
+  variable: "--font-cjk",
+  preload: false,
 });
 
 export function generateStaticParams() {
@@ -39,13 +44,22 @@ export default async function SiteLayout({
   params,
 }: LayoutProps<"/[locale]">) {
   const locale = await getPageLocale(params);
+  const t = await getTranslations({ locale, namespace: "notFound" });
 
   return (
-    <html lang={locale} className={`${onest.variable} h-full antialiased`}>
+    <html lang={locale} className={`${onest.variable} ${notoSansSc.variable} h-full antialiased`}>
       <body className="site flex min-h-full flex-col bg-paper text-ink">
+        <a
+          href="#main"
+          className="sr-only z-50 bg-brand px-5 py-3 text-[15px] font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        >
+          {t("skipToContent")}
+        </a>
         <NextIntlClientProvider>
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
           <SiteFooter locale={locale} />
         </NextIntlClientProvider>
       </body>

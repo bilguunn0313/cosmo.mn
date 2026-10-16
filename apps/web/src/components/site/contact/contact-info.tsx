@@ -1,6 +1,7 @@
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { siteButtonClass } from "@/components/site/site-button";
 import type { PublicSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
 
@@ -12,12 +13,12 @@ interface InfoRowProps {
 
 function InfoRow({ icon, label, children }: InfoRowProps) {
   return (
-    <div className="flex gap-4">
-      <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white">
+    <div className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-white/28 py-5">
+      <span className="flex size-11 items-center justify-center bg-white/10 text-white">
         {icon}
       </span>
-      <div className="grid gap-0.5">
-        <dt className="text-sm text-white/65">{label}</dt>
+      <div className="grid gap-1">
+        <dt className="text-[13px] text-night-text">{label}</dt>
         <dd className="text-[17px] leading-snug text-white">{children}</dd>
       </div>
     </div>
@@ -42,8 +43,8 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
   ].filter((social) => social.url);
 
   return (
-    <div className="grid content-start bg-brand-night gap-10 rounded-3xl p-6 text-white sm:p-10 md:rounded-[2rem] lg:p-12">
-      <dl className="grid gap-6">
+    <div className="grid content-start gap-8 bg-brand-night px-6 py-8 text-white sm:px-10 sm:py-10">
+      <dl className="border-b border-white/28">
         {setting?.address && (
           <InfoRow icon={<MapPin className="size-5" />} label={t("address")}>
             <span className="whitespace-pre-line">{setting.address}</span>
@@ -72,7 +73,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
 
       {socials.length > 0 && (
         <div className="grid gap-3">
-          <h2 className="text-sm text-white/65">{t("socials")}</h2>
+          <h2 className="text-[13px] text-night-text">{t("socials")}</h2>
           <div className="flex flex-wrap gap-2">
             {socials.map((social) => (
               <a
@@ -80,10 +81,10 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
                 href={social.url ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-1 rounded-full border border-white/25 px-4 text-[15px] text-white/90 transition-colors duration-150 hover:border-white/60 hover:text-white"
+                className="inline-flex h-10 items-center gap-1.5 border border-white/40 px-4 text-[15px] font-medium transition-colors duration-150 hover:bg-white/10"
               >
                 {social.label}
-                <ArrowUpRight className="size-3.5" />
+                <ArrowUpRight className="size-4" />
               </a>
             ))}
           </div>
@@ -95,7 +96,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
           href={setting.mapUrl ?? undefined}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative block aspect-[16/10] overflow-hidden rounded-2xl bg-white/10 md:rounded-3xl"
+          className="group relative block aspect-16/10 overflow-hidden bg-white/10"
         >
           <Image
             src={setting.mapImageUrl}
@@ -103,7 +104,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
             fill
             unoptimized
             sizes="(min-width: 1024px) 40vw, 100vw"
-            className="object-cover transition-[scale] duration-700 ease-(--ease-out) group-hover:scale-[1.03]"
+            className="object-cover transition-[scale] duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
           />
         </a>
       )}
@@ -113,10 +114,10 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
           href={setting.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-12 w-fit items-center gap-2 rounded-full bg-white px-6 text-[15px] font-medium text-brand-deep transition-[background-color,scale] duration-150 ease-(--ease-out) hover:bg-white/90 motion-safe:active:scale-[0.97]"
+          className={siteButtonClass("white", "w-fit min-w-60")}
         >
-          <MapPin className="size-4" />
           {t("openMap")}
+          <MapPin className="size-4.5" />
         </a>
       )}
     </div>

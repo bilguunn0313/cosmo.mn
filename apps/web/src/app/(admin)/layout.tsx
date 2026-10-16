@@ -22,7 +22,7 @@ export default function AdminRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="mn" className={`${inter.variable} h-full antialiased`}>
+    <html lang="mn" className={`${inter.variable} h-full antialiased [font-feature-settings:"cv11","ss01"]`}>
       <body className="min-h-full">
         <Providers>{children}</Providers>
       </body>

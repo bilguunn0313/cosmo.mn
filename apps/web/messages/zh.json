@@ -2,6 +2,12 @@
   "metadata": {
     "description": "Cosmo 将国际食品、美妆和家居品牌带给蒙古消费者。"
   },
+  "notFound": {
+    "title": "页面未找到",
+    "text": "您要查找的页面可能已被删除、更名，或网址输入有误。",
+    "backHome": "返回首页",
+    "skipToContent": "跳至主要内容"
+  },
   "seo": {
     "homeTitle": "Cosmo Trade | 蒙古快消品进口与分销商",
     "homeDescription": "Cosmo Trade 自1993年起从10多个国家进口食品、美妆及家居用品品牌，并分销至蒙古全国4500多个销售网点。",
@@ -123,7 +129,8 @@
     "next": "下一页",
     "pageOf": "第 {page} 页，共 {total} 页",
     "related": "更多新闻",
-    "allNews": "全部新闻"
+    "allNews": "全部新闻",
+    "published": "发布日期"
   },
   "contact": {
     "description": "欢迎与我们洽谈合作或提出建议。",
@@ -157,6 +164,13 @@
   },
   "about": {
     "heroTitle": "Cosmo Trade",
+    "ceo": {
+      "title": "总经理致辞",
+      "quote": "总经理致辞的核心内容，用一两句话写在这里。",
+      "body": "致辞的其余部分：公司愿景、团队以及对合作伙伴的话。",
+      "name": "姓名",
+      "role": "总经理"
+    },
     "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
     "missionLabel": "使命",
     "missionText": "让顾客满意与快乐是我们的目标。",
@@ -183,7 +197,156 @@
     "description": "了解我们的团队、工作环境与招聘流程。",
     "joinTitle": "加入我们",
     "joinText": "请通过邮件发送您的简历。有合适的职位时，我们会与您联系。",
-    "sendCv": "发送简历"
+    "sendCv": "发送简历",
+    "fillForm": "立即申请",
+    "openJobs": "招聘职位",
+    "statsLabel": "团队数据",
+    "statEmployees": "员工",
+    "statTenure": "平均工龄（年）",
+    "statAge": "平均年龄",
+    "statGender": "性别比例",
+    "women": "女性 {percent}%",
+    "men": "男性 {percent}%",
+    "structureEyebrow": "组织结构与编制",
+    "structureTitle": "{departments} 个部门，{people} 名员工",
+    "structureText": "仓储、物流与销售团队占公司员工总数的 60% 以上。",
+    "departments": {
+      "warehouse": "仓储物流部",
+      "sales": "销售部",
+      "administration": "行政人事部",
+      "finance": "财务部",
+      "management": "管理层",
+      "businessDevelopment": "业务拓展部",
+      "marketing": "市场部",
+      "it": "信息技术部"
+    },
+    "growth": {
+      "training": {
+        "title": "培训与发展",
+        "text": "我们支持员工持续成长，提供学习国际经验与职业晋升的机会。"
+      },
+      "rewards": {
+        "title": "奖励与表彰",
+        "text": "我们重视员工的成绩与贡献，并推荐优秀员工参评行业及国家荣誉。"
+      },
+      "highlights": {
+        "training": {
+          "value": "2-10",
+          "text": "名员工每年参加海外培训与考察"
+        },
+        "bonus": {
+          "value": "10%",
+          "text": "的员工每年获得现金奖励"
+        },
+        "trip": {
+          "value": "10-14",
+          "text": "人的团队每 2-3 年获得旅行奖励"
+        }
+      }
+    },
+    "principlesEyebrow": "劳动关系",
+    "principlesTitle": "我们的原则",
+    "principles": {
+      "nonDiscrimination": "反对歧视",
+      "freedomToWork": "保障劳动自由：自由择业、良好工作条件、获得报酬与休息",
+      "noHarassment": "禁止骚扰、暴力及性骚扰",
+      "noForcedLabor": "禁止强迫劳动",
+      "humanRights": "公正、人道，尊重人权与自由",
+      "reputation": "珍视公司声誉",
+      "respectCustomers": "尊重合作伙伴与客户"
+    },
+    "jobsNote": "招聘信息发布于以下渠道",
+    "channels": {
+      "zangia": "全部招聘信息",
+      "unegui": "公司主页上的招聘信息",
+      "facebook": "团队动态与招聘信息",
+      "phone": "直接联系人力资源部"
+    },
+    "form": {
+      "eyebrow": "求职申请",
+      "title": "在线提交申请",
+      "intro": "共 4 步，约 5 分钟。有合适的职位时，我们会与您联系。",
+      "steps": {
+        "basic": "基本信息",
+        "education": "教育背景",
+        "experience": "工作经历",
+        "skills": "技能与其他信息"
+      },
+      "fields": {
+        "name": "姓名 *",
+        "position": "意向职位 *",
+        "phone": "电话号码 *",
+        "district": "区",
+        "khoroo": "社区",
+        "school": "毕业院校",
+        "degree": "专业 / 学位",
+        "studyFrom": "入学年份",
+        "studyTo": "毕业年份",
+        "isStudying": "目前在读",
+        "noExperience": "无工作经验（应届毕业生）",
+        "company": "公司名称",
+        "role": "职位",
+        "from": "开始年份",
+        "to": "结束年份",
+        "duties": "主要职责",
+        "languages": "外语能力",
+        "software": "电脑与专业软件",
+        "otherSoftware": "其他软件（选填）",
+        "startDate": "可入职时间"
+      },
+      "placeholders": {
+        "name": "姓名",
+        "position": "例如：销售经理",
+        "khoroo": "例如：第 3 社区",
+        "school": "学校名称",
+        "degree": "例如：工商管理，学士",
+        "studying": "在读",
+        "now": "至今",
+        "duties": "2-3 句话"
+      },
+      "errors": {
+        "name": "请输入姓名",
+        "position": "请输入意向职位",
+        "phone": "请输入 8 位电话号码"
+      },
+      "districts": {
+        "bayangol": "巴彦戈勒区",
+        "bayanzurkh": "巴彦珠日和区",
+        "songinokhairkhan": "松吉诺海尔汗区",
+        "sukhbaatar": "苏赫巴托尔区",
+        "khanUul": "汗乌拉区",
+        "chingeltei": "青格勒泰区",
+        "nalaikh": "纳来哈区",
+        "baganuur": "巴嘎诺尔区",
+        "bagakhangai": "巴嘎杭盖区",
+        "countryside": "乌兰巴托以外"
+      },
+      "languages": {
+        "english": "英语",
+        "russian": "俄语",
+        "chinese": "汉语",
+        "korean": "韩语",
+        "japanese": "日语",
+        "german": "德语"
+      },
+      "startOptions": {
+        "now": "立即",
+        "twoWeeks": "2 周后",
+        "oneMonth": "1 个月后",
+        "custom": "选择日期"
+      },
+      "choose": "请选择",
+      "lastTwoJobs": "最近 2 份工作",
+      "jobLabel": "工作 {number}",
+      "addJob": "添加另一份工作",
+      "remove": "删除",
+      "back": "上一步",
+      "next": "下一步",
+      "submit": "提交申请",
+      "thanksTitle": "谢谢，{name}！",
+      "thanksText": "我们已收到您的申请。有合适的职位时，我们会致电 {phone} 与您联系。",
+      "newForm": "新的申请"
+    }
   },
   "categories": {
     "FOOD": "食品",

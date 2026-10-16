@@ -1,0 +1,174 @@
+"use client";
+
+import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { useRef } from "react";
+import type { PublicMilestone } from "@/lib/public-api";
+import { cn } from "@/lib/utils";
+
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
+interface TimelineItem {
+  key: string;
+  title: string;
+  lines: string[];
+  firstYear: number;
+  lastYear: number;
+}
+
+function descriptionLines(description: string | null) {
+  return (description ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function isSameContent(item: TimelineItem, title: string, lines: string[]) {
+  return item.title === title && item.lines.join("\n") === lines.join("\n");
+}
+
+function groupMilestones(milestones: PublicMilestone[]) {
+  const sorted = [...milestones].sort((a, b) => a.year - b.year);
+  const items: TimelineItem[] = [];
+
+  for (const milestone of sorted) {
+    const lines = descriptionLines(milestone.description);
+    const previous = items.at(-1);
+    const continuesPrevious =
+      previous !== undefined &&
+      previous.lastYear === milestone.year - 1 &&
+      isSameContent(previous, milestone.title, lines);
+
+    if (continuesPrevious) {
+      previous.lastYear = milestone.year;
+      continue;
+    }
+
+    items.push({
+      key: String(milestone.id),
+      title: milestone.title,
+      lines,
+      firstYear: milestone.year,
+      lastYear: milestone.year,
+    });
+  }
+
+  return items;
+}
+
+function yearLabel(item: TimelineItem) {
+  if (item.firstYear === item.lastYear) {
+    return String(item.firstYear);
+  }
+
+  return `${item.firstYear}-${String(item.lastYear).slice(2)}`;
+}
+
+interface HistoryTimelineProps {
+  title: string;
+  milestones: PublicMilestone[];
+}
+
+export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start 75%", "end 60%"],
+  });
+  const railProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.4,
+  });
+
+  const items = groupMilestones(milestones);
+
+  if (items.length === 0) {
+    return null;
+  }
+
+  return (
+    <section
+      id="history"
+      aria-labelledby="history-title"
+      className="mx-auto max-w-300 scroll-mt-24 px-4 pt-24 md:px-6 md:pt-32 xl:px-12 xl:pt-40"
+    >
+      <h2
+        id="history-title"
+        className="pb-10 text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-16"
+      >
+        {title}
+      </h2>
+
+      <div ref={trackRef} className="relative">
+        <div
+          aria-hidden
+          className="absolute inset-y-0 left-3.5 w-0.5 -translate-x-1/2 bg-rule md:left-1/2"
+        />
+        <motion.div
+          aria-hidden
+          style={{ scaleY: shouldReduceMotion ? 1 : railProgress }}
+          className="absolute inset-y-0 left-3.5 w-0.5 origin-top -translate-x-1/2 bg-brand md:left-1/2"
+        />
+
+        <ol>
+          {items.map((item, index) => {
+            const isLeft = index % 2 === 0;
+
+            return (
+              <li
+                key={item.key}
+                className="grid grid-cols-[28px_minmax(0,1fr)] items-start py-4 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:py-8"
+              >
+                <div className="col-start-1 row-start-1 flex justify-center pt-3.5 md:col-start-2 md:pt-5">
+                  <motion.span
+                    initial={shouldReduceMotion ? false : { scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 16 }}
+                    className="size-3.5 bg-brand shadow-[0_0_0_6px_var(--color-paper)]"
+                  />
+                </div>
+
+                <motion.div
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, x: isLeft ? -96 : 96 }
+                  }
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.2 : 0.8,
+                    ease: EASE_OUT,
+                  }}
+                  className={cn(
+                    "col-start-2 row-start-1 flex flex-col gap-2.5 pl-4",
+                    isLeft
+                      ? "md:col-start-1 md:items-end md:pr-12 md:pl-0 md:text-right"
+                      : "md:col-start-3 md:pl-12",
+                  )}
+                >
+                  <span className="text-[clamp(40px,4.4vw,64px)] leading-[0.9] font-semibold tracking-[-0.05em] text-brand tabular-nums">
+                    {yearLabel(item)}
+                  </span>
+                  <h3 className="max-w-110 text-[clamp(18px,1.6vw,22px)] leading-[1.3] font-semibold tracking-[-0.015em] text-balance">
+                    {item.title}
+                  </h3>
+                  {item.lines.map((line) => (
+                    <p
+                      key={line}
+                      className="max-w-105 text-[15px] leading-normal text-ink-2"
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </motion.div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  );
+}

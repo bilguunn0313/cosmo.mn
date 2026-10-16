@@ -62,9 +62,11 @@
   --color-ink: #1f2b3d;
   --color-ink-2: #46526a;
   --color-ink-3: #5a6579;
-  --color-rule: color-mix(in srgb, #1f2b3d 32%, transparent);
+  --color-rule: color-mix(in srgb, #1f2b3d 14%, transparent);
   --color-night-text: #c9d2e3;
+  --color-danger: #b3261e;
   --tracking-heading: -0.035em;
+  --radius-card: 1.25rem;
 }
 
 @utility site-container-wide {
@@ -352,6 +354,19 @@
     outline: 2px solid var(--ring);
   }
 
+  .site .rich-text img {
+    border-radius: 0;
+  }
+
+  .site .rich-text a {
+    color: var(--color-brand-700);
+  }
+
+  .site .rich-text blockquote {
+    border-left: 2px solid var(--color-brand-300);
+    color: var(--color-ink-2);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     * {
       --tw-enter-scale: 1 !important;
@@ -481,7 +496,9 @@
   }
   html {
     @apply font-sans;
-    font-feature-settings: "cv11", "ss01";
+  }
+  html:lang(zh) {
+    font-family: var(--font-sans), var(--font-cjk), sans-serif;
   }
   h1,
   h2,

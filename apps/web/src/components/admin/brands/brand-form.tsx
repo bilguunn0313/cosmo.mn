@@ -58,6 +58,7 @@ const brandFormSchema = z.object({
     .min(1, "Дор хаяж нэг ангилал сонгоно уу"),
   logo: z.custom<Media | null>(),
   cover: z.custom<Media | null>(),
+  showcaseImage: z.custom<Media | null>(),
   originCountry: z.union([z.literal(""), z.enum(COUNTRY_CODES)]),
   websiteUrl: z
     .string()
@@ -96,6 +97,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
       categories: [],
       logo: null,
       cover: null,
+      showcaseImage: null,
       originCountry: "",
       websiteUrl: "",
       isPublished: false,
@@ -108,6 +110,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
     categories: brand.categories,
     logo: brand.logo,
     cover: brand.cover,
+    showcaseImage: brand.showcaseImage,
     originCountry: brand.originCountry ?? "",
     websiteUrl: brand.websiteUrl ?? "",
     isPublished: brand.isPublished,
@@ -121,6 +124,7 @@ function toInput(values: BrandFormValues): CreateBrandInput {
     categories: values.categories,
     logoId: values.logo?.id ?? null,
     coverId: values.cover?.id ?? null,
+    showcaseImageId: values.showcaseImage?.id ?? null,
     originCountry: values.originCountry || null,
     websiteUrl: values.websiteUrl === "" ? null : values.websiteUrl,
     isPublished: values.isPublished,
@@ -316,7 +320,7 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
         />
       </FormField>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <FormField
           label="Лого"
           htmlFor="brand-logo"
@@ -348,6 +352,24 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
                 value={field.value}
                 onChange={field.onChange}
                 pickerTitle="Нүүр зураг сонгох"
+                removable
+              />
+            )}
+          />
+        </FormField>
+        <FormField
+          label="Бүтээгдэхүүний зураг (нүүр хуудас)"
+          htmlFor="brand-showcase"
+          hint="Нүүр хуудасны брэндийн картанд. Тунгалаг дэвсгэртэй, босоо PNG тохиромжтой"
+        >
+          <Controller
+            control={control}
+            name="showcaseImage"
+            render={({ field }) => (
+              <MediaField
+                value={field.value}
+                onChange={field.onChange}
+                pickerTitle="Бүтээгдэхүүний зураг сонгох"
                 removable
               />
             )}

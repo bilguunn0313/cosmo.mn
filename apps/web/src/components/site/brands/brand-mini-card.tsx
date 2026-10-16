@@ -26,7 +26,7 @@ export function BrandMiniCard({ brand }: BrandMiniCardProps) {
           />
         )}
       </span>
-      <span className="flex items-center justify-between gap-3 border-t-2 border-rule px-4 py-4 md:px-5">
+      <span className="flex items-center justify-between gap-3 border-t border-rule px-4 py-4 md:px-5">
         <span className="min-w-0 text-lg font-semibold tracking-heading wrap-anywhere md:text-xl">
           {brand.name}
         </span>

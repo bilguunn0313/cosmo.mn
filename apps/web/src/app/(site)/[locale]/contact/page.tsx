@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ContactForm } from "@/components/site/contact/contact-form";
 import { ContactInfo } from "@/components/site/contact/contact-info";
-import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
 import { fetchDepartments, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
@@ -41,24 +40,28 @@ export default async function ContactPage({
   ]);
 
   return (
-    <div className="site-container-wide grid gap-8 pt-8 md:gap-10 md:pt-14">
-      <div className="grid gap-4">
-        <SectionHeader as="h1" id="contact-title" title={t("nav.contact")} />
-        <p className="max-w-2xl text-lg text-muted-foreground">
+    <div className="site-container pt-12 md:pt-24">
+      <header className="grid gap-5 border-b border-rule pb-8 md:pb-10">
+        <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(56px,9vw,144px)] leading-[0.9] font-semibold tracking-heading duration-900 ease-(--ease-out) fill-mode-both">
+          {t("nav.contact")}
+        </h1>
+        <p className="animate-in fade-in slide-in-from-bottom-6 max-w-150 text-lg leading-normal text-pretty text-ink-2 duration-900 ease-(--ease-out) fill-mode-both delay-150 md:text-[19px]">
           {t("contact.description")}
         </p>
-      </div>
+      </header>
 
-      <div className="grid gap-4 md:gap-6 lg:grid-cols-[1fr_1.3fr]">
-        <ContactInfo setting={setting} />
+      <div className="grid gap-12 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-x-6">
+        <div className="lg:col-span-5">
+          <ContactInfo setting={setting} />
+        </div>
 
         <section
           aria-labelledby="contact-form-title"
-          className="grid content-start gap-8 rounded-3xl bg-card p-6 sm:p-10 md:rounded-[2rem] lg:p-12"
+          className="grid content-start gap-8 lg:col-span-6 lg:col-start-7"
         >
           <h2
             id="contact-form-title"
-            className="text-2xl font-semibold tracking-tight md:text-3xl"
+            className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"
           >
             {t("contact.formTitle")}
           </h2>

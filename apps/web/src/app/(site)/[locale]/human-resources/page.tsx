@@ -1,14 +1,17 @@
-import { ArrowUpRight, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { CtaCard, ctaButtonClass } from "@/components/site/cta-card";
-import { SectionHeader } from "@/components/site/section-header";
+import { ApplicationForm } from "@/components/site/careers/application-form";
+import { CareersIntro } from "@/components/site/careers/careers-intro";
+import { CareersStats } from "@/components/site/careers/careers-stats";
+import { DepartmentChart } from "@/components/site/careers/department-chart";
+import { GrowthSection } from "@/components/site/careers/growth-section";
+import { JobChannels } from "@/components/site/careers/job-channels";
+import { PrinciplesBand } from "@/components/site/careers/principles-band";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
-import { Link } from "@/i18n/navigation";
+import { totalEmployees } from "@/lib/hr-facts";
 import { fetchSections, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -28,55 +31,50 @@ export default async function HumanResourcesPage({
   params,
 }: PageProps<"/[locale]/human-resources">) {
   const locale = await getPageLocale(params);
-  const t = await getTranslations();
+  const t = await getTranslations("careers.form");
   const [sections, setting] = await Promise.all([
     fetchSections("human-resources", locale),
     fetchSiteSetting(locale),
   ]);
 
   return (
-    <div className="site-container-wide grid gap-8 pt-8 md:gap-10 md:pt-14">
-      <div className="grid gap-4">
-        <SectionHeader as="h1" id="careers-title" title={t("nav.careers")} />
-        <p className="max-w-2xl text-lg text-muted-foreground">
-          {t("careers.description")}
-        </p>
-      </div>
+    <>
+      <CareersIntro />
+      <CareersStats employeeCount={totalEmployees()} />
+      <DepartmentChart />
+      <GrowthSection />
 
       {sections.length > 0 && (
-        <div className="border-b-2 border-rule">
-          <StorySections sections={sections} />
+        <div className="site-container pt-20 md:pt-32">
+          <div className="border-b border-rule">
+            <StorySections sections={sections} />
+          </div>
         </div>
       )}
 
-      <CtaCard
-        id="join-title"
-        title={t("careers.joinTitle")}
-        text={t("careers.joinText")}
+      <PrinciplesBand />
+      <JobChannels setting={setting} />
+
+      <section
+        id="anket"
+        aria-labelledby="application-title"
+        className="site-container grid scroll-mt-28 gap-10 pt-20 md:pt-36 lg:grid-cols-12 lg:gap-x-6"
       >
-        {setting?.email && (
-          <a
-            href={`mailto:${setting.email}`}
-            className={cn(
-              ctaButtonClass,
-              "bg-primary text-primary-foreground hover:bg-primary/90",
-            )}
+        <div className="grid content-start gap-5 lg:sticky lg:top-30 lg:col-span-4 lg:self-start">
+          <h2
+            id="application-title"
+            className="text-[clamp(40px,4.4vw,64px)] leading-[0.98] font-semibold tracking-[-0.04em]"
           >
-            <Mail className="size-4" />
-            {t("careers.sendCv")}
-          </a>
-        )}
-        <Link
-          href="/contact"
-          className={cn(
-            ctaButtonClass,
-            "bg-canvas text-foreground hover:bg-muted",
-          )}
-        >
-          {t("nav.contact")}
-          <ArrowUpRight className="size-4" />
-        </Link>
-      </CtaCard>
-    </div>
+            {t("title")}
+          </h2>
+          <p className="max-w-95 text-[17px] leading-normal text-ink-2">
+            {t("intro")}
+          </p>
+        </div>
+        <div className="lg:col-span-7 lg:col-start-6">
+          <ApplicationForm />
+        </div>
+      </section>
+    </>
   );
 }

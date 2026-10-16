@@ -43,7 +43,7 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   ].filter((social) => social.url);
 
   return (
-    <footer className="mt-20 border-t-2 border-rule md:mt-32">
+    <footer className="mt-20 border-t border-rule md:mt-32">
       <div className="site-container pt-14 pb-7">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-6">
           <div className="grid content-start gap-4 sm:col-span-2 lg:col-span-4">
@@ -104,7 +104,7 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
           )}
         </div>
 
-        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t-2 border-rule pt-4 text-[13px] text-ink-3 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t border-rule pt-4 text-[13px] text-ink-3 sm:flex-row sm:items-center">
           <p>
             © {new Date().getFullYear()} Cosmo. {t("rights")}
           </p>

@@ -2,6 +2,12 @@
   "metadata": {
     "description": "Cosmo brings international food, beauty and household brands to customers in Mongolia."
   },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for may have been removed, renamed or the address may be mistyped.",
+    "backHome": "Back to home page",
+    "skipToContent": "Skip to main content"
+  },
   "seo": {
     "homeTitle": "Cosmo Trade LLC | FMCG importer and distributor in Mongolia",
     "homeDescription": "Since 1993, Cosmo Trade has imported food, beauty and household brands from over 10 countries and delivered them to 4,500+ points of sale across Mongolia.",
@@ -123,7 +129,8 @@
     "next": "Next",
     "pageOf": "{page} of {total}",
     "related": "More news",
-    "allNews": "All news"
+    "allNews": "All news",
+    "published": "Published"
   },
   "contact": {
     "description": "Send us your partnership ideas, questions or feedback.",
@@ -157,6 +164,13 @@
   },
   "about": {
     "heroTitle": "Cosmo Trade",
+    "ceo": {
+      "title": "Message from the CEO",
+      "quote": "The main idea of the CEO's message goes here in one or two sentences.",
+      "body": "The rest of the message: the company's vision, its team and a word to partners.",
+      "name": "Full Name",
+      "role": "Chief Executive Officer"
+    },
     "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
     "missionLabel": "Our mission",
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
@@ -183,7 +197,156 @@
     "description": "About our team, workplace and hiring process.",
     "joinTitle": "Join our team",
     "joinText": "Send us your CV by email. We will contact you when a suitable position opens.",
-    "sendCv": "Send CV"
+    "sendCv": "Send CV",
+    "fillForm": "Apply now",
+    "openJobs": "Open positions",
+    "statsLabel": "Our team in numbers",
+    "statEmployees": "Employees",
+    "statTenure": "Average years with us",
+    "statAge": "Average age",
+    "statGender": "Gender ratio",
+    "women": "{percent}% women",
+    "men": "{percent}% men",
+    "structureEyebrow": "Structure and headcount",
+    "structureTitle": "{departments} departments, {people} people",
+    "structureText": "Our warehouse, distribution and sales teams make up more than 60% of the company.",
+    "departments": {
+      "warehouse": "Warehouse and distribution",
+      "sales": "Sales",
+      "administration": "Administration and HR",
+      "finance": "Finance and accounting",
+      "management": "Management",
+      "businessDevelopment": "Business development",
+      "marketing": "Marketing",
+      "it": "Information technology"
+    },
+    "growth": {
+      "training": {
+        "title": "Training and growth",
+        "text": "We support continuous development by giving our people the chance to learn from international practice and grow in their profession."
+      },
+      "rewards": {
+        "title": "Rewards and recognition",
+        "text": "We value our employees' achievements and real contribution, and nominate them for industry and state honors."
+      },
+      "highlights": {
+        "training": {
+          "value": "2-10",
+          "text": "employees join training trips abroad every year"
+        },
+        "bonus": {
+          "value": "10%",
+          "text": "of employees receive a cash bonus every year"
+        },
+        "trip": {
+          "value": "10-14",
+          "text": "person teams are rewarded with a trip every 2-3 years"
+        }
+      }
+    },
+    "principlesEyebrow": "Workplace relations",
+    "principlesTitle": "Our principles",
+    "principles": {
+      "nonDiscrimination": "No discrimination",
+      "freedomToWork": "Freedom to work: choosing one's job freely, fair working conditions, fair pay and rest",
+      "noHarassment": "No harassment, violence or sexual harassment",
+      "noForcedLabor": "No forced labor",
+      "humanRights": "Fairness, humanity and respect for human rights and freedoms",
+      "reputation": "Protecting the company's good name",
+      "respectCustomers": "Respect for partners, customers and clients"
+    },
+    "jobsNote": "Job ads are published on these channels",
+    "channels": {
+      "zangia": "All open job listings",
+      "unegui": "Listings on our company profile",
+      "facebook": "Team news and job posts",
+      "phone": "Call our HR team directly"
+    },
+    "form": {
+      "eyebrow": "Job application",
+      "title": "Apply online",
+      "intro": "4 steps, about 5 minutes. We will contact you when a suitable position opens.",
+      "steps": {
+        "basic": "Basic information",
+        "education": "Education",
+        "experience": "Work experience",
+        "skills": "Skills and other details"
+      },
+      "fields": {
+        "name": "Full name *",
+        "position": "Position of interest *",
+        "phone": "Phone number *",
+        "district": "District",
+        "khoroo": "Khoroo",
+        "school": "School",
+        "degree": "Field of study / Degree",
+        "studyFrom": "Start year",
+        "studyTo": "Graduation year",
+        "isStudying": "Currently studying",
+        "noExperience": "No work experience (recent graduate)",
+        "company": "Company",
+        "role": "Job title",
+        "from": "Start year",
+        "to": "End year",
+        "duties": "Main duties",
+        "languages": "Foreign languages",
+        "software": "Computer and professional software",
+        "otherSoftware": "Other software (optional)",
+        "startDate": "Available to start"
+      },
+      "placeholders": {
+        "name": "Bat-Erdene Bold",
+        "position": "For example: Sales manager",
+        "khoroo": "For example: 3rd khoroo",
+        "school": "School name",
+        "degree": "For example: Business administration, bachelor's",
+        "studying": "Studying",
+        "now": "Present",
+        "duties": "2-3 sentences"
+      },
+      "errors": {
+        "name": "Please enter your name",
+        "position": "Please enter a position",
+        "phone": "Please enter an 8-digit number"
+      },
+      "districts": {
+        "bayangol": "Bayangol",
+        "bayanzurkh": "Bayanzurkh",
+        "songinokhairkhan": "Songinokhairkhan",
+        "sukhbaatar": "Sukhbaatar",
+        "khanUul": "Khan-Uul",
+        "chingeltei": "Chingeltei",
+        "nalaikh": "Nalaikh",
+        "baganuur": "Baganuur",
+        "bagakhangai": "Bagakhangai",
+        "countryside": "Outside Ulaanbaatar"
+      },
+      "languages": {
+        "english": "English",
+        "russian": "Russian",
+        "chinese": "Chinese",
+        "korean": "Korean",
+        "japanese": "Japanese",
+        "german": "German"
+      },
+      "startOptions": {
+        "now": "Immediately",
+        "twoWeeks": "In 2 weeks",
+        "oneMonth": "In 1 month",
+        "custom": "Pick a date"
+      },
+      "choose": "Choose",
+      "lastTwoJobs": "Your last 2 jobs",
+      "jobLabel": "Job {number}",
+      "addJob": "Add another job",
+      "remove": "Remove",
+      "back": "Back",
+      "next": "Next",
+      "submit": "Send application",
+      "thanksTitle": "Thank you, {name}!",
+      "thanksText": "We received your application. We will call you at {phone} when a suitable position opens.",
+      "newForm": "New application"
+    }
   },
   "categories": {
     "FOOD": "Food",

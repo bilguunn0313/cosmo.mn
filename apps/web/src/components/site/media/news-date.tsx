@@ -18,7 +18,7 @@ export async function NewsDate({ publishedAt, className }: NewsDateProps) {
   return (
     <time
       dateTime={publishedAt}
-      className={cn("text-sm text-muted-foreground tabular-nums", className)}
+      className={cn("tabular-nums", className)}
     >
       {format.dateTime(new Date(publishedAt), DATE_FORMAT)}
     </time>

@@ -32,9 +32,9 @@ export function MobileMenu() {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-full gap-0 rounded-none border-l-2 border-rule bg-paper text-ink sm:max-w-sm"
+        className="w-full gap-0 rounded-none border-l border-rule bg-paper text-ink sm:max-w-sm"
       >
-        <SheetHeader className="h-16 justify-center border-b-2 border-rule px-4">
+        <SheetHeader className="h-16 justify-center border-b border-rule px-4">
           <SheetTitle className="eyebrow text-ink-3">
             {t("header.menu")}
           </SheetTitle>
@@ -47,7 +47,7 @@ export function MobileMenu() {
               href={item.href}
               onClick={close}
               aria-current={pathname.startsWith(item.href) ? "page" : undefined}
-              className="border-b-2 border-rule px-4 py-5 text-2xl font-semibold tracking-heading transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700"
+              className="border-b border-rule px-4 py-5 text-2xl font-semibold tracking-heading transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700"
             >
               {t(`nav.${item.key}`)}
             </Link>

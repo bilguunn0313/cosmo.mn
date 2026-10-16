@@ -1,8 +1,9 @@
-import { Play } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
-import { NewsDate } from "@/components/site/media/news-date";
+import { NewsCoverPlaceholder } from "@/components/site/media/news-cover-placeholder";
+import { NewsMeta } from "@/components/site/media/news-meta";
+import { VideoBadge } from "@/components/site/media/video-badge";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeader } from "@/components/site/section-header";
 import { Link } from "@/i18n/navigation";
@@ -10,36 +11,11 @@ import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 
-interface NewsMetaProps {
-  news: PublicNewsItem;
-}
-
-async function NewsMeta({ news }: NewsMetaProps) {
-  const t = await getTranslations("home");
-
-  return (
-    <div className="flex gap-2.5 text-[13px] font-semibold text-ink-3">
-      <NewsDate
-        publishedAt={news.publishedAt}
-        className="text-[13px] text-ink-3"
-      />
-      <span aria-hidden>·</span>
-      {news.videoUrl ? (
-        <span className="text-brand-700">{t("video")}</span>
-      ) : (
-        <span>{t("newsLabel")}</span>
-      )}
-    </div>
-  );
-}
-
 interface FeaturedNewsProps {
   news: PublicNewsItem;
 }
 
-async function FeaturedNews({ news }: FeaturedNewsProps) {
-  const t = await getTranslations("home");
-
+function FeaturedNews({ news }: FeaturedNewsProps) {
   return (
     <Link
       href={newsPath(news.slug)}
@@ -58,15 +34,10 @@ async function FeaturedNews({ news }: FeaturedNewsProps) {
               className="object-cover transition-[scale] duration-800 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
             />
           ) : (
-            <div className="absolute inset-0 bg-brand" />
+            <NewsCoverPlaceholder />
           )}
         </ImageReveal>
-        {news.videoUrl && (
-          <span className="absolute top-0 left-0 inline-flex items-center gap-2 bg-brand px-3.5 py-2 text-[13px] font-semibold text-white">
-            <Play className="size-3.5 fill-current" />
-            {t("video")}
-          </span>
-        )}
+        {news.videoUrl && <VideoBadge />}
       </div>
 
       <Reveal delay={0.35} className="grid gap-4.5">
@@ -90,7 +61,7 @@ function NewsRow({ news, isFirst }: NewsRowProps) {
       href={newsPath(news.slug)}
       className={cn(
         "group grid gap-2.5 pb-6 outline-offset-4 outline-brand focus-visible:outline-2",
-        !isFirst && "border-t-2 border-rule pt-6",
+        !isFirst && "border-t border-rule pt-6",
       )}
     >
       <NewsMeta news={news} />

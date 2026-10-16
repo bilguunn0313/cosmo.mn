@@ -61,6 +61,7 @@ export interface PublicBrand {
   summary: string | null;
   logoUrl: string | null;
   coverUrl: string | null;
+  showcaseImageUrl: string | null;
   originCountry: CountryCode | null;
 }
 

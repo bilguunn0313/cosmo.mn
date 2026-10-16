@@ -22,6 +22,7 @@ const brandFields = z.object({
     }),
   logoId: optionalIdSchema,
   coverId: optionalIdSchema,
+  showcaseImageId: optionalIdSchema,
   websiteUrl: optionalUrlSchema,
   originCountry: z.enum(COUNTRY_CODES).nullable().optional(),
   isPublished: z.boolean(),

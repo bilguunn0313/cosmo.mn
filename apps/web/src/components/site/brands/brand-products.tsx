@@ -20,7 +20,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
       aria-labelledby="brand-products-title"
       className="site-container pt-20 md:pt-28"
     >
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-rule pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
         <h2
           id="brand-products-title"
           className="text-[clamp(40px,4.4vw,64px)] leading-none font-semibold tracking-heading"
@@ -32,7 +32,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
         </span>
       </div>
 
-      <div className="grid gap-8 border-b-2 border-rule pt-10 pb-12 md:pt-12 md:pb-16 lg:grid-cols-12 lg:gap-x-6">
+      <div className="grid gap-8 border-b border-rule pt-10 pb-12 md:pt-12 md:pb-16 lg:grid-cols-12 lg:gap-x-6">
         {summary && (
           <p className="text-base leading-relaxed text-pretty text-ink-2 lg:sticky lg:top-28 lg:col-span-4 lg:self-start lg:pr-4">
             {summary}
@@ -41,7 +41,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
 
         <ul
           className={cn(
-            "grid grid-cols-2 gap-0.5 self-start border-2 border-rule bg-rule md:grid-cols-3",
+            "grid grid-cols-2 gap-px self-start border border-rule bg-rule md:grid-cols-3",
             summary ? "lg:col-span-8" : "lg:col-span-12 xl:grid-cols-4",
           )}
         >
@@ -61,7 +61,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
                     className="object-contain p-5 sm:p-6"
                   />
                 </div>
-                <div className="grid flex-1 content-start gap-2 border-t-2 border-rule px-4 pt-4 pb-5 sm:px-5 sm:pt-4.5">
+                <div className="grid flex-1 content-start gap-2 border-t border-rule px-4 pt-4 pb-5 sm:px-5 sm:pt-4.5">
                   <h3 className="text-[17px] leading-[1.3] font-medium">
                     {product.name}
                   </h3>

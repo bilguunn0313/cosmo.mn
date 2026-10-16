@@ -16,15 +16,12 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   return (
     <section
       aria-labelledby="brands-marquee-title"
-      className="border-t-2 border-rule bg-white"
+      className="border-b border-rule bg-white"
     >
-      <div className="site-container flex flex-col md:flex-row">
-        <h2
-          id="brands-marquee-title"
-          className="eyebrow flex shrink-0 items-center border-b-2 border-rule py-5 text-ink-3 md:w-60 md:border-r-2 md:border-b-0 md:pr-6"
-        >
-          {t("officialDistributor")}
-        </h2>
+      <h2 id="brands-marquee-title" className="sr-only">
+        {t("officialDistributor")}
+      </h2>
+      <div className="flex">
         <MarqueeRow brands={brands} />
       </div>
     </section>

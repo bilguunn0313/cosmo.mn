@@ -93,7 +93,7 @@ export function CatalogBook({
   const isAtEnd = firstPage >= lastStart;
 
   const pageLabel = isWide
-    ? `${twoDigits(firstPage + 1)}–${twoDigits(Math.min(firstPage + 2, pages.length))} / ${twoDigits(pages.length)}`
+    ? `${twoDigits(firstPage + 1)}-${twoDigits(Math.min(firstPage + 2, pages.length))} / ${twoDigits(pages.length)}`
     : `${twoDigits(firstPage + 1)} / ${twoDigits(pages.length)}`;
 
   const turn = (direction: 1 | -1) => {
@@ -174,7 +174,7 @@ export function CatalogBook({
           )}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-1/2 -ml-px hidden w-0.5 bg-rule md:block"
+            className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px bg-rule md:block"
           />
 
           <div
@@ -211,7 +211,7 @@ export function CatalogBook({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-rule py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-rule py-4">
         <div className="flex items-center gap-4">
           <span className="text-sm font-semibold whitespace-nowrap tabular-nums">
             {pageLabel}

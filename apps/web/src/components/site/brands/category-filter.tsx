@@ -21,7 +21,7 @@ export async function CategoryFilter({
   return (
     <nav
       aria-label={t("brands.filterLabel")}
-      className="no-scrollbar -mx-4 overflow-x-auto border-b-2 border-rule px-4 md:mx-0 md:px-0"
+      className="no-scrollbar -mx-4 overflow-x-auto border-b border-rule px-4 md:mx-0 md:px-0"
     >
       <ul className="flex gap-1">
         {options.map(({ category, count }) => (

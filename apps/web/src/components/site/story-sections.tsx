@@ -16,7 +16,7 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
   const number = String(index + 1).padStart(2, "0");
 
   return (
-    <article className="grid border-t-2 border-rule md:grid-cols-2">
+    <article className="grid border-t border-rule md:grid-cols-2">
       <div
         className={cn(
           "relative h-[min(60vh,520px)] overflow-hidden",

@@ -83,7 +83,7 @@ export default async function BrandsPage({
         />
 
         {shownBrands.length > 0 ? (
-          <ul className="grid grid-cols-2 gap-0.5 border-2 border-rule bg-rule md:grid-cols-3 xl:grid-cols-4">
+          <ul className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3 xl:grid-cols-4">
             {shownBrands.map((brand, index) => (
               <li key={brand.slug} className="bg-paper">
                 <Reveal index={index % GRID_COLUMNS.xl} className="h-full">
@@ -104,7 +104,7 @@ export default async function BrandsPage({
             />
           </ul>
         ) : (
-          <div className="grid justify-items-start gap-5 border-b-2 border-rule py-20">
+          <div className="grid justify-items-start gap-5 border-b border-rule py-20">
             <p className="text-2xl font-semibold tracking-heading md:text-[32px]">
               {t("brands.empty")}
             </p>
@@ -151,7 +151,7 @@ export default async function BrandsPage({
         aria-labelledby="brand-partner-title"
         className="site-container pt-20 md:pt-32"
       >
-        <div className="grid gap-6 border-y-2 border-rule py-12 md:py-14 lg:grid-cols-12 lg:items-end lg:gap-x-6">
+        <div className="grid gap-6 border-y border-rule py-12 md:py-14 lg:grid-cols-12 lg:items-end lg:gap-x-6">
           <h2
             id="brand-partner-title"
             className="text-[clamp(36px,4.6vw,68px)] leading-none font-semibold tracking-heading text-balance lg:col-span-7"

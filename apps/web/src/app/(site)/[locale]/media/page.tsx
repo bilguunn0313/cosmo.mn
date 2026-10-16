@@ -1,16 +1,17 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { NewsCard } from "@/components/site/media/news-card";
+import { FeaturedNews } from "@/components/site/media/featured-news";
+import { NewsGrid } from "@/components/site/media/news-grid";
 import { NewsPagination } from "@/components/site/media/news-pagination";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
+import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
+import { Link } from "@/i18n/navigation";
 import { fetchNewsPage } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
 const NEWS_PER_PAGE = 10;
-const REVEAL_COLUMNS = 3;
 
 function parsePage(value: unknown) {
   const page = Number(value);
@@ -47,43 +48,42 @@ export default async function MediaPage({
     notFound();
   }
 
-  const [featured, ...rest] = items;
+  const featured = page === 1 ? items[0] : undefined;
+  const gridItems = featured ? items.slice(1) : items;
 
   return (
-    <div className="site-container-wide grid gap-8 pt-8 md:gap-10 md:pt-14">
-      <div className="grid gap-4">
-        <SectionHeader as="h1" id="media-title" title={t("nav.media")} />
-        <p className="max-w-2xl text-lg text-muted-foreground">
-          {t("media.description")}
-        </p>
+    <>
+      <section className="site-container pt-12 md:pt-24">
+        <div className="grid gap-5 border-b border-rule pb-8 md:gap-6 md:pb-10">
+          <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(56px,8.4vw,136px)] leading-[0.9] font-semibold tracking-[-0.055em] duration-1000 ease-(--ease-out) fill-mode-both">
+            {t("nav.media")}
+          </h1>
+          <p className="animate-in fade-in slide-in-from-bottom-6 max-w-[48ch] text-lg leading-normal text-pretty text-ink-2 duration-1000 ease-(--ease-out) fill-mode-both delay-200 md:text-[19px]">
+            {t("media.description")}
+          </p>
+        </div>
+      </section>
+
+      <div className="site-container grid gap-10 pt-10 md:gap-14 md:pt-14">
+        {items.length === 0 ? (
+          <div className="grid justify-items-start gap-5 border-b border-rule pb-20">
+            <p className="text-2xl font-semibold tracking-heading md:text-[32px]">
+              {t("media.empty")}
+            </p>
+            <Link href="/" className={siteButtonClass("secondary")}>
+              {t("notFound.backHome")}
+              <ArrowRight className="size-4.5" />
+            </Link>
+          </div>
+        ) : (
+          <>
+            {featured && <FeaturedNews news={featured} />}
+            {gridItems.length > 0 && <NewsGrid items={gridItems} />}
+          </>
+        )}
+
+        <NewsPagination page={page} totalPages={totalPages} />
       </div>
-
-      {items.length === 0 ? (
-        <div className="rounded-3xl bg-card px-6 py-20 text-center text-lg text-muted-foreground md:rounded-[2rem]">
-          {t("media.empty")}
-        </div>
-      ) : (
-        <div className="grid gap-3 md:gap-4">
-          {featured && (
-            <Reveal>
-              <NewsCard news={featured} isFeatured />
-            </Reveal>
-          )}
-          {rest.length > 0 && (
-            <ul className="grid gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
-              {rest.map((news, index) => (
-                <li key={news.slug}>
-                  <Reveal index={index % REVEAL_COLUMNS} className="h-full">
-                    <NewsCard news={news} />
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-
-      <NewsPagination page={page} totalPages={totalPages} />
-    </div>
+    </>
   );
 }

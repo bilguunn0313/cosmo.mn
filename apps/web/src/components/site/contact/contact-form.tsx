@@ -1,20 +1,23 @@
-"use client";
+﻿"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ContactInput } from "@cosmo/shared";
-import { Check, Loader2 } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  errorClass,
+  inputClass,
+  labelClass,
+} from "@/components/site/form-styles";
+import { siteButtonClass } from "@/components/site/site-button";
 import type { PublicDepartment } from "@/lib/public-api";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const TOO_MANY_REQUESTS = 429;
-
-const fieldClass =
-  "w-full rounded-2xl border border-transparent bg-canvas px-4 text-base outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/15 aria-invalid:border-destructive";
 
 type Translate = ReturnType<typeof useTranslations<"contact">>;
 
@@ -63,16 +66,14 @@ interface FieldProps {
 
 function Field({ id, label, hint, error, children }: FieldProps) {
   return (
-    <div className="grid gap-2">
-      <label htmlFor={id} className="text-[15px] font-medium">
+    <div className="grid content-start gap-1.5">
+      <label htmlFor={id} className={labelClass}>
         {label}
-        {hint && (
-          <span className="font-normal text-muted-foreground"> ({hint})</span>
-        )}
+        {hint && <span className="font-normal text-ink-3"> ({hint})</span>}
       </label>
       {children}
       {error && (
-        <p id={`${id}-error`} className="text-sm text-destructive">
+        <p id={`${id}-error`} className={errorClass}>
           {error}
         </p>
       )}
@@ -126,21 +127,20 @@ export function ContactForm({ departments }: ContactFormProps) {
     return (
       <div
         role="status"
-        className="grid justify-items-start gap-4 py-10 motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95"
+        className="animate-in fade-in slide-in-from-bottom-4 grid justify-items-start gap-5 bg-brand px-6 py-12 text-white duration-500 ease-(--ease-out) md:px-10"
       >
-        <span className="flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-          <Check className="size-7" />
-        </span>
-        <h3 className="text-2xl font-semibold tracking-tight">
+        <Check className="size-12" strokeWidth={2.5} />
+        <h3 className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading">
           {t("sentTitle")}
         </h3>
-        <p className="max-w-md text-muted-foreground">{t("sentText")}</p>
+        <p className="max-w-md text-lg">{t("sentText")}</p>
         <button
           type="button"
           onClick={() => setIsSent(false)}
-          className="inline-flex h-11 items-center rounded-full bg-canvas px-5 text-[15px] font-medium transition-[color,scale] duration-150 ease-(--ease-out) hover:text-primary motion-safe:active:scale-[0.97]"
+          className={siteButtonClass("white", "min-w-50")}
         >
           {t("sendAnother")}
+          <ArrowRight className="size-4.5" />
         </button>
       </div>
     );
@@ -162,7 +162,7 @@ export function ContactForm({ departments }: ContactFormProps) {
             autoComplete="name"
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy("name")}
-            className={cn(fieldClass, "h-12")}
+            className={cn(inputClass, "h-12")}
             {...register("name")}
           />
         </Field>
@@ -177,7 +177,7 @@ export function ContactForm({ departments }: ContactFormProps) {
             autoComplete="email"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy("email")}
-            className={cn(fieldClass, "h-12")}
+            className={cn(inputClass, "h-12")}
             {...register("email")}
           />
         </Field>
@@ -196,7 +196,7 @@ export function ContactForm({ departments }: ContactFormProps) {
             autoComplete="tel"
             aria-invalid={Boolean(errors.phone)}
             aria-describedby={describedBy("phone")}
-            className={cn(fieldClass, "h-12")}
+            className={cn(inputClass, "h-12")}
             {...register("phone")}
           />
         </Field>
@@ -204,7 +204,7 @@ export function ContactForm({ departments }: ContactFormProps) {
           <Field id="contact-department" label={t("departmentLabel")}>
             <select
               id="contact-department"
-              className={cn(fieldClass, "h-12 cursor-pointer")}
+              className={cn(inputClass, "h-12 cursor-pointer")}
               {...register("departmentId")}
             >
               <option value="">{t("general")}</option>
@@ -228,22 +228,26 @@ export function ContactForm({ departments }: ContactFormProps) {
           rows={6}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy("message")}
-          className={cn(fieldClass, "resize-y py-3")}
+          className={cn(inputClass, "resize-y py-3")}
           {...register("message")}
         />
       </Field>
 
-      <div className="grid justify-items-start gap-3">
+      <div className="grid justify-items-start gap-3 border-t border-rule pt-6">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-8 text-[15px] font-medium text-primary-foreground transition-[background-color,scale,opacity] duration-150 ease-(--ease-out) hover:bg-primary/90 disabled:opacity-70 motion-safe:active:scale-[0.97]"
+          className={siteButtonClass("primary", "min-w-55 disabled:opacity-70")}
         >
-          {isSubmitting && <Loader2 className="size-4 animate-spin" />}
           {isSubmitting ? t("sending") : t("submit")}
+          {isSubmitting ? (
+            <Loader2 className="size-4.5 animate-spin" />
+          ) : (
+            <ArrowRight className="size-4.5" />
+          )}
         </button>
         {submitError && (
-          <p role="alert" className="text-sm text-destructive">
+          <p role="alert" className={errorClass}>
             {submitError}
           </p>
         )}

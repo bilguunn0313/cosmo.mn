@@ -82,7 +82,7 @@ export default async function BrandPage({
 
       {brand.sections.length > 0 && (
         <div className="site-container pt-20 md:pt-28">
-          <div className="border-b-2 border-rule">
+          <div className="border-b border-rule">
             <StorySections sections={brand.sections} />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default async function BrandPage({
           aria-labelledby="related-brands-title"
           className="site-container pt-20 md:pt-28"
         >
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-rule pb-5">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
             <h2
               id="related-brands-title"
               className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"
@@ -107,7 +107,7 @@ export default async function BrandPage({
               <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
             </Link>
           </div>
-          <ul className="mt-6 grid grid-cols-2 gap-0.5 border-2 border-rule bg-rule xl:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-px border border-rule bg-rule xl:grid-cols-4">
             {relatedBrands.map((other, index) => (
               <li key={other.slug} className="bg-paper">
                 <Reveal index={index} className="h-full">

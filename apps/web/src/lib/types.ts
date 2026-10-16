@@ -116,6 +116,8 @@ export interface Brand {
   logo: Media | null;
   coverId: number | null;
   cover: Media | null;
+  showcaseImageId: number | null;
+  showcaseImage: Media | null;
   websiteUrl: string | null;
   originCountry: CountryCode | null;
   order: number;

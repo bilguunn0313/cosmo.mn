@@ -18,11 +18,13 @@ export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const [isPastHero, setIsPastHero] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", () => {
+  useMotionValueEvent(scrollY, "change", (latest) => {
     const hero = document.getElementById(HERO_MEDIA_ID);
     const headerHeight = headerRef.current?.offsetHeight ?? 0;
 
+    setIsScrolled(latest > 0);
     setIsPastHero(
       hero ? hero.getBoundingClientRect().bottom <= headerHeight : false,
     );
@@ -36,8 +38,9 @@ export function SiteHeader() {
       data-over-hero={isOverHero}
       style={{ viewTransitionName: "site-header" }}
       className={cn(
-        "group/header sticky top-0 z-40 border-b-2 transition-[background-color,border-color] duration-300 ease-out",
-        isOverHero ? "border-transparent bg-transparent" : "border-rule bg-paper",
+        "group/header sticky top-0 z-40 border-b transition-[background-color,border-color] duration-300 ease-out",
+        isOverHero ? "bg-transparent" : "bg-paper",
+        isScrolled && !isOverHero ? "border-rule" : "border-transparent",
       )}
     >
       <div

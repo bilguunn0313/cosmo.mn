@@ -1,10 +1,7 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { siteButtonClass } from "@/components/site/site-button";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
-
-const pillClass =
-  "inline-flex h-11 items-center gap-1.5 rounded-full bg-card px-5 text-[15px] font-medium transition-[color,scale] duration-150 ease-(--ease-out) hover:text-primary motion-safe:active:scale-[0.97]";
 
 function pageHref(page: number) {
   return { pathname: "/media", query: page > 1 ? { page } : {} };
@@ -28,26 +25,32 @@ export async function NewsPagination({
   return (
     <nav
       aria-label={t("pagination")}
-      className="flex items-center justify-center gap-3"
+      className="grid grid-cols-[1fr_auto_1fr] items-center gap-4"
     >
       {page > 1 ? (
-        <Link href={pageHref(page - 1)} className={pillClass}>
-          <ChevronLeft className="size-4" />
+        <Link
+          href={pageHref(page - 1)}
+          className={siteButtonClass("secondary", "group justify-self-start")}
+        >
+          <ArrowLeft className="size-4.5 transition-[translate] duration-200 ease-out group-hover:-translate-x-0.5" />
           {t("previous")}
         </Link>
       ) : (
-        <span aria-hidden className={cn(pillClass, "invisible")} />
+        <span aria-hidden />
       )}
-      <span className="min-w-20 text-center text-[15px] text-muted-foreground tabular-nums">
+      <span className="text-[15px] font-semibold text-ink-3 tabular-nums">
         {t("pageOf", { page, total: totalPages })}
       </span>
       {page < totalPages ? (
-        <Link href={pageHref(page + 1)} className={pillClass}>
+        <Link
+          href={pageHref(page + 1)}
+          className={siteButtonClass("secondary", "group justify-self-end")}
+        >
           {t("next")}
-          <ChevronRight className="size-4" />
+          <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
         </Link>
       ) : (
-        <span aria-hidden className={cn(pillClass, "invisible")} />
+        <span aria-hidden />
       )}
     </nav>
   );

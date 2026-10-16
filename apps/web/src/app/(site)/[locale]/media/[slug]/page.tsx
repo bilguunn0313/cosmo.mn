@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { NewsCard } from "@/components/site/media/news-card";
+import { ImageReveal } from "@/components/site/image-reveal";
 import { NewsDate } from "@/components/site/media/news-date";
+import { NewsGrid } from "@/components/site/media/news-grid";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
@@ -57,84 +58,90 @@ export default async function NewsPage({
     .slice(0, MAX_RELATED);
 
   return (
-    <div className="site-container-wide grid gap-4 pt-4 md:gap-6 md:pt-6">
-      <article className="mx-auto grid w-full max-w-5xl gap-8 md:gap-10">
-        <Link
-          href="/media"
-          className="group inline-flex w-fit items-center gap-2 rounded-full px-1 py-1 text-[15px] font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground"
-        >
-          <ArrowLeft className="size-4 transition-[translate] duration-200 ease-(--ease-out) group-hover:-translate-x-0.5" />
-          {t("nav.media")}
-        </Link>
+    <>
+      <article>
+        <header className="site-container pt-6 md:pt-8">
+          <Link
+            href="/media"
+            className="group inline-flex items-center gap-2 py-1.5 text-sm font-medium text-brand-700"
+          >
+            <ArrowLeft className="size-4 transition-[translate] duration-200 ease-out group-hover:-translate-x-0.5" />
+            {t("media.allNews")}
+          </Link>
 
-        <header className="grid max-w-4xl gap-4">
-          <NewsDate publishedAt={news.publishedAt} className="text-base" />
-          <h1 className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl lg:text-6xl">
-            {news.title}
-          </h1>
-          {news.summary && (
-            <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-              {news.summary}
-            </p>
-          )}
+          <Reveal className="mt-8 grid max-w-275 gap-6 md:mt-12">
+            <h1 className="text-[clamp(36px,4.6vw,72px)] leading-[1.02] font-semibold tracking-heading text-balance">
+              {news.title}
+            </h1>
+            {news.summary && (
+              <p className="max-w-215 text-[clamp(19px,1.6vw,24px)] leading-[1.35] font-semibold text-pretty text-ink-2">
+                {news.summary}
+              </p>
+            )}
+          </Reveal>
         </header>
 
         {news.videoUrl ? (
-          <video
-            src={news.videoUrl}
-            poster={news.coverUrl ?? undefined}
-            controls
-            playsInline
-            preload="metadata"
-            className="aspect-video w-full rounded-3xl bg-brand-night object-contain md:rounded-[2rem]"
-          />
+          <div className="site-container mt-10 md:mt-14">
+            <video
+              src={news.videoUrl}
+              poster={news.coverUrl ?? undefined}
+              controls
+              playsInline
+              preload="metadata"
+              className="aspect-video w-full bg-brand-night object-contain"
+            />
+          </div>
         ) : (
           news.coverUrl && (
-            <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-muted md:rounded-[2rem]">
-              <Image
-                src={news.coverUrl}
-                alt=""
-                fill
-                unoptimized
-                priority
-                sizes="(min-width: 1024px) 64rem, 100vw"
-                className="object-cover"
-              />
+            <div className="site-container mt-10 md:mt-14">
+              <div className="relative h-[min(70vh,640px)] overflow-hidden bg-surface">
+                <ImageReveal delay={0.15}>
+                  <Image
+                    src={news.coverUrl}
+                    alt=""
+                    fill
+                    unoptimized
+                    priority
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </ImageReveal>
+              </div>
             </div>
           )
         )}
 
-        {news.content && (
-          <div className="rounded-3xl bg-card px-5 py-10 sm:px-10 md:rounded-[2rem] md:py-14 lg:px-16">
+        <div className="site-container grid gap-8 pt-10 md:pt-16 lg:grid-cols-12 lg:gap-x-6">
+          <dl className="grid content-start gap-1 border-t border-rule pt-4 lg:sticky lg:top-30 lg:col-span-3 lg:self-start">
+            <dt className="text-[13px] text-ink-3">{t("media.published")}</dt>
+            <dd className="text-[22px] font-medium">
+              <NewsDate publishedAt={news.publishedAt} />
+            </dd>
+          </dl>
+
+          {news.content && (
             <div
-              className="rich-text mx-auto max-w-[68ch] text-lg text-foreground/85"
+              className="rich-text max-w-[68ch] text-lg text-ink lg:col-span-7 lg:col-start-5"
               dangerouslySetInnerHTML={{ __html: news.content }}
             />
-          </div>
-        )}
+          )}
+        </div>
       </article>
 
       {related.length > 0 && (
         <section
           aria-labelledby="related-news-title"
-          className="grid gap-8 pt-12 md:gap-10 md:pt-20"
+          className="site-container grid gap-6 pt-20 md:pt-32"
         >
           <SectionHeader
             id="related-news-title"
             title={t("media.related")}
             link={{ href: "/media", label: t("media.allNews") }}
           />
-          <ul className="grid gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
-            {related.map((item, index) => (
-              <li key={item.slug}>
-                <Reveal index={index} className="h-full">
-                  <NewsCard news={item} />
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+          <NewsGrid items={related} />
         </section>
       )}
-    </div>
+    </>
   );
 }

@@ -13,7 +13,7 @@ export async function HomeCtaSection({ setting }: HomeCtaSectionProps) {
   const cvButtonClass = siteButtonClass("secondary", "mt-3 min-w-55");
 
   return (
-    <section className="mt-20 border-y-2 border-rule md:mt-32 md:bg-linear-to-r md:from-transparent md:from-50% md:to-brand md:to-50%">
+    <section className="mt-20 border-y border-rule md:mt-32 md:bg-linear-to-r md:from-transparent md:from-50% md:to-brand md:to-50%">
       <div className="site-container grid md:grid-cols-2">
         <div className="flex flex-col items-start gap-5 py-14 md:py-18 md:pr-12">
           <p className="eyebrow text-ink-3">{t("nav.careers")}</p>
