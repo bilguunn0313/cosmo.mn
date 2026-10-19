@@ -174,24 +174,14 @@
     "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
     "missionLabel": "使命",
     "missionText": "让顾客满意与快乐是我们的目标。",
-    "nationalLabel": "全国荣誉",
-    "awards": {
-      "taxpayer": {
-        "count": "7×",
-        "text": "优秀纳税企业"
-      },
-      "top100": {
-        "count": "3×",
-        "text": "蒙古“百强”企业"
-      },
-      "top150": {
-        "count": "2×",
-        "text": "蒙古“150强”企业"
-      }
-    },
     "historyTitle": "发展历程",
     "partnerTitle": "期待与您合作",
-    "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。"
+    "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。",
+    "purposeTitle": "我们的使命",
+    "visionLabel": "愿景",
+    "visionText": "成为蒙古消费品分销领域最值得信赖的合作伙伴。",
+    "sloganLabel": "口号",
+    "sloganText": "让世界品牌走进每一个蒙古家庭。"
   },
   "careers": {
     "description": "了解我们的团队、工作环境与招聘流程。",

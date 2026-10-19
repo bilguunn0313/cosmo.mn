@@ -26,13 +26,10 @@ export async function AboutIntroSection({
     >
       <Reveal className="grid content-start justify-items-start gap-8 lg:col-span-7">
         <p className="eyebrow text-ink-3">{t("nav.about")}</p>
-        <h2
-          id="about-intro-title"
-          className="text-[clamp(48px,5.8vw,84px)] leading-[0.96] font-semibold tracking-[-0.045em] text-balance"
-        >
+        <h2 id="about-intro-title" className="type-h2 text-balance">
           {t("home.aboutTitle")}
         </h2>
-        <p className="max-w-150 text-lg text-pretty text-ink-2 md:text-xl md:leading-normal">
+        <p className="max-w-150 text-lg text-pretty text-ink-2">
           {t("home.aboutText")}
         </p>
         <Link
@@ -53,7 +50,7 @@ export async function AboutIntroSection({
               className="flex flex-col gap-1.5 pt-5 pb-6"
             >
               <dt className="order-2 text-base text-ink-3">{stat.label}</dt>
-              <dd className="order-1 text-[clamp(56px,5vw,72px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">
+              <dd className="order-1 type-stat text-brand">
                 <StatNumber value={stat.value} suffix={stat.suffix} />
               </dd>
             </Reveal>

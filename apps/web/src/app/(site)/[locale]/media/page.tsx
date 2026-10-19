@@ -67,9 +67,7 @@ export default async function MediaPage({
       <div className="site-container grid gap-10 pt-14 md:gap-14 md:pt-20">
         {items.length === 0 ? (
           <div className="grid justify-items-start gap-5 pb-20">
-            <p className="text-2xl font-semibold tracking-heading md:text-[32px]">
-              {t("media.empty")}
-            </p>
+            <p className="type-h3">{t("media.empty")}</p>
             <Link href="/" className={siteButtonClass("secondary")}>
               {t("notFound.backHome")}
               <ArrowRight className="size-4.5" />

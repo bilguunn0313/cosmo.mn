@@ -16,9 +16,7 @@ export async function HomeCtaSection({ setting }: HomeCtaSectionProps) {
     <section className="site-container mt-20 md:mt-32">
       <div className="flex flex-col items-start gap-5 md:max-w-[50%]">
         <p className="eyebrow text-ink-3">{t("nav.careers")}</p>
-        <h2 className="text-[clamp(34px,3.4vw,48px)] leading-[1.04] font-semibold tracking-heading text-balance">
-          {t("careers.joinTitle")}
-        </h2>
+        <h2 className="type-h2 text-balance">{t("careers.joinTitle")}</h2>
         <p className="max-w-130 text-lg text-pretty text-ink-2">
           {t("careers.joinText")}
         </p>

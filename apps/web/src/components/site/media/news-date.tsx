@@ -16,10 +16,7 @@ export async function NewsDate({ publishedAt, className }: NewsDateProps) {
   const format = await getFormatter();
 
   return (
-    <time
-      dateTime={publishedAt}
-      className={cn("tabular-nums", className)}
-    >
+    <time dateTime={publishedAt} className={cn("tabular-nums", className)}>
       {format.dateTime(new Date(publishedAt), DATE_FORMAT)}
     </time>
   );

@@ -16,10 +16,7 @@ export async function DepartmentChart() {
       className="site-container grid gap-10 pt-20 md:pt-36 lg:grid-cols-12 lg:gap-x-6"
     >
       <div className="grid content-start gap-5 lg:sticky lg:top-30 lg:col-span-4 lg:self-start">
-        <h2
-          id="structure-title"
-          className="text-[clamp(40px,4.4vw,64px)] leading-[0.98] font-semibold tracking-[-0.04em]"
-        >
+        <h2 id="structure-title" className="type-h2">
           {t("structureTitle", {
             departments: DEPARTMENT_KEYS.length,
             people: totalPeople,
@@ -47,7 +44,7 @@ export async function DepartmentChart() {
                 }
               />
             </span>
-            <span className="col-start-2 row-start-1 text-right text-[22px] font-semibold tabular-nums sm:col-start-auto sm:row-start-auto">
+            <span className="col-start-2 row-start-1 text-right text-xl font-semibold tabular-nums sm:col-start-auto sm:row-start-auto">
               {headcounts[key]}
             </span>
           </li>

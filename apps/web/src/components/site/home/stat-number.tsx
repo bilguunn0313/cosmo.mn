@@ -52,7 +52,12 @@ export function StatNumber({
       duration: COUNT_DURATION_SECONDS,
       ease: [0.23, 1, 0.32, 1],
       onUpdate: (count) => {
-        element.textContent = formatCount(count, locale, suffix, fractionDigits);
+        element.textContent = formatCount(
+          count,
+          locale,
+          suffix,
+          fractionDigits,
+        );
       },
     });
 

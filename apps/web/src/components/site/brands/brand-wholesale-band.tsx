@@ -21,10 +21,7 @@ export async function BrandWholesaleBand({
       <div className="site-container grid gap-8 py-16 md:py-20 lg:grid-cols-12 lg:items-end lg:gap-x-6">
         <div className="grid gap-4 lg:col-span-7">
           <p className="eyebrow">{t("wholesaleEyebrow")}</p>
-          <h2
-            id="wholesale-title"
-            className="text-[clamp(40px,5vw,76px)] leading-[0.98] font-semibold tracking-heading text-balance"
-          >
+          <h2 id="wholesale-title" className="type-h2 text-balance">
             {t("wholesaleTitle", { name: brandName })}
           </h2>
         </div>

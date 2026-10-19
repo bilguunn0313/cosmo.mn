@@ -63,10 +63,7 @@ export async function JobChannels({ setting }: JobChannelsProps) {
       className="site-container scroll-mt-28 pt-20 md:pt-36"
     >
       <div className="grid gap-3 pb-5">
-        <h2
-          id="jobs-title"
-          className="text-[clamp(40px,4.4vw,64px)] leading-none font-semibold tracking-[-0.04em]"
-        >
+        <h2 id="jobs-title" className="type-h2">
           {t("openJobs")}
         </h2>
         <p className="text-[17px] text-ink-2">{t("jobsNote")}</p>
@@ -81,9 +78,7 @@ export async function JobChannels({ setting }: JobChannelsProps) {
               rel={channel.isPhone ? undefined : "noopener noreferrer"}
               className="group grid grid-cols-[minmax(0,1fr)_32px] items-center gap-x-6 gap-y-1 py-6 transition-[background-color,padding] duration-300 ease-out hover:bg-brand-100 md:grid-cols-[minmax(0,4fr)_minmax(0,6fr)_48px] md:py-7 md:hover:px-4"
             >
-              <span className="text-[clamp(28px,3vw,44px)] font-semibold tracking-heading tabular-nums">
-                {channel.name}
-              </span>
+              <span className="type-h3">{channel.name}</span>
               <span className="col-start-1 text-base text-ink-3 md:col-start-auto md:text-[17px]">
                 {channel.description}
               </span>

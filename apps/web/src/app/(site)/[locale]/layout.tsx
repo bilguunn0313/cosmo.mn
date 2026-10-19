@@ -47,7 +47,10 @@ export default async function SiteLayout({
   const t = await getTranslations({ locale, namespace: "notFound" });
 
   return (
-    <html lang={locale} className={`${onest.variable} ${notoSansSc.variable} h-full antialiased`}>
+    <html
+      lang={locale}
+      className={`${onest.variable} ${notoSansSc.variable} h-full antialiased`}
+    >
       <body className="site flex min-h-full flex-col bg-paper text-ink">
         <a
           href="#main"

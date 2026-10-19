@@ -21,10 +21,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
       className="site-container pt-20 md:pt-28"
     >
       <div className="flex flex-wrap items-end justify-between gap-4 pb-5">
-        <h2
-          id="brand-products-title"
-          className="text-[clamp(40px,4.4vw,64px)] leading-none font-semibold tracking-heading"
-        >
+        <h2 id="brand-products-title" className="type-h2">
           {t("products")}
         </h2>
         <span className="text-sm text-ink-3">

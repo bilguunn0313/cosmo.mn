@@ -174,24 +174,14 @@
     "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
     "missionLabel": "Our mission",
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
-    "nationalLabel": "Recognized nationwide",
-    "awards": {
-      "taxpayer": {
-        "count": "7×",
-        "text": "Best taxpayer organization"
-      },
-      "top100": {
-        "count": "3×",
-        "text": "Mongolia's “TOP-100” enterprises"
-      },
-      "top150": {
-        "count": "2×",
-        "text": "Mongolia's “TOP-150” enterprises"
-      }
-    },
     "historyTitle": "Our history",
     "partnerTitle": "Let's work together",
-    "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us."
+    "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us.",
+    "purposeTitle": "Our purpose",
+    "visionLabel": "Vision",
+    "visionText": "To be the most trusted partner in Mongolia's consumer goods distribution.",
+    "sloganLabel": "Slogan",
+    "sloganText": "World brands for every Mongolian home."
   },
   "careers": {
     "description": "About our team, workplace and hiring process.",

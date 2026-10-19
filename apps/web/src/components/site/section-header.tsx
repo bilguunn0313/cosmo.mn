@@ -21,10 +21,7 @@ export function SectionHeader({
     <div className="flex flex-wrap items-end justify-between gap-4 pb-5 md:pb-6">
       <div className="grid gap-4 md:gap-5">
         {eyebrow && <p className="eyebrow text-ink-3">{eyebrow}</p>}
-        <Heading
-          id={id}
-          className="text-[clamp(40px,4.8vw,72px)] leading-[0.98] font-semibold tracking-heading text-balance"
-        >
+        <Heading id={id} className="type-h2 text-balance">
           {title}
         </Heading>
       </div>

@@ -130,9 +130,7 @@ export function ContactForm({ departments }: ContactFormProps) {
         className="animate-in fade-in slide-in-from-bottom-4 grid justify-items-start gap-5 bg-brand px-6 py-12 text-white duration-500 ease-(--ease-out) md:px-10"
       >
         <Check className="size-12" strokeWidth={2.5} />
-        <h3 className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading">
-          {t("sentTitle")}
-        </h3>
+        <h3 className="type-h3">{t("sentTitle")}</h3>
         <p className="max-w-md text-lg">{t("sentText")}</p>
         <button
           type="button"

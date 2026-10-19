@@ -44,7 +44,7 @@ export async function CareersStats({ employeeCount }: CareersStatsProps) {
         {numberStats.map((stat) => (
           <div key={stat.key} className={CELL_CLASS}>
             <dt className="order-2 text-[17px] text-ink-3">{stat.label}</dt>
-            <dd className="order-1 text-[clamp(56px,6.5vw,104px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">
+            <dd className="order-1 type-stat text-brand">
               <StatNumber
                 value={stat.value}
                 fractionDigits={stat.fractionDigits}
@@ -54,9 +54,7 @@ export async function CareersStats({ employeeCount }: CareersStatsProps) {
         ))}
 
         <div className={cn(CELL_CLASS, "justify-end")}>
-          <dt className="order-2 text-[17px] text-ink-3">
-            {t("statGender")}
-          </dt>
+          <dt className="order-2 text-[17px] text-ink-3">{t("statGender")}</dt>
           <dd className="order-1 grid gap-3">
             <span className="flex justify-between text-[15px] font-semibold tabular-nums">
               <span className="text-brand">

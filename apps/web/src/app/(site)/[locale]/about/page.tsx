@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CeoMessage } from "@/components/site/about/ceo-message";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
+import { PurposeSection } from "@/components/site/about/purpose-section";
 import { ValuesList } from "@/components/site/about/values-list";
 import { PageBanner } from "@/components/site/page-banner";
 import { getPageLocale } from "@/i18n/locale";
@@ -41,11 +42,12 @@ export default async function AboutPage({
         imageUrl={pageBannerUrl(setting, "about")}
       />
       <CeoMessage />
+      <PurposeSection />
+      <ValuesList />
       <HistoryTimeline
         title={t("about.historyTitle")}
         milestones={milestones}
       />
-      <ValuesList />
     </>
   );
 }

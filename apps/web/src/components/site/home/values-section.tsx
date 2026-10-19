@@ -9,10 +9,7 @@ export async function ValuesSection() {
 
   return (
     <section aria-labelledby="values-title" className="pt-20 md:pt-32">
-      <h2
-        id="values-title"
-        className="site-container pb-10 text-[clamp(48px,5.8vw,84px)] leading-[0.96] font-semibold tracking-[-0.045em] md:pb-16"
-      >
+      <h2 id="values-title" className="site-container pb-10 type-h2 md:pb-16">
         {t("home.valuesTitle")}
       </h2>
 
@@ -36,10 +33,10 @@ export async function ValuesSection() {
                 </ImageReveal>
               </div>
               <Reveal delay={0.2} className="grid gap-4 md:col-span-5">
-                <h3 className="text-[clamp(32px,3.9vw,56px)] leading-none font-semibold tracking-[0.01em] text-balance uppercase">
+                <h3 className="type-h3 text-balance uppercase">
                   {t(`home.values.${key}.title`)}
                 </h3>
-                <p className="max-w-130 text-lg text-pretty text-ink-2 md:text-[21px] md:leading-normal">
+                <p className="max-w-130 text-lg text-pretty text-ink-2">
                   {t(`home.values.${key}.text`)}
                 </p>
               </Reveal>

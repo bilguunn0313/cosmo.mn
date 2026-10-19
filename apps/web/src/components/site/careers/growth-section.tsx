@@ -12,15 +12,9 @@ export async function GrowthSection() {
   return (
     <section className="site-container grid gap-16 pt-20 md:pt-40 lg:grid-cols-2 lg:gap-6">
       {GROWTH_ITEMS.map((item, index) => (
-        <Reveal
-          key={item.key}
-          index={index}
-          className="flex flex-col gap-6"
-        >
+        <Reveal key={item.key} index={index} className="flex flex-col gap-6">
           <div className="grid gap-4">
-            <h2 className="text-[clamp(36px,3.6vw,52px)] leading-none font-semibold tracking-[-0.04em]">
-              {t(`${item.key}.title`)}
-            </h2>
+            <h2 className="type-h3">{t(`${item.key}.title`)}</h2>
             <p className="max-w-150 text-lg leading-normal text-pretty text-ink-2">
               {t(`${item.key}.text`)}
             </p>
@@ -31,7 +25,7 @@ export async function GrowthSection() {
                 key={highlight}
                 className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-5 py-5"
               >
-                <span className="text-[clamp(48px,5vw,80px)] leading-none font-semibold tracking-[-0.05em] text-brand tabular-nums">
+                <span className="type-stat text-brand">
                   {t(`highlights.${highlight}.value`)}
                 </span>
                 <span className="text-[17px] leading-[1.4]">

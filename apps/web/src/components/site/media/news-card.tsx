@@ -35,7 +35,7 @@ export function NewsCard({ news }: NewsCardProps) {
 
       <div className="flex flex-1 flex-col gap-3 p-5 md:px-6 md:pt-5 md:pb-7">
         <NewsMeta news={news} />
-        <h3 className="line-clamp-3 text-[clamp(21px,1.7vw,26px)] leading-[1.15] font-semibold tracking-heading text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <h3 className="line-clamp-3 type-h4 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
         </h3>
         {news.summary && (

@@ -88,7 +88,9 @@ export function CatalogBook({
 
   const step = isWide ? 2 : 1;
   const firstPage = isWide ? pageIndex - (pageIndex % 2) : pageIndex;
-  const lastStart = isWide ? pages.length - 1 - ((pages.length - 1) % 2) : pages.length - 1;
+  const lastStart = isWide
+    ? pages.length - 1 - ((pages.length - 1) % 2)
+    : pages.length - 1;
   const isAtStart = firstPage === 0;
   const isAtEnd = firstPage >= lastStart;
 
@@ -150,7 +152,10 @@ export function CatalogBook({
           onClick={() => turn(1)}
           disabled={isAtEnd}
           aria-label={labels.next}
-          className={cn(arrowClass, "right-2 md:right-[clamp(12px,1.6vw,32px)]")}
+          className={cn(
+            arrowClass,
+            "right-2 md:right-[clamp(12px,1.6vw,32px)]",
+          )}
         >
           <ChevronRight className="size-6" />
         </button>
@@ -165,7 +170,10 @@ export function CatalogBook({
           </div>
           {isWide && (
             <div className="relative overflow-hidden bg-white">
-              <CatalogPage src={pages[firstPage + 1]} pageNumber={firstPage + 2} />
+              <CatalogPage
+                src={pages[firstPage + 1]}
+                pageNumber={firstPage + 2}
+              />
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-y-0 left-0 w-[14%] bg-linear-to-r from-brand-night/10 to-transparent"

@@ -46,7 +46,7 @@ export async function FeaturedNews({ news }: FeaturedNewsProps) {
         className="grid justify-items-start gap-5 lg:col-span-5"
       >
         <NewsMeta news={news} />
-        <h2 className="text-[clamp(32px,3.4vw,52px)] leading-[1.02] font-semibold tracking-heading text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <h2 className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
         </h2>
         {news.summary && (

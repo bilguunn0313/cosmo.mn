@@ -114,7 +114,12 @@ interface ArrowButtonProps {
   children: React.ReactNode;
 }
 
-function ArrowButton({ label, onClick, className, children }: ArrowButtonProps) {
+function ArrowButton({
+  label,
+  onClick,
+  className,
+  children,
+}: ArrowButtonProps) {
   return (
     <button
       type="button"

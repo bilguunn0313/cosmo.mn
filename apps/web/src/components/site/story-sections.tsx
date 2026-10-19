@@ -62,7 +62,10 @@ interface StorySectionsProps {
   startIndex?: number;
 }
 
-export function StorySections({ sections, startIndex = 0 }: StorySectionsProps) {
+export function StorySections({
+  sections,
+  startIndex = 0,
+}: StorySectionsProps) {
   return sections.map((section, index) => (
     <StoryRow
       key={section.id}
@@ -71,7 +74,7 @@ export function StorySections({ sections, startIndex = 0 }: StorySectionsProps) 
       imageUrl={section.imageUrl}
     >
       <div
-        className="rich-text max-w-150 text-lg text-ink-2 md:text-xl"
+        className="rich-text max-w-150 text-lg text-ink-2"
         dangerouslySetInnerHTML={{ __html: section.body }}
       />
     </StoryRow>

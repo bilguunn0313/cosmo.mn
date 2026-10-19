@@ -71,7 +71,10 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
 
   return (
     <>
-      <section aria-labelledby="brand-title" className="site-container pt-6 md:pt-8">
+      <section
+        aria-labelledby="brand-title"
+        className="site-container pt-6 md:pt-8"
+      >
         <nav className="flex flex-wrap items-center gap-2.5 text-sm font-medium">
           <Link
             href="/brands"
@@ -116,10 +119,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
             <p className="eyebrow text-brand-700">
               {t("home.officialDistributor")} · {categoryNames}
             </p>
-            <h1
-              id="brand-title"
-              className="text-[clamp(56px,9vw,148px)] leading-[0.88] font-semibold tracking-heading wrap-anywhere"
-            >
+            <h1 id="brand-title" className="type-display wrap-anywhere">
               {brand.name}
             </h1>
             {facts.length > 0 && (
@@ -127,7 +127,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
                 {facts.map((fact) => (
                   <div key={fact.label} className="grid gap-1 pt-4 pr-4">
                     <dt className="text-[13px] text-ink-3">{fact.label}</dt>
-                    <dd className="text-[22px] font-medium">{fact.value}</dd>
+                    <dd className="text-xl font-medium">{fact.value}</dd>
                   </div>
                 ))}
               </dl>

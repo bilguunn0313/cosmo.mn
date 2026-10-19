@@ -42,7 +42,7 @@ function FeaturedNews({ news }: FeaturedNewsProps) {
 
       <Reveal delay={0.35} className="grid gap-4.5">
         <NewsMeta news={news} />
-        <h3 className="text-[clamp(28px,2.5vw,36px)] leading-[1.1] font-semibold tracking-[-0.03em] text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <h3 className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
         </h3>
       </Reveal>
@@ -65,7 +65,7 @@ function NewsRow({ news, isFirst }: NewsRowProps) {
       )}
     >
       <NewsMeta news={news} />
-      <h3 className="line-clamp-2 text-xl leading-[1.2] font-semibold tracking-[-0.015em] transition-colors duration-150 group-hover:text-brand-700 md:text-2xl">
+      <h3 className="line-clamp-2 type-h4 transition-colors duration-150 group-hover:text-brand-700">
         {news.title}
       </h3>
     </Link>

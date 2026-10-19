@@ -80,9 +80,7 @@ function CategoryButton({
           isActive ? "opacity-90" : "opacity-0",
         )}
       />
-      <span className="relative text-lg leading-tight font-semibold tracking-heading md:text-2xl">
-        {label}
-      </span>
+      <span className="relative type-h4">{label}</span>
       <ArrowDownRight
         aria-hidden
         className={cn(
@@ -162,7 +160,7 @@ function ShowcaseCard({ brand, categoryLabel }: ShowcaseCardProps) {
       </span>
       <span className="flex items-center justify-between gap-3 pt-4">
         <span className="grid min-w-0 gap-1">
-          <span className="text-xl leading-tight font-semibold tracking-heading wrap-anywhere transition-colors duration-150 group-hover:text-brand-700">
+          <span className="type-h4 wrap-anywhere transition-colors duration-150 group-hover:text-brand-700">
             {brand.name}
           </span>
           <span className="text-[13px] font-semibold text-brand-700">
@@ -182,7 +180,12 @@ interface ArrowButtonProps {
   children: React.ReactNode;
 }
 
-function ArrowButton({ label, isDisabled, onClick, children }: ArrowButtonProps) {
+function ArrowButton({
+  label,
+  isDisabled,
+  onClick,
+  children,
+}: ArrowButtonProps) {
   return (
     <button
       type="button"
@@ -283,7 +286,9 @@ export function BrandShowcase({ brands, tiles }: BrandShowcaseProps) {
 
       <div
         ref={trackRef}
-        onScroll={(event) => setScrollState(readScrollState(event.currentTarget))}
+        onScroll={(event) =>
+          setScrollState(readScrollState(event.currentTarget))
+        }
         tabIndex={0}
         aria-label={t("home.categoriesTitle")}
         className="bleed-gutter no-scrollbar mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto outline-offset-4 outline-brand focus-visible:outline-2 md:mt-10 md:gap-4"

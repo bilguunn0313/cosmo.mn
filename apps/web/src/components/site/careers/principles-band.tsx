@@ -22,10 +22,7 @@ export async function PrinciplesBand() {
       <div className="site-container grid gap-10 py-16 md:gap-14 md:py-26">
         <div className="grid gap-5">
           <p className="eyebrow text-brand-300">{t("principlesEyebrow")}</p>
-          <h2
-            id="principles-title"
-            className="text-[clamp(40px,4.4vw,64px)] leading-[0.98] font-semibold tracking-[-0.04em]"
-          >
+          <h2 id="principles-title" className="type-h2">
             {t("principlesTitle")}
           </h2>
         </div>
@@ -39,9 +36,7 @@ export async function PrinciplesBand() {
                 <span className="text-[15px] font-semibold text-brand-300 tabular-nums">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="text-lg leading-[1.35] font-semibold md:text-[21px]">
-                  {t(`principles.${key}`)}
-                </span>
+                <span className="type-h4">{t(`principles.${key}`)}</span>
               </Reveal>
             </li>
           ))}

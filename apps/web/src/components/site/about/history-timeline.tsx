@@ -91,16 +91,13 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
     <section
       id="history"
       aria-labelledby="history-title"
-      className="site-container scroll-mt-24 overflow-x-clip pt-24 md:pt-32 xl:pt-40"
+      className="site-container scroll-mt-24 overflow-x-clip pt-20 md:pt-28"
     >
-      <h2
-        id="history-title"
-        className="text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em] md:pb-10"
-      >
+      <h2 id="history-title" className="type-h2">
         {title}
       </h2>
 
-      <div ref={trackRef} className="relative mx-auto mt-10 max-w-300 md:mt-16">
+      <div ref={trackRef} className="relative mx-auto mt-8 max-w-300 md:mt-10">
         <div
           aria-hidden
           className="absolute inset-y-0 left-3.5 w-0.5 -translate-x-1/2 bg-rule md:left-1/2"
@@ -118,9 +115,9 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
             return (
               <li
                 key={item.key}
-                className="grid grid-cols-[28px_minmax(0,1fr)] items-start py-4 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:py-8"
+                className="grid grid-cols-[28px_minmax(0,1fr)] items-start py-3 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:py-5"
               >
-                <div className="col-start-1 row-start-1 flex justify-center pt-3.5 md:col-start-2 md:pt-5">
+                <div className="col-start-1 row-start-1 flex justify-center pt-3 md:col-start-2 md:pt-3.5">
                   <motion.span
                     initial={shouldReduceMotion ? false : { scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -149,10 +146,10 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
                       : "md:col-start-3 md:pl-12",
                   )}
                 >
-                  <span className="text-[clamp(40px,4.4vw,64px)] leading-[0.9] font-semibold tracking-[-0.05em] text-brand tabular-nums">
+                  <span className="type-stat text-brand">
                     {yearLabel(item)}
                   </span>
-                  <h3 className="max-w-110 text-[clamp(18px,1.6vw,22px)] leading-[1.3] font-semibold tracking-[-0.015em] text-balance">
+                  <h3 className="max-w-110 text-lg leading-[1.3] font-semibold tracking-[-0.015em] text-balance">
                     {item.title}
                   </h3>
                   {item.lines.map((line) => (

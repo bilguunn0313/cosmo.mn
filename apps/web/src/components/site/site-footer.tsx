@@ -55,7 +55,10 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
             </p>
           </div>
 
-          <FooterColumn title={t("menu")} className="lg:col-span-2 lg:col-start-6">
+          <FooterColumn
+            title={t("menu")}
+            className="lg:col-span-2 lg:col-start-6"
+          >
             {SITE_NAV.map((item) => (
               <Link
                 key={item.href}

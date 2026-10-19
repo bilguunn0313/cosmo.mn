@@ -120,9 +120,7 @@ export default async function BrandsPage({
           </ul>
         ) : (
           <div className="grid justify-items-start gap-5 py-20">
-            <p className="text-2xl font-semibold tracking-heading md:text-[32px]">
-              {t("brands.empty")}
-            </p>
+            <p className="type-h3">{t("brands.empty")}</p>
             <Link href="/brands" className={siteButtonClass("secondary")}>
               {t("brands.showAll")}
             </Link>
@@ -137,10 +135,7 @@ export default async function BrandsPage({
           className="site-container scroll-mt-28 pt-20 md:pt-32"
         >
           <div className="flex flex-wrap items-end justify-between gap-4 pb-6 md:pb-8">
-            <h2
-              id="catalog-title"
-              className="text-[clamp(40px,4.8vw,72px)] leading-[0.98] font-semibold tracking-heading"
-            >
+            <h2 id="catalog-title" className="type-h2">
               {t("catalog.title")}
             </h2>
             <p className="text-[15px] text-ink-2">{t("catalog.hint")}</p>

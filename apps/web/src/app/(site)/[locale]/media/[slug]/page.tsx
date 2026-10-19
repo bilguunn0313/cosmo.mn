@@ -70,11 +70,9 @@ export default async function NewsPage({
           </Link>
 
           <Reveal className="mt-8 grid max-w-275 gap-6 md:mt-12">
-            <h1 className="text-[clamp(36px,4.6vw,72px)] leading-[1.02] font-semibold tracking-heading text-balance">
-              {news.title}
-            </h1>
+            <h1 className="type-display text-balance">{news.title}</h1>
             {news.summary && (
-              <p className="max-w-215 text-[clamp(19px,1.6vw,24px)] leading-[1.35] font-semibold text-pretty text-ink-2">
+              <p className="max-w-215 text-lg leading-[1.4] md:text-xl font-semibold text-pretty text-ink-2">
                 {news.summary}
               </p>
             )}
@@ -115,7 +113,7 @@ export default async function NewsPage({
         <div className="site-container grid gap-8 pt-10 md:pt-16 lg:grid-cols-12 lg:gap-x-6">
           <dl className="grid content-start gap-1 pt-4 lg:sticky lg:top-30 lg:col-span-3 lg:self-start">
             <dt className="text-[13px] text-ink-3">{t("media.published")}</dt>
-            <dd className="text-[22px] font-medium">
+            <dd className="text-xl font-medium">
               <NewsDate publishedAt={news.publishedAt} />
             </dd>
           </dl>

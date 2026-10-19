@@ -7,7 +7,7 @@
 @utility site-container {
   margin-inline: auto;
   width: 100%;
-  max-width: 1920px;
+  max-width: var(--container-site);
   padding-inline: 1rem;
 
   @media (width >= 48rem) {
@@ -29,7 +29,7 @@
   }
 
   @media (width >= 80rem) {
-    --gutter: max(3rem, calc((100% - 1920px) / 2 + 3rem));
+    --gutter: max(3rem, calc((100% - var(--container-site)) / 2 + 3rem));
   }
 }
 
@@ -49,6 +49,42 @@
   text-transform: uppercase;
 }
 
+@utility type-display {
+  font-size: clamp(40px, 5vw, 80px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+@utility type-h2 {
+  font-size: clamp(32px, 3vw, 48px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+@utility type-h3 {
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+@utility type-h4 {
+  font-size: clamp(20px, 1.6vw, 24px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+@utility type-stat {
+  font-size: clamp(40px, 4vw, 64px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
 @theme {
   --color-brand-100: #eef5fd;
   --color-brand-200: #dcebfa;
@@ -66,22 +102,8 @@
   --color-night-text: #c9d2e3;
   --color-danger: #b3261e;
   --tracking-heading: -0.035em;
+  --container-site: 90rem;
   --radius-card: 1.25rem;
-}
-
-@utility site-container-wide {
-  margin-inline: auto;
-  width: 100%;
-  max-width: 1920px;
-  padding-inline: 0.75rem;
-
-  @media (width >= 48rem) {
-    padding-inline: 1rem;
-  }
-
-  @media (width >= 80rem) {
-    padding-inline: 1.5rem;
-  }
 }
 
 @theme inline {

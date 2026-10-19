@@ -168,9 +168,7 @@ export function ApplicationForm() {
         className="animate-in fade-in slide-in-from-bottom-4 grid scroll-mt-28 justify-items-start gap-5 bg-brand px-6 py-12 text-white duration-500 ease-(--ease-out) md:px-12 md:py-14"
       >
         <Check className="size-12" strokeWidth={2.5} />
-        <h3 className="text-[clamp(36px,4vw,56px)] leading-none font-semibold tracking-[-0.04em]">
-          {t("thanksTitle", { name: firstName })}
-        </h3>
+        <h3 className="type-h2">{t("thanksTitle", { name: firstName })}</h3>
         <p className="max-w-130 text-lg leading-normal">
           {t("thanksText", { phone: values.phone })}
         </p>
@@ -232,9 +230,7 @@ export function ApplicationForm() {
         >
           {step === 1 && (
             <>
-              <h3 className="text-[28px] font-semibold tracking-[-0.02em]">
-                {t("steps.basic")}
-              </h3>
+              <h3 className="type-h3">{t("steps.basic")}</h3>
               <TextField
                 name="name"
                 label={t("fields.name")}
@@ -291,9 +287,7 @@ export function ApplicationForm() {
 
           {step === 2 && (
             <>
-              <h3 className="text-[28px] font-semibold tracking-[-0.02em]">
-                {t("steps.education")}
-              </h3>
+              <h3 className="type-h3">{t("steps.education")}</h3>
               <TextField
                 name="school"
                 label={t("fields.school")}
@@ -338,9 +332,7 @@ export function ApplicationForm() {
           {step === 3 && (
             <>
               <div className="flex flex-wrap items-baseline justify-between gap-4">
-                <h3 className="text-[28px] font-semibold tracking-[-0.02em]">
-                  {t("steps.experience")}
-                </h3>
+                <h3 className="type-h3">{t("steps.experience")}</h3>
                 <span className="text-sm text-ink-3">{t("lastTwoJobs")}</span>
               </div>
               <Checkbox
@@ -382,9 +374,7 @@ export function ApplicationForm() {
 
           {step === 4 && (
             <div className="grid gap-7">
-              <h3 className="text-[28px] font-semibold tracking-[-0.02em]">
-                {t("steps.skills")}
-              </h3>
+              <h3 className="type-h3">{t("steps.skills")}</h3>
               <ChipGroup
                 label={t("fields.languages")}
                 options={LANGUAGE_KEYS.map((key) => ({
@@ -392,7 +382,9 @@ export function ApplicationForm() {
                   label: t(`languages.${key}`),
                 }))}
                 selected={languages}
-                onToggle={(value) => setLanguages(toggleValue(languages, value))}
+                onToggle={(value) =>
+                  setLanguages(toggleValue(languages, value))
+                }
               />
               <div className="grid gap-2.5">
                 <ChipGroup
@@ -402,7 +394,9 @@ export function ApplicationForm() {
                     label: name,
                   }))}
                   selected={software}
-                  onToggle={(value) => setSoftware(toggleValue(software, value))}
+                  onToggle={(value) =>
+                    setSoftware(toggleValue(software, value))
+                  }
                 />
                 <TextField
                   name="otherSoftware"

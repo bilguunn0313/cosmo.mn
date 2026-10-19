@@ -14,10 +14,7 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   }
 
   return (
-    <section
-      aria-labelledby="brands-marquee-title"
-      className="bg-white"
-    >
+    <section aria-labelledby="brands-marquee-title" className="bg-white">
       <h2 id="brands-marquee-title" className="sr-only">
         {t("officialDistributor")}
       </h2>

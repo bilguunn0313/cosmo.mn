@@ -42,10 +42,10 @@ export default async function ContactPage({
   return (
     <div className="site-container pt-12 md:pt-24">
       <header className="grid gap-5 pb-8 md:pb-10">
-        <h1 className="animate-in fade-in slide-in-from-bottom-6 text-[clamp(56px,9vw,144px)] leading-[0.9] font-semibold tracking-heading duration-900 ease-(--ease-out) fill-mode-both">
+        <h1 className="animate-in fade-in slide-in-from-bottom-6 type-display duration-900 ease-(--ease-out) fill-mode-both">
           {t("nav.contact")}
         </h1>
-        <p className="animate-in fade-in slide-in-from-bottom-6 max-w-150 text-lg leading-normal text-pretty text-ink-2 duration-900 ease-(--ease-out) fill-mode-both delay-150 md:text-[19px]">
+        <p className="animate-in fade-in slide-in-from-bottom-6 max-w-150 text-lg leading-normal text-pretty text-ink-2 duration-900 ease-(--ease-out) fill-mode-both delay-150">
           {t("contact.description")}
         </p>
       </header>
@@ -59,10 +59,7 @@ export default async function ContactPage({
           aria-labelledby="contact-form-title"
           className="grid content-start gap-8 lg:col-span-6 lg:col-start-7"
         >
-          <h2
-            id="contact-form-title"
-            className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"
-          >
+          <h2 id="contact-form-title" className="type-h2">
             {t("contact.formTitle")}
           </h2>
           <ContactForm departments={departments} />

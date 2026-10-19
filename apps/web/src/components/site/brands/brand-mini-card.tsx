@@ -27,9 +27,7 @@ export function BrandMiniCard({ brand }: BrandMiniCardProps) {
         )}
       </span>
       <span className="flex items-center justify-between gap-3 border-t border-rule px-4 py-4 md:px-5">
-        <span className="min-w-0 text-lg font-semibold tracking-heading wrap-anywhere md:text-xl">
-          {brand.name}
-        </span>
+        <span className="min-w-0 type-h4 wrap-anywhere">{brand.name}</span>
         <ArrowRight className="size-4.5 shrink-0 text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
       </span>
     </Link>

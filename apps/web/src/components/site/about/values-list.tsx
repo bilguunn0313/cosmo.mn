@@ -1,10 +1,20 @@
-import { ArrowRight } from "lucide-react";
+import {
+  BadgeCheck,
+  HandHeart,
+  HeartHandshake,
+  type LucideIcon,
+  Users,
+} from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 import { Reveal } from "@/components/site/reveal";
-import { siteButtonClass } from "@/components/site/site-button";
-import { Link } from "@/i18n/navigation";
-import { ABOUT_CONTENT, VALUE_KEYS } from "@/lib/about";
+import { VALUE_KEYS, type ValueKey } from "@/lib/about";
+
+const VALUE_ICONS: Record<ValueKey, LucideIcon> = {
+  people: Users,
+  satisfaction: HeartHandshake,
+  quality: BadgeCheck,
+  responsibility: HandHeart,
+};
 
 export async function ValuesList() {
   const t = await getTranslations();
@@ -12,54 +22,33 @@ export async function ValuesList() {
   return (
     <section
       aria-labelledby="values-title"
-      className="site-container pt-24 md:pt-32 xl:pt-40"
+      className="site-container pt-20 md:pt-28"
     >
-      <div className="flex flex-wrap items-baseline justify-between gap-4 pb-4 md:pb-6">
-        <h2
-          id="values-title"
-          className="text-[clamp(40px,4.8vw,72px)] leading-[0.95] font-semibold tracking-[-0.045em]"
-        >
-          {t("home.valuesTitle")}
-        </h2>
-        <Link
-          href="/human-resources"
-          className={siteButtonClass("ghost", "group")}
-        >
-          {t("nav.careers")}
-          <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
-        </Link>
-      </div>
+      <h2 id="values-title" className="type-h2 pb-8 md:pb-10">
+        {t("home.valuesTitle")}
+      </h2>
 
-      <ul>
-        {VALUE_KEYS.map((key) => {
-          const imageUrl = ABOUT_CONTENT.valueImageUrls[key];
+      <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {VALUE_KEYS.map((key, index) => {
+          const Icon = VALUE_ICONS[key];
 
           return (
-            <li
-              key={key}
-              className="grid gap-4 py-8 md:grid-cols-12 md:items-center md:gap-x-6 md:py-12"
-            >
-              <Reveal className="flex items-center gap-6 md:col-span-4">
-                {imageUrl && (
-                  <div className="relative aspect-square w-24 shrink-0 overflow-hidden rounded-card bg-brand-100 md:w-[clamp(96px,8vw,144px)]">
-                    <Image
-                      src={imageUrl}
-                      alt=""
-                      fill
-                      unoptimized
-                      sizes="144px"
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <h3 className="text-[clamp(28px,2.6vw,40px)] leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-brand">
-                  {t(`home.values.${key}.title`)}
-                </h3>
-              </Reveal>
-              <Reveal delay={0.08} className="md:col-span-7 md:col-start-6">
-                <p className="max-w-180 text-[clamp(20px,1.7vw,26px)] leading-snug tracking-[-0.01em] text-pretty text-ink-2">
-                  {t(`home.values.${key}.text`)}
-                </p>
+            <li key={key}>
+              <Reveal
+                index={index}
+                className="flex h-full flex-col gap-8 rounded-card bg-surface p-6 md:p-8"
+              >
+                <Icon
+                  aria-hidden
+                  strokeWidth={1.5}
+                  className="size-12 text-brand"
+                />
+                <div className="grid gap-3">
+                  <h3 className="type-h4">{t(`home.values.${key}.title`)}</h3>
+                  <p className="text-[17px] leading-relaxed text-pretty text-ink-2">
+                    {t(`home.values.${key}.text`)}
+                  </p>
+                </div>
               </Reveal>
             </li>
           );

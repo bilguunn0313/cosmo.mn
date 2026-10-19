@@ -94,10 +94,7 @@ export default async function BrandPage({
           className="site-container pt-20 md:pt-28"
         >
           <div className="flex flex-wrap items-end justify-between gap-4 pb-5">
-            <h2
-              id="related-brands-title"
-              className="text-[clamp(32px,3.4vw,48px)] leading-none font-semibold tracking-heading"
-            >
+            <h2 id="related-brands-title" className="type-h2">
               {t("brands.related")}
             </h2>
             <Link href="/brands" className={siteButtonClass("ghost", "group")}>
