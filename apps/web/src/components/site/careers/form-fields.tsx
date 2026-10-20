@@ -111,7 +111,7 @@ export function ChipGroup({
             type="button"
             aria-pressed={selected.includes(option.value)}
             onClick={() => onToggle(option.value)}
-            className="h-11 border border-ink-3 px-4 text-[15px] font-semibold transition-colors duration-200 hover:bg-brand-100 aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white"
+            className="h-11 rounded-control border border-ink-3 px-4 text-sm font-semibold transition-colors duration-200 hover:bg-brand-100 aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white"
           >
             {option.label}
           </button>
@@ -129,7 +129,7 @@ interface CheckboxProps {
 
 export function Checkbox({ label, checked, onChange }: CheckboxProps) {
   return (
-    <label className="flex w-fit cursor-pointer items-center gap-2.5 text-[15px]">
+    <label className="flex w-fit cursor-pointer items-center gap-2.5 text-sm">
       <input
         type="checkbox"
         checked={checked}

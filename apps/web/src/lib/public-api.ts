@@ -1,4 +1,5 @@
 import type { BrandCategory, CountryCode, SectionPage } from "@cosmo/shared";
+import type { ValueKey } from "./about";
 import type { Locale } from "./types";
 
 export const API_URL = process.env.API_URL ?? "http://localhost:4000";
@@ -36,6 +37,7 @@ export interface PublicSiteSetting {
   salesPointCount: number | null;
   categoryImages: Record<BrandCategory, string | null>;
   pageBanners: Record<BannerPage, string | null>;
+  valueImages: Record<ValueKey, string | null>;
   address: string | null;
   workingHours: string | null;
 }

@@ -38,7 +38,7 @@ export async function NewsPagination({
       ) : (
         <span aria-hidden />
       )}
-      <span className="text-[15px] font-semibold text-ink-3 tabular-nums">
+      <span className="text-sm font-semibold text-ink-3 tabular-nums">
         {t("pageOf", { page, total: totalPages })}
       </span>
       {page < totalPages ? (

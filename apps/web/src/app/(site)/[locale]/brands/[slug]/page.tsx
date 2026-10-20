@@ -3,10 +3,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { BrandHead } from "@/components/site/brands/brand-head";
-import { BrandMiniCard } from "@/components/site/brands/brand-mini-card";
 import { BrandProducts } from "@/components/site/brands/brand-products";
-import { BrandWholesaleBand } from "@/components/site/brands/brand-wholesale-band";
-import { GridFillers } from "@/components/site/grid-fillers";
+import { BrandTile } from "@/components/site/brands/brand-tile";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { StorySections } from "@/components/site/story-sections";
@@ -86,8 +84,6 @@ export default async function BrandPage({
         </div>
       )}
 
-      <BrandWholesaleBand brandName={brand.name} />
-
       {relatedBrands.length > 0 && (
         <section
           aria-labelledby="related-brands-title"
@@ -102,18 +98,19 @@ export default async function BrandPage({
               <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
             </Link>
           </div>
-          <ul className="mt-6 grid grid-cols-2 gap-px border border-rule bg-rule xl:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-x-3 gap-y-8 md:gap-x-4 xl:grid-cols-4">
             {relatedBrands.map((other, index) => (
-              <li key={other.slug} className="bg-paper">
+              <li key={other.slug}>
                 <Reveal index={index} className="h-full">
-                  <BrandMiniCard brand={other} />
+                  <BrandTile
+                    brand={other}
+                    meta={other.categories
+                      .map((category) => t(`categories.${category}`))
+                      .join(", ")}
+                  />
                 </Reveal>
               </li>
             ))}
-            <GridFillers
-              itemCount={relatedBrands.length}
-              columns={{ base: 2, md: 2, xl: 4 }}
-            />
           </ul>
         </section>
       )}

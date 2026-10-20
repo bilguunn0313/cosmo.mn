@@ -22,6 +22,7 @@
     "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。"
   },
   "nav": {
+    "home": "首页",
     "about": "关于我们",
     "brands": "品牌",
     "careers": "人才招聘",
@@ -189,7 +190,6 @@
     "joinText": "请通过邮件发送您的简历。有合适的职位时，我们会与您联系。",
     "sendCv": "发送简历",
     "fillForm": "立即申请",
-    "openJobs": "招聘职位",
     "statsLabel": "团队数据",
     "statEmployees": "员工",
     "statTenure": "平均工龄（年）",
@@ -244,13 +244,6 @@
       "humanRights": "公正、人道，尊重人权与自由",
       "reputation": "珍视公司声誉",
       "respectCustomers": "尊重合作伙伴与客户"
-    },
-    "jobsNote": "招聘信息发布于以下渠道",
-    "channels": {
-      "zangia": "全部招聘信息",
-      "unegui": "公司主页上的招聘信息",
-      "facebook": "团队动态与招聘信息",
-      "phone": "直接联系人力资源部"
     },
     "form": {
       "eyebrow": "求职申请",

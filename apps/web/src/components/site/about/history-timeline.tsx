@@ -155,7 +155,7 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
                   {item.lines.map((line) => (
                     <p
                       key={line}
-                      className="max-w-105 text-[15px] leading-normal text-ink-2"
+                      className="max-w-105 text-sm leading-normal text-ink-2"
                     >
                       {line}
                     </p>

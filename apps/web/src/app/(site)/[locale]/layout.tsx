@@ -54,7 +54,7 @@ export default async function SiteLayout({
       <body className="site flex min-h-full flex-col bg-paper text-ink">
         <a
           href="#main"
-          className="sr-only z-50 bg-brand px-5 py-3 text-[15px] font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-50 bg-brand px-5 py-3 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           {t("skipToContent")}
         </a>

@@ -5,7 +5,7 @@ import { phoneHref } from "@/lib/site-links";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
-import { CONTACT_HREF, SITE_NAV } from "./site-nav";
+import { SITE_NAV } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
 interface FooterColumnProps {
@@ -17,14 +17,13 @@ interface FooterColumnProps {
 function FooterColumn({ title, className, children }: FooterColumnProps) {
   return (
     <div className={cn("grid content-start gap-2.5", className)}>
-      <h2 className="eyebrow mb-1.5 text-ink-3">{title}</h2>
-      <div className="grid gap-2.5 text-[15px]">{children}</div>
+      <h2 className="eyebrow mb-1.5 text-brand-300">{title}</h2>
+      <div className="grid gap-2.5 text-sm">{children}</div>
     </div>
   );
 }
 
-const footerLinkClass =
-  "w-fit transition-colors duration-150 hover:text-brand-700";
+const footerLinkClass = "w-fit transition-colors duration-150 hover:text-white";
 
 interface SiteFooterProps {
   locale: Locale;
@@ -43,16 +42,14 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   ].filter((social) => social.url);
 
   return (
-    <footer className="mt-20 border-t border-rule md:mt-32">
-      <div className="site-container pt-14 pb-7">
+    <footer className="mt-20 bg-brand-night text-night-text md:mt-32">
+      <div className="site-container pt-16 pb-7 md:pt-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-6">
           <div className="grid content-start gap-4 sm:col-span-2 lg:col-span-4">
             <Link href="/" className="w-fit">
-              <Wordmark />
+              <Wordmark className="text-white" />
             </Link>
-            <p className="max-w-85 text-[15px] text-ink-2">
-              {t("description")}
-            </p>
+            <p className="max-w-85 text-sm">{t("description")}</p>
           </div>
 
           <FooterColumn
@@ -68,9 +65,6 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
                 {tNav(item.key)}
               </Link>
             ))}
-            <Link href={CONTACT_HREF} className={footerLinkClass}>
-              {tNav("contact")}
-            </Link>
           </FooterColumn>
 
           <FooterColumn title={t("contact")} className="lg:col-span-3">
@@ -107,11 +101,11 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
           )}
         </div>
 
-        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t border-rule pt-4 text-[13px] text-ink-3 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t border-white/15 pt-4 text-[13px] text-white/60 sm:flex-row sm:items-center">
           <p>
             © {new Date().getFullYear()} Cosmo. {t("rights")}
           </p>
-          <LanguageSwitcher className="-mx-1.5" />
+          <LanguageSwitcher tone="dark" className="-mx-1.5" />
         </div>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+import { History, Store, Tags, Users, type LucideIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import type { PublicBrand, PublicSiteSetting } from "@/lib/public-api";
 
@@ -6,6 +7,7 @@ export interface Stat {
   value: number;
   suffix: string;
   label: string;
+  icon: LucideIcon;
 }
 
 export async function getStats(
@@ -22,6 +24,7 @@ export async function getStats(
           value: currentYear - setting.foundedYear,
           suffix: "+",
           label: t("statYears"),
+          icon: History,
         }
       : null,
     setting?.employeeCount
@@ -30,6 +33,7 @@ export async function getStats(
           value: setting.employeeCount,
           suffix: "+",
           label: t("statEmployees"),
+          icon: Users,
         }
       : null,
     brands.length > 0
@@ -38,6 +42,7 @@ export async function getStats(
           value: brands.length,
           suffix: "",
           label: t("statBrands"),
+          icon: Tags,
         }
       : null,
     setting?.salesPointCount
@@ -46,6 +51,7 @@ export async function getStats(
           value: setting.salesPointCount,
           suffix: "+",
           label: t("statSalesPoints"),
+          icon: Store,
         }
       : null,
   ];

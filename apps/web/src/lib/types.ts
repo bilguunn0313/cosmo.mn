@@ -195,6 +195,14 @@ export interface SiteSetting {
   mediaBannerImage: Media | null;
   brandsBannerImageId: number | null;
   brandsBannerImage: Media | null;
+  valuePeopleImageId: number | null;
+  valuePeopleImage: Media | null;
+  valueSatisfactionImageId: number | null;
+  valueSatisfactionImage: Media | null;
+  valueQualityImageId: number | null;
+  valueQualityImage: Media | null;
+  valueResponsibilityImageId: number | null;
+  valueResponsibilityImage: Media | null;
   foundedYear: number | null;
   employeeCount: number | null;
   salesPointCount: number | null;

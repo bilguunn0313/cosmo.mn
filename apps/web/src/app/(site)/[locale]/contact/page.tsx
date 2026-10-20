@@ -45,7 +45,7 @@ export default async function ContactPage({
         <h1 className="animate-in fade-in slide-in-from-bottom-6 type-display duration-900 ease-(--ease-out) fill-mode-both">
           {t("nav.contact")}
         </h1>
-        <p className="animate-in fade-in slide-in-from-bottom-6 max-w-150 text-lg leading-normal text-pretty text-ink-2 duration-900 ease-(--ease-out) fill-mode-both delay-150">
+        <p className="animate-in fade-in slide-in-from-bottom-6 max-w-150 text-base leading-relaxed text-pretty text-ink-2 duration-900 ease-(--ease-out) fill-mode-both delay-150">
           {t("contact.description")}
         </p>
       </header>

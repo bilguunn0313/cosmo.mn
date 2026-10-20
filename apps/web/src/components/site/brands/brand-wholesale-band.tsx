@@ -26,7 +26,7 @@ export async function BrandWholesaleBand({
           </h2>
         </div>
         <div className="grid justify-items-start gap-5 lg:col-span-5 lg:col-start-8">
-          <p className="text-[17px] leading-normal text-pretty">
+          <p className="text-base leading-relaxed text-pretty">
             {t("wholesaleText")}
           </p>
           <Link

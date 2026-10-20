@@ -169,7 +169,7 @@ export function ApplicationForm() {
       >
         <Check className="size-12" strokeWidth={2.5} />
         <h3 className="type-h2">{t("thanksTitle", { name: firstName })}</h3>
-        <p className="max-w-130 text-lg leading-normal">
+        <p className="max-w-130 text-base leading-relaxed">
           {t("thanksText", { phone: values.phone })}
         </p>
         <button

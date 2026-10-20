@@ -15,7 +15,7 @@ export function NewsCard({ news }: NewsCardProps) {
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group flex h-full flex-col bg-paper transition-colors duration-200 outline-offset-[-2px] hover:bg-brand-100 outline-brand focus-visible:outline-2"
+      className="group flex h-full flex-col overflow-hidden rounded-card bg-white outline-offset-4 outline-brand transition-colors duration-200 hover:bg-brand-100 focus-visible:outline-2"
     >
       <div className="relative mx-3 mt-3 aspect-16/10 overflow-hidden rounded-card bg-surface md:mx-4 md:mt-4">
         {news.coverUrl ? (
@@ -39,7 +39,7 @@ export function NewsCard({ news }: NewsCardProps) {
           {news.title}
         </h3>
         {news.summary && (
-          <p className="line-clamp-2 text-[15px] leading-[1.45] text-ink-2">
+          <p className="line-clamp-2 text-sm leading-[1.45] text-ink-2">
             {news.summary}
           </p>
         )}

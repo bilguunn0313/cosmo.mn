@@ -37,7 +37,7 @@ export async function WorldMapSection({
           <h2 id="world-map-title" className="type-h2 text-balance">
             {t("mapTitle", { count: layout.origins.length })}
           </h2>
-          <p className="text-lg text-night-text">{t("mapDescription")}</p>
+          <p className="text-base text-night-text">{t("mapDescription")}</p>
         </Reveal>
 
         <div className="border-2 border-white/28 p-3 md:p-6 lg:col-span-8">

@@ -36,12 +36,12 @@ export async function CeoMessage() {
             ”
           </span>
         </blockquote>
-        <p className="max-w-180 text-[17px] leading-relaxed text-pretty text-ink-2">
+        <p className="max-w-180 text-base leading-relaxed text-pretty text-ink-2">
           {t("body")}
         </p>
         <p className="grid gap-1 border-l-2 border-brand pl-4">
           <span className="text-lg font-semibold">{t("name")}</span>
-          <span className="text-[15px] text-ink-3">{t("role")}</span>
+          <span className="text-sm text-ink-3">{t("role")}</span>
         </p>
       </Reveal>
     </section>

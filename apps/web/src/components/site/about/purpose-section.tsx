@@ -31,7 +31,7 @@ function StatementCard({
       <Icon aria-hidden strokeWidth={1.5} className="size-12 text-brand" />
       <div className="grid gap-3">
         <h3 className="type-h4">{label}</h3>
-        <p className="max-w-130 text-lg leading-relaxed text-pretty text-ink-2">
+        <p className="max-w-130 text-base leading-relaxed text-pretty text-ink-2">
           {text}
         </p>
       </div>
@@ -66,7 +66,7 @@ export async function PurposeSection() {
             className="absolute inset-0 bg-linear-to-t from-brand-night/90 via-brand-night/40 to-transparent"
           />
           <div className="relative grid gap-3">
-            <h3 className="text-[15px] font-semibold text-brand-300">
+            <h3 className="text-sm font-semibold text-brand-300">
               {t("sloganLabel")}
             </h3>
             <p className="type-h2 max-w-140 text-balance">{t("sloganText")}</p>

@@ -1,19 +1,13 @@
 "use client";
 
 import type { BrandCategory } from "@cosmo/shared";
-import {
-  ArrowDownRight,
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowDownRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { BrandTile } from "@/components/site/brands/brand-tile";
 import type { PublicBrand } from "@/lib/public-api";
-import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 
 const CARD_STAGGER_SECONDS = 0.05;
@@ -92,87 +86,6 @@ function CategoryButton({
   );
 }
 
-interface CardVisualProps {
-  brand: PublicBrand;
-}
-
-function CardVisual({ brand }: CardVisualProps) {
-  if (brand.showcaseImageUrl) {
-    return (
-      <>
-        <Image
-          src={brand.showcaseImageUrl}
-          alt={brand.name}
-          fill
-          unoptimized
-          sizes="320px"
-          className="object-contain px-[14%] pt-[12%] pb-[22%] transition-[scale] duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none"
-        />
-        {brand.logoUrl && (
-          <span className="absolute bottom-4 left-4 size-16 overflow-hidden rounded-full bg-white shadow-[0_4px_16px_color-mix(in_srgb,var(--color-brand-900)_14%,transparent)] md:size-18">
-            <Image
-              src={brand.logoUrl}
-              alt=""
-              fill
-              unoptimized
-              sizes="72px"
-              className="object-contain p-2.5"
-            />
-          </span>
-        )}
-      </>
-    );
-  }
-
-  if (brand.logoUrl) {
-    return (
-      <Image
-        src={brand.logoUrl}
-        alt={brand.name}
-        fill
-        unoptimized
-        sizes="320px"
-        className="object-contain p-[22%] mix-blend-multiply transition-[scale] duration-700 ease-out group-hover:scale-[1.06] motion-reduce:transition-none"
-      />
-    );
-  }
-
-  return (
-    <span className="absolute inset-0 grid place-items-center p-8 text-center text-3xl font-semibold tracking-heading text-ink-3">
-      {brand.name}
-    </span>
-  );
-}
-
-interface ShowcaseCardProps {
-  brand: PublicBrand;
-  categoryLabel: string;
-}
-
-function ShowcaseCard({ brand, categoryLabel }: ShowcaseCardProps) {
-  return (
-    <Link
-      href={brandPath(brand.slug)}
-      className="group flex h-full flex-col outline-offset-4 outline-brand focus-visible:outline-2"
-    >
-      <span className="relative block aspect-4/5 overflow-hidden rounded-card bg-[radial-gradient(circle_at_50%_45%,white_35%,var(--color-brand-100)_70%,var(--color-brand-200))]">
-        <CardVisual brand={brand} />
-      </span>
-      <span className="flex items-center justify-between gap-3 pt-4">
-        <span className="grid min-w-0 gap-1">
-          <span className="type-h4 wrap-anywhere transition-colors duration-150 group-hover:text-brand-700">
-            {brand.name}
-          </span>
-          <span className="text-[13px] font-semibold text-brand-700">
-            {categoryLabel}
-          </span>
-        </span>
-        <ArrowRight className="size-5 shrink-0 text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
-      </span>
-    </Link>
-  );
-}
-
 interface ArrowButtonProps {
   label: string;
   isDisabled: boolean;
@@ -192,7 +105,7 @@ function ArrowButton({
       aria-label={label}
       disabled={isDisabled}
       onClick={onClick}
-      className="flex size-13 items-center justify-center border border-ink-3 transition-[background-color,opacity] duration-150 hover:bg-brand-100 disabled:pointer-events-none disabled:opacity-30"
+      className="flex size-13 items-center justify-center rounded-control border border-ink-3 transition-[background-color,opacity] duration-150 hover:bg-brand-100 disabled:pointer-events-none disabled:opacity-30"
     >
       {children}
     </button>
@@ -310,9 +223,9 @@ export function BrandShowcase({ brands, tiles }: BrandShowcaseProps) {
             }}
             className="w-[min(70vw,320px)] shrink-0 snap-start"
           >
-            <ShowcaseCard
+            <BrandTile
               brand={brand}
-              categoryLabel={brand.categories
+              meta={brand.categories
                 .map((category) => t(`categories.${category}`))
                 .join(", ")}
             />

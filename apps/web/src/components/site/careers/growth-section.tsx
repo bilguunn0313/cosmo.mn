@@ -15,7 +15,7 @@ export async function GrowthSection() {
         <Reveal key={item.key} index={index} className="flex flex-col gap-6">
           <div className="grid gap-4">
             <h2 className="type-h3">{t(`${item.key}.title`)}</h2>
-            <p className="max-w-150 text-lg leading-normal text-pretty text-ink-2">
+            <p className="max-w-150 text-base leading-relaxed text-pretty text-ink-2">
               {t(`${item.key}.text`)}
             </p>
           </div>
@@ -28,7 +28,7 @@ export async function GrowthSection() {
                 <span className="type-stat text-brand">
                   {t(`highlights.${highlight}.value`)}
                 </span>
-                <span className="text-[17px] leading-[1.4]">
+                <span className="text-base leading-[1.4]">
                   {t(`highlights.${highlight}.text`)}
                 </span>
               </li>

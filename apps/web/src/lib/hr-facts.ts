@@ -25,10 +25,6 @@ export const HR_FACTS = {
     marketing: 5,
     it: 4,
   } satisfies Record<DepartmentKey, number>,
-  jobChannels: {
-    zangia: "https://www.zangia.mn",
-    unegui: "https://www.unegui.mn",
-  },
 };
 
 export function totalEmployees() {

@@ -24,12 +24,12 @@ export async function AboutIntroSection({
       aria-labelledby="about-intro-title"
       className="site-container grid gap-y-14 py-20 md:py-32 lg:grid-cols-12 lg:gap-x-6"
     >
-      <Reveal className="grid content-start justify-items-start gap-8 lg:col-span-7">
+      <Reveal className="grid content-start justify-items-start gap-8 lg:col-span-6">
         <p className="eyebrow text-ink-3">{t("nav.about")}</p>
         <h2 id="about-intro-title" className="type-h2 text-balance">
           {t("home.aboutTitle")}
         </h2>
-        <p className="max-w-150 text-lg text-pretty text-ink-2">
+        <p className="max-w-150 text-base text-pretty text-ink-2">
           {t("home.aboutText")}
         </p>
         <Link
@@ -42,15 +42,22 @@ export async function AboutIntroSection({
       </Reveal>
 
       {stats.length > 0 && (
-        <dl className="self-end lg:col-span-4 lg:col-start-9">
+        <dl className="grid gap-3 lg:col-span-5 lg:col-start-8">
           {stats.map((stat, index) => (
             <Reveal
               key={stat.key}
               index={index}
-              className="flex flex-col gap-1.5 pt-5 pb-6"
+              className="group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-6 gap-y-1 bg-surface px-6 py-7 transition-colors duration-200 ease-out hover:bg-brand md:px-8 md:py-9"
             >
-              <dt className="order-2 text-base text-ink-3">{stat.label}</dt>
-              <dd className="order-1 type-stat text-brand">
+              <stat.icon
+                aria-hidden
+                className="row-span-2 size-12 text-brand transition-colors duration-200 ease-out group-hover:text-white md:size-14"
+                strokeWidth={1.25}
+              />
+              <dt className="col-start-2 row-start-2 text-[13px] font-semibold tracking-[0.06em] text-ink-3 uppercase transition-colors duration-200 ease-out group-hover:text-white/85">
+                {stat.label}
+              </dt>
+              <dd className="col-start-2 row-start-1 type-stat text-ink transition-colors duration-200 ease-out group-hover:text-white">
                 <StatNumber value={stat.value} suffix={stat.suffix} />
               </dd>
             </Reveal>

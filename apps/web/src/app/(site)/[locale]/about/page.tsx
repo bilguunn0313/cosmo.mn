@@ -43,11 +43,11 @@ export default async function AboutPage({
       />
       <CeoMessage />
       <PurposeSection />
-      <ValuesList />
       <HistoryTimeline
         title={t("about.historyTitle")}
         milestones={milestones}
       />
+      <ValuesList images={setting?.valueImages} />
     </>
   );
 }

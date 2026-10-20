@@ -50,11 +50,11 @@ export async function FeaturedNews({ news }: FeaturedNewsProps) {
           {news.title}
         </h2>
         {news.summary && (
-          <p className="line-clamp-4 text-[17px] leading-normal text-pretty text-ink-2">
+          <p className="line-clamp-4 text-base leading-relaxed text-pretty text-ink-2">
             {news.summary}
           </p>
         )}
-        <span className="inline-flex items-center gap-2 py-2 text-[15px] font-semibold text-brand-700">
+        <span className="inline-flex items-center gap-2 py-2 text-sm font-semibold text-brand-700">
           {t("learnMore")}
           <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
         </span>

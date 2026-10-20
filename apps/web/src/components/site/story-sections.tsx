@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
+import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 import type { PublicSection } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
@@ -13,7 +14,6 @@ interface StoryRowProps {
 
 export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
   const isTextFirst = index % 2 === 1;
-  const number = String(index + 1).padStart(2, "0");
 
   return (
     <article className="grid pt-10 md:grid-cols-2 md:pt-16">
@@ -36,10 +36,8 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
             />
           </ImageReveal>
         ) : (
-          <div className="absolute inset-0 flex items-end bg-brand p-6 text-white md:p-8">
-            <span className="text-[clamp(120px,15vw,220px)] leading-[0.82] font-semibold tracking-[-0.06em]">
-              {number}
-            </span>
+          <div className="absolute inset-0 overflow-hidden bg-brand">
+            <LogoMark className="absolute -right-[12%] -bottom-[18%] w-[78%] text-white/10" />
           </div>
         )}
       </div>
@@ -50,7 +48,7 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
           isTextFirst ? "md:pr-12" : "md:pl-12",
         )}
       >
-        <h2 className="eyebrow text-[15px] text-ink-3">{label}</h2>
+        <h2 className="type-h3 text-balance">{label}</h2>
         {children}
       </Reveal>
     </article>
@@ -74,7 +72,7 @@ export function StorySections({
       imageUrl={section.imageUrl}
     >
       <div
-        className="rich-text max-w-150 text-lg text-ink-2"
+        className="rich-text max-w-150 text-base text-ink-2"
         dangerouslySetInnerHTML={{ __html: section.body }}
       />
     </StoryRow>

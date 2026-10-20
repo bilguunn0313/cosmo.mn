@@ -1,4 +1,6 @@
+import { CircleCheck } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 
 const PRINCIPLE_KEYS = [
@@ -17,30 +19,33 @@ export async function PrinciplesBand() {
   return (
     <section
       aria-labelledby="principles-title"
-      className="mt-20 bg-brand-night text-white md:mt-40"
+      className="relative mt-20 overflow-hidden bg-brand-night text-white md:mt-40"
     >
-      <div className="site-container grid gap-10 py-16 md:gap-14 md:py-26">
+      <LogoMark className="pointer-events-none absolute -top-[10%] -right-[8%] w-[min(560px,60vw)] text-white/[0.04]" />
+      <div className="site-container relative grid gap-10 py-16 md:gap-14 md:py-26">
         <div className="grid gap-5">
           <p className="eyebrow text-brand-300">{t("principlesEyebrow")}</p>
           <h2 id="principles-title" className="type-h2">
             {t("principlesTitle")}
           </h2>
         </div>
-        <ol className="grid gap-x-12 md:grid-cols-2">
+        <ul className="grid gap-x-12 md:grid-cols-2">
           {PRINCIPLE_KEYS.map((key, index) => (
-            <li key={key} className="border-t-2 border-white/28">
+            <li key={key} className="border-t border-white/15">
               <Reveal
                 index={index % 2}
-                className="grid grid-cols-[48px_minmax(0,1fr)] gap-4 py-5 md:grid-cols-[56px_minmax(0,1fr)] md:py-6"
+                className="grid grid-cols-[auto_minmax(0,1fr)] gap-4 py-5 md:gap-5 md:py-6"
               >
-                <span className="text-[15px] font-semibold text-brand-300 tabular-nums">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+                <CircleCheck
+                  aria-hidden
+                  className="mt-0.5 size-6 text-brand-400"
+                  strokeWidth={1.75}
+                />
                 <span className="type-h4">{t(`principles.${key}`)}</span>
               </Reveal>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

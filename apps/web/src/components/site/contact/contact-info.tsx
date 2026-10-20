@@ -19,7 +19,7 @@ function InfoRow({ icon, label, children }: InfoRowProps) {
       </span>
       <div className="grid gap-1">
         <dt className="text-[13px] text-night-text">{label}</dt>
-        <dd className="text-[17px] leading-snug text-white">{children}</dd>
+        <dd className="text-base leading-snug text-white">{children}</dd>
       </div>
     </div>
   );
@@ -81,7 +81,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
                 href={social.url ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-1.5 border border-white/40 px-4 text-[15px] font-medium transition-colors duration-150 hover:bg-white/10"
+                className="inline-flex h-10 items-center gap-1.5 border border-white/40 px-4 text-sm font-medium transition-colors duration-150 hover:bg-white/10"
               >
                 {social.label}
                 <ArrowUpRight className="size-4" />

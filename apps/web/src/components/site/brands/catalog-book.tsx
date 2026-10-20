@@ -233,7 +233,7 @@ export function CatalogBook({
             href={viewerUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center gap-2 px-4 text-[15px] font-semibold whitespace-nowrap text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700"
+            className="inline-flex h-12 items-center gap-2 px-4 text-sm font-semibold whitespace-nowrap text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700"
           >
             {labels.fullscreen}
             <ArrowUpRight className="size-4" />

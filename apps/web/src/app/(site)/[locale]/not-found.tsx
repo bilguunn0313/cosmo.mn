@@ -17,7 +17,7 @@ export default async function NotFound() {
       </p>
       <div className="grid justify-items-start gap-6 lg:col-span-5">
         <h1 className="type-h2 text-balance">{t("notFound.title")}</h1>
-        <p className="max-w-110 text-lg leading-normal text-pretty text-ink-2">
+        <p className="max-w-110 text-base leading-relaxed text-pretty text-ink-2">
           {t("notFound.text")}
         </p>
         <div className="flex flex-wrap gap-2">

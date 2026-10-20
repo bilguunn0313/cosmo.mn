@@ -6,8 +6,13 @@ import {
   Users,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Reveal } from "@/components/site/reveal";
-import { VALUE_KEYS, type ValueKey } from "@/lib/about";
+import {
+  VALUE_IMAGE_PLACEHOLDERS,
+  VALUE_KEYS,
+  type ValueKey,
+} from "@/lib/about";
 
 const VALUE_ICONS: Record<ValueKey, LucideIcon> = {
   people: Users,
@@ -16,7 +21,11 @@ const VALUE_ICONS: Record<ValueKey, LucideIcon> = {
   responsibility: HandHeart,
 };
 
-export async function ValuesList() {
+interface ValuesListProps {
+  images: Record<ValueKey, string | null> | undefined;
+}
+
+export async function ValuesList({ images }: ValuesListProps) {
   const t = await getTranslations();
 
   return (
@@ -36,16 +45,28 @@ export async function ValuesList() {
             <li key={key}>
               <Reveal
                 index={index}
-                className="flex h-full flex-col gap-8 rounded-card bg-surface p-6 md:p-8"
+                className="relative flex aspect-4/5 flex-col justify-end gap-6 overflow-hidden rounded-card bg-brand-night p-6 text-white md:p-8"
               >
+                <Image
+                  src={images?.[key] ?? VALUE_IMAGE_PLACEHOLDERS[key]}
+                  alt=""
+                  fill
+                  unoptimized
+                  sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-linear-to-t from-brand-night/95 via-brand-night/55 to-brand-night/5"
+                />
                 <Icon
                   aria-hidden
                   strokeWidth={1.5}
-                  className="size-12 text-brand"
+                  className="relative size-11"
                 />
-                <div className="grid gap-3">
+                <div className="relative grid gap-3">
                   <h3 className="type-h4">{t(`home.values.${key}.title`)}</h3>
-                  <p className="text-[17px] leading-relaxed text-pretty text-ink-2">
+                  <p className="text-base leading-relaxed text-pretty text-white/85">
                     {t(`home.values.${key}.text`)}
                   </p>
                 </div>

@@ -33,7 +33,7 @@ export async function CategoryFilter({
               }}
               scroll={false}
               aria-current={category === activeCategory ? "page" : undefined}
-              className="-mb-0.5 inline-flex items-baseline gap-2 border-b-4 border-transparent px-3 pt-4 pb-3.5 text-base font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:text-brand-700 aria-[current=page]:border-brand aria-[current=page]:text-brand-700 md:px-4 md:text-[17px]"
+              className="-mb-0.5 inline-flex items-baseline gap-2 border-b-4 border-transparent px-3 pt-4 pb-3.5 text-base font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:text-brand-700 aria-[current=page]:border-brand aria-[current=page]:text-brand-700 md:px-4"
             >
               {category ? t(`categories.${category}`) : t("brands.all")}
               <span className="text-[13px] font-semibold text-ink-3 tabular-nums">

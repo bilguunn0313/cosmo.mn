@@ -50,60 +50,63 @@
 }
 
 @utility type-display {
-  font-size: clamp(40px, 5vw, 80px);
+  font-size: clamp(36px, 3vw, 48px);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 @utility type-h2 {
-  font-size: clamp(32px, 3vw, 48px);
+  font-size: clamp(30px, 2.6vw, 48px);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.03em;
 }
 
 @utility type-h3 {
-  font-size: clamp(24px, 2.2vw, 32px);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: clamp(24px, 1.8vw, 32px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 @utility type-h4 {
-  font-size: clamp(20px, 1.6vw, 24px);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+  font-size: clamp(20px, 1.4vw, 24px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 @utility type-stat {
-  font-size: clamp(40px, 4vw, 64px);
+  font-size: clamp(36px, 3vw, 48px);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 
 @theme {
-  --color-brand-100: #eef5fd;
-  --color-brand-200: #dcebfa;
-  --color-brand-300: #bcd7f3;
-  --color-brand-400: #7fb0e6;
-  --color-brand-600: #155fae;
-  --color-brand-700: #0f4c8f;
-  --color-brand-900: #0b2546;
+  --color-brand-100: #ebf1f7;
+  --color-brand-200: #d6e3ef;
+  --color-brand-300: #b5cde2;
+  --color-brand-400: #84abce;
+  --color-brand-600: #17426c;
+  --color-brand-700: #133659;
+  --color-brand-900: #0b1f33;
+  --color-coral: #e9624c;
+  --color-amber: #fbc877;
   --color-paper: #f5f6f8;
   --color-surface: #e9edf2;
   --color-ink: #1f2b3d;
   --color-ink-2: #46526a;
   --color-ink-3: #5a6579;
   --color-rule: color-mix(in srgb, #1f2b3d 14%, transparent);
-  --color-night-text: #c9d2e3;
+  --color-night-text: #c8d6e5;
   --color-danger: #b3261e;
   --tracking-heading: -0.035em;
   --container-site: 90rem;
   --radius-card: 1.25rem;
+  --radius-control: 0.625rem;
 }
 
 @theme inline {
@@ -198,9 +201,9 @@
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
   --canvas: oklch(0.968 0.007 250);
-  --brand-deep: oklch(0.34 0.15 268);
-  --brand: #1a6fc4;
-  --brand-night: #0f1d36;
+  --brand-deep: #0f2c4a;
+  --brand: #1b4d7f;
+  --brand-night: #0b1f33;
   --brand-glow: oklch(0.72 0.14 240);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -250,6 +253,11 @@
   .site .lucide {
     stroke-linecap: square;
     stroke-linejoin: miter;
+  }
+
+  .site {
+    --text-base--line-height: 1.6;
+    --text-sm--line-height: 1.6;
   }
 
   .cover-zoom {

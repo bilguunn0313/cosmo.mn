@@ -22,7 +22,7 @@ export async function DepartmentChart() {
             people: totalPeople,
           })}
         </h2>
-        <p className="max-w-95 text-[17px] leading-normal text-ink-2">
+        <p className="max-w-95 text-base leading-relaxed text-ink-2">
           {t("structureText")}
         </p>
       </div>
@@ -33,7 +33,7 @@ export async function DepartmentChart() {
             key={key}
             className="grid grid-cols-[minmax(0,1fr)_48px] items-center gap-x-5 gap-y-2 py-3 sm:grid-cols-[minmax(0,5fr)_minmax(0,6fr)_56px]"
           >
-            <span className="text-[17px] font-semibold">
+            <span className="text-base font-semibold">
               {t(`departments.${key}`)}
             </span>
             <span className="col-span-2 row-start-2 sm:col-span-1 sm:row-start-auto">
@@ -44,7 +44,7 @@ export async function DepartmentChart() {
                 }
               />
             </span>
-            <span className="col-start-2 row-start-1 text-right text-xl font-semibold tabular-nums sm:col-start-auto sm:row-start-auto">
+            <span className="col-start-2 row-start-1 text-right text-lg font-semibold tabular-nums sm:col-start-auto sm:row-start-auto">
               {headcounts[key]}
             </span>
           </li>

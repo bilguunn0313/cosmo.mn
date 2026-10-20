@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MilestonesPanel } from "@/components/admin/about/milestones-panel";
+import { ValueImagesPanel } from "@/components/admin/about/value-images-panel";
 import { PageBannerPanel } from "@/components/admin/page-banner-panel";
 import { PageHeader } from "@/components/admin/page-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
@@ -25,7 +26,9 @@ export default function AboutPageAdmin() {
         bodyMode="rich"
       />
 
-      <MilestonesPanel step={3} />
+      <ValueImagesPanel step={3} />
+
+      <MilestonesPanel step={4} />
     </div>
   );
 }

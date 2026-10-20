@@ -5,7 +5,6 @@ import { CareersIntro } from "@/components/site/careers/careers-intro";
 import { CareersStats } from "@/components/site/careers/careers-stats";
 import { DepartmentChart } from "@/components/site/careers/department-chart";
 import { GrowthSection } from "@/components/site/careers/growth-section";
-import { JobChannels } from "@/components/site/careers/job-channels";
 import { PrinciplesBand } from "@/components/site/careers/principles-band";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
@@ -52,7 +51,6 @@ export default async function HumanResourcesPage({
       )}
 
       <PrinciplesBand />
-      <JobChannels setting={setting} />
 
       <section
         id="anket"
@@ -63,7 +61,7 @@ export default async function HumanResourcesPage({
           <h2 id="application-title" className="type-h2">
             {t("title")}
           </h2>
-          <p className="max-w-95 text-[17px] leading-normal text-ink-2">
+          <p className="max-w-95 text-base leading-relaxed text-ink-2">
             {t("intro")}
           </p>
         </div>

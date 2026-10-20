@@ -5,7 +5,6 @@ import { BrandCategoriesSection } from "@/components/site/home/brand-categories-
 import { BrandMarquee } from "@/components/site/home/brand-marquee";
 import { HeroCarousel } from "@/components/site/home/hero-carousel";
 import { HeroFallback } from "@/components/site/home/hero-fallback";
-import { HomeCtaSection } from "@/components/site/home/home-cta-section";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
 import { ValuesSection } from "@/components/site/home/values-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
@@ -18,7 +17,7 @@ import {
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const HOME_NEWS_COUNT = 5;
+const HOME_NEWS_COUNT = 4;
 
 export async function generateMetadata({
   params,
@@ -53,9 +52,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <WorldMapSection brands={brands} locale={locale} />
       <BrandMarquee brands={brands} />
       <BrandCategoriesSection brands={brands} setting={setting} />
-      <ValuesSection />
+      <ValuesSection images={setting?.valueImages} />
       <LatestNewsSection news={news} />
-      <HomeCtaSection setting={setting} />
     </>
   );
 }

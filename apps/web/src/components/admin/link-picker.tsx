@@ -106,7 +106,7 @@ export function LinkPicker({ id, value, onChange, invalid }: LinkPickerProps) {
           )}
           {news.length > 0 && (
             <SelectGroup>
-              <SelectLabel>Сүүлийн мэдээ</SelectLabel>
+              <SelectLabel>Мэдээлэл</SelectLabel>
               {news.map((item) => (
                 <SelectItem key={item.path} value={item.path}>
                   {targetLabel(item)}

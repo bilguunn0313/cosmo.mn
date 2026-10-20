@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
-import { siteButtonClass } from "./site-button";
-import { CONTACT_HREF, SITE_NAV } from "./site-nav";
+import { SITE_NAV, isNavItemActive } from "./site-nav";
 
 export function MobileMenu() {
   const t = useTranslations();
@@ -46,7 +45,9 @@ export function MobileMenu() {
               key={item.href}
               href={item.href}
               onClick={close}
-              aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+              aria-current={
+                isNavItemActive(item.href, pathname) ? "page" : undefined
+              }
               className="border-b border-rule px-4 py-5 text-2xl font-semibold tracking-heading transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700"
             >
               {t(`nav.${item.key}`)}
@@ -54,16 +55,8 @@ export function MobileMenu() {
           ))}
         </nav>
 
-        <div className="mt-auto grid gap-4 p-4">
+        <div className="mt-auto p-4">
           <LanguageSwitcher className="-mx-1.5" />
-          <Link
-            href={CONTACT_HREF}
-            onClick={close}
-            className={siteButtonClass("primary")}
-          >
-            {t("nav.contact")}
-            <ArrowUpRight className="size-4.5" />
-          </Link>
         </div>
       </SheetContent>
     </Sheet>

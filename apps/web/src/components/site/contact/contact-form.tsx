@@ -131,7 +131,7 @@ export function ContactForm({ departments }: ContactFormProps) {
       >
         <Check className="size-12" strokeWidth={2.5} />
         <h3 className="type-h3">{t("sentTitle")}</h3>
-        <p className="max-w-md text-lg">{t("sentText")}</p>
+        <p className="max-w-md text-base">{t("sentText")}</p>
         <button
           type="button"
           onClick={() => setIsSent(false)}

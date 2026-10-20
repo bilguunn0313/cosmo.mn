@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import { useMotionValueEvent, useScroll } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
@@ -8,8 +7,12 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
 import { MobileMenu } from "./mobile-menu";
-import { siteButtonClass } from "./site-button";
-import { CONTACT_HREF, HERO_MEDIA_ID, SITE_NAV } from "./site-nav";
+import {
+  HERO_MEDIA_ID,
+  PAGE_BANNER_ID,
+  SITE_NAV,
+  isNavItemActive,
+} from "./site-nav";
 import { Wordmark } from "./wordmark";
 
 export function SiteHeader() {
@@ -19,14 +22,19 @@ export function SiteHeader() {
   const { scrollY } = useScroll();
   const [isPastHero, setIsPastHero] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverBanner, setIsOverBanner] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const hero = document.getElementById(HERO_MEDIA_ID);
+    const banner = document.getElementById(PAGE_BANNER_ID);
     const headerHeight = headerRef.current?.offsetHeight ?? 0;
 
     setIsScrolled(latest > 0);
     setIsPastHero(
       hero ? hero.getBoundingClientRect().bottom <= headerHeight : false,
+    );
+    setIsOverBanner(
+      banner ? latest > 0 && banner.getBoundingClientRect().bottom > 0 : false,
     );
   });
 
@@ -38,9 +46,10 @@ export function SiteHeader() {
       data-over-hero={isOverHero}
       style={{ viewTransitionName: "site-header" }}
       className={cn(
-        "group/header sticky top-0 z-40 border-b transition-[background-color,border-color] duration-300 ease-out",
+        "group/header sticky top-0 z-40 border-b transition-[translate,background-color,border-color] duration-300 ease-out motion-reduce:transition-none",
         isOverHero ? "bg-transparent" : "bg-paper",
         isScrolled && !isOverHero ? "border-rule" : "border-transparent",
+        isOverBanner && "-translate-y-full focus-within:translate-y-0",
       )}
     >
       <div
@@ -65,8 +74,10 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              aria-current={pathname.startsWith(item.href) ? "page" : undefined}
-              className="px-4 py-3 text-[15px] font-semibold text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700 aria-[current=page]:shadow-[inset_0_-4px_0_var(--color-brand)] group-data-[over-hero=true]/header:text-white group-data-[over-hero=true]/header:hover:bg-white/15"
+              aria-current={
+                isNavItemActive(item.href, pathname) ? "page" : undefined
+              }
+              className="px-4 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700 aria-[current=page]:shadow-[inset_0_-4px_0_var(--color-brand)] group-data-[over-hero=true]/header:text-white group-data-[over-hero=true]/header:hover:bg-white/15"
             >
               {t(`nav.${item.key}`)}
             </Link>
@@ -75,16 +86,6 @@ export function SiteHeader() {
 
         <div className="flex items-center justify-self-end gap-5">
           <LanguageSwitcher className="hidden lg:flex" />
-          <Link
-            href={CONTACT_HREF}
-            className={siteButtonClass(
-              "primary",
-              "hidden h-11.5 min-w-47.5 lg:inline-flex",
-            )}
-          >
-            {t("nav.contact")}
-            <ArrowUpRight className="size-4.5" />
-          </Link>
           <MobileMenu />
         </div>
       </div>
