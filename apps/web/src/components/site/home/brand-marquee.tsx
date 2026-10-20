@@ -2,6 +2,19 @@ import { getTranslations } from "next-intl/server";
 import type { PublicBrand } from "@/lib/public-api";
 import { MarqueeRow } from "./marquee-row";
 
+const TWO_ROW_MIN_BRANDS = 8;
+
+function splitIntoRows(brands: PublicBrand[]) {
+  if (brands.length < TWO_ROW_MIN_BRANDS) {
+    return [brands];
+  }
+
+  return [
+    brands.filter((_, index) => index % 2 === 0),
+    brands.filter((_, index) => index % 2 === 1),
+  ];
+}
+
 interface BrandMarqueeProps {
   brands: PublicBrand[];
 }
@@ -14,12 +27,24 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   }
 
   return (
-    <section aria-labelledby="brands-marquee-title" className="bg-white">
-      <h2 id="brands-marquee-title" className="sr-only">
-        {t("officialDistributor")}
-      </h2>
-      <div className="flex">
-        <MarqueeRow brands={brands} />
+    <section
+      aria-labelledby="brands-marquee-title"
+      className="mt-20 bg-white py-14 md:mt-32 md:py-20"
+    >
+      <div className="site-container">
+        <h2 id="brands-marquee-title" className="type-h2 text-balance">
+          {t("partnersTitle")}
+        </h2>
+        <span
+          aria-hidden
+          className="mt-4 block h-[3px] rounded-full bg-linear-to-r from-brand via-brand-400 via-25% to-rule md:mt-5"
+        />
+      </div>
+
+      <div className="mt-10 grid gap-8 md:mt-14 md:gap-12">
+        {splitIntoRows(brands).map((row, index) => (
+          <MarqueeRow key={index} brands={row} isReversed={index === 1} />
+        ))}
       </div>
     </section>
   );

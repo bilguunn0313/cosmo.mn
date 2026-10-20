@@ -31,7 +31,7 @@ export async function ValuesList({ images }: ValuesListProps) {
   return (
     <section
       aria-labelledby="values-title"
-      className="site-container pt-20 md:pt-28"
+      className="site-container pt-20 md:pt-32"
     >
       <h2 id="values-title" className="type-h2 pb-8 md:pb-10">
         {t("home.valuesTitle")}

@@ -16,7 +16,7 @@ export async function BrandWholesaleBand({
   return (
     <section
       aria-labelledby="wholesale-title"
-      className="mt-20 bg-brand text-white md:mt-28"
+      className="mt-20 bg-brand text-white md:mt-32"
     >
       <div className="site-container grid gap-8 py-16 md:py-20 lg:grid-cols-12 lg:items-end lg:gap-x-6">
         <div className="grid gap-4 lg:col-span-7">

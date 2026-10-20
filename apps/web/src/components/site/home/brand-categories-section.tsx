@@ -1,40 +1,22 @@
-import { BRAND_CATEGORIES } from "@cosmo/shared";
 import { getTranslations } from "next-intl/server";
 import { SectionHeader } from "@/components/site/section-header";
-import type { PublicBrand, PublicSiteSetting } from "@/lib/public-api";
-import { BrandShowcase, type CategoryTile } from "./brand-showcase";
+import type { PublicBrand } from "@/lib/public-api";
+import { BrandBento } from "./brand-bento";
 
-function buildTiles(
-  brands: PublicBrand[],
-  setting: PublicSiteSetting | null,
-): CategoryTile[] {
-  return BRAND_CATEGORIES.flatMap((category) => {
-    const inCategory = brands.filter((brand) =>
-      brand.categories.includes(category),
-    );
+function pickBentoBrands(brands: PublicBrand[]) {
+  const featured = brands
+    .filter((brand) => brand.featuredOrder !== null)
+    .sort((a, b) => (a.featuredOrder ?? 0) - (b.featuredOrder ?? 0));
 
-    if (inCategory.length === 0) {
-      return [];
-    }
-
-    return {
-      category,
-      imageUrl:
-        setting?.categoryImages?.[category] ??
-        inCategory.find((brand) => brand.coverUrl)?.coverUrl ??
-        null,
-    };
-  });
+  return featured.length > 0 ? featured : brands;
 }
 
 interface BrandCategoriesSectionProps {
   brands: PublicBrand[];
-  setting: PublicSiteSetting | null;
 }
 
 export async function BrandCategoriesSection({
   brands,
-  setting,
 }: BrandCategoriesSectionProps) {
   const t = await getTranslations("home");
 
@@ -45,17 +27,14 @@ export async function BrandCategoriesSection({
   return (
     <section
       aria-labelledby="brand-categories-title"
-      className="pt-20 md:pt-28"
+      className="site-container pt-20 md:pt-32"
     >
-      <div className="site-container">
-        <SectionHeader
-          id="brand-categories-title"
-          title={t("categoriesTitle")}
-          link={{ href: "/brands", label: t("allBrands") }}
-        />
-      </div>
-
-      <BrandShowcase brands={brands} tiles={buildTiles(brands, setting)} />
+      <SectionHeader
+        id="brand-categories-title"
+        title={t("categoriesTitle")}
+        link={{ href: "/brands", label: t("allBrands") }}
+      />
+      <BrandBento brands={pickBentoBrands(brands)} />
     </section>
   );
 }

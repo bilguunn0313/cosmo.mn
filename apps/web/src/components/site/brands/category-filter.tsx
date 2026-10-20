@@ -21,9 +21,9 @@ export async function CategoryFilter({
   return (
     <nav
       aria-label={t("brands.filterLabel")}
-      className="no-scrollbar -mx-4 overflow-x-auto border-b border-rule px-4 md:mx-0 md:px-0"
+      className="no-scrollbar -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0"
     >
-      <ul className="flex gap-1">
+      <ul className="flex gap-2">
         {options.map(({ category, count }) => (
           <li key={category ?? "all"}>
             <Link
@@ -33,10 +33,10 @@ export async function CategoryFilter({
               }}
               scroll={false}
               aria-current={category === activeCategory ? "page" : undefined}
-              className="-mb-0.5 inline-flex items-baseline gap-2 border-b-4 border-transparent px-3 pt-4 pb-3.5 text-base font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:text-brand-700 aria-[current=page]:border-brand aria-[current=page]:text-brand-700 md:px-4"
+              className="group inline-flex h-11 items-center gap-2 rounded-control bg-surface px-4 text-[15px] font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:bg-brand-100 aria-[current=page]:bg-brand aria-[current=page]:text-white md:px-5"
             >
               {category ? t(`categories.${category}`) : t("brands.all")}
-              <span className="text-[13px] font-semibold text-ink-3 tabular-nums">
+              <span className="text-[13px] font-semibold text-ink-3 tabular-nums group-aria-[current=page]:text-brand-200">
                 {count}
               </span>
             </Link>

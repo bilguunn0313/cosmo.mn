@@ -89,28 +89,28 @@ describe('Site settings', () => {
     ]);
   });
 
-  it('ангиллын зургийг нийтэд өгч, зургийн сангаас устгахыг хориглоно', async () => {
-    const foodImageId = await uploadTestImage(context);
+  it('хуудасны баннерыг зургийн сангаас устгахыг хориглож, нэрийг нь зөв хэлнэ', async () => {
+    const brandsBannerImageId = await uploadTestImage(context);
 
     await context.admin
       .put('/admin/site-settings')
-      .send({ foodImageId })
+      .send({ brandsBannerImageId })
       .expect(200);
 
     const response = await context.guest
       .get('/public/site-settings')
       .expect(200);
-    expect(response.body.categoryImages).toEqual({
-      FOOD: expect.stringMatching(/^\/uploads\//),
-      BEAUTY: null,
-      HOUSEHOLD: null,
-    });
+    expect(response.body.pageBanners.brands).toMatch(/^\/uploads\//);
+    expect(response.body).not.toHaveProperty('categoryImages');
 
     const deletion = await context.admin
-      .delete(`/admin/media/${foodImageId}`)
+      .delete(`/admin/media/${brandsBannerImageId}`)
       .expect(409);
     expect(deletion.body.usages).toEqual([
-      expect.objectContaining({ type: 'siteSetting', title: 'Ангиллын зураг' }),
+      expect.objectContaining({
+        type: 'siteSetting',
+        title: 'Хуудасны баннер',
+      }),
     ]);
   });
 

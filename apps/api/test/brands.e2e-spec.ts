@@ -121,6 +121,83 @@ describe('Brands', () => {
     await context.guest.get('/public/brands/brand-hidden').expect(404);
   });
 
+  describe('Онцлох брэндүүд', () => {
+    let firstId: number;
+    let secondId: number;
+
+    beforeAll(async () => {
+      firstId = (await createBrand('brand-featured-a').expect(201)).body.id;
+      secondId = (await createBrand('brand-featured-b').expect(201)).body.id;
+    });
+
+    function featuredOrderBySlug(
+      brands: { slug: string; featuredOrder: number | null }[],
+    ) {
+      return Object.fromEntries(
+        brands
+          .filter((brand) => brand.featuredOrder !== null)
+          .map((brand) => [brand.slug, brand.featuredOrder]),
+      );
+    }
+
+    it('сонгосон дарааллаар нь хадгалж нийтэд өгнө', async () => {
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [secondId, firstId] })
+        .expect(204);
+
+      const response = await context.guest.get('/public/brands').expect(200);
+      expect(featuredOrderBySlug(response.body)).toEqual({
+        'brand-featured-b': 0,
+        'brand-featured-a': 1,
+      });
+    });
+
+    it('шинээр хадгалахад өмнөх сонголтыг солино', async () => {
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [firstId] })
+        .expect(204);
+
+      const response = await context.guest.get('/public/brands').expect(200);
+      expect(featuredOrderBySlug(response.body)).toEqual({
+        'brand-featured-a': 0,
+      });
+    });
+
+    it('хоосон жагсаалт илгээхэд бүх онцлохыг цуцална', async () => {
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [] })
+        .expect(204);
+
+      const response = await context.guest.get('/public/brands').expect(200);
+      expect(featuredOrderBySlug(response.body)).toEqual({});
+    });
+
+    it('5-аас олон, давхардсан эсвэл байхгүй брэндийг хүлээж авахгүй', async () => {
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [1, 2, 3, 4, 5, 6] })
+        .expect(400);
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [firstId, firstId] })
+        .expect(400);
+      await context.admin
+        .put('/admin/brands/featured')
+        .send({ ids: [999999] })
+        .expect(400);
+    });
+
+    it('нэвтрээгүй хэрэглэгч өөрчилж чадахгүй', async () => {
+      await context.guest
+        .put('/admin/brands/featured')
+        .send({ ids: [firstId] })
+        .expect(401);
+    });
+  });
+
   describe('Брэндийн хэсгүүд', () => {
     let brandId: number;
 

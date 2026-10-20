@@ -68,6 +68,19 @@ export const createProductSchema = productFields.extend({
 
 export const updateProductSchema = productFields.partial();
 
+export const MAX_FEATURED_BRANDS = 5;
+
+export const featuredBrandsSchema = z.object({
+  ids: z
+    .array(idSchema)
+    .max(MAX_FEATURED_BRANDS, {
+      message: `Хамгийн ихдээ ${MAX_FEATURED_BRANDS} брэнд сонгоно`,
+    })
+    .refine((list) => new Set(list).size === list.length, {
+      message: "Брэнд давхардсан байна",
+    }),
+});
+
 export const publicBrandsQuerySchema = z.object({
   locale: localeSchema,
   category: z.enum(BRAND_CATEGORIES).optional(),
@@ -79,4 +92,5 @@ export type CreateBrandSectionInput = z.infer<typeof createBrandSectionSchema>;
 export type UpdateBrandSectionInput = z.infer<typeof updateBrandSectionSchema>;
 export type CreateProductInput = z.infer<typeof createProductSchema>;
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;
+export type FeaturedBrandsInput = z.infer<typeof featuredBrandsSchema>;
 export type PublicBrandsQuery = z.infer<typeof publicBrandsQuerySchema>;

@@ -13,8 +13,8 @@ interface InfoRowProps {
 
 function InfoRow({ icon, label, children }: InfoRowProps) {
   return (
-    <div className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-white/28 py-5">
-      <span className="flex size-11 items-center justify-center bg-white/10 text-white">
+    <div className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-white/15 py-5">
+      <span className="flex size-11 items-center justify-center rounded-control bg-white/10 text-brand-300">
         {icon}
       </span>
       <div className="grid gap-1">
@@ -43,29 +43,29 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
   ].filter((social) => social.url);
 
   return (
-    <div className="grid content-start gap-8 bg-brand-night px-6 py-8 text-white sm:px-10 sm:py-10">
-      <dl className="border-b border-white/28">
+    <div className="grid content-start gap-8 rounded-card bg-brand-night px-6 py-8 text-white sm:px-10 sm:py-10">
+      <dl className="border-b border-white/15">
         {setting?.address && (
-          <InfoRow icon={<MapPin className="size-5" />} label={t("address")}>
+          <InfoRow icon={<MapPin className="size-5" strokeWidth={1.5} />} label={t("address")}>
             <span className="whitespace-pre-line">{setting.address}</span>
           </InfoRow>
         )}
         {setting?.phone && (
-          <InfoRow icon={<Phone className="size-5" />} label={t("phone")}>
+          <InfoRow icon={<Phone className="size-5" strokeWidth={1.5} />} label={t("phone")}>
             <a href={phoneHref(setting.phone)} className={linkClass}>
               {setting.phone}
             </a>
           </InfoRow>
         )}
         {setting?.email && (
-          <InfoRow icon={<Mail className="size-5" />} label={t("email")}>
+          <InfoRow icon={<Mail className="size-5" strokeWidth={1.5} />} label={t("email")}>
             <a href={`mailto:${setting.email}`} className={linkClass}>
               {setting.email}
             </a>
           </InfoRow>
         )}
         {setting?.workingHours && (
-          <InfoRow icon={<Clock className="size-5" />} label={t("hours")}>
+          <InfoRow icon={<Clock className="size-5" strokeWidth={1.5} />} label={t("hours")}>
             {setting.workingHours}
           </InfoRow>
         )}
@@ -81,7 +81,7 @@ export async function ContactInfo({ setting }: ContactInfoProps) {
                 href={social.url ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-1.5 border border-white/40 px-4 text-sm font-medium transition-colors duration-150 hover:bg-white/10"
+                className="inline-flex h-10 items-center gap-1.5 rounded-control border border-white/40 px-4 text-sm font-medium transition-colors duration-150 hover:bg-white/10"
               >
                 {social.label}
                 <ArrowUpRight className="size-4" />

@@ -10,7 +10,7 @@ export async function GrowthSection() {
   const t = await getTranslations("careers.growth");
 
   return (
-    <section className="site-container grid gap-16 pt-20 md:pt-40 lg:grid-cols-2 lg:gap-6">
+    <section className="site-container grid gap-16 pt-20 md:pt-32 lg:grid-cols-2 lg:gap-6">
       {GROWTH_ITEMS.map((item, index) => (
         <Reveal key={item.key} index={index} className="flex flex-col gap-6">
           <div className="grid gap-4">

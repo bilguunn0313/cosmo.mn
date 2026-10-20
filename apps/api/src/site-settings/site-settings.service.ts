@@ -8,9 +8,6 @@ const SITE_SETTING_ID = 1;
 
 const siteSettingInclude = {
   mapImage: true,
-  foodImage: true,
-  beautyImage: true,
-  householdImage: true,
   aboutBannerImage: true,
   careersBannerImage: true,
   mediaBannerImage: true,
@@ -71,11 +68,6 @@ export class SiteSettingsService {
       foundedYear: setting.foundedYear,
       employeeCount: setting.employeeCount,
       salesPointCount: setting.salesPointCount,
-      categoryImages: {
-        FOOD: setting.foodImage?.url ?? null,
-        BEAUTY: setting.beautyImage?.url ?? null,
-        HOUSEHOLD: setting.householdImage?.url ?? null,
-      },
       pageBanners: {
         about: setting.aboutBannerImage?.url ?? null,
         careers: setting.careersBannerImage?.url ?? null,

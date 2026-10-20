@@ -91,7 +91,7 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
     <section
       id="history"
       aria-labelledby="history-title"
-      className="site-container scroll-mt-24 overflow-x-clip pt-20 md:pt-28"
+      className="site-container scroll-mt-24 overflow-x-clip pt-20 md:pt-32"
     >
       <h2 id="history-title" className="type-h2">
         {title}

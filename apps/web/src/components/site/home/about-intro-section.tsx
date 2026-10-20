@@ -52,7 +52,7 @@ export async function AboutIntroSection({
               <stat.icon
                 aria-hidden
                 className="row-span-2 size-12 text-brand transition-colors duration-200 ease-out group-hover:text-white md:size-14"
-                strokeWidth={1.25}
+                strokeWidth={1.5}
               />
               <dt className="col-start-2 row-start-2 text-[13px] font-semibold tracking-[0.06em] text-ink-3 uppercase transition-colors duration-200 ease-out group-hover:text-white/85">
                 {stat.label}

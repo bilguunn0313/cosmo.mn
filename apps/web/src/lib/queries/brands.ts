@@ -72,3 +72,13 @@ export function useToggleBrand() {
 export function useReorderBrands() {
   return useReorder<Brand>(brandsQueryKey, "/admin/brands/reorder");
 }
+
+export function useSetFeaturedBrands() {
+  const invalidateBrands = useInvalidateBrands();
+
+  return useMutation({
+    mutationFn: (ids: number[]) =>
+      api<void>("/admin/brands/featured", { method: "PUT", body: { ids } }),
+    onSuccess: invalidateBrands,
+  });
+}

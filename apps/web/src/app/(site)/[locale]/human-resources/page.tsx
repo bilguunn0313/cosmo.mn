@@ -55,7 +55,7 @@ export default async function HumanResourcesPage({
       <section
         id="anket"
         aria-labelledby="application-title"
-        className="site-container grid scroll-mt-28 gap-10 pt-20 md:pt-36 lg:grid-cols-12 lg:gap-x-6"
+        className="site-container grid scroll-mt-28 gap-10 pt-20 md:pt-32 lg:grid-cols-12 lg:gap-x-6"
       >
         <div className="grid content-start gap-5 lg:sticky lg:top-30 lg:col-span-4 lg:self-start">
           <h2 id="application-title" className="type-h2">

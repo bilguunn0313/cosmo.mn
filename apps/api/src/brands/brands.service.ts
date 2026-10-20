@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type {
   CreateBrandInput,
   Locale,
@@ -91,6 +95,30 @@ export class BrandsService {
     });
   }
 
+  async setFeatured(ids: number[]) {
+    const foundCount = await this.prisma.brand.count({
+      where: { id: { in: ids } },
+    });
+
+    if (foundCount !== ids.length) {
+      throw new BadRequestException('Сонгосон брэнд олдсонгүй');
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.brand.updateMany({
+        where: { featuredOrder: { not: null } },
+        data: { featuredOrder: null },
+      });
+
+      for (const [index, id] of ids.entries()) {
+        await tx.brand.update({
+          where: { id },
+          data: { featuredOrder: index },
+        });
+      }
+    });
+  }
+
   async remove(id: number) {
     await this.findOne(id);
     await this.prisma.brand.delete({ where: { id } });
@@ -118,6 +146,7 @@ export class BrandsService {
         coverUrl: brand.cover?.url ?? null,
         showcaseImageUrl: brand.showcaseImage?.url ?? null,
         originCountry: brand.originCountry,
+        featuredOrder: brand.featuredOrder,
       };
     });
   }

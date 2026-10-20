@@ -58,9 +58,6 @@ model Media {
   newsCovers                     News[]         @relation("NewsCover")
   newsVideos                     News[]         @relation("NewsVideo")
   siteSettingMaps                SiteSetting[]  @relation("SiteSettingMap")
-  siteSettingFoods               SiteSetting[]  @relation("SiteSettingFood")
-  siteSettingBeauties            SiteSetting[]  @relation("SiteSettingBeauty")
-  siteSettingHouseholds          SiteSetting[]  @relation("SiteSettingHousehold")
   siteSettingAbouts              SiteSetting[]  @relation("SiteSettingAboutBanner")
   siteSettingCareers             SiteSetting[]  @relation("SiteSettingCareersBanner")
   siteSettingMedias              SiteSetting[]  @relation("SiteSettingMediaBanner")
@@ -111,6 +108,7 @@ model Brand {
   websiteUrl      String?
   originCountry   String?
   order           Int             @default(0)
+  featuredOrder   Int?
   isPublished     Boolean         @default(false)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -279,12 +277,6 @@ model SiteSetting {
   mapUrl                     String?
   mapImageId                 Int?
   mapImage                   Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
-  foodImageId                Int?
-  foodImage                  Media?   @relation("SiteSettingFood", fields: [foodImageId], references: [id])
-  beautyImageId              Int?
-  beautyImage                Media?   @relation("SiteSettingBeauty", fields: [beautyImageId], references: [id])
-  householdImageId           Int?
-  householdImage             Media?   @relation("SiteSettingHousehold", fields: [householdImageId], references: [id])
   aboutBannerImageId         Int?
   aboutBannerImage           Media?   @relation("SiteSettingAboutBanner", fields: [aboutBannerImageId], references: [id])
   careersBannerImageId       Int?

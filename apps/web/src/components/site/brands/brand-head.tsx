@@ -115,7 +115,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
             </p>
             <h1
               id="brand-title"
-              className="text-[40px] leading-[1.05] font-semibold tracking-heading wrap-anywhere"
+              className="type-display wrap-anywhere"
             >
               {brand.name}
             </h1>

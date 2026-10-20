@@ -79,7 +79,7 @@ export default async function BrandPage({
       )}
 
       {brand.sections.length > 0 && (
-        <div className="site-container pt-20 md:pt-28">
+        <div className="site-container pt-20 md:pt-32">
           <StorySections sections={brand.sections} />
         </div>
       )}
@@ -87,7 +87,7 @@ export default async function BrandPage({
       {relatedBrands.length > 0 && (
         <section
           aria-labelledby="related-brands-title"
-          className="site-container pt-20 md:pt-28"
+          className="site-container pt-20 md:pt-32"
         >
           <div className="flex flex-wrap items-end justify-between gap-4 pb-5">
             <h2 id="related-brands-title" className="type-h2">

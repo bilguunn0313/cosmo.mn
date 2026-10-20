@@ -52,7 +52,7 @@ export function PageBanner({
         />
 
         <div className="site-container absolute inset-x-0 bottom-10 grid justify-items-start gap-4 text-white md:bottom-14">
-          <h1 className="animate-in fade-in slide-in-from-bottom-6 max-w-3xl text-[40px] leading-[1.05] font-semibold tracking-heading text-balance duration-900 ease-(--ease-out) fill-mode-both delay-250">
+          <h1 className="animate-in fade-in slide-in-from-bottom-6 max-w-3xl type-display text-balance duration-900 ease-(--ease-out) fill-mode-both delay-250">
             {title}
           </h1>
           {(description || children) && (

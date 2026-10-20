@@ -35,7 +35,6 @@ export interface PublicSiteSetting {
   foundedYear: number | null;
   employeeCount: number | null;
   salesPointCount: number | null;
-  categoryImages: Record<BrandCategory, string | null>;
   pageBanners: Record<BannerPage, string | null>;
   valueImages: Record<ValueKey, string | null>;
   address: string | null;
@@ -68,6 +67,7 @@ export interface PublicBrand {
   coverUrl: string | null;
   showcaseImageUrl: string | null;
   originCountry: CountryCode | null;
+  featuredOrder: number | null;
 }
 
 export function fetchBrands(locale: Locale) {

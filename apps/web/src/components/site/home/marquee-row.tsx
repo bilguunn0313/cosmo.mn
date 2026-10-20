@@ -36,7 +36,7 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
       tabIndex={isRepeat ? -1 : undefined}
       aria-hidden={isRepeat || undefined}
       className={cn(
-        "flex h-28 w-44 shrink-0 items-center justify-center bg-white px-6 py-5 transition-colors duration-150 hover:bg-brand-100 md:h-40 md:w-60 md:px-8 md:py-6",
+        "group flex h-16 w-40 shrink-0 items-center justify-center px-6 md:h-20 md:w-56 md:px-10",
         isRepeat && "motion-reduce:hidden",
       )}
     >
@@ -47,8 +47,8 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
             alt={brand.name}
             fill
             unoptimized
-            sizes="240px"
-            className="object-contain"
+            sizes="224px"
+            className="object-contain transition-[scale] duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none"
           />
         </span>
       ) : (
@@ -62,9 +62,10 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
 
 interface MarqueeRowProps {
   brands: PublicBrand[];
+  isReversed?: boolean;
 }
 
-export function MarqueeRow({ brands }: MarqueeRowProps) {
+export function MarqueeRow({ brands, isReversed = false }: MarqueeRowProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const speedChangeRef = useRef<AnimationPlaybackControls | null>(null);
 
@@ -99,12 +100,15 @@ export function MarqueeRow({ brands }: MarqueeRowProps) {
           changeSpeed(1);
         }
       }}
-      className="min-w-0 flex-1 overflow-hidden"
+      className="min-w-0 overflow-hidden"
     >
       <div
         ref={trackRef}
         style={{ animationDuration: `${items.length * SECONDS_PER_ITEM}s` }}
-        className="flex w-max animate-marquee motion-reduce:w-full motion-reduce:animate-none"
+        className={cn(
+          "flex w-max animate-marquee motion-reduce:w-full motion-reduce:animate-none",
+          isReversed && "[animation-direction:reverse]",
+        )}
       >
         <div className="flex shrink-0 motion-reduce:w-full motion-reduce:flex-wrap">
           {items.map((brand, index) => (

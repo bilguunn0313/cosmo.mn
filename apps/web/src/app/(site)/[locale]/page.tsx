@@ -50,9 +50,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
       <AboutIntroSection setting={setting} brands={brands} />
       <WorldMapSection brands={brands} locale={locale} />
-      <BrandMarquee brands={brands} />
-      <BrandCategoriesSection brands={brands} setting={setting} />
+      <BrandCategoriesSection brands={brands} />
       <ValuesSection images={setting?.valueImages} />
+      <BrandMarquee brands={brands} />
       <LatestNewsSection news={news} />
     </>
   );

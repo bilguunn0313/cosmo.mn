@@ -8,16 +8,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { ApiCookieAuth, ApiTags } from '@nestjs/swagger';
 import {
   createBrandSchema,
+  featuredBrandsSchema,
   reorderSchema,
   updateBrandSchema,
 } from '@cosmo/shared';
 import type {
   CreateBrandInput,
+  FeaturedBrandsInput,
   ReorderInput,
   UpdateBrandInput,
 } from '@cosmo/shared';
@@ -59,6 +62,16 @@ export class AdminBrandsController {
     @Body(new ZodValidationPipe(reorderSchema)) body: ReorderInput,
   ) {
     await this.brandsService.reorder(body.ids);
+  }
+
+  @Put('featured')
+  @HttpCode(204)
+  @ApiZodBody(featuredBrandsSchema)
+  async setFeatured(
+    @Body(new ZodValidationPipe(featuredBrandsSchema))
+    body: FeaturedBrandsInput,
+  ) {
+    await this.brandsService.setFeatured(body.ids);
   }
 
   @Patch(':id')

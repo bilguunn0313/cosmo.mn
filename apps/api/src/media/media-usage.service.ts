@@ -19,6 +19,29 @@ export interface MediaUsage {
   title: string;
 }
 
+interface SiteSettingImageIds {
+  mapImageId: number | null;
+  aboutBannerImageId: number | null;
+  careersBannerImageId: number | null;
+  mediaBannerImageId: number | null;
+  brandsBannerImageId: number | null;
+}
+
+function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
+  if (setting.mapImageId === id) {
+    return 'Байршлын зураг';
+  }
+
+  const bannerIds = [
+    setting.aboutBannerImageId,
+    setting.careersBannerImageId,
+    setting.mediaBannerImageId,
+    setting.brandsBannerImageId,
+  ];
+
+  return bannerIds.includes(id) ? 'Хуудасны баннер' : 'Үнэт зүйлсийн зураг';
+}
+
 @Injectable()
 export class MediaUsageService {
   constructor(private readonly prisma: PrismaService) {}
@@ -86,9 +109,6 @@ export class MediaUsageService {
         where: {
           OR: [
             { mapImageId: id },
-            { foodImageId: id },
-            { beautyImageId: id },
-            { householdImageId: id },
             { aboutBannerImageId: id },
             { careersBannerImageId: id },
             { mediaBannerImageId: id },
@@ -146,7 +166,7 @@ export class MediaUsageService {
       ...siteSettings.map((setting) => ({
         type: 'siteSetting' as const,
         id: setting.id,
-        title: setting.mapImageId === id ? 'Байршлын зураг' : 'Ангиллын зураг',
+        title: siteSettingUsageTitle(setting, id),
       })),
     ];
   }

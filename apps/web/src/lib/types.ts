@@ -121,6 +121,7 @@ export interface Brand {
   websiteUrl: string | null;
   originCountry: CountryCode | null;
   order: number;
+  featuredOrder: number | null;
   isPublished: boolean;
   translations: BrandTranslation[];
 }
@@ -181,12 +182,6 @@ export interface SiteSetting {
   mapUrl: string | null;
   mapImageId: number | null;
   mapImage: Media | null;
-  foodImageId: number | null;
-  foodImage: Media | null;
-  beautyImageId: number | null;
-  beautyImage: Media | null;
-  householdImageId: number | null;
-  householdImage: Media | null;
   aboutBannerImageId: number | null;
   aboutBannerImage: Media | null;
   careersBannerImageId: number | null;

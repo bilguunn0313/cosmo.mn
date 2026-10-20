@@ -45,7 +45,7 @@ export async function PurposeSection() {
   return (
     <section
       aria-labelledby="purpose-title"
-      className="site-container pt-20 md:pt-28"
+      className="site-container pt-20 md:pt-32"
     >
       <h2 id="purpose-title" className="type-h2 pb-8 md:pb-10">
         {t("purposeTitle")}
