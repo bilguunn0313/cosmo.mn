@@ -48,7 +48,7 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
             fill
             unoptimized
             sizes="224px"
-            className="object-contain transition-[scale] duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="object-contain mix-blend-multiply transition-[scale] duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none"
           />
         </span>
       ) : (

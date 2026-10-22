@@ -190,7 +190,7 @@ export function CatalogBook({
             className="book-cover pointer-events-none absolute inset-y-0 left-1/2 z-1 w-1/2 origin-left transform-3d max-md:hidden"
           >
             <div className="absolute inset-0 flex flex-col justify-between bg-brand p-[8%] text-white backface-hidden">
-              <span className="text-[clamp(22px,2.4vw,40px)] font-extrabold tracking-[-0.04em]">
+              <span className="text-[clamp(22px,2.4vw,40px)] font-display font-bold tracking-[-0.03em]">
                 Cosmo
               </span>
               <span className="grid gap-2">

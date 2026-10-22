@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_SC, Onest } from "next/font/google";
+import { IBM_Plex_Sans, Noto_Sans_SC, Roboto } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import "../../globals.css";
@@ -9,9 +9,14 @@ import { getPageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, siteNameFor } from "@/lib/seo";
 
-const onest = Onest({
+const roboto = Roboto({
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
   variable: "--font-sans",
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  variable: "--font-plex",
 });
 
 const notoSansSc = Noto_Sans_SC({
@@ -49,9 +54,9 @@ export default async function SiteLayout({
   return (
     <html
       lang={locale}
-      className={`${onest.variable} ${notoSansSc.variable} h-full antialiased`}
+      className={`${roboto.variable} ${ibmPlexSans.variable} ${notoSansSc.variable} h-full antialiased`}
     >
-      <body className="site flex min-h-full flex-col bg-paper text-ink">
+      <body className="site flex min-h-full flex-col bg-white text-ink">
         <a
           href="#main"
           className="sr-only z-50 bg-brand px-5 py-3 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"

@@ -18,12 +18,12 @@ export async function NewsMeta({ news, className }: NewsMetaProps) {
         className,
       )}
     >
-      <NewsDate publishedAt={news.publishedAt} />
-      <span aria-hidden>·</span>
-      {news.videoUrl ? (
-        <span className="text-brand-700">{t("video")}</span>
-      ) : (
-        <span>{t("newsLabel")}</span>
+      <NewsDate publishedAt={news.publishedAt} isShort />
+      {news.videoUrl && (
+        <>
+          <span aria-hidden>·</span>
+          <span className="text-brand-700">{t("video")}</span>
+        </>
       )}
     </div>
   );

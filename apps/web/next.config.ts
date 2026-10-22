@@ -5,6 +5,7 @@ const apiUrl = process.env.API_URL ?? "http://localhost:4000";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  allowedDevOrigins: ["192.168.*.*"],
   experimental: {
     proxyClientMaxBodySize: "60mb",
     serverComponentsHmrCache: false,

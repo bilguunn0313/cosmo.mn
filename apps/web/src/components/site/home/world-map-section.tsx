@@ -29,7 +29,7 @@ export async function WorldMapSection({
   return (
     <section
       aria-labelledby="world-map-title"
-      className="bg-brand-night text-white"
+      className="bg-brand text-white"
     >
       <div className="site-container grid gap-y-10 py-16 md:py-22 lg:grid-cols-12 lg:gap-x-6">
         <Reveal className="grid content-start gap-5 lg:col-span-4">

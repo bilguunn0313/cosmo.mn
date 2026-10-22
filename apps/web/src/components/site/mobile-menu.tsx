@@ -25,13 +25,13 @@ export function MobileMenu() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger
         aria-label={t("header.openMenu")}
-        className="flex size-11 items-center justify-center text-ink transition-colors duration-150 hover:bg-brand-100 group-data-[over-hero=true]/header:text-white group-data-[over-hero=true]/header:hover:bg-white/15 lg:hidden"
+        className="flex size-11 items-center justify-center text-ink transition-colors duration-150 hover:bg-brand-100 lg:hidden"
       >
         <Menu className="size-6" />
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-full gap-0 rounded-none border-l border-rule bg-paper text-ink sm:max-w-sm"
+        className="w-full gap-0 rounded-none border-l border-rule bg-white text-ink sm:max-w-sm"
       >
         <SheetHeader className="h-16 justify-center border-b border-rule px-4">
           <SheetTitle className="eyebrow text-ink-3">

@@ -1,5 +1,10 @@
-import { History, Store, Tags, Users, type LucideIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {
+  BrandsIcon,
+  DistributionIcon,
+  GrowthIcon,
+  TeamIcon,
+} from "@/components/site/brand-icons";
 import type { PublicBrand, PublicSiteSetting } from "@/lib/public-api";
 
 export interface Stat {
@@ -7,7 +12,7 @@ export interface Stat {
   value: number;
   suffix: string;
   label: string;
-  icon: LucideIcon;
+  icon: (props: { className?: string }) => React.JSX.Element;
 }
 
 export async function getStats(
@@ -24,7 +29,7 @@ export async function getStats(
           value: currentYear - setting.foundedYear,
           suffix: "+",
           label: t("statYears"),
-          icon: History,
+          icon: GrowthIcon,
         }
       : null,
     setting?.employeeCount
@@ -33,7 +38,7 @@ export async function getStats(
           value: setting.employeeCount,
           suffix: "+",
           label: t("statEmployees"),
-          icon: Users,
+          icon: TeamIcon,
         }
       : null,
     brands.length > 0
@@ -42,7 +47,7 @@ export async function getStats(
           value: brands.length,
           suffix: "",
           label: t("statBrands"),
-          icon: Tags,
+          icon: BrandsIcon,
         }
       : null,
     setting?.salesPointCount
@@ -51,7 +56,7 @@ export async function getStats(
           value: setting.salesPointCount,
           suffix: "+",
           label: t("statSalesPoints"),
-          icon: Store,
+          icon: DistributionIcon,
         }
       : null,
   ];

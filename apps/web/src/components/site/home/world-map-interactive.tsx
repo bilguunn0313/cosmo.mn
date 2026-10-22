@@ -11,7 +11,7 @@ import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 import type { MapOrigin, MapPoint, WorldMapLayout } from "@/lib/world-map";
 
-const WORLD_MAP_SRC = "/world-map.svg?v=3";
+const WORLD_MAP_SRC = "/world-map.svg?v=5";
 const ARC_LIFT = 0.3;
 const ARC_STAGGER_SECONDS = 0.12;
 const CLOSE_DELAY_MS = 150;

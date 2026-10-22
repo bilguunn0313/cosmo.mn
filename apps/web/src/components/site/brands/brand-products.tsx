@@ -45,7 +45,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
             <li key={product.id}>
               <Reveal
                 index={index % REVEAL_COLUMNS}
-                className="flex h-full flex-col overflow-hidden rounded-card bg-white"
+                className="flex h-full flex-col overflow-hidden rounded-card bg-paper"
               >
                 <div className="relative h-40 sm:h-55">
                   <Image
@@ -54,7 +54,7 @@ export async function BrandProducts({ products, summary }: BrandProductsProps) {
                     fill
                     unoptimized
                     sizes="(min-width: 1024px) 22vw, (min-width: 768px) 33vw, 50vw"
-                    className="object-contain p-5 sm:p-6"
+                    className="object-contain p-5 mix-blend-multiply sm:p-6"
                   />
                 </div>
                 <div className="grid flex-1 content-start gap-2 px-4 pt-2 pb-5 sm:px-5">

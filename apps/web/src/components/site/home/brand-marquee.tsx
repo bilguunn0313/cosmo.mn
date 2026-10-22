@@ -29,7 +29,7 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   return (
     <section
       aria-labelledby="brands-marquee-title"
-      className="mt-20 bg-white py-14 md:mt-32 md:py-20"
+      className="pt-20 md:pt-32"
     >
       <div className="site-container">
         <h2 id="brands-marquee-title" className="type-h2 text-balance">

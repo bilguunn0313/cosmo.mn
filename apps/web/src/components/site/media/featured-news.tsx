@@ -1,44 +1,40 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
 import { Reveal } from "@/components/site/reveal";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
-import { NewsCoverPlaceholder } from "./news-cover-placeholder";
+import { NewsCover } from "./news-cover";
 import { NewsMeta } from "./news-meta";
-import { VideoBadge } from "./video-badge";
 
 interface FeaturedNewsProps {
   news: PublicNewsItem;
+  titleAs?: "h2" | "h3";
+  priority?: boolean;
 }
 
-export async function FeaturedNews({ news }: FeaturedNewsProps) {
+export async function FeaturedNews({
+  news,
+  titleAs: Title = "h2",
+  priority = false,
+}: FeaturedNewsProps) {
   const t = await getTranslations("home");
 
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group grid gap-6 pb-10 outline-offset-4 outline-brand focus-visible:outline-2 md:pb-14 lg:grid-cols-12 lg:items-end lg:gap-x-6"
+      className="group grid gap-6 rounded-card outline-offset-4 outline-brand transition-[scale] duration-160 ease-out focus-visible:outline-2 active:scale-[0.99] motion-reduce:transition-none lg:grid-cols-12 lg:items-center lg:gap-x-10"
     >
       <div className="relative aspect-16/10 overflow-hidden rounded-card bg-surface lg:col-span-7 lg:aspect-auto lg:h-[min(62vh,560px)]">
         <ImageReveal>
-          {news.coverUrl ? (
-            <Image
-              src={news.coverUrl}
-              alt=""
-              fill
-              unoptimized
-              priority
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="object-cover transition-[scale] duration-800 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-            />
-          ) : (
-            <NewsCoverPlaceholder />
-          )}
+          <NewsCover
+            news={news}
+            priority={priority}
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            className="absolute inset-0 rounded-card"
+          />
         </ImageReveal>
-        {news.videoUrl && <VideoBadge />}
       </div>
 
       <Reveal
@@ -46,9 +42,9 @@ export async function FeaturedNews({ news }: FeaturedNewsProps) {
         className="grid justify-items-start gap-5 lg:col-span-5"
       >
         <NewsMeta news={news} />
-        <h2 className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <Title className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
-        </h2>
+        </Title>
         {news.summary && (
           <p className="line-clamp-4 text-base leading-relaxed text-pretty text-ink-2">
             {news.summary}

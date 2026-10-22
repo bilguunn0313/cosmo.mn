@@ -1,13 +1,13 @@
 import { getTranslations } from "next-intl/server";
-import { HERO_MEDIA_ID } from "@/components/site/site-nav";
+import { cn } from "@/lib/utils";
+import { HERO_HEIGHT_CLASS } from "./hero-size";
 
 export async function HeroFallback() {
   const t = await getTranslations();
 
   return (
     <section
-      id={HERO_MEDIA_ID}
-      className="-mt-16 flex h-[80svh] min-h-105 items-end bg-brand text-white lg:-mt-21 lg:h-svh"
+      className={cn("flex items-end bg-brand text-white", HERO_HEIGHT_CLASS)}
     >
       <div className="site-container pb-10 md:pb-16">
         <h2 className="max-w-4xl type-display text-balance">

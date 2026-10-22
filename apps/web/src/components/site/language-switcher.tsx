@@ -7,9 +7,8 @@ import { LOCALE_LABELS, LOCALE_SHORT_LABELS } from "@/lib/translations";
 import { cn } from "@/lib/utils";
 
 const TONE_CLASSES = {
-  light:
-    "text-ink-3 hover:text-brand-700 aria-[current=true]:text-ink group-data-[over-hero=true]/header:text-white/70 group-data-[over-hero=true]/header:hover:text-white group-data-[over-hero=true]/header:aria-[current=true]:text-white",
-  dark: "text-white/60 hover:text-white aria-[current=true]:text-white",
+  light: "text-ink-3 hover:text-brand-700 aria-[current=true]:text-ink",
+  dark: "text-white/75 hover:text-white aria-[current=true]:text-white",
 } as const;
 
 interface LanguageSwitcherProps {

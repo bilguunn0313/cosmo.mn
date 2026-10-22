@@ -12,8 +12,8 @@ import type { PublicBrand } from "./public-api";
 
 const MAP_WIDTH = 1000;
 const ANTARCTICA_ID = "010";
-const LAND_COLOR = "#1d2847";
-const BORDER_COLOR = "#2d3a63";
+const LAND_COLOR = "#3a6997";
+const BORDER_COLOR = "#1b4d7f";
 
 type CountryFeature = Feature<Geometry, { name: string }>;
 

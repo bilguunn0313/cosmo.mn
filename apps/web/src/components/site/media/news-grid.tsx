@@ -10,7 +10,7 @@ interface NewsGridProps {
 
 export function NewsGrid({ items }: NewsGridProps) {
   return (
-    <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <ul className="grid gap-x-6 gap-y-10 md:grid-cols-2 md:gap-y-12 xl:grid-cols-3">
       {items.map((news, index) => (
         <li key={news.slug}>
           <Reveal index={index % REVEAL_COLUMNS} className="h-full">

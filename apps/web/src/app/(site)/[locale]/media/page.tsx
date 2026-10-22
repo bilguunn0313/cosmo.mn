@@ -75,7 +75,11 @@ export default async function MediaPage({
           </div>
         ) : (
           <>
-            {featured && <FeaturedNews news={featured} />}
+            {featured && (
+              <div className="pb-10 md:pb-14">
+                <FeaturedNews news={featured} priority />
+              </div>
+            )}
             {gridItems.length > 0 && <NewsGrid items={gridItems} />}
           </>
         )}

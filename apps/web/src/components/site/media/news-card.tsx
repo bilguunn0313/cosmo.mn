@@ -1,49 +1,53 @@
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
-import { NewsCoverPlaceholder } from "./news-cover-placeholder";
+import { cn } from "@/lib/utils";
+import { NewsCover } from "./news-cover";
 import { NewsMeta } from "./news-meta";
-import { VideoBadge } from "./video-badge";
 
 interface NewsCardProps {
   news: PublicNewsItem;
+  isLarge?: boolean;
 }
 
-export function NewsCard({ news }: NewsCardProps) {
+export function NewsCard({ news, isLarge = false }: NewsCardProps) {
   return (
     <Link
       href={newsPath(news.slug)}
-      className="group flex h-full flex-col overflow-hidden rounded-card bg-white outline-offset-4 outline-brand transition-colors duration-200 hover:bg-brand-100 focus-visible:outline-2"
+      className="group grid content-start gap-4 rounded-card outline-offset-4 outline-brand transition-[scale] duration-160 ease-out focus-visible:outline-2 active:scale-[0.98] motion-reduce:transition-none"
     >
-      <div className="relative mx-3 mt-3 aspect-16/10 overflow-hidden rounded-card bg-surface md:mx-4 md:mt-4">
-        {news.coverUrl ? (
-          <Image
-            src={news.coverUrl}
-            alt=""
-            fill
-            unoptimized
-            sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-            className="object-cover transition-[scale] duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-          />
-        ) : (
-          <NewsCoverPlaceholder />
-        )}
-        {news.videoUrl && <VideoBadge />}
-      </div>
+      <NewsCover
+        news={news}
+        sizes={
+          isLarge
+            ? "(min-width: 1024px) 58vw, 100vw"
+            : "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+        }
+        className="aspect-16/10 rounded-card"
+      />
 
-      <div className="flex flex-1 flex-col gap-3 p-5 md:px-6 md:pt-5 md:pb-7">
+      <div className="grid gap-2.5 pr-2">
         <NewsMeta news={news} />
-        <h3 className="line-clamp-3 type-h4 text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <h3
+          className={cn(
+            "line-clamp-3 text-balance transition-colors duration-150 group-hover:text-brand-700",
+            isLarge ? "type-h3" : "type-h4",
+          )}
+        >
           {news.title}
         </h3>
         {news.summary && (
-          <p className="line-clamp-2 text-sm leading-[1.45] text-ink-2">
+          <p
+            className={cn(
+              "text-pretty text-ink-2",
+              isLarge
+                ? "line-clamp-3 max-w-150 text-base leading-relaxed"
+                : "line-clamp-2 text-sm leading-[1.45]",
+            )}
+          >
             {news.summary}
           </p>
         )}
-        <ArrowRight className="mt-auto size-5.5 self-end text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
       </div>
     </Link>
   );

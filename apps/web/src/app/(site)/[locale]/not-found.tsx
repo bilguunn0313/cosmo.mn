@@ -11,7 +11,7 @@ export default async function NotFound() {
     <section className="site-container grid gap-10 pt-16 pb-8 md:pt-24 lg:grid-cols-12 lg:items-end lg:gap-x-6">
       <p
         aria-hidden
-        className="text-[clamp(120px,22vw,320px)] leading-[0.8] font-semibold tracking-[-0.06em] text-brand tabular-nums lg:col-span-7"
+        className="text-[clamp(120px,22vw,320px)] leading-[0.8] font-display font-semibold tracking-[-0.04em] text-brand tabular-nums lg:col-span-7"
       >
         404
       </p>

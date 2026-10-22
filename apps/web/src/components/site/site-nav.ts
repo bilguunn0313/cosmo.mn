@@ -9,8 +9,6 @@ export const SITE_NAV = [
 
 export const CONTACT_HREF = "/contact";
 
-export const HERO_MEDIA_ID = "hero-media";
-
 export const PAGE_BANNER_ID = "page-banner";
 
 export function isNavItemActive(href: string, pathname: string) {

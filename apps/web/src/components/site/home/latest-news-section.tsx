@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
+import { FeaturedNews } from "@/components/site/media/featured-news";
 import { NewsCard } from "@/components/site/media/news-card";
+import { NewsRow } from "@/components/site/media/news-row";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeader } from "@/components/site/section-header";
 import type { PublicNewsItem } from "@/lib/public-api";
@@ -10,8 +12,9 @@ interface LatestNewsSectionProps {
 
 export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
   const t = await getTranslations("home");
+  const [lead, ...rest] = news;
 
-  if (news.length === 0) {
+  if (!lead) {
     return null;
   }
 
@@ -26,15 +29,33 @@ export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
         link={{ href: "/media", label: t("allNews") }}
       />
 
-      <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {news.map((item, index) => (
-          <li key={item.slug}>
-            <Reveal index={index} className="h-full">
-              <NewsCard news={item} />
+      <div className="mt-6">
+        {rest.length === 0 ? (
+          <FeaturedNews news={lead} titleAs="h3" />
+        ) : (
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+            <Reveal className="lg:col-span-7">
+              <NewsCard news={lead} isLarge />
             </Reveal>
-          </li>
-        ))}
-      </ul>
+
+            {rest.length === 1 ? (
+              <Reveal index={1} className="lg:col-span-5">
+                <NewsCard news={rest[0]} />
+              </Reveal>
+            ) : (
+              <ul className="divide-y divide-rule lg:col-span-5">
+                {rest.map((item, index) => (
+                  <li key={item.slug} className="py-5 first:pt-0 last:pb-0">
+                    <Reveal index={index + 1}>
+                      <NewsRow news={item} />
+                    </Reveal>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

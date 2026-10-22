@@ -5,6 +5,7 @@ import { BrandCategoriesSection } from "@/components/site/home/brand-categories-
 import { BrandMarquee } from "@/components/site/home/brand-marquee";
 import { HeroCarousel } from "@/components/site/home/hero-carousel";
 import { HeroFallback } from "@/components/site/home/hero-fallback";
+import { KeyStats } from "@/components/site/home/key-stats";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
 import { ValuesSection } from "@/components/site/home/values-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
@@ -48,7 +49,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <h1 className="sr-only">{t("seo.homeTitle")}</h1>
       {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
-      <AboutIntroSection setting={setting} brands={brands} />
+      <KeyStats setting={setting} brands={brands} />
+      <AboutIntroSection />
       <WorldMapSection brands={brands} locale={locale} />
       <BrandCategoriesSection brands={brands} />
       <ValuesSection images={setting?.valueImages} />

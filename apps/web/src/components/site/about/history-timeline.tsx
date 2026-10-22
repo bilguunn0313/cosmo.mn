@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import Image from "next/image";
 import { useRef } from "react";
 import type { PublicMilestone } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ interface TimelineItem {
   key: string;
   title: string;
   lines: string[];
+  imageUrl: string | null;
   firstYear: number;
   lastYear: number;
 }
@@ -40,6 +42,7 @@ function groupMilestones(milestones: PublicMilestone[]) {
 
     if (continuesPrevious) {
       previous.lastYear = milestone.year;
+      previous.imageUrl ??= milestone.imageUrl;
       continue;
     }
 
@@ -47,6 +50,7 @@ function groupMilestones(milestones: PublicMilestone[]) {
       key: String(milestone.id),
       title: milestone.title,
       lines,
+      imageUrl: milestone.imageUrl,
       firstYear: milestone.year,
       lastYear: milestone.year,
     });
@@ -123,7 +127,7 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true, amount: 0.8 }}
                     transition={{ type: "spring", stiffness: 260, damping: 16 }}
-                    className="size-3.5 bg-brand shadow-[0_0_0_6px_var(--color-paper)]"
+                    className="size-3.5 bg-brand shadow-[0_0_0_6px_var(--color-white)]"
                   />
                 </div>
 
@@ -160,6 +164,18 @@ export function HistoryTimeline({ title, milestones }: HistoryTimelineProps) {
                       {line}
                     </p>
                   ))}
+                  {item.imageUrl && (
+                    <div className="relative mt-2 aspect-16/10 w-full max-w-105 overflow-hidden rounded-card bg-surface">
+                      <Image
+                        src={item.imageUrl}
+                        alt=""
+                        fill
+                        unoptimized
+                        sizes="(min-width: 768px) 420px, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                 </motion.div>
               </li>
             );

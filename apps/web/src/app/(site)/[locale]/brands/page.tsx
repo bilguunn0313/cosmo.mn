@@ -79,23 +79,15 @@ export default async function BrandsPage({
         title={t("nav.brands")}
         imageUrl={pageBannerUrl(setting, "brands")}
       >
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="text-sm font-semibold">
-            {t("brands.count", {
-              brands: brands.length,
-              categories: categories.length,
-            })}
-          </span>
-          {hasCatalog && (
-            <a
-              href="#catalog"
-              className={siteButtonClass("white", "min-w-52.5")}
-            >
-              {t("catalog.view")}
-              <ArrowDown className="size-4.5" />
-            </a>
-          )}
-        </div>
+        {hasCatalog && (
+          <a
+            href="#catalog"
+            className={siteButtonClass("white", "min-w-52.5")}
+          >
+            {t("catalog.view")}
+            <ArrowDown className="size-4.5" />
+          </a>
+        )}
       </PageBanner>
 
       <div className="site-container grid gap-6 pt-8 md:gap-8 md:pt-12">

@@ -69,7 +69,6 @@
         "text": "We value law and ethics in everything we do and aim to be a socially responsible company."
       }
     },
-    "newsLabel": "News",
     "partnerEyebrow": "Partnership",
     "contactUs": "Get in touch",
     "mute": "Mute",
@@ -104,7 +103,6 @@
     "website": "Website",
     "products": "Products",
     "related": "More brands",
-    "count": "{brands, plural, one {# brand} other {# brands}} · {categories, plural, one {# category} other {# categories}}",
     "partnerTitle": "Bring your brand to Mongolia?",
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
     "partnerButton": "Partner with us",
