@@ -107,11 +107,7 @@
     "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
     "partnerButton": "洽谈合作",
     "origin": "原产地",
-    "productCount": "{count} 款产品",
-    "wholesaleEyebrow": "零售商或经销商？",
-    "wholesaleTitle": "批量订购 {name} 产品",
-    "wholesaleText": "关于批发价格、配送及订购条件，请联系我们的销售部门。",
-    "wholesaleButton": "获取报价"
+    "productCount": "{count} 款产品"
   },
   "catalog": {
     "title": "产品目录",

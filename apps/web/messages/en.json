@@ -107,11 +107,7 @@
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
     "partnerButton": "Partner with us",
     "origin": "Origin",
-    "productCount": "{count, plural, one {# product} other {# products}}",
-    "wholesaleEyebrow": "Retailer or reseller?",
-    "wholesaleTitle": "Order {name} products wholesale",
-    "wholesaleText": "Contact our sales team about wholesale prices, delivery and ordering terms.",
-    "wholesaleButton": "Request a quote"
+    "productCount": "{count, plural, one {# product} other {# products}}"
   },
   "catalog": {
     "title": "Catalog",
