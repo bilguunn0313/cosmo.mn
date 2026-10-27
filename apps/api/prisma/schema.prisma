@@ -62,10 +62,12 @@ model Media {
   siteSettingCareers             SiteSetting[]  @relation("SiteSettingCareersBanner")
   siteSettingMedias              SiteSetting[]  @relation("SiteSettingMediaBanner")
   siteSettingBrands              SiteSetting[]  @relation("SiteSettingBrandsBanner")
+  siteSettingContacts            SiteSetting[]  @relation("SiteSettingContactBanner")
   siteSettingValuePeople         SiteSetting[]  @relation("SiteSettingValuePeople")
   siteSettingValueSatisfaction   SiteSetting[]  @relation("SiteSettingValueSatisfaction")
   siteSettingValueQuality        SiteSetting[]  @relation("SiteSettingValueQuality")
   siteSettingValueResponsibility SiteSetting[]  @relation("SiteSettingValueResponsibility")
+  siteSettingHomeAbout           SiteSetting[]  @relation("SiteSettingHomeAbout")
 }
 
 model Slide {
@@ -285,6 +287,8 @@ model SiteSetting {
   mediaBannerImage           Media?   @relation("SiteSettingMediaBanner", fields: [mediaBannerImageId], references: [id])
   brandsBannerImageId        Int?
   brandsBannerImage          Media?   @relation("SiteSettingBrandsBanner", fields: [brandsBannerImageId], references: [id])
+  contactBannerImageId       Int?
+  contactBannerImage         Media?   @relation("SiteSettingContactBanner", fields: [contactBannerImageId], references: [id])
   valuePeopleImageId         Int?
   valuePeopleImage           Media?   @relation("SiteSettingValuePeople", fields: [valuePeopleImageId], references: [id])
   valueSatisfactionImageId   Int?
@@ -293,9 +297,12 @@ model SiteSetting {
   valueQualityImage          Media?   @relation("SiteSettingValueQuality", fields: [valueQualityImageId], references: [id])
   valueResponsibilityImageId Int?
   valueResponsibilityImage   Media?   @relation("SiteSettingValueResponsibility", fields: [valueResponsibilityImageId], references: [id])
+  homeAboutImageId           Int?
+  homeAboutImage             Media?   @relation("SiteSettingHomeAbout", fields: [homeAboutImageId], references: [id])
   foundedYear                Int?
   employeeCount              Int?
   salesPointCount            Int?
+  productCount               Int?
   updatedAt                  DateTime @updatedAt
 
   translations SiteSettingTranslation[]

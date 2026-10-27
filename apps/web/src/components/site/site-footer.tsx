@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { siFacebook, siInstagram, siYoutube } from "simple-icons";
 import { Link } from "@/i18n/navigation";
 import { fetchSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
@@ -6,6 +7,7 @@ import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
 import { SITE_NAV } from "./site-nav";
+import { SocialIcon } from "./social-icon";
 import { Wordmark } from "./wordmark";
 
 interface FooterColumnProps {
@@ -35,10 +37,10 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   const setting = await fetchSiteSetting(locale);
 
   const socials = [
-    { label: "Facebook", url: setting?.facebookUrl },
-    { label: "Instagram", url: setting?.instagramUrl },
-    { label: "YouTube", url: setting?.youtubeUrl },
-    { label: "LinkedIn", url: setting?.linkedinUrl },
+    { label: "Facebook", url: setting?.facebookUrl, icon: siFacebook },
+    { label: "Instagram", url: setting?.instagramUrl, icon: siInstagram },
+    { label: "YouTube", url: setting?.youtubeUrl, icon: siYoutube },
+    { label: "LinkedIn", url: setting?.linkedinUrl, icon: null },
   ].filter((social) => social.url);
 
   return (
@@ -86,17 +88,29 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
 
           {socials.length > 0 && (
             <FooterColumn title={t("socials")} className="lg:col-span-2">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.url ?? undefined}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={footerLinkClass}
-                >
-                  {social.label}
-                </a>
-              ))}
+              <div className="flex flex-wrap items-center gap-2">
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.url ?? undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    title={social.label}
+                    className={
+                      social.icon
+                        ? "flex size-10 items-center justify-center rounded-control bg-white/10 text-white transition-colors duration-150 hover:bg-white/20"
+                        : footerLinkClass
+                    }
+                  >
+                    {social.icon ? (
+                      <SocialIcon icon={social.icon} className="size-5" />
+                    ) : (
+                      social.label
+                    )}
+                  </a>
+                ))}
+              </div>
             </FooterColumn>
           )}
         </div>

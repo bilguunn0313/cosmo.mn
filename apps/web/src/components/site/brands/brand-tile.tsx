@@ -3,12 +3,14 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
+import { cn } from "@/lib/utils";
 
 interface BrandVisualProps {
   brand: PublicBrand;
+  isCompact: boolean;
 }
 
-function BrandVisual({ brand }: BrandVisualProps) {
+function BrandVisual({ brand, isCompact }: BrandVisualProps) {
   if (brand.showcaseImageUrl) {
     return (
       <>
@@ -21,7 +23,14 @@ function BrandVisual({ brand }: BrandVisualProps) {
           className="object-contain px-[14%] pt-[12%] pb-[22%] transition-[scale] duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none"
         />
         {brand.logoUrl && (
-          <span className="absolute bottom-4 left-4 size-16 overflow-hidden rounded-full bg-white shadow-[0_4px_16px_color-mix(in_srgb,var(--color-brand-900)_14%,transparent)] md:size-18">
+          <span
+            className={cn(
+              "absolute overflow-hidden rounded-full bg-white shadow-[0_4px_16px_color-mix(in_srgb,var(--color-brand-900)_14%,transparent)]",
+              isCompact
+                ? "bottom-3 left-3 size-12"
+                : "bottom-4 left-4 size-16 md:size-18",
+            )}
+          >
             <Image
               src={brand.logoUrl}
               alt=""
@@ -59,16 +68,22 @@ function BrandVisual({ brand }: BrandVisualProps) {
 interface BrandTileProps {
   brand: PublicBrand;
   meta?: string;
+  isCompact?: boolean;
 }
 
-export function BrandTile({ brand, meta }: BrandTileProps) {
+export function BrandTile({ brand, meta, isCompact = false }: BrandTileProps) {
   return (
     <Link
       href={brandPath(brand.slug)}
       className="group flex h-full flex-col outline-offset-4 outline-brand focus-visible:outline-2"
     >
-      <span className="relative block aspect-4/5 overflow-hidden rounded-card bg-[radial-gradient(circle_at_50%_45%,white_35%,var(--color-brand-100)_70%,var(--color-brand-200))]">
-        <BrandVisual brand={brand} />
+      <span
+        className={cn(
+          "relative block overflow-hidden rounded-card bg-[radial-gradient(circle_at_50%_45%,white_35%,var(--color-brand-100)_70%,var(--color-brand-200))]",
+          isCompact ? "aspect-square" : "aspect-4/5",
+        )}
+      >
+        <BrandVisual brand={brand} isCompact={isCompact} />
       </span>
       <span className="flex items-center justify-between gap-3 pt-4">
         <span className="grid min-w-0 gap-1">

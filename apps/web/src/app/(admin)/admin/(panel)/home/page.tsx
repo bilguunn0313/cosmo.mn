@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
+import { AboutImagePanel } from "@/components/admin/home/about-image-panel";
 import { FeaturedBrandsPanel } from "@/components/admin/home/featured-brands-panel";
 import { SlidesPanel } from "@/components/admin/home/slides-panel";
 import { StatsPanel } from "@/components/admin/home/stats-panel";
@@ -25,7 +26,9 @@ export default function HomePageAdmin() {
 
       <StatsPanel step={2} />
 
-      <FeaturedBrandsPanel step={3} />
+      <AboutImagePanel step={3} />
+
+      <FeaturedBrandsPanel step={4} />
 
       <aside className="flex gap-3 rounded-xl bg-muted/50 p-4 text-sm">
         <Sparkles className="mt-0.5 size-4 shrink-0 text-muted-foreground" />

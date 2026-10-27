@@ -25,6 +25,8 @@ interface SiteSettingImageIds {
   careersBannerImageId: number | null;
   mediaBannerImageId: number | null;
   brandsBannerImageId: number | null;
+  contactBannerImageId: number | null;
+  homeAboutImageId: number | null;
 }
 
 function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
@@ -32,11 +34,16 @@ function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
     return 'Байршлын зураг';
   }
 
+  if (setting.homeAboutImageId === id) {
+    return 'Нүүр хуудасны «Бидний тухай» зураг';
+  }
+
   const bannerIds = [
     setting.aboutBannerImageId,
     setting.careersBannerImageId,
     setting.mediaBannerImageId,
     setting.brandsBannerImageId,
+    setting.contactBannerImageId,
   ];
 
   return bannerIds.includes(id) ? 'Хуудасны баннер' : 'Үнэт зүйлсийн зураг';
@@ -113,10 +120,12 @@ export class MediaUsageService {
             { careersBannerImageId: id },
             { mediaBannerImageId: id },
             { brandsBannerImageId: id },
+            { contactBannerImageId: id },
             { valuePeopleImageId: id },
             { valueSatisfactionImageId: id },
             { valueQualityImageId: id },
             { valueResponsibilityImageId: id },
+            { homeAboutImageId: id },
           ],
         },
       }),

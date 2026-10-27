@@ -18,6 +18,7 @@ const BANNER_FIELDS = {
   careers: { id: "careersBannerImageId", media: "careersBannerImage" },
   media: { id: "mediaBannerImageId", media: "mediaBannerImage" },
   brands: { id: "brandsBannerImageId", media: "brandsBannerImage" },
+  contact: { id: "contactBannerImageId", media: "contactBannerImage" },
 } as const;
 
 type BannerPage = keyof typeof BANNER_FIELDS;

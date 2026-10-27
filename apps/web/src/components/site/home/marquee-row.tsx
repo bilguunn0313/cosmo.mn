@@ -9,8 +9,8 @@ import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 
-const MIN_ITEMS_PER_LOOP = 8;
-const SECONDS_PER_ITEM = 4;
+const MIN_ITEMS_PER_LOOP = 6;
+const SECONDS_PER_ITEM = 5;
 const HOVER_SPEED = 0.25;
 const SPEED_CHANGE_SECONDS = 0.4;
 
@@ -36,18 +36,18 @@ function BrandLogo({ brand, isRepeat }: BrandLogoProps) {
       tabIndex={isRepeat ? -1 : undefined}
       aria-hidden={isRepeat || undefined}
       className={cn(
-        "group flex h-16 w-40 shrink-0 items-center justify-center px-6 md:h-20 md:w-56 md:px-10",
+        "group flex h-24 w-[50vw] shrink-0 items-center justify-center md:h-37.5 min-[50rem]:w-[33.333vw] lg:w-[25vw] min-[81.25rem]:w-[20vw] min-[118.75rem]:w-[16.666vw]",
         isRepeat && "motion-reduce:hidden",
       )}
     >
       {brand.logoUrl ? (
-        <span className="relative size-full">
+        <span className="relative h-12 w-28 md:h-16 md:w-34">
           <Image
             src={brand.logoUrl}
             alt={brand.name}
             fill
             unoptimized
-            sizes="224px"
+            sizes="136px"
             className="object-contain mix-blend-multiply transition-[scale] duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none"
           />
         </span>

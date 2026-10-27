@@ -190,6 +190,8 @@ export interface SiteSetting {
   mediaBannerImage: Media | null;
   brandsBannerImageId: number | null;
   brandsBannerImage: Media | null;
+  contactBannerImageId: number | null;
+  contactBannerImage: Media | null;
   valuePeopleImageId: number | null;
   valuePeopleImage: Media | null;
   valueSatisfactionImageId: number | null;
@@ -198,9 +200,12 @@ export interface SiteSetting {
   valueQualityImage: Media | null;
   valueResponsibilityImageId: number | null;
   valueResponsibilityImage: Media | null;
+  homeAboutImageId: number | null;
+  homeAboutImage: Media | null;
   foundedYear: number | null;
   employeeCount: number | null;
   salesPointCount: number | null;
+  productCount: number | null;
   updatedAt: string;
   translations: SiteSettingTranslation[];
 }

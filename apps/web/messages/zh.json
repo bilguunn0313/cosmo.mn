@@ -47,8 +47,8 @@
     "heroTitle": "将世界品牌带进每个蒙古家庭",
     "officialDistributor": "官方经销商",
     "partnersTitle": "我们的合作伙伴",
-    "aboutTitle": "自1993年起将世界品牌带到蒙古",
-    "aboutText": "Cosmo Trade 官方进口来自10多个国家的食品、美妆及家居用品品牌，并分销至蒙古全国。",
+    "aboutTitle": "为日常消费创造价值",
+    "aboutText": "自1993年以来，Cosmo Trade 一直专注于快速消费品的进口、销售与分销业务。我们将国际及区域品牌带给蒙古消费者，并依托广泛的分销网络和基于互信的合作，致力于提升产品的可及性。",
     "originEyebrow": "品牌来源",
     "valuesTitle": "核心价值观",
     "values": {
@@ -84,10 +84,21 @@
     "mapDescription": "我们的品牌来自这些国家。",
     "brandCount": "{count} 个品牌",
     "statsTitle": "关键数据",
-    "statYears": "年行业经验",
-    "statEmployees": "团队成员",
-    "statBrands": "品牌",
-    "statSalesPoints": "销售网点",
+    "keyStats": {
+      "founded": {
+        "label": "运营经验",
+        "suffix": "+ 年"
+      },
+      "products": {
+        "label": "产品品类"
+      },
+      "salesPoints": {
+        "label": "覆盖销售网点"
+      },
+      "team": {
+        "label": "团队成员"
+      }
+    },
     "categoriesTitle": "按品类浏览品牌",
     "allBrands": "全部品牌",
     "newsTitle": "最新动态",
@@ -131,11 +142,8 @@
   "contact": {
     "description": "欢迎与我们洽谈合作或提出建议。",
     "address": "地址",
-    "phone": "电话",
-    "email": "邮箱",
     "hours": "工作时间",
     "openMap": "在地图中打开",
-    "socials": "社交媒体",
     "formTitle": "给我们留言",
     "nameLabel": "姓名",
     "emailLabel": "邮箱",
@@ -168,6 +176,20 @@
       "role": "总经理"
     },
     "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
+    "intro": {
+      "label": "公司简介",
+      "lead": "Cosmo Trade LLC 成立于1993年，在快速消费品的进口、销售和分销领域积累了多年经验。",
+      "body1": "我们与美国、欧洲和亚洲的国际及区域品牌合作，向蒙古市场供应符合消费者需求和市场变化的产品。为让产品更便捷地触达消费者，我们通过超市、大卖场、零售和批发贸易以及HORECA（酒店、餐厅和餐饮服务业）等销售渠道不断扩大合作。",
+      "body2": "此外，我们致力于在蒙古市场推广和发展国际品牌、提升产品销量并发展自有品牌。依托多年的经验、可靠的合作关系和分销能力，我们努力为消费者、客户和商业伙伴创造长期价值，并为行业的可持续发展做出贡献。",
+      "channelsTitle": "销售渠道",
+      "channels": {
+        "supermarket": "超市",
+        "hypermarket": "大卖场",
+        "retail": "零售",
+        "wholesale": "批发",
+        "horeca": "HORECA"
+      }
+    },
     "missionLabel": "使命",
     "missionText": "让顾客满意与快乐是我们的目标。",
     "historyTitle": "发展历程",

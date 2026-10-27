@@ -12,10 +12,12 @@ const siteSettingInclude = {
   careersBannerImage: true,
   mediaBannerImage: true,
   brandsBannerImage: true,
+  contactBannerImage: true,
   valuePeopleImage: true,
   valueSatisfactionImage: true,
   valueQualityImage: true,
   valueResponsibilityImage: true,
+  homeAboutImage: true,
   translations: true,
 } satisfies Prisma.SiteSettingInclude;
 
@@ -68,11 +70,13 @@ export class SiteSettingsService {
       foundedYear: setting.foundedYear,
       employeeCount: setting.employeeCount,
       salesPointCount: setting.salesPointCount,
+      productCount: setting.productCount,
       pageBanners: {
         about: setting.aboutBannerImage?.url ?? null,
         careers: setting.careersBannerImage?.url ?? null,
         media: setting.mediaBannerImage?.url ?? null,
         brands: setting.brandsBannerImage?.url ?? null,
+        contact: setting.contactBannerImage?.url ?? null,
       },
       valueImages: {
         people: setting.valuePeopleImage?.url ?? null,
@@ -80,6 +84,7 @@ export class SiteSettingsService {
         quality: setting.valueQualityImage?.url ?? null,
         responsibility: setting.valueResponsibilityImage?.url ?? null,
       },
+      homeAboutImageUrl: setting.homeAboutImage?.url ?? null,
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

@@ -127,15 +127,19 @@ export function ContactForm({ departments }: ContactFormProps) {
     return (
       <div
         role="status"
-        className="animate-in fade-in slide-in-from-bottom-4 grid justify-items-start gap-5 bg-brand px-6 py-12 text-white duration-500 ease-(--ease-out) md:px-10"
+        className="animate-in fade-in slide-in-from-bottom-4 grid justify-items-start gap-5 duration-500 ease-(--ease-out)"
       >
-        <Check className="size-12" strokeWidth={2.5} />
-        <h3 className="type-h3">{t("sentTitle")}</h3>
-        <p className="max-w-md text-base">{t("sentText")}</p>
+        <span className="flex size-14 items-center justify-center rounded-control bg-brand-100 text-brand">
+          <Check className="size-7" strokeWidth={2} />
+        </span>
+        <h3 className="type-h4">{t("sentTitle")}</h3>
+        <p className="max-w-md text-base leading-relaxed text-ink-2">
+          {t("sentText")}
+        </p>
         <button
           type="button"
           onClick={() => setIsSent(false)}
-          className={siteButtonClass("white", "min-w-50")}
+          className={siteButtonClass("secondary", "min-w-50")}
         >
           {t("sendAnother")}
           <ArrowRight className="size-4.5" />
@@ -149,21 +153,22 @@ export function ContactForm({ departments }: ContactFormProps) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-5">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
+      <Field
+        id="contact-name"
+        label={t("nameLabel")}
+        error={errors.name?.message}
+      >
+        <input
           id="contact-name"
-          label={t("nameLabel")}
-          error={errors.name?.message}
-        >
-          <input
-            id="contact-name"
-            autoComplete="name"
-            aria-invalid={Boolean(errors.name)}
-            aria-describedby={describedBy("name")}
-            className={cn(inputClass, "h-12")}
-            {...register("name")}
-          />
-        </Field>
+          autoComplete="name"
+          aria-invalid={Boolean(errors.name)}
+          aria-describedby={describedBy("name")}
+          className={cn(inputClass, "h-12")}
+          {...register("name")}
+        />
+      </Field>
+
+      <div className="grid gap-5 sm:grid-cols-2">
         <Field
           id="contact-email"
           label={t("emailLabel")}
@@ -179,9 +184,6 @@ export function ContactForm({ departments }: ContactFormProps) {
             {...register("email")}
           />
         </Field>
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
         <Field
           id="contact-phone"
           label={t("phoneLabel")}
@@ -198,23 +200,24 @@ export function ContactForm({ departments }: ContactFormProps) {
             {...register("phone")}
           />
         </Field>
-        {departments.length > 0 && (
-          <Field id="contact-department" label={t("departmentLabel")}>
-            <select
-              id="contact-department"
-              className={cn(inputClass, "h-12 cursor-pointer")}
-              {...register("departmentId")}
-            >
-              <option value="">{t("general")}</option>
-              {departments.map((department) => (
-                <option key={department.id} value={department.id}>
-                  {department.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-        )}
       </div>
+
+      {departments.length > 0 && (
+        <Field id="contact-department" label={t("departmentLabel")}>
+          <select
+            id="contact-department"
+            className={cn(inputClass, "h-12 cursor-pointer")}
+            {...register("departmentId")}
+          >
+            <option value="">{t("general")}</option>
+            {departments.map((department) => (
+              <option key={department.id} value={department.id}>
+                {department.name}
+              </option>
+            ))}
+          </select>
+        </Field>
+      )}
 
       <Field
         id="contact-message"
@@ -231,11 +234,11 @@ export function ContactForm({ departments }: ContactFormProps) {
         />
       </Field>
 
-      <div className="grid justify-items-start gap-3 pt-6">
+      <div className="grid gap-3 pt-2">
         <button
           type="submit"
           disabled={isSubmitting}
-          className={siteButtonClass("primary", "min-w-55 disabled:opacity-70")}
+          className={siteButtonClass("primary", "w-full disabled:opacity-70")}
         >
           {isSubmitting ? t("sending") : t("submit")}
           {isSubmitting ? (

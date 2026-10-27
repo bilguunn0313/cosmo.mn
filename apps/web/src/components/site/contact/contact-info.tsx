@@ -1,32 +1,12 @@
-import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
-import { siteButtonClass } from "@/components/site/site-button";
+import { FadeInImage } from "@/components/site/fade-in-image";
+import { CONTACT_MAP_PLACEHOLDER } from "@/lib/page-banners";
 import type { PublicSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
 
-interface InfoRowProps {
-  icon: React.ReactNode;
-  label: string;
-  children: React.ReactNode;
-}
-
-function InfoRow({ icon, label, children }: InfoRowProps) {
-  return (
-    <div className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-white/15 py-5">
-      <span className="flex size-11 items-center justify-center rounded-control bg-white/10 text-brand-300">
-        {icon}
-      </span>
-      <div className="grid gap-1">
-        <dt className="text-[13px] text-night-text">{label}</dt>
-        <dd className="text-base leading-snug text-white">{children}</dd>
-      </div>
-    </div>
-  );
-}
-
-const linkClass =
-  "underline-offset-4 transition-colors duration-150 hover:underline";
+const contactButtonClass =
+  "inline-flex h-12 min-w-0 items-center justify-center gap-2.5 rounded-control bg-paper px-4 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700";
 
 interface ContactInfoProps {
   setting: PublicSiteSetting | null;
@@ -34,91 +14,86 @@ interface ContactInfoProps {
 
 export async function ContactInfo({ setting }: ContactInfoProps) {
   const t = await getTranslations("contact");
+  const mapImageUrl = setting?.mapImageUrl ?? CONTACT_MAP_PLACEHOLDER;
+  const hasDetails = Boolean(
+    setting?.address || setting?.workingHours || setting?.phone || setting?.email,
+  );
 
-  const socials = [
-    { label: "Facebook", url: setting?.facebookUrl },
-    { label: "Instagram", url: setting?.instagramUrl },
-    { label: "YouTube", url: setting?.youtubeUrl },
-    { label: "LinkedIn", url: setting?.linkedinUrl },
-  ].filter((social) => social.url);
+  const mapImage = (
+    <FadeInImage
+      src={mapImageUrl}
+      alt=""
+      fill
+      unoptimized
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      className="object-cover transition-[scale,opacity] duration-250 ease-out group-hover:scale-[1.04] group-hover:duration-500 motion-reduce:transition-none"
+    />
+  );
 
   return (
-    <div className="grid content-start gap-8 rounded-card bg-brand-night px-6 py-8 text-white sm:px-10 sm:py-10">
-      <dl className="border-b border-white/15">
-        {setting?.address && (
-          <InfoRow icon={<MapPin className="size-5" strokeWidth={1.5} />} label={t("address")}>
-            <span className="whitespace-pre-line">{setting.address}</span>
-          </InfoRow>
-        )}
-        {setting?.phone && (
-          <InfoRow icon={<Phone className="size-5" strokeWidth={1.5} />} label={t("phone")}>
-            <a href={phoneHref(setting.phone)} className={linkClass}>
-              {setting.phone}
-            </a>
-          </InfoRow>
-        )}
-        {setting?.email && (
-          <InfoRow icon={<Mail className="size-5" strokeWidth={1.5} />} label={t("email")}>
-            <a href={`mailto:${setting.email}`} className={linkClass}>
-              {setting.email}
-            </a>
-          </InfoRow>
-        )}
-        {setting?.workingHours && (
-          <InfoRow icon={<Clock className="size-5" strokeWidth={1.5} />} label={t("hours")}>
-            {setting.workingHours}
-          </InfoRow>
-        )}
-      </dl>
-
-      {socials.length > 0 && (
-        <div className="grid gap-3">
-          <h2 className="text-[13px] text-night-text">{t("socials")}</h2>
-          <div className="flex flex-wrap gap-2">
-            {socials.map((social) => (
-              <a
-                key={social.label}
-                href={social.url ?? undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-1.5 rounded-control border border-white/40 px-4 text-sm font-medium transition-colors duration-150 hover:bg-white/10"
-              >
-                {social.label}
-                <ArrowUpRight className="size-4" />
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {setting?.mapImageUrl && (
-        <a
-          href={setting.mapUrl ?? undefined}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group relative block aspect-16/10 overflow-hidden rounded-card bg-white/10"
-        >
-          <Image
-            src={setting.mapImageUrl}
-            alt={t("openMap")}
-            fill
-            unoptimized
-            sizes="(min-width: 1024px) 40vw, 100vw"
-            className="object-cover transition-[scale] duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
-          />
-        </a>
-      )}
-
-      {setting?.mapUrl && (
+    <div className="relative grid min-h-140 content-end overflow-hidden rounded-card bg-surface p-3 sm:p-4">
+      {setting?.mapUrl ? (
         <a
           href={setting.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={siteButtonClass("white", "w-fit min-w-60")}
+          tabIndex={-1}
+          aria-hidden
+          className="group absolute inset-0"
         >
-          {t("openMap")}
-          <MapPin className="size-4.5" />
+          {mapImage}
         </a>
+      ) : (
+        <div className="absolute inset-0">{mapImage}</div>
+      )}
+
+      {hasDetails && (
+        <div className="relative grid gap-6 rounded-card bg-white p-6 shadow-[0_24px_48px_-24px_color-mix(in_srgb,var(--color-brand-night)_45%,transparent)] sm:p-8">
+          <div className="grid gap-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <h2 className="type-h4">{t("address")}</h2>
+              {setting?.mapUrl && (
+                <a
+                  href={setting.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700 underline-offset-4 hover:underline"
+                >
+                  {t("openMap")}
+                  <ArrowUpRight className="size-4" />
+                </a>
+              )}
+            </div>
+            {setting?.address && (
+              <p className="text-base leading-relaxed whitespace-pre-line text-ink-2">
+                {setting.address}
+              </p>
+            )}
+            {setting?.workingHours && (
+              <p className="flex items-center gap-2 text-sm text-ink-2">
+                <Clock className="size-4.5 shrink-0 text-brand" strokeWidth={1.5} />
+                {t("hours")}: {setting.workingHours}
+              </p>
+            )}
+          </div>
+
+          {(setting?.phone || setting?.email) && (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {setting.phone && (
+                <a href={phoneHref(setting.phone)} className={contactButtonClass}>
+                  <Phone className="size-4.5 shrink-0 text-brand" strokeWidth={1.5} />
+                  <span className="truncate">{setting.phone}</span>
+                </a>
+              )}
+              {setting.email && (
+                <a href={`mailto:${setting.email}`} className={contactButtonClass}>
+                  <Mail className="size-4.5 shrink-0 text-brand" strokeWidth={1.5} />
+                  <span className="truncate">{setting.email}</span>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

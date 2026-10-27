@@ -47,8 +47,8 @@
     "heroTitle": "World brands for every Mongolian home",
     "officialDistributor": "Official distributor",
     "partnersTitle": "Our partners",
-    "aboutTitle": "Bringing world brands to Mongolia since 1993",
-    "aboutText": "Cosmo Trade LLC officially imports food, beauty and household brands from over 10 countries and distributes them across Mongolia.",
+    "aboutTitle": "Creating value in everyday consumption",
+    "aboutText": "Since 1993, Cosmo Trade LLC has grown its business in the import, sales and distribution of fast-moving consumer goods. We bring international and regional brands to consumers in Mongolia and aim to make products more accessible through a wide distribution network and partnerships built on mutual trust.",
     "originEyebrow": "Origins",
     "valuesTitle": "Our values",
     "values": {
@@ -84,10 +84,21 @@
     "mapDescription": "Our brands come from these countries.",
     "brandCount": "{count, plural, one {# brand} other {# brands}}",
     "statsTitle": "Key figures",
-    "statYears": "Years in business",
-    "statEmployees": "Team members",
-    "statBrands": "Brands",
-    "statSalesPoints": "Points of sale",
+    "keyStats": {
+      "founded": {
+        "label": "Operating experience",
+        "suffix": "+ years"
+      },
+      "products": {
+        "label": "Product lines"
+      },
+      "salesPoints": {
+        "label": "Points of sale reached"
+      },
+      "team": {
+        "label": "Team members"
+      }
+    },
     "categoriesTitle": "Brands by category",
     "allBrands": "All brands",
     "newsTitle": "Latest news",
@@ -131,11 +142,8 @@
   "contact": {
     "description": "Send us your partnership ideas, questions or feedback.",
     "address": "Address",
-    "phone": "Phone",
-    "email": "Email",
     "hours": "Working hours",
     "openMap": "Open in maps",
-    "socials": "Social media",
     "formTitle": "Write to us",
     "nameLabel": "Name",
     "emailLabel": "Email",
@@ -168,6 +176,20 @@
       "role": "Chief Executive Officer"
     },
     "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
+    "intro": {
+      "label": "Company overview",
+      "lead": "Cosmo Trade LLC was founded in 1993 and has built many years of experience in importing, selling and distributing fast-moving consumer goods.",
+      "body1": "We work with international and regional brands from the USA, Europe and Asia, supplying the Mongolian market with products that meet consumer needs and changes in the market. To make products more accessible to consumers, we keep expanding our partnerships through supermarkets, hypermarkets, retail and wholesale trade, and HORECA, the hotel, restaurant and catering sector.",
+      "body2": "We also work to introduce and grow international brands in the Mongolian market, increase product sales and develop our own brands. Building on our experience, reliable partnerships and distribution capability, we aim to create long-term value for consumers, customers and business partners, and to contribute to the sustainable growth of our industry.",
+      "channelsTitle": "Sales channels",
+      "channels": {
+        "supermarket": "Supermarkets",
+        "hypermarket": "Hypermarkets",
+        "retail": "Retail",
+        "wholesale": "Wholesale",
+        "horeca": "HORECA"
+      }
+    },
     "missionLabel": "Our mission",
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
     "historyTitle": "Our history",

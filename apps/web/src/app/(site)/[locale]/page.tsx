@@ -10,6 +10,7 @@ import { LatestNewsSection } from "@/components/site/home/latest-news-section";
 import { ValuesSection } from "@/components/site/home/values-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
+import { HOME_ABOUT_IMAGE_PLACEHOLDER } from "@/lib/about";
 import {
   fetchBrands,
   fetchLatestNews,
@@ -18,7 +19,7 @@ import {
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const HOME_NEWS_COUNT = 4;
+const HOME_NEWS_COUNT = 8;
 
 export async function generateMetadata({
   params,
@@ -49,8 +50,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <h1 className="sr-only">{t("seo.homeTitle")}</h1>
       {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
-      <KeyStats setting={setting} brands={brands} />
-      <AboutIntroSection />
+      <KeyStats setting={setting} />
+      <AboutIntroSection
+        imageUrl={setting?.homeAboutImageUrl ?? HOME_ABOUT_IMAGE_PLACEHOLDER}
+      />
       <WorldMapSection brands={brands} locale={locale} />
       <BrandCategoriesSection brands={brands} />
       <ValuesSection images={setting?.valueImages} />

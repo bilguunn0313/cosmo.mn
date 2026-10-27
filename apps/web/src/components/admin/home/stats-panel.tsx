@@ -10,7 +10,6 @@ import { PanelHeader } from "@/components/admin/panel-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBrands } from "@/lib/queries/brands";
 import {
   useSiteSetting,
   useUpdateSiteSetting,
@@ -32,6 +31,7 @@ const statsFormSchema = z.object({
   ),
   employeeCount: wholeNumber,
   salesPointCount: wholeNumber,
+  productCount: wholeNumber,
 });
 
 type StatsFormValues = z.infer<typeof statsFormSchema>;
@@ -49,14 +49,12 @@ function defaultValues(setting: SiteSetting): StatsFormValues {
     foundedYear: toFormValue(setting.foundedYear),
     employeeCount: toFormValue(setting.employeeCount),
     salesPointCount: toFormValue(setting.salesPointCount),
+    productCount: toFormValue(setting.productCount),
   };
 }
 
 function StatsForm({ setting }: { setting: SiteSetting }) {
   const updateSiteSetting = useUpdateSiteSetting();
-  const brands = useBrands();
-  const publishedBrandCount =
-    brands.data?.filter((brand) => brand.isPublished).length ?? 0;
 
   const {
     control,
@@ -79,6 +77,7 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
         foundedYear: toNumberOrNull(values.foundedYear),
         employeeCount: toNumberOrNull(values.employeeCount),
         salesPointCount: toNumberOrNull(values.salesPointCount),
+        productCount: toNumberOrNull(values.productCount),
       },
       {
         onSuccess: (savedSetting) => {
@@ -91,8 +90,8 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
   });
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid max-w-3xl gap-6">
-      <div className="grid gap-6 sm:grid-cols-3">
+    <form onSubmit={onSubmit} noValidate className="grid max-w-4xl gap-6">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <FormField
           label="Байгуулагдсан он"
           htmlFor="stat-founded-year"
@@ -109,6 +108,20 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
             placeholder="2008"
             aria-invalid={Boolean(errors.foundedYear)}
             {...register("foundedYear")}
+          />
+        </FormField>
+        <FormField
+          label="Нэр төрлийн бараа"
+          htmlFor="stat-products"
+          hint="Нийт бараа бүтээгдэхүүний төрлийн тоо"
+          error={errors.productCount?.message}
+        >
+          <Input
+            id="stat-products"
+            inputMode="numeric"
+            placeholder="240"
+            aria-invalid={Boolean(errors.productCount)}
+            {...register("productCount")}
           />
         </FormField>
         <FormField
@@ -142,11 +155,7 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        Брэндийн тоог нийтлэгдсэн брэндүүдээс автоматаар тоолно. Одоо:{" "}
-        <span className="font-medium text-foreground tabular-nums">
-          {publishedBrandCount}
-        </span>
-        . Хоосон үлдээсэн үзүүлэлт сайт дээр харагдахгүй.
+        Хоосон үлдээсэн үзүүлэлт сайт дээр харагдахгүй.
       </p>
 
       <Button
@@ -173,7 +182,7 @@ export function StatsPanel({ step }: StatsPanelProps) {
       <PanelHeader
         step={step}
         title="Тоон үзүүлэлт"
-        description="Брэндийн туузны доор 4 том тоогоор харагдана. Зочин хэсэг рүү гүйлгэхэд 0-ээс тоологдож гарна."
+        description="Нүүр хуудасны slide-ийн доорх цайвар хөх туузанд 4 тоогоор харагдана. Зочин хэсэг рүү гүйлгэхэд 0-ээс тоологдож гарна."
       />
       {setting.data ? (
         <StatsForm setting={setting.data} />

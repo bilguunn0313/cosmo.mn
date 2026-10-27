@@ -41,7 +41,7 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
         />
       </div>
 
-      <div className="mt-10 grid gap-8 md:mt-14 md:gap-12">
+      <div className="mt-6 grid gap-4 md:mt-12 md:gap-15">
         {splitIntoRows(brands).map((row, index) => (
           <MarqueeRow key={index} brands={row} isReversed={index === 1} />
         ))}

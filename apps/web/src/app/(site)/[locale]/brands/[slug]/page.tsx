@@ -15,7 +15,7 @@ import type { PublicBrand } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 import { brandPath } from "@/lib/site-links";
 
-const MAX_RELATED = 4;
+const MAX_RELATED = 5;
 
 function pickRelatedBrands(current: PublicBrand, allBrands: PublicBrand[]) {
   const others = allBrands.filter((brand) => brand.slug !== current.slug);
@@ -98,12 +98,13 @@ export default async function BrandPage({
               <ArrowRight className="size-4.5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
             </Link>
           </div>
-          <ul className="mt-6 grid grid-cols-2 gap-x-3 gap-y-8 md:gap-x-4 xl:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-4 xl:grid-cols-5">
             {relatedBrands.map((other, index) => (
               <li key={other.slug}>
                 <Reveal index={index} className="h-full">
                   <BrandTile
                     brand={other}
+                    isCompact
                     meta={other.categories
                       .map((category) => t(`categories.${category}`))
                       .join(", ")}

@@ -10,7 +10,7 @@ export async function CeoMessage() {
   return (
     <section
       aria-labelledby="ceo-title"
-      className="site-container grid gap-8 pt-16 md:pt-24 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-x-16 xl:gap-x-24"
+      className="site-container grid gap-8 pt-20 md:pt-32 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-x-16 xl:gap-x-24"
     >
       <Reveal className="relative aspect-4/5 w-full max-w-120 overflow-hidden rounded-card bg-brand-100 lg:h-[min(calc(100svh-10rem),600px)] lg:w-auto lg:max-w-none">
         <Image

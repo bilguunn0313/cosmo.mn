@@ -13,6 +13,8 @@ export const CEO_PHOTO_PLACEHOLDER =
 export const SLOGAN_IMAGE_PLACEHOLDER =
   "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=80&auto=format&fit=crop";
 
+export const HOME_ABOUT_IMAGE_PLACEHOLDER = "/images/home-about.webp";
+
 const STOCK_PHOTO = (id: string) =>
   `https://images.unsplash.com/${id}?w=900&q=80&auto=format&fit=crop`;
 

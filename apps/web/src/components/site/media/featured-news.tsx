@@ -10,13 +10,11 @@ import { NewsMeta } from "./news-meta";
 
 interface FeaturedNewsProps {
   news: PublicNewsItem;
-  titleAs?: "h2" | "h3";
   priority?: boolean;
 }
 
 export async function FeaturedNews({
   news,
-  titleAs: Title = "h2",
   priority = false,
 }: FeaturedNewsProps) {
   const t = await getTranslations("home");
@@ -42,9 +40,9 @@ export async function FeaturedNews({
         className="grid justify-items-start gap-5 lg:col-span-5"
       >
         <NewsMeta news={news} />
-        <Title className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
+        <h2 className="type-h3 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
-        </Title>
+        </h2>
         {news.summary && (
           <p className="line-clamp-4 text-base leading-relaxed text-pretty text-ink-2">
             {news.summary}

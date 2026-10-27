@@ -1,16 +1,14 @@
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
-import { cn } from "@/lib/utils";
 import { NewsCover } from "./news-cover";
 import { NewsMeta } from "./news-meta";
 
 interface NewsCardProps {
   news: PublicNewsItem;
-  isLarge?: boolean;
 }
 
-export function NewsCard({ news, isLarge = false }: NewsCardProps) {
+export function NewsCard({ news }: NewsCardProps) {
   return (
     <Link
       href={newsPath(news.slug)}
@@ -18,33 +16,17 @@ export function NewsCard({ news, isLarge = false }: NewsCardProps) {
     >
       <NewsCover
         news={news}
-        sizes={
-          isLarge
-            ? "(min-width: 1024px) 58vw, 100vw"
-            : "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-        }
+        sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
         className="aspect-16/10 rounded-card"
       />
 
       <div className="grid gap-2.5 pr-2">
         <NewsMeta news={news} />
-        <h3
-          className={cn(
-            "line-clamp-3 text-balance transition-colors duration-150 group-hover:text-brand-700",
-            isLarge ? "type-h3" : "type-h4",
-          )}
-        >
+        <h3 className="line-clamp-3 type-h4 text-balance transition-colors duration-150 group-hover:text-brand-700">
           {news.title}
         </h3>
         {news.summary && (
-          <p
-            className={cn(
-              "text-pretty text-ink-2",
-              isLarge
-                ? "line-clamp-3 max-w-150 text-base leading-relaxed"
-                : "line-clamp-2 text-sm leading-[1.45]",
-            )}
-          >
+          <p className="line-clamp-2 text-sm leading-[1.45] text-pretty text-ink-2">
             {news.summary}
           </p>
         )}

@@ -14,6 +14,7 @@ import { fetchNewsPage, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
 const NEWS_PER_PAGE = 10;
+const MIN_ITEMS_FOR_FEATURED = 4;
 
 function parsePage(value: unknown) {
   const page = Number(value);
@@ -53,8 +54,9 @@ export default async function MediaPage({
     notFound();
   }
 
-  const featured = page === 1 ? items[0] : undefined;
-  const gridItems = featured ? items.slice(1) : items;
+  const hasFeatured = page === 1 && items.length >= MIN_ITEMS_FOR_FEATURED;
+  const featured = hasFeatured ? items[0] : undefined;
+  const gridItems = hasFeatured ? items.slice(1) : items;
 
   return (
     <>
@@ -64,7 +66,7 @@ export default async function MediaPage({
         imageUrl={pageBannerUrl(setting, "media")}
       />
 
-      <div className="site-container grid gap-10 pt-14 md:gap-14 md:pt-20">
+      <div className="site-container grid gap-12 pt-14 md:gap-16 md:pt-20">
         {items.length === 0 ? (
           <div className="grid justify-items-start gap-5 pb-20">
             <p className="type-h3">{t("media.empty")}</p>
@@ -75,11 +77,7 @@ export default async function MediaPage({
           </div>
         ) : (
           <>
-            {featured && (
-              <div className="pb-10 md:pb-14">
-                <FeaturedNews news={featured} priority />
-              </div>
-            )}
+            {featured && <FeaturedNews news={featured} priority />}
             {gridItems.length > 0 && <NewsGrid items={gridItems} />}
           </>
         )}
