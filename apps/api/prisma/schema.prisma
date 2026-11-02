@@ -46,28 +46,29 @@ model Media {
   duration     Int?
   createdAt    DateTime  @default(now())
 
-  slides                         Slide[]        @relation("SlideMedia")
-  slidePosters                   Slide[]        @relation("SlidePoster")
-  brandLogos                     Brand[]        @relation("BrandLogo")
-  brandCovers                    Brand[]        @relation("BrandCover")
-  brandShowcases                 Brand[]        @relation("BrandShowcase")
+  slides                         Slide[]         @relation("SlideMedia")
+  slidePosters                   Slide[]         @relation("SlidePoster")
+  brandLogos                     Brand[]         @relation("BrandLogo")
+  brandCovers                    Brand[]         @relation("BrandCover")
+  brandShowcases                 Brand[]         @relation("BrandShowcase")
   brandSections                  BrandSection[]
   products                       Product[]
   sections                       Section[]
   milestones                     Milestone[]
-  newsCovers                     News[]         @relation("NewsCover")
-  newsVideos                     News[]         @relation("NewsVideo")
-  siteSettingMaps                SiteSetting[]  @relation("SiteSettingMap")
-  siteSettingAbouts              SiteSetting[]  @relation("SiteSettingAboutBanner")
-  siteSettingCareers             SiteSetting[]  @relation("SiteSettingCareersBanner")
-  siteSettingMedias              SiteSetting[]  @relation("SiteSettingMediaBanner")
-  siteSettingBrands              SiteSetting[]  @relation("SiteSettingBrandsBanner")
-  siteSettingContacts            SiteSetting[]  @relation("SiteSettingContactBanner")
-  siteSettingValuePeople         SiteSetting[]  @relation("SiteSettingValuePeople")
-  siteSettingValueSatisfaction   SiteSetting[]  @relation("SiteSettingValueSatisfaction")
-  siteSettingValueQuality        SiteSetting[]  @relation("SiteSettingValueQuality")
-  siteSettingValueResponsibility SiteSetting[]  @relation("SiteSettingValueResponsibility")
-  siteSettingHomeAbout           SiteSetting[]  @relation("SiteSettingHomeAbout")
+  retailPartners                 RetailPartner[]
+  newsCovers                     News[]          @relation("NewsCover")
+  newsVideos                     News[]          @relation("NewsVideo")
+  siteSettingMaps                SiteSetting[]   @relation("SiteSettingMap")
+  siteSettingAbouts              SiteSetting[]   @relation("SiteSettingAboutBanner")
+  siteSettingCareers             SiteSetting[]   @relation("SiteSettingCareersBanner")
+  siteSettingMedias              SiteSetting[]   @relation("SiteSettingMediaBanner")
+  siteSettingBrands              SiteSetting[]   @relation("SiteSettingBrandsBanner")
+  siteSettingContacts            SiteSetting[]   @relation("SiteSettingContactBanner")
+  siteSettingValuePeople         SiteSetting[]   @relation("SiteSettingValuePeople")
+  siteSettingValueSatisfaction   SiteSetting[]   @relation("SiteSettingValueSatisfaction")
+  siteSettingValueQuality        SiteSetting[]   @relation("SiteSettingValueQuality")
+  siteSettingValueResponsibility SiteSetting[]   @relation("SiteSettingValueResponsibility")
+  siteSettingHomeAbout           SiteSetting[]   @relation("SiteSettingHomeAbout")
 }
 
 model Slide {
@@ -237,6 +238,19 @@ model MilestoneTranslation {
   description String?
 
   @@unique([milestoneId, locale])
+}
+
+model RetailPartner {
+  id        Int      @id @default(autoincrement())
+  name      String
+  logoId    Int
+  logo      Media    @relation(fields: [logoId], references: [id])
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVisible, order])
 }
 
 model News {

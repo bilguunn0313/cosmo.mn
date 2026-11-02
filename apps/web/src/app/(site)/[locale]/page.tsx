@@ -1,25 +1,26 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { AboutIntroSection } from "@/components/site/home/about-intro-section";
-import { BrandCategoriesSection } from "@/components/site/home/brand-categories-section";
 import { BrandMarquee } from "@/components/site/home/brand-marquee";
-import { HeroCarousel } from "@/components/site/home/hero-carousel";
-import { HeroFallback } from "@/components/site/home/hero-fallback";
-import { KeyStats } from "@/components/site/home/key-stats";
+import { BusinessAreasSection } from "@/components/site/home/business-areas-section";
+import { HomeHero } from "@/components/site/home/home-hero";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
-import { ValuesSection } from "@/components/site/home/values-section";
+import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
+import { RetailPartnersSection } from "@/components/site/home/retail-partners-section";
+import { WhyCosmoSection } from "@/components/site/home/why-cosmo-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
-import { HOME_ABOUT_IMAGE_PLACEHOLDER } from "@/lib/about";
+import { homeStats } from "@/lib/home-stats";
 import {
   fetchBrands,
   fetchLatestNews,
+  fetchOriginCountries,
+  fetchRetailPartners,
   fetchSiteSetting,
   fetchSlides,
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const HOME_NEWS_COUNT = 8;
+const HOME_NEWS_COUNT = 3;
 
 export async function generateMetadata({
   params,
@@ -38,27 +39,27 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = await getPageLocale(params);
-  const t = await getTranslations();
-  const [slides, brands, setting, news] = await Promise.all([
-    fetchSlides(locale),
-    fetchBrands(locale),
-    fetchSiteSetting(locale),
-    fetchLatestNews(locale, HOME_NEWS_COUNT),
-  ]);
+  const [slides, brands, setting, countries, partners, news] =
+    await Promise.all([
+      fetchSlides(locale),
+      fetchBrands(locale),
+      fetchSiteSetting(locale),
+      fetchOriginCountries(locale),
+      fetchRetailPartners(locale),
+      fetchLatestNews(locale, HOME_NEWS_COUNT),
+    ]);
+  const stats = homeStats(setting, locale);
 
   return (
     <>
-      <h1 className="sr-only">{t("seo.homeTitle")}</h1>
-      {slides.length > 0 ? <HeroCarousel slides={slides} /> : <HeroFallback />}
-      <KeyStats setting={setting} />
-      <AboutIntroSection
-        imageUrl={setting?.homeAboutImageUrl ?? HOME_ABOUT_IMAGE_PLACEHOLDER}
-      />
-      <WorldMapSection brands={brands} locale={locale} />
-      <BrandCategoriesSection brands={brands} />
-      <ValuesSection images={setting?.valueImages} />
+      <HomeHero slides={slides} stats={stats} />
       <BrandMarquee brands={brands} />
+      <BusinessAreasSection />
+      <WhyCosmoSection stats={stats} />
+      <WorldMapSection countries={countries} locale={locale} />
+      <RetailPartnersSection partners={partners} />
       <LatestNewsSection news={news} />
+      <PartnerCtaSection />
     </>
   );
 }

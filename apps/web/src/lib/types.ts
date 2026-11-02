@@ -39,6 +39,7 @@ export type MediaUsageType =
   | "product"
   | "section"
   | "milestone"
+  | "retailPartner"
   | "news"
   | "siteSetting";
 
@@ -97,6 +98,15 @@ export interface Milestone {
   image: Media | null;
   isVisible: boolean;
   translations: MilestoneTranslation[];
+}
+
+export interface RetailPartner {
+  id: number;
+  name: string;
+  logoId: number;
+  logo: Media;
+  order: number;
+  isVisible: boolean;
 }
 
 export type BrandCategory = "FOOD" | "BEAUTY" | "HOUSEHOLD";

@@ -68,7 +68,6 @@ export interface PublicBrand {
   logoUrl: string | null;
   coverUrl: string | null;
   showcaseImageUrl: string | null;
-  originCountry: CountryCode | null;
   featuredOrder: number | null;
 }
 
@@ -76,6 +75,25 @@ export function fetchBrands(locale: Locale) {
   return fetchPublic<PublicBrand[]>("/public/brands", locale).catch(
     (): PublicBrand[] => [],
   );
+}
+
+export function fetchOriginCountries(locale: Locale) {
+  return fetchPublic<CountryCode[]>("/public/origin-countries", locale).catch(
+    (): CountryCode[] => [],
+  );
+}
+
+export interface PublicRetailPartner {
+  id: number;
+  name: string;
+  logoUrl: string;
+}
+
+export function fetchRetailPartners(locale: Locale) {
+  return fetchPublic<PublicRetailPartner[]>(
+    "/public/retail-partners",
+    locale,
+  ).catch((): PublicRetailPartner[] => []);
 }
 
 export interface PublicSection {

@@ -8,7 +8,6 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import atlas from "world-atlas/countries-110m.json";
-import type { PublicBrand } from "./public-api";
 
 const MAP_WIDTH = 1000;
 const ANTARCTICA_ID = "010";
@@ -73,17 +72,10 @@ export interface MapPoint {
   y: number;
 }
 
-export interface MapBrand {
-  slug: string;
-  name: string;
-  logoUrl: string | null;
-}
-
 export interface MapOrigin {
   code: CountryCode;
   pin: MapPoint;
   shape: string | null;
-  brands: MapBrand[];
 }
 
 export interface WorldMapLayout {
@@ -98,24 +90,8 @@ function project(position: { lat: number; lng: number }): MapPoint | null {
   return point ? { x: point[0], y: point[1] } : null;
 }
 
-function groupBrandsByCountry(brands: PublicBrand[]) {
-  const groups = new Map<CountryCode, MapBrand[]>();
-
-  for (const brand of brands) {
-    if (!brand.originCountry) {
-      continue;
-    }
-
-    const group = groups.get(brand.originCountry) ?? [];
-    group.push({ slug: brand.slug, name: brand.name, logoUrl: brand.logoUrl });
-    groups.set(brand.originCountry, group);
-  }
-
-  return groups;
-}
-
 export function buildWorldMapLayout(
-  brands: PublicBrand[],
+  countries: CountryCode[],
 ): WorldMapLayout | null {
   const mongoliaPin = project(MONGOLIA_POSITION);
 
@@ -123,25 +99,16 @@ export function buildWorldMapLayout(
     return null;
   }
 
-  const origins = [...groupBrandsByCountry(brands).entries()]
-    .flatMap(([code, countryBrands]) => {
-      const position = COUNTRY_POSITIONS[code];
-      const pin = project(position);
+  const origins = countries.flatMap((code) => {
+    const position = COUNTRY_POSITIONS[code];
+    const pin = project(position);
 
-      if (!pin) {
-        return [];
-      }
+    if (!pin) {
+      return [];
+    }
 
-      return [
-        {
-          code,
-          pin,
-          shape: findCountryShape(position.numeric),
-          brands: countryBrands,
-        },
-      ];
-    })
-    .sort((a, b) => b.brands.length - a.brands.length);
+    return [{ code, pin, shape: findCountryShape(position.numeric) }];
+  });
 
   return {
     width: MAP_WIDTH,

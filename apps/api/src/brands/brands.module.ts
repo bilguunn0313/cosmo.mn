@@ -6,6 +6,7 @@ import { BrandProductsService } from './brand-products.service';
 import { BrandSectionsService } from './brand-sections.service';
 import { BrandsService } from './brands.service';
 import { PublicBrandsController } from './public-brands.controller';
+import { PublicOriginCountriesController } from './public-origin-countries.controller';
 
 @Module({
   controllers: [
@@ -13,6 +14,7 @@ import { PublicBrandsController } from './public-brands.controller';
     AdminBrandSectionsController,
     AdminBrandProductsController,
     PublicBrandsController,
+    PublicOriginCountriesController,
   ],
   providers: [BrandsService, BrandSectionsService, BrandProductsService],
 })

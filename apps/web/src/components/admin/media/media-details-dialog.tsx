@@ -33,6 +33,7 @@ const USAGE_LABELS: Record<MediaUsageType, string> = {
   product: "Брэндийн бүтээгдэхүүн",
   section: "Хуудасны хэсэг",
   milestone: "Компанийн түүх",
+  retailPartner: "Нүүр хуудасны харилцагч",
   news: "Медиа",
   siteSetting: "Холбоо барих",
 };

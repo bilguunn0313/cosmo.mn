@@ -48,14 +48,41 @@ describe('Brands', () => {
     await createBrand('Bad Slug').expect(400);
   });
 
-  it('гарал үүслийн улсыг хадгалж нийтэд өгнө', async () => {
-    await createBrand('brand-german', { originCountry: 'DE' }).expect(201);
+  it('гарал үүслийн улсыг брэндтэй нь холбож нийтэд өгөхгүй', async () => {
+    const created = await createBrand('brand-german', {
+      originCountry: 'DE',
+    }).expect(201);
+    expect(created.body.originCountry).toBe('DE');
 
-    const response = await context.guest.get('/public/brands').expect(200);
-    const brand = response.body.find(
+    const list = await context.guest.get('/public/brands').expect(200);
+    const brand = list.body.find(
       (item: { slug: string }) => item.slug === 'brand-german',
     );
-    expect(brand.originCountry).toBe('DE');
+    expect(brand).not.toHaveProperty('originCountry');
+
+    const detail = await context.guest
+      .get('/public/brands/brand-german')
+      .expect(200);
+    expect(detail.body).not.toHaveProperty('originCountry');
+  });
+
+  it('нийтлэгдсэн брэндүүдийн улсуудыг давхардалгүй жагсаана', async () => {
+    await createBrand('brand-japan-a', { originCountry: 'JP' }).expect(201);
+    await createBrand('brand-japan-b', { originCountry: 'JP' }).expect(201);
+    await createBrand('brand-hidden-korea', {
+      originCountry: 'KR',
+      isPublished: false,
+    }).expect(201);
+
+    const response = await context.guest
+      .get('/public/origin-countries')
+      .expect(200);
+
+    expect(response.body).toContain('JP');
+    expect(response.body).not.toContain('KR');
+    expect(response.body.filter((code: string) => code === 'JP')).toHaveLength(
+      1,
+    );
   });
 
   it('жагсаалтад байхгүй улсын кодыг хүлээж авахгүй', async () => {

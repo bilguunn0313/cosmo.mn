@@ -145,10 +145,22 @@ export class BrandsService {
         logoUrl: brand.logo?.url ?? null,
         coverUrl: brand.cover?.url ?? null,
         showcaseImageUrl: brand.showcaseImage?.url ?? null,
-        originCountry: brand.originCountry,
         featuredOrder: brand.featuredOrder,
       };
     });
+  }
+
+  async findOriginCountries() {
+    const brands = await this.prisma.brand.findMany({
+      where: { isPublished: true, originCountry: { not: null } },
+      distinct: ['originCountry'],
+      orderBy: { originCountry: 'asc' },
+      select: { originCountry: true },
+    });
+
+    return brands
+      .map((brand) => brand.originCountry)
+      .filter((code) => code !== null);
   }
 
   async findPublishedBySlug(slug: string, locale: Locale) {
@@ -184,7 +196,6 @@ export class BrandsService {
       coverUrl: brand.cover?.url ?? null,
       showcaseImageUrl: brand.showcaseImage?.url ?? null,
       websiteUrl: brand.websiteUrl,
-      originCountry: brand.originCountry,
       sections: brand.sections.map((section) => {
         const sectionTranslation = pickTranslation(
           section.translations,

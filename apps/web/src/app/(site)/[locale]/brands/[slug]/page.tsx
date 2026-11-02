@@ -64,15 +64,11 @@ export default async function BrandPage({
     notFound();
   }
 
-  const countryNames = new Intl.DisplayNames([locale], { type: "region" });
-  const countryName = brand.originCountry
-    ? (countryNames.of(brand.originCountry) ?? null)
-    : null;
   const relatedBrands = pickRelatedBrands(brand, allBrands);
 
   return (
     <>
-      <BrandHead brand={brand} countryName={countryName} />
+      <BrandHead brand={brand} />
 
       {brand.products.length > 0 && (
         <BrandProducts products={brand.products} summary={brand.summary} />

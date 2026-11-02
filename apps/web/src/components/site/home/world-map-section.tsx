@@ -1,21 +1,22 @@
+import type { CountryCode } from "@cosmo/shared";
 import { getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/site/reveal";
-import type { PublicBrand } from "@/lib/public-api";
+import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import type { Locale } from "@/lib/types";
 import { buildWorldMapLayout } from "@/lib/world-map";
 import { WorldMapInteractive } from "./world-map-interactive";
 
 interface WorldMapSectionProps {
-  brands: PublicBrand[];
+  countries: CountryCode[];
   locale: Locale;
 }
 
 export async function WorldMapSection({
-  brands,
+  countries,
   locale,
 }: WorldMapSectionProps) {
   const t = await getTranslations("home");
-  const layout = buildWorldMapLayout(brands);
+  const layout = buildWorldMapLayout(countries);
 
   if (!layout || layout.origins.length === 0) {
     return null;
@@ -27,13 +28,10 @@ export async function WorldMapSection({
   );
 
   return (
-    <section
-      aria-labelledby="world-map-title"
-      className="bg-brand text-white"
-    >
+    <section aria-labelledby="world-map-title" className="bg-brand text-white">
       <div className="site-container grid gap-y-10 py-16 md:py-22 lg:grid-cols-12 lg:gap-x-6">
         <Reveal className="grid content-start gap-5 lg:col-span-4">
-          <p className="eyebrow text-brand-300">{t("originEyebrow")}</p>
+          <SectionEyebrow tone="white">{t("originEyebrow")}</SectionEyebrow>
           <h2 id="world-map-title" className="type-h2 text-balance">
             {t("mapTitle", { count: layout.origins.length })}
           </h2>

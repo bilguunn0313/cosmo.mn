@@ -11,6 +11,7 @@ import { MediaModule } from './media/media.module';
 import { MilestonesModule } from './milestones/milestones.module';
 import { NewsModule } from './news/news.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RetailPartnersModule } from './retail-partners/retail-partners.module';
 import { SectionsModule } from './sections/sections.module';
 import { SiteSettingsModule } from './site-settings/site-settings.module';
 import { SlidesModule } from './slides/slides.module';
@@ -29,6 +30,7 @@ import { SlidesModule } from './slides/slides.module';
     SectionsModule,
     MilestonesModule,
     NewsModule,
+    RetailPartnersModule,
     SiteSettingsModule,
     ContactModule,
   ],

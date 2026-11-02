@@ -10,6 +10,7 @@ export type MediaUsageType =
   | 'product'
   | 'section'
   | 'milestone'
+  | 'retailPartner'
   | 'news'
   | 'siteSetting';
 
@@ -63,6 +64,7 @@ export class MediaUsageService {
       products,
       sections,
       milestones,
+      retailPartners,
       news,
       siteSettings,
     ] = await Promise.all([
@@ -102,6 +104,7 @@ export class MediaUsageService {
         where: { imageId: id },
         include: { translations: true },
       }),
+      this.prisma.retailPartner.findMany({ where: { logoId: id } }),
       this.prisma.news.findMany({
         where: {
           OR: [
@@ -166,6 +169,11 @@ export class MediaUsageService {
         title: `${milestone.year} ${
           pickTranslation(milestone.translations, DEFAULT_LOCALE)?.title ?? ''
         }`,
+      })),
+      ...retailPartners.map((partner) => ({
+        type: 'retailPartner' as const,
+        id: partner.id,
+        title: partner.name,
       })),
       ...news.map((item) => ({
         type: 'news' as const,

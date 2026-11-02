@@ -1,7 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
-// import { ArrowRight } from "lucide-react";
+import { Volume2, VolumeX } from "lucide-react";
 import {
   animate,
   motion,
@@ -13,11 +12,9 @@ import type { PanInfo } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-// import { siteButtonClass } from "@/components/site/site-button";
-// import { SmartLink } from "@/components/site/smart-link";
+import { LogoMark } from "@/components/site/logo-mark";
 import type { PublicSlide } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
-import { HERO_HEIGHT_CLASS } from "./hero-size";
 
 const SLIDE_DURATION_MS = 4000;
 const SWIPE_THRESHOLD_PX = 50;
@@ -156,35 +153,7 @@ function MediaButton({ label, onClick, children }: MediaButtonProps) {
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex size-12 items-center justify-center bg-paper text-ink transition-colors duration-150 hover:bg-brand-100"
-    >
-      {children}
-    </button>
-  );
-}
-
-interface ArrowButtonProps {
-  label: string;
-  onClick: () => void;
-  className: string;
-  children: React.ReactNode;
-}
-
-function ArrowButton({
-  label,
-  onClick,
-  className,
-  children,
-}: ArrowButtonProps) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className={cn(
-        "absolute top-1/2 z-10 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full bg-brand-night/25 text-white backdrop-blur-sm transition-[background-color,scale] duration-160 ease-out hover:bg-brand-night/45 active:scale-[0.97] md:flex",
-        className,
-      )}
+      className="flex size-12 items-center justify-center rounded-full bg-white text-brand-700 transition-[background-color,scale] duration-150 ease-out hover:bg-brand-100 motion-safe:active:scale-[0.97]"
     >
       {children}
     </button>
@@ -287,129 +256,105 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   };
 
   return (
-    <section aria-roledescription="carousel" aria-label={t("home.carousel")}>
-      <div
-        ref={viewportRef}
+    <div
+      ref={viewportRef}
+      aria-roledescription="carousel"
+      aria-label={t("home.carousel")}
+      className="absolute inset-0 overflow-hidden"
+    >
+      <motion.div
+        style={{ x: trackX }}
+        drag={hasMany && !pending ? "x" : false}
+        dragMomentum={false}
+        onDragStart={() => setIsDragging(true)}
+        onDragEnd={(_, info) => handleDragEnd(info)}
         className={cn(
-          "relative overflow-hidden bg-brand-night",
-          HERO_HEIGHT_CLASS,
+          "absolute inset-0 touch-pan-y select-none",
+          hasMany && "cursor-grab active:cursor-grabbing",
         )}
       >
-        <motion.div
-          style={{ x: trackX }}
-          drag={hasMany && !pending ? "x" : false}
-          dragMomentum={false}
-          onDragStart={() => setIsDragging(true)}
-          onDragEnd={(_, info) => handleDragEnd(info)}
-          className={cn(
-            "absolute inset-0 touch-pan-y select-none",
-            hasMany && "cursor-grab active:cursor-grabbing",
-          )}
-        >
-          {slides.map((slide, index) => {
-            const position = slidePosition({
-              index,
-              activeIndex,
-              pending,
-              count,
-              revealSide,
-            });
+        {slides.map((slide, index) => {
+          const position = slidePosition({
+            index,
+            activeIndex,
+            pending,
+            count,
+            revealSide,
+          });
 
-            return (
-              <div
-                key={slide.id}
-                role="group"
-                aria-roledescription="slide"
-                aria-label={t("home.slideLabel", {
-                  current: index + 1,
-                  total: count,
-                })}
-                aria-hidden={index !== activeIndex}
-                style={{ translate: `${(position ?? 0) * 100}% 0` }}
-                className={cn(
-                  "absolute inset-0",
-                  position === null && "invisible",
-                )}
-              >
-                <SlideMedia
-                  slide={slide}
-                  isActive={index === activeIndex}
-                  isFirst={index === 0}
-                  canPlay={!shouldReduceMotion}
-                  isMuted={isMuted}
-                />
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {hasMany && (
-          <>
-            <ArrowButton
-              label={t("home.previous")}
-              onClick={() => goBy(-1)}
-              className="left-4 md:left-6"
+          return (
+            <div
+              key={slide.id}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={t("home.slideLabel", {
+                current: index + 1,
+                total: count,
+              })}
+              aria-hidden={index !== activeIndex}
+              style={{ translate: `${(position ?? 0) * 100}% 0` }}
+              className={cn(
+                "absolute inset-0",
+                position === null && "invisible",
+              )}
             >
-              <ChevronLeft className="size-8" strokeWidth={1.5} />
-            </ArrowButton>
-            <ArrowButton
-              label={t("home.next")}
-              onClick={() => goBy(1)}
-              className="right-4 md:right-6"
+              <SlideMedia
+                slide={slide}
+                isActive={index === activeIndex}
+                isFirst={index === 0}
+                canPlay={!shouldReduceMotion}
+                isMuted={isMuted}
+              />
+            </div>
+          );
+        })}
+      </motion.div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-5 z-10 md:bottom-8">
+        <div className="site-container flex min-h-12 items-center justify-between gap-4">
+          {hasMany ? (
+            <div
+              role="group"
+              aria-label={t("home.slideIndicators")}
+              className="pointer-events-auto -ml-2 flex items-center"
             >
-              <ChevronRight className="size-8" strokeWidth={1.5} />
-            </ArrowButton>
-          </>
-        )}
-
-        {hasMany && (
-          <div className="absolute inset-x-0 bottom-3 z-10 flex justify-center md:bottom-5">
-            {slides.map((slide, index) => (
-              <button
-                key={slide.id}
-                type="button"
-                aria-label={t("home.goToSlide", { number: index + 1 })}
-                aria-current={index === activeIndex}
-                onClick={() => goTo(index, index > activeIndex ? 1 : -1)}
-                className="group grid size-6 place-items-center"
-              >
-                <span className="size-3 rounded-full border-[1.5px] border-white shadow-[0_1px_4px_rgb(0_0_0/0.35)] transition-colors duration-200 ease-out group-hover:bg-white/50 group-aria-[current=true]:bg-white" />
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0">
-          <div className="site-container flex items-end justify-end gap-4 pb-4 md:pb-6">
-            {/* {activeSlide.linkUrl ? (
-                <SmartLink
-                  href={activeSlide.linkUrl}
-                  className={siteButtonClass("white", "min-w-55")}
+              {slides.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  type="button"
+                  aria-label={t("home.goToSlide", { number: index + 1 })}
+                  aria-current={index === activeIndex}
+                  onClick={() => goTo(index, index > activeIndex ? 1 : -1)}
+                  className="group grid size-9 place-items-center rounded-full outline-white transition-[scale] duration-150 ease-out focus-visible:outline-2 motion-safe:active:scale-[0.95]"
                 >
-                  {activeSlide.buttonText ?? t("home.learnMore")}
-                  <ArrowRight className="size-4.5" />
-                </SmartLink>
-              ) : (
-                <span />
-              )} */}
-
-            {isVideoActive && (
-              <div className="pointer-events-auto">
-                <MediaButton
-                  label={isMuted ? t("home.unmute") : t("home.mute")}
-                  onClick={() => setIsMuted(!isMuted)}
-                >
-                  {isMuted ? (
-                    <VolumeX className="size-5" />
+                  {index === activeIndex ? (
+                    <LogoMark className="w-5.5 text-white drop-shadow-[0_1px_3px_rgb(11_31_51/0.4)] motion-safe:animate-in motion-safe:duration-200 motion-safe:ease-out motion-safe:zoom-in-90 motion-safe:fade-in" />
                   ) : (
-                    <Volume2 className="size-5" />
+                    <span className="size-2 rounded-full bg-white/55 transition-colors duration-150 group-hover:bg-white" />
                   )}
-                </MediaButton>
-              </div>
-            )}
-          </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <span />
+          )}
+
+          {isVideoActive && (
+            <div className="pointer-events-auto">
+              <MediaButton
+                label={isMuted ? t("home.unmute") : t("home.mute")}
+                onClick={() => setIsMuted(!isMuted)}
+              >
+                {isMuted ? (
+                  <VolumeX className="size-5" />
+                ) : (
+                  <Volume2 className="size-5" />
+                )}
+              </MediaButton>
+            </div>
+          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

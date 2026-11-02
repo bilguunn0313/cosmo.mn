@@ -46,9 +46,6 @@
     "featured": "精选",
     "heroTitle": "将世界品牌带进每个蒙古家庭",
     "officialDistributor": "官方经销商",
-    "partnersTitle": "我们的合作伙伴",
-    "aboutTitle": "为日常消费创造价值",
-    "aboutText": "自1993年以来，Cosmo Trade 一直专注于快速消费品的进口、销售与分销业务。我们将国际及区域品牌带给蒙古消费者，并依托广泛的分销网络和基于互信的合作，致力于提升产品的可及性。",
     "originEyebrow": "品牌来源",
     "valuesTitle": "核心价值观",
     "values": {
@@ -80,30 +77,81 @@
     "previous": "上一张",
     "next": "下一张",
     "brandsTitle": "我们的品牌",
-    "mapTitle": "从 {count} 个国家来到蒙古",
     "mapDescription": "我们的品牌来自这些国家。",
-    "brandCount": "{count} 个品牌",
-    "statsTitle": "关键数据",
-    "keyStats": {
-      "founded": {
-        "label": "运营经验",
-        "suffix": "+ 年"
-      },
-      "products": {
-        "label": "产品品类"
-      },
-      "salesPoints": {
-        "label": "覆盖销售网点"
-      },
-      "team": {
-        "label": "团队成员"
-      }
-    },
-    "categoriesTitle": "按品类浏览品牌",
     "allBrands": "全部品牌",
     "newsTitle": "最新动态",
     "allNews": "全部新闻",
-    "video": "视频"
+    "video": "视频",
+    "heroText": "自{foundedYear}年起，我们进口国际食品、美妆和家居品牌，并配送至{salesPoints}多个销售网点。",
+    "heroTextPlain": "我们进口国际食品、美妆和家居品牌，并配送至蒙古全国。",
+    "slideIndicators": "幻灯片",
+    "areas": {
+      "eyebrow": "我们的业务",
+      "title": "从进口到商店货架",
+      "text": "品牌进入蒙古消费者手中的每一个环节都由我们亲自负责。",
+      "items": {
+        "import": {
+          "title": "进口",
+          "text": "从世界各地的制造商将产品引进蒙古。"
+        },
+        "warehouse": {
+          "title": "仓储与物流",
+          "text": "按标准储存货物，并按时备好每一份订单。"
+        },
+        "distribution": {
+          "title": "配送",
+          "text": "为各销售网点提供定期、可靠的配送。"
+        },
+        "sales": {
+          "title": "销售与陈列",
+          "text": "通过超市、零售、批发和餐饮渠道销售，并负责货架陈列。"
+        },
+        "marketing": {
+          "title": "营销支持",
+          "text": "为每个品牌组织广告宣传和店内推广活动。"
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "为什么选择 Cosmo Trade",
+      "title": "领先品牌值得信赖的合作伙伴",
+      "text": "广泛的分销网络、多年的经验以及基于互信的合作，使我们成为进入或拓展蒙古市场的国际品牌的首选合作伙伴。",
+      "imageAlt": "Cosmo Trade 分销的产品",
+      "reasons": {
+        "network": {
+          "title": "覆盖全国的分销网络",
+          "text": "通过超市、大卖场、零售、批发和餐饮渠道，覆盖{salesPoints}多个销售网点。",
+          "textPlain": "通过超市、大卖场、零售、批发和餐饮渠道覆盖全国。"
+        },
+        "oneStop": {
+          "title": "从进口到货架的一站式合作伙伴",
+          "text": "进口、仓储、物流、配送和销售各环节均由我们负责，品牌只需与一个合作伙伴对接。"
+        },
+        "experience": {
+          "title": "{years}年经验",
+          "text": "自{foundedYear}年起，已将{products}多种产品引入并发展于蒙古市场。",
+          "titlePlain": "多年经验",
+          "textPlain": "我们已将众多国际品牌引入并发展于蒙古市场。"
+        },
+        "marketing": {
+          "title": "贸易营销与陈列",
+          "text": "我们{team}多人的团队负责每个品牌的货架陈列、广告宣传和店内推广。",
+          "textPlain": "我们的团队负责每个品牌的货架陈列、广告宣传和店内推广。"
+        }
+      }
+    },
+    "retail": {
+      "eyebrow": "销售网络",
+      "title": "遍及蒙古所有主要零售渠道",
+      "text": "我们的产品通过超市、大卖场、零售、批发和餐饮渠道送达消费者。",
+      "partners": "销售网络合作伙伴"
+    },
+    "newsEyebrow": "新闻中心",
+    "cta": {
+      "title": "携手在蒙古发展您的品牌",
+      "text": "如果您计划进入蒙古市场或扩大销售，欢迎与我们联系。"
+    },
+    "mapTitle": "从 {count} 个国家来到蒙古"
   },
   "brands": {
     "description": "国际食品、美妆与家居用品品牌。",
@@ -117,7 +165,6 @@
     "partnerTitle": "想将您的品牌引入蒙古吗？",
     "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
     "partnerButton": "洽谈合作",
-    "origin": "原产地",
     "productCount": "{count} 款产品"
   },
   "catalog": {

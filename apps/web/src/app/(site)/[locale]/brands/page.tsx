@@ -63,14 +63,8 @@ export default async function BrandsPage({
   ];
 
   const shownBrands = activeCategory ? inCategory(activeCategory) : brands;
-  const countryNames = new Intl.DisplayNames([locale], { type: "region" });
   const brandMeta = (brand: PublicBrand) =>
-    [
-      brand.categories.map((category) => t(`categories.${category}`)).join(", "),
-      brand.originCountry ? countryNames.of(brand.originCountry) : null,
-    ]
-      .filter(Boolean)
-      .join(" · ");
+    brand.categories.map((category) => t(`categories.${category}`)).join(", ");
   const hasCatalog = CATALOG.pages.length > 0;
 
   return (
@@ -80,10 +74,7 @@ export default async function BrandsPage({
         imageUrl={pageBannerUrl(setting, "brands")}
       >
         {hasCatalog && (
-          <a
-            href="#catalog"
-            className={siteButtonClass("white", "min-w-52.5")}
-          >
+          <a href="#catalog" className={siteButtonClass("white", "min-w-52.5")}>
             {t("catalog.view")}
             <ArrowDown className="size-4.5" />
           </a>

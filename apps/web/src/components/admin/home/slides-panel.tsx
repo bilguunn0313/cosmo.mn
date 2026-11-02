@@ -52,7 +52,7 @@ export function SlidesPanel() {
       <PanelHeader
         step={1}
         title="Дээд талын carousel"
-        description="Сайтад орж ирэхэд дэлгэц дүүрэн харагдах видео эсвэл зургууд. Дээрээс доош дарааллаар солигдоно."
+        description="Хуудасны хамгийн дээд талын том зураг, видео."
         action={
           <Button onClick={() => openForm(null)}>
             <Plus />

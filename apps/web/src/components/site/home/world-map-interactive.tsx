@@ -2,12 +2,9 @@
 
 import type { CountryCode } from "@cosmo/shared";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { CountryFlag } from "@/components/site/country-flag";
-import { Link } from "@/i18n/navigation";
-import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 import type { MapOrigin, MapPoint, WorldMapLayout } from "@/lib/world-map";
 
@@ -15,7 +12,6 @@ const WORLD_MAP_SRC = "/world-map.svg?v=5";
 const ARC_LIFT = 0.3;
 const ARC_STAGGER_SECONDS = 0.12;
 const CLOSE_DELAY_MS = 150;
-const MAX_TOOLTIP_BRANDS = 3;
 
 function arcPath(from: MapPoint, to: MapPoint) {
   const distance = Math.hypot(to.x - from.x, to.y - from.y);
@@ -50,8 +46,6 @@ function CountryTooltip({
 }: CountryTooltipProps) {
   const shouldReduceMotion = useReducedMotion();
   const xRatio = origin.pin.x / layout.width;
-  const shownBrands = origin.brands.slice(0, MAX_TOOLTIP_BRANDS);
-  const hiddenCount = origin.brands.length - shownBrands.length;
 
   return (
     <motion.div
@@ -69,36 +63,12 @@ function CountryTooltip({
         translate: `${tooltipShift(xRatio)} calc(-100% - 12px)`,
         transformOrigin: "bottom center",
       }}
-      className="absolute z-10 flex items-center gap-3 border-2 border-white/28 bg-brand-night py-1.5 pr-4 pl-1.5 text-sm whitespace-nowrap text-white"
+      className="absolute z-10 border-2 border-white/28 bg-brand-night p-1.5 text-sm whitespace-nowrap text-white"
     >
       <span className="inline-flex items-center gap-2 bg-brand px-3 py-1 font-semibold">
         <CountryFlag code={origin.code} className="shadow-none" />
         {countryName}
       </span>
-      {shownBrands.map((brand) => (
-        <Link
-          key={brand.slug}
-          href={brandPath(brand.slug)}
-          className="flex items-center gap-1.5 text-white/85 transition-colors duration-150 hover:text-white"
-        >
-          {brand.logoUrl && (
-            <span className="relative size-5 overflow-hidden bg-white">
-              <Image
-                src={brand.logoUrl}
-                alt=""
-                fill
-                unoptimized
-                sizes="20px"
-                className="object-contain p-0.5"
-              />
-            </span>
-          )}
-          {brand.name}
-        </Link>
-      ))}
-      {hiddenCount > 0 && (
-        <span className="text-white/60 tabular-nums">+{hiddenCount}</span>
-      )}
     </motion.div>
   );
 }
@@ -112,7 +82,6 @@ export function WorldMapInteractive({
   layout,
   countryNames,
 }: WorldMapInteractiveProps) {
-  const t = useTranslations("home");
   const shouldReduceMotion = useReducedMotion();
   const [activeCode, setActiveCode] = useState<CountryCode | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -284,11 +253,7 @@ export function WorldMapInteractive({
 
       <ul className="sr-only">
         {origins.map((origin) => (
-          <li key={origin.code}>
-            {countryNames[origin.code]}:{" "}
-            {t("brandCount", { count: origin.brands.length })},{" "}
-            {origin.brands.map((brand) => brand.name).join(", ")}
-          </li>
+          <li key={origin.code}>{countryNames[origin.code]}</li>
         ))}
       </ul>
     </div>

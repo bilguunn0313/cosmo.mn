@@ -17,6 +17,9 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverBanner, setIsOverBanner] = useState(false);
 
+  const isHome = pathname === "/";
+  const isOverHero = isHome && !isScrolled;
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const banner = document.getElementById(PAGE_BANNER_ID);
 
@@ -30,7 +33,9 @@ export function SiteHeader() {
     <header
       style={{ viewTransitionName: "site-header" }}
       className={cn(
-        "sticky top-0 z-40 bg-white transition-[translate,box-shadow] duration-300 ease-out motion-reduce:transition-none",
+        "top-0 z-40 transition-[translate,box-shadow,background-color] duration-300 ease-out motion-reduce:transition-none",
+        isHome ? "fixed inset-x-0" : "sticky",
+        isOverHero ? "bg-transparent" : "bg-white",
         isScrolled &&
           "shadow-[0_1px_0_var(--color-rule),0_12px_32px_-16px_color-mix(in_srgb,var(--color-brand-night)_35%,transparent)]",
         isOverBanner && "-translate-y-full focus-within:translate-y-0",
@@ -42,7 +47,12 @@ export function SiteHeader() {
           aria-label={t("header.homeLabel")}
           className="justify-self-start"
         >
-          <Wordmark className="text-2xl lg:text-[30px]" />
+          <Wordmark
+            className={cn(
+              "text-2xl lg:text-[30px]",
+              isOverHero && "text-white",
+            )}
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
@@ -53,7 +63,12 @@ export function SiteHeader() {
               aria-current={
                 isNavItemActive(item.href, pathname) ? "page" : undefined
               }
-              className="px-4 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700 aria-[current=page]:shadow-[inset_0_-4px_0_var(--color-brand)]"
+              className={cn(
+                "px-4 py-3 text-sm font-semibold transition-colors duration-150",
+                isOverHero
+                  ? "text-brand-200 hover:text-white aria-[current=page]:text-white aria-[current=page]:shadow-[inset_0_-3px_0_white]"
+                  : "text-ink hover:bg-brand-100 hover:text-brand-700 aria-[current=page]:text-brand-700 aria-[current=page]:shadow-[inset_0_-4px_0_var(--color-brand)]",
+              )}
             >
               {t(`nav.${item.key}`)}
             </Link>
@@ -61,8 +76,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center justify-self-end gap-5">
-          <LanguageSwitcher className="hidden lg:flex" />
-          <MobileMenu />
+          <LanguageSwitcher
+            tone={isOverHero ? "dark" : "light"}
+            className="hidden lg:flex"
+          />
+          <MobileMenu tone={isOverHero ? "dark" : "light"} />
         </div>
       </div>
     </header>

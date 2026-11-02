@@ -1,19 +1,13 @@
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
+import { Link } from "@/i18n/navigation";
+import { repeatToFill } from "@/lib/marquee";
 import type { PublicBrand } from "@/lib/public-api";
-import { MarqueeRow } from "./marquee-row";
+import { brandPath } from "@/lib/site-links";
+import { LogoMarquee } from "./logo-marquee";
 
-const TWO_ROW_MIN_BRANDS = 8;
-
-function splitIntoRows(brands: PublicBrand[]) {
-  if (brands.length < TWO_ROW_MIN_BRANDS) {
-    return [brands];
-  }
-
-  return [
-    brands.filter((_, index) => index % 2 === 0),
-    brands.filter((_, index) => index % 2 === 1),
-  ];
-}
+const MAX_VISIBLE_TILES = 8;
+const SECONDS_PER_TILE = 2.5;
 
 interface BrandMarqueeProps {
   brands: PublicBrand[];
@@ -26,26 +20,38 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
     return null;
   }
 
-  return (
-    <section
-      aria-labelledby="brands-marquee-title"
-      className="pt-20 md:pt-32"
-    >
-      <div className="site-container">
-        <h2 id="brands-marquee-title" className="type-h2 text-balance">
-          {t("partnersTitle")}
-        </h2>
-        <span
-          aria-hidden
-          className="mt-4 block h-[3px] rounded-full bg-linear-to-r from-brand via-brand-400 via-25% to-rule md:mt-5"
-        />
-      </div>
+  const tiles = repeatToFill(brands, MAX_VISIBLE_TILES + 1);
 
-      <div className="mt-6 grid gap-4 md:mt-12 md:gap-15">
-        {splitIntoRows(brands).map((row, index) => (
-          <MarqueeRow key={index} brands={row} isReversed={index === 1} />
+  return (
+    <section aria-label={t("brandsTitle")} className="bg-white py-1">
+      <LogoMarquee tileCount={tiles.length} secondsPerTile={SECONDS_PER_TILE}>
+        {tiles.map((brand, index) => (
+          <Link
+            key={`${brand.slug}-${index}`}
+            href={brandPath(brand.slug)}
+            tabIndex={index >= brands.length ? -1 : undefined}
+            aria-hidden={index >= brands.length || undefined}
+            className="mr-(--gap) flex aspect-square w-[calc((100cqw-(var(--count)-1)*var(--gap))/var(--count))] shrink-0 items-center justify-center rounded-card outline-offset-[-4px] outline-brand transition-[scale] duration-150 ease-out [--count:3] [--gap:30px] focus-visible:outline-2 motion-safe:active:scale-[0.97] md:[--count:5] lg:[--count:8]"
+          >
+            {brand.logoUrl ? (
+              <span className="relative h-[46%] w-[62%]">
+                <Image
+                  src={brand.logoUrl}
+                  alt={brand.name}
+                  fill
+                  unoptimized
+                  sizes="160px"
+                  className="object-contain"
+                />
+              </span>
+            ) : (
+              <span className="font-display text-xl font-semibold text-ink">
+                {brand.name}
+              </span>
+            )}
+          </Link>
         ))}
-      </div>
+      </LogoMarquee>
     </section>
   );
 }

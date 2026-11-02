@@ -7,6 +7,7 @@ export * from "./locales";
 export * from "./media";
 export * from "./milestone";
 export * from "./news";
+export * from "./retail-partner";
 export * from "./section";
 export * from "./site-setting";
 export * from "./slide";

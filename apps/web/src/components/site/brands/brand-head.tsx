@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
-import { CountryFlag } from "@/components/site/country-flag";
 import { BannerImage } from "@/components/site/page-banner";
 import { Reveal } from "@/components/site/reveal";
 import { Link } from "@/i18n/navigation";
@@ -23,28 +22,15 @@ interface BrandFact {
 
 interface BrandHeadProps {
   brand: PublicBrandDetail;
-  countryName: string | null;
 }
 
-export async function BrandHead({ brand, countryName }: BrandHeadProps) {
+export async function BrandHead({ brand }: BrandHeadProps) {
   const t = await getTranslations();
   const categoryNames = brand.categories
     .map((category) => t(`categories.${category}`))
     .join(", ");
 
   const facts: BrandFact[] = [];
-
-  if (countryName && brand.originCountry) {
-    facts.push({
-      label: t("brands.origin"),
-      value: (
-        <span className="inline-flex items-center gap-2.5">
-          <CountryFlag code={brand.originCountry} />
-          {countryName}
-        </span>
-      ),
-    });
-  }
 
   if (brand.products.length > 0) {
     facts.push({
@@ -113,10 +99,7 @@ export async function BrandHead({ brand, countryName }: BrandHeadProps) {
             <p className="eyebrow text-brand-700">
               {t("home.officialDistributor")} · {categoryNames}
             </p>
-            <h1
-              id="brand-title"
-              className="type-display wrap-anywhere"
-            >
+            <h1 id="brand-title" className="type-display wrap-anywhere">
               {brand.name}
             </h1>
           </Reveal>

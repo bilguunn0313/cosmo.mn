@@ -46,9 +46,6 @@
     "featured": "Featured",
     "heroTitle": "World brands for every Mongolian home",
     "officialDistributor": "Official distributor",
-    "partnersTitle": "Our partners",
-    "aboutTitle": "Creating value in everyday consumption",
-    "aboutText": "Since 1993, Cosmo Trade LLC has grown its business in the import, sales and distribution of fast-moving consumer goods. We bring international and regional brands to consumers in Mongolia and aim to make products more accessible through a wide distribution network and partnerships built on mutual trust.",
     "originEyebrow": "Origins",
     "valuesTitle": "Our values",
     "values": {
@@ -80,30 +77,81 @@
     "previous": "Previous",
     "next": "Next",
     "brandsTitle": "Our brands",
-    "mapTitle": "From {count, plural, one {# country} other {# countries}} to Mongolia",
     "mapDescription": "Our brands come from these countries.",
-    "brandCount": "{count, plural, one {# brand} other {# brands}}",
-    "statsTitle": "Key figures",
-    "keyStats": {
-      "founded": {
-        "label": "Operating experience",
-        "suffix": "+ years"
-      },
-      "products": {
-        "label": "Product lines"
-      },
-      "salesPoints": {
-        "label": "Points of sale reached"
-      },
-      "team": {
-        "label": "Team members"
-      }
-    },
-    "categoriesTitle": "Brands by category",
     "allBrands": "All brands",
     "newsTitle": "Latest news",
     "allNews": "All news",
-    "video": "Video"
+    "video": "Video",
+    "heroText": "Since {foundedYear} we have imported international food, beauty and household brands and delivered them to more than {salesPoints} points of sale.",
+    "heroTextPlain": "We import international food, beauty and household brands and deliver them across Mongolia.",
+    "slideIndicators": "Slides",
+    "areas": {
+      "eyebrow": "What we do",
+      "title": "From import to the store shelf",
+      "text": "We handle every step of bringing a brand to customers in Mongolia ourselves.",
+      "items": {
+        "import": {
+          "title": "Import",
+          "text": "We bring products into Mongolia from manufacturers around the world."
+        },
+        "warehouse": {
+          "title": "Warehousing and logistics",
+          "text": "We store goods to standard and prepare every order on time."
+        },
+        "distribution": {
+          "title": "Distribution",
+          "text": "We deliver to points of sale on a regular, reliable schedule."
+        },
+        "sales": {
+          "title": "Sales and merchandising",
+          "text": "We sell through supermarket, retail, wholesale and HORECA channels and look after shelf placement."
+        },
+        "marketing": {
+          "title": "Marketing support",
+          "text": "We run advertising and in-store activations for every brand."
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "Why Cosmo Trade",
+      "title": "A trusted partner to leading brands",
+      "text": "A wide distribution network, long experience and partnerships built on mutual trust make us the partner of choice for international brands entering or growing in the Mongolian market.",
+      "imageAlt": "Products distributed by Cosmo Trade",
+      "reasons": {
+        "network": {
+          "title": "A nationwide distribution network",
+          "text": "We reach more than {salesPoints} points of sale through supermarkets, hypermarkets, retail, wholesale and HORECA.",
+          "textPlain": "We reach customers nationwide through supermarkets, hypermarkets, retail, wholesale and HORECA."
+        },
+        "oneStop": {
+          "title": "One partner from import to shelf",
+          "text": "We handle import, warehousing, logistics, distribution and sales ourselves, so a brand works with a single partner."
+        },
+        "experience": {
+          "title": "{years} years of experience",
+          "text": "Since {foundedYear} we have introduced and grown more than {products} products in the Mongolian market.",
+          "titlePlain": "Long experience",
+          "textPlain": "We have introduced and grown international brands in the Mongolian market."
+        },
+        "marketing": {
+          "title": "Trade marketing and merchandising",
+          "text": "Our team of more than {team} people looks after shelf placement, advertising and in-store activation for every brand.",
+          "textPlain": "Our team looks after shelf placement, advertising and in-store activation for every brand."
+        }
+      }
+    },
+    "retail": {
+      "eyebrow": "Retail network",
+      "title": "In every major retail channel in Mongolia",
+      "text": "Our products reach customers through supermarkets, hypermarkets, retail, wholesale and HORECA.",
+      "partners": "Retail network partners"
+    },
+    "newsEyebrow": "Media",
+    "cta": {
+      "title": "Let's grow your brand in Mongolia together",
+      "text": "Planning to enter the Mongolian market or grow your sales? Get in touch with us."
+    },
+    "mapTitle": "From {count, plural, one {# country} other {# countries}} to Mongolia"
   },
   "brands": {
     "description": "International food, beauty and household brands.",
@@ -117,7 +165,6 @@
     "partnerTitle": "Bring your brand to Mongolia?",
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
     "partnerButton": "Partner with us",
-    "origin": "Origin",
     "productCount": "{count, plural, one {# product} other {# products}}"
   },
   "catalog": {
