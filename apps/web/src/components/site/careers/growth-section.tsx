@@ -1,10 +1,15 @@
 import { getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/site/reveal";
 
-const GROWTH_ITEMS = [
+type HighlightKey = "training";
+
+const GROWTH_ITEMS: {
+  key: "training" | "rewards";
+  highlights: HighlightKey[];
+}[] = [
   { key: "training", highlights: ["training"] },
-  { key: "rewards", highlights: ["bonus", "trip"] },
-] as const;
+  { key: "rewards", highlights: [] },
+];
 
 export async function GrowthSection() {
   const t = await getTranslations("careers.growth");
@@ -19,21 +24,23 @@ export async function GrowthSection() {
               {t(`${item.key}.text`)}
             </p>
           </div>
-          <ul className="mt-auto">
-            {item.highlights.map((highlight) => (
-              <li
-                key={highlight}
-                className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-5 py-5"
-              >
-                <span className="type-stat text-brand">
-                  {t(`highlights.${highlight}.value`)}
-                </span>
-                <span className="text-base leading-[1.4]">
-                  {t(`highlights.${highlight}.text`)}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {item.highlights.length > 0 && (
+            <ul className="mt-auto">
+              {item.highlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-5 py-5"
+                >
+                  <span className="type-stat text-brand">
+                    {t(`highlights.${highlight}.value`)}
+                  </span>
+                  <span className="text-base leading-[1.4]">
+                    {t(`highlights.${highlight}.text`)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </Reveal>
       ))}
     </section>

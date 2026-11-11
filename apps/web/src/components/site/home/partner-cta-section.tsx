@@ -4,19 +4,29 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { siteButtonClass } from "@/components/site/site-button";
 import { CONTACT_HREF } from "@/components/site/site-nav";
-import { Link } from "@/i18n/navigation";
+import { SmartLink } from "@/components/site/smart-link";
 import { cn } from "@/lib/utils";
 
 interface PartnerCtaSectionProps {
+  eyebrow?: string;
   title?: string;
   text?: string;
+  href?: string;
+  buttonLabel?: string;
   isDark?: boolean;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 export async function PartnerCtaSection({
+  eyebrow,
   title,
   text,
+  href = CONTACT_HREF,
+  buttonLabel,
   isDark = false,
+  className,
+  children,
 }: PartnerCtaSectionProps) {
   const t = await getTranslations();
 
@@ -27,6 +37,7 @@ export async function PartnerCtaSection({
       className={cn(
         "relative isolate overflow-hidden py-20 md:py-26",
         isDark ? "bg-brand-700 text-white" : "bg-brand-100",
+        className,
       )}
     >
       <LogoMark
@@ -38,7 +49,7 @@ export async function PartnerCtaSection({
 
       <Reveal className="site-container flex max-w-205 flex-col items-center gap-5 text-center">
         <SectionEyebrow tone={isDark ? "white" : "brand"}>
-          {t("home.partnerEyebrow")}
+          {eyebrow ?? t("home.partnerEyebrow")}
         </SectionEyebrow>
         <h2
           id="partner-cta-title"
@@ -54,15 +65,16 @@ export async function PartnerCtaSection({
         >
           {text ?? t("home.cta.text")}
         </p>
-        <Link
-          href={CONTACT_HREF}
+        {children}
+        <SmartLink
+          href={href}
           className={siteButtonClass(
             isDark ? "white" : "primary",
             "mt-2 px-7 text-base font-medium",
           )}
         >
-          {t("nav.contact")}
-        </Link>
+          {buttonLabel ?? t("nav.contact")}
+        </SmartLink>
       </Reveal>
     </section>
   );

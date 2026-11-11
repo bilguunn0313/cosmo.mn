@@ -25,6 +25,31 @@ enum BrandCategory {
   HOUSEHOLD
 }
 
+enum JobDepartment {
+  warehouse
+  sales
+  administration
+  finance
+  management
+  businessDevelopment
+  marketing
+  it
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  SHIFT
+  CONTRACT
+  INTERNSHIP
+}
+
+enum JobStage {
+  OPEN
+  INTERVIEW
+  DECIDED
+}
+
 model Admin {
   id           Int      @id @default(autoincrement())
   email        String   @unique
@@ -283,10 +308,44 @@ model NewsTranslation {
   @@unique([newsId, locale])
 }
 
+model JobPosting {
+  id             Int            @id @default(autoincrement())
+  slug           String         @unique
+  department     JobDepartment
+  employmentType EmploymentType
+  stage          JobStage       @default(OPEN)
+  openedAt       DateTime
+  closesAt       DateTime?
+  isPublished    Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  translations JobPostingTranslation[]
+
+  @@index([isPublished, openedAt])
+}
+
+model JobPostingTranslation {
+  id           Int        @id @default(autoincrement())
+  jobPostingId Int
+  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  locale       Locale
+  title        String
+  location     String?
+  salary       String?
+  summary      String?
+  duties       String?
+  requirements String?
+  offers       String?
+
+  @@unique([jobPostingId, locale])
+}
+
 model SiteSetting {
   id                         Int      @id @default(1)
   phone                      String?
   email                      String?
+  hrEmail                    String?
   facebookUrl                String?
   instagramUrl               String?
   youtubeUrl                 String?

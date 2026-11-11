@@ -3,6 +3,8 @@ export * from "./brand";
 export * from "./common";
 export * from "./contact";
 export * from "./countries";
+export * from "./job-application";
+export * from "./job-posting";
 export * from "./locales";
 export * from "./media";
 export * from "./milestone";

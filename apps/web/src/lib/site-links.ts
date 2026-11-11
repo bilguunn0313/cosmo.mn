@@ -9,6 +9,17 @@ export const SITE_PAGES = [
   { path: "/contact", label: "Холбоо барих" },
 ];
 
+export const APPLICATION_PATH = "/human-resources/anket";
+export const JOBS_PATH = "/human-resources/jobs";
+
+export function jobPath(slug: string) {
+  return `${JOBS_PATH}/${slug}`;
+}
+
+export function jobApplicationPath(slug: string) {
+  return `${APPLICATION_PATH}?job=${encodeURIComponent(slug)}`;
+}
+
 export function brandPath(slug: string) {
   return `/brands/${slug}`;
 }

@@ -1,15 +1,16 @@
 import { DEFAULT_LOCALE, LOCALES } from "@cosmo/shared";
 import type { MetadataRoute } from "next";
-import { fetchBrands, fetchNewsPage } from "@/lib/public-api";
+import { fetchBrands, fetchJobs, fetchNewsPage } from "@/lib/public-api";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { SITE_URL, localizedPath } from "@/lib/seo";
-import { brandPath, newsPath } from "@/lib/site-links";
+import { brandPath, jobPath, newsPath } from "@/lib/site-links";
 
 const STATIC_PATHS = [
   "/",
   "/about",
   "/brands",
   "/human-resources",
+  "/human-resources/jobs",
   "/media",
   "/contact",
 ];
@@ -58,14 +59,16 @@ async function fetchAllNews() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [brands, news] = await Promise.all([
+  const [brands, news, jobs] = await Promise.all([
     fetchBrands(DEFAULT_LOCALE),
     fetchAllNews(),
+    fetchJobs(DEFAULT_LOCALE),
   ]);
 
   return [
     ...STATIC_PATHS.flatMap((path) => sitemapEntries(path)),
     ...brands.flatMap((brand) => sitemapEntries(brandPath(brand.slug))),
+    ...jobs.flatMap((job) => sitemapEntries(jobPath(job.slug))),
     ...news.flatMap((item) =>
       sitemapEntries(newsPath(item.slug), item.publishedAt),
     ),

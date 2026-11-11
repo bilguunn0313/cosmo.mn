@@ -1,4 +1,11 @@
-import type { BrandCategory, CountryCode, SectionPage } from "@cosmo/shared";
+import type {
+  BrandCategory,
+  CountryCode,
+  EmploymentType,
+  JobDepartment,
+  JobStage,
+  SectionPage,
+} from "@cosmo/shared";
 import type { Locale } from "./types";
 
 export const API_URL = process.env.API_URL ?? "http://localhost:4000";
@@ -177,6 +184,38 @@ export interface PublicNewsDetail extends PublicNewsItem {
 export function fetchNews(slug: string, locale: Locale) {
   return fetchPublic<PublicNewsDetail>(
     `/public/news/${encodeURIComponent(slug)}`,
+    locale,
+  ).catch(() => null);
+}
+
+export interface PublicJob {
+  slug: string;
+  title: string;
+  department: JobDepartment;
+  employmentType: EmploymentType;
+  stage: JobStage;
+  location: string | null;
+  openedAt: string;
+  closesAt: string | null;
+}
+
+export interface PublicJobDetail extends PublicJob {
+  salary: string | null;
+  summary: string | null;
+  duties: string[];
+  requirements: string[];
+  offers: string[];
+}
+
+export function fetchJobs(locale: Locale) {
+  return fetchPublic<PublicJob[]>("/public/jobs", locale).catch(
+    (): PublicJob[] => [],
+  );
+}
+
+export function fetchJob(slug: string, locale: Locale) {
+  return fetchPublic<PublicJobDetail>(
+    `/public/jobs/${encodeURIComponent(slug)}`,
     locale,
   ).catch(() => null);
 }

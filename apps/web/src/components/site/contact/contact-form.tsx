@@ -13,6 +13,7 @@ import {
   growTextarea,
   inputClass,
   labelClass,
+  requiredMarkClass,
   textareaClass,
 } from "@/components/site/form-styles";
 import { LineSelect } from "@/components/site/line-select";
@@ -84,7 +85,12 @@ function Field({
     <div className={cn("grid content-start gap-1", className)}>
       <label htmlFor={id} className={labelClass}>
         {label}
-        {isRequired && <span aria-hidden> *</span>}
+        {isRequired && (
+          <span aria-hidden className={requiredMarkClass}>
+            {" "}
+            *
+          </span>
+        )}
       </label>
       {children}
       {error && (

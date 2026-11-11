@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JobsPanel } from "@/components/admin/jobs/jobs-panel";
 import { PageBannerPanel } from "@/components/admin/page-banner-panel";
 import { PageHeader } from "@/components/admin/page-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
@@ -23,6 +24,8 @@ export default function HumanResourcesPageAdmin() {
         emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Хүний нөөцийн бодлого» хэсгээс эхэлнэ үү."
         bodyMode="rich"
       />
+
+      <JobsPanel step={3} />
     </div>
   );
 }

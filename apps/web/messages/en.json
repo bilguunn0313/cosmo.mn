@@ -19,7 +19,9 @@
     "careersTitle": "Careers",
     "careersDescription": "Work at Cosmo Trade LLC. Learn about our team, workplace and open positions.",
     "mediaDescription": "News, events and new product launches from Cosmo Trade LLC.",
-    "contactDescription": "Cosmo Trade LLC address: {address}. Phone: {phone}."
+    "contactDescription": "Cosmo Trade LLC address: {address}. Phone: {phone}.",
+    "jobsTitle": "Open positions",
+    "jobsDescription": "Open positions at Cosmo Trade LLC. Choose a role and apply online."
   },
   "nav": {
     "home": "Home",
@@ -310,11 +312,8 @@
     "joinTitle": "Join our team",
     "joinText": "Send us your CV by email. We will contact you when a suitable position opens.",
     "sendCv": "Send CV",
-    "fillForm": "Apply now",
     "statsLabel": "Our team in numbers",
     "statEmployees": "Employees",
-    "statTenure": "Average years with us",
-    "statAge": "Average age",
     "statGender": "Gender ratio",
     "women": "{percent}% women",
     "men": "{percent}% men",
@@ -344,14 +343,6 @@
         "training": {
           "value": "2-10",
           "text": "employees join training trips abroad every year"
-        },
-        "bonus": {
-          "value": "10%",
-          "text": "of employees receive a cash bonus every year"
-        },
-        "trip": {
-          "value": "10-14",
-          "text": "person teams are rewarded with a trip every 2-3 years"
         }
       }
     },
@@ -368,8 +359,7 @@
     },
     "form": {
       "eyebrow": "Job application",
-      "title": "Apply online",
-      "intro": "4 steps, about 5 minutes. We will contact you when a suitable position opens.",
+      "intro": "Apply online for an open position at Cosmo Trade LLC.",
       "steps": {
         "basic": "Basic information",
         "education": "Education",
@@ -377,9 +367,12 @@
         "skills": "Skills and other details"
       },
       "fields": {
-        "name": "Full name *",
-        "position": "Position of interest *",
-        "phone": "Phone number *",
+        "photo": "Photo",
+        "lastName": "Last name",
+        "firstName": "First name",
+        "age": "Age",
+        "gender": "Gender",
+        "phone": "Phone number",
         "district": "District",
         "khoroo": "Khoroo",
         "school": "School",
@@ -387,7 +380,7 @@
         "studyFrom": "Start year",
         "studyTo": "Graduation year",
         "isStudying": "Currently studying",
-        "noExperience": "No work experience (recent graduate)",
+        "noExperience": "No work experience yet",
         "company": "Company",
         "role": "Job title",
         "from": "Start year",
@@ -395,23 +388,30 @@
         "duties": "Main duties",
         "languages": "Foreign languages",
         "software": "Computer and professional software",
-        "otherSoftware": "Other software (optional)",
-        "startDate": "Available to start"
+        "otherSoftware": "Other software",
+        "startDate": "Available to start",
+        "soum": "Province, soum",
+        "isCurrentJob": "I work here now"
       },
       "placeholders": {
-        "name": "Bat-Erdene Bold",
-        "position": "For example: Sales manager",
-        "khoroo": "For example: 3rd khoroo",
-        "school": "School name",
-        "degree": "For example: Business administration, bachelor's",
         "studying": "Studying",
-        "now": "Present",
-        "duties": "2-3 sentences"
+        "now": "Present"
       },
       "errors": {
-        "name": "Please enter your name",
-        "position": "Please enter a position",
-        "phone": "Please enter an 8-digit number"
+        "photo": "Please add a photo",
+        "photoType": "This image could not be read. Please choose a JPG or PNG photo",
+        "photoSize": "This photo could not be resized. Please choose another one",
+        "lastName": "Please enter your last name",
+        "firstName": "Please enter your first name",
+        "age": "Please enter your age",
+        "gender": "Please select your gender",
+        "phone": "Please enter an 8-digit number",
+        "ageRange": "Please enter an age between 15 and 80",
+        "summary": "{count, plural, one {# field needs} other {# fields need}} your attention",
+        "tooMany": "Too many attempts. Please wait a moment and try again",
+        "closed": "This position is no longer accepting applications",
+        "failed": "Your application could not be sent. Please try again",
+        "failedCall": "Your application could not be sent. Please try again or call {phone}"
       },
       "districts": {
         "bayangol": "Bayangol",
@@ -440,16 +440,80 @@
         "custom": "Pick a date"
       },
       "choose": "Choose",
-      "lastTwoJobs": "Your last 2 jobs",
-      "jobLabel": "Job {number}",
-      "addJob": "Add another job",
+      "lastTwoJobs": "Your last 2 employers",
+      "jobLabel": "Employer {number}",
+      "addJob": "Add another employer",
       "remove": "Remove",
-      "back": "Back",
-      "next": "Next",
       "submit": "Send application",
       "thanksTitle": "Thank you, {name}!",
-      "thanksText": "We received your application. We will call you at {phone} when a suitable position opens.",
-      "newForm": "New application"
+      "thanksText": "Our HR team has received your application for {job}. If you are shortlisted, we will call you at {phone}.",
+      "genders": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "photoChoose": "Choose photo",
+      "photoChange": "Change",
+      "photoProcessing": "Please wait…",
+      "photoHint": "Face clearly visible",
+      "photoAdded": "Photo added",
+      "noteRequired": "Only fields marked with this are required",
+      "notePrivacy": "Only our HR team sees your application",
+      "noteQuestions": "Questions?",
+      "unavailableTitle": "This position is not accepting applications",
+      "unavailableText": "The position has closed or the link is wrong. Please choose one of our open positions.",
+      "sending": "Sending…",
+      "otherJobs": "Other positions"
+    },
+    "jobs": {
+      "title": "Open positions",
+      "intro": "Join the team that brings international brands to customers across Mongolia.",
+      "count": "{count, plural, one {# open position} other {# open positions}}",
+      "heroButton": "Open positions",
+      "columns": {
+        "position": "Position",
+        "stage": "Stage",
+        "closes": "Apply by"
+      },
+      "stages": {
+        "OPEN": "Accepting applications",
+        "INTERVIEW": "Interviews",
+        "DECIDED": "Decision made"
+      },
+      "types": {
+        "FULL_TIME": "Full-time",
+        "PART_TIME": "Part-time",
+        "SHIFT": "Shift work",
+        "CONTRACT": "Contract",
+        "INTERNSHIP": "Internship"
+      },
+      "alwaysOpen": "Open until filled",
+      "until": "{date}",
+      "daysLeft": "{count, plural, one {# day left} other {# days left}}",
+      "lastDay": "Closes today",
+      "emptyTitle": "No open positions right now",
+      "emptyText": "New positions will be posted on this page.",
+      "followText": "Follow our Facebook page to hear about them first.",
+      "followButton": "Facebook page",
+      "aboutTeam": "About our team",
+      "bandTitle": "{count, plural, one {# position is open now} other {# positions are open now}}",
+      "bandText": "Choose a position and apply online.",
+      "bandButton": "All positions",
+      "location": "Location",
+      "workType": "Work type",
+      "salary": "Salary",
+      "salaryNegotiable": "Negotiable",
+      "published": "Posted",
+      "deadline": "Apply by",
+      "apply": "Apply",
+      "applyNote": "Your application goes straight to our HR team.",
+      "closedNote": "Selection for this position has finished, so we are no longer accepting applications.",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "duties": "Responsibilities",
+      "requirements": "Requirements",
+      "offers": "What we offer",
+      "otherJobs": "Other open positions",
+      "allJobs": "View all"
     }
   },
   "categories": {

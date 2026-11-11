@@ -6,12 +6,18 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
 
+export interface MailAttachment {
+  filename: string;
+  content: Buffer;
+}
+
 export interface MailMessage {
   to: string;
   replyTo?: string;
   subject: string;
   html: string;
   text: string;
+  attachments?: MailAttachment[];
 }
 
 const DEFAULT_FROM = 'cosmo.mn <onboarding@resend.dev>';
@@ -63,7 +69,9 @@ export class MailService {
     this.logger.warn(
       `RESEND_API_KEY тохируулаагүй тул имэйл илгээгдсэнгүй.\n` +
         `To: ${message.to}\nReply-To: ${message.replyTo ?? '-'}\n` +
-        `Subject: ${message.subject}\n\n${message.text}`,
+        `Subject: ${message.subject}\n` +
+        `Attachments: ${message.attachments?.map((file) => `${file.filename} (${file.content.length} bytes)`).join(', ') ?? '-'}\n\n` +
+        message.text,
     );
   }
 }

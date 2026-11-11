@@ -1,4 +1,9 @@
-import type { CountryCode } from "@cosmo/shared";
+import type {
+  CountryCode,
+  EmploymentType,
+  JobDepartment,
+  JobStage,
+} from "@cosmo/shared";
 
 export interface AuthAdmin {
   id: number;
@@ -186,6 +191,7 @@ export interface SiteSetting {
   id: number;
   phone: string | null;
   email: string | null;
+  hrEmail: string | null;
   facebookUrl: string | null;
   instagramUrl: string | null;
   youtubeUrl: string | null;
@@ -240,4 +246,28 @@ export interface MediaUsage {
   type: MediaUsageType;
   id: number;
   title: string;
+}
+
+export interface JobPostingTranslation {
+  id: number;
+  locale: Locale;
+  title: string;
+  location: string | null;
+  salary: string | null;
+  summary: string | null;
+  duties: string | null;
+  requirements: string | null;
+  offers: string | null;
+}
+
+export interface JobPosting {
+  id: number;
+  slug: string;
+  department: JobDepartment;
+  employmentType: EmploymentType;
+  stage: JobStage;
+  openedAt: string;
+  closesAt: string | null;
+  isPublished: boolean;
+  translations: JobPostingTranslation[];
 }

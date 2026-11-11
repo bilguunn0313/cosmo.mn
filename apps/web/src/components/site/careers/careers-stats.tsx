@@ -14,44 +14,18 @@ export async function CareersStats({ employeeCount }: CareersStatsProps) {
   const t = await getTranslations("careers");
   const menPercent = 100 - HR_FACTS.womenPercent;
 
-  const numberStats = [
-    {
-      key: "employees",
-      label: t("statEmployees"),
-      value: employeeCount,
-      fractionDigits: 0,
-    },
-    {
-      key: "tenure",
-      label: t("statTenure"),
-      value: HR_FACTS.averageTenureYears,
-      fractionDigits: 1,
-    },
-    {
-      key: "age",
-      label: t("statAge"),
-      value: HR_FACTS.averageAge,
-      fractionDigits: 1,
-    },
-  ];
-
   return (
     <section
       aria-label={t("statsLabel")}
       className="site-container mt-14 md:mt-20"
     >
-      <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {numberStats.map((stat) => (
-          <div key={stat.key} className={CELL_CLASS}>
-            <dt className="order-2 text-base text-ink-3">{stat.label}</dt>
-            <dd className="order-1 type-stat text-brand">
-              <StatNumber
-                value={stat.value}
-                fractionDigits={stat.fractionDigits}
-              />
-            </dd>
-          </div>
-        ))}
+      <dl className="grid gap-3 sm:grid-cols-2">
+        <div className={CELL_CLASS}>
+          <dt className="order-2 text-base text-ink-3">{t("statEmployees")}</dt>
+          <dd className="order-1 type-stat text-brand">
+            <StatNumber value={employeeCount} fractionDigits={0} />
+          </dd>
+        </div>
 
         <div className={cn(CELL_CLASS, "justify-end")}>
           <dt className="order-2 text-base text-ink-3">{t("statGender")}</dt>

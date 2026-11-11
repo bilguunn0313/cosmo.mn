@@ -19,7 +19,9 @@
     "careersTitle": "招聘信息",
     "careersDescription": "加入 Cosmo Trade，了解我们的团队、工作环境与招聘职位。",
     "mediaDescription": "Cosmo Trade 的新闻、活动及新品发布。",
-    "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。"
+    "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。",
+    "jobsTitle": "招聘职位",
+    "jobsDescription": "Cosmo Trade 的招聘职位。选择职位并在线提交申请。"
   },
   "nav": {
     "home": "首页",
@@ -310,11 +312,8 @@
     "joinTitle": "加入我们",
     "joinText": "请通过邮件发送您的简历。有合适的职位时，我们会与您联系。",
     "sendCv": "发送简历",
-    "fillForm": "立即申请",
     "statsLabel": "团队数据",
     "statEmployees": "员工",
-    "statTenure": "平均工龄（年）",
-    "statAge": "平均年龄",
     "statGender": "性别比例",
     "women": "女性 {percent}%",
     "men": "男性 {percent}%",
@@ -344,14 +343,6 @@
         "training": {
           "value": "2-10",
           "text": "名员工每年参加海外培训与考察"
-        },
-        "bonus": {
-          "value": "10%",
-          "text": "的员工每年获得现金奖励"
-        },
-        "trip": {
-          "value": "10-14",
-          "text": "人的团队每 2-3 年获得旅行奖励"
         }
       }
     },
@@ -368,8 +359,7 @@
     },
     "form": {
       "eyebrow": "求职申请",
-      "title": "在线提交申请",
-      "intro": "共 4 步，约 5 分钟。有合适的职位时，我们会与您联系。",
+      "intro": "在线申请 Cosmo Trade 的招聘职位。",
       "steps": {
         "basic": "基本信息",
         "education": "教育背景",
@@ -377,9 +367,12 @@
         "skills": "技能与其他信息"
       },
       "fields": {
-        "name": "姓名 *",
-        "position": "意向职位 *",
-        "phone": "电话号码 *",
+        "photo": "证件照",
+        "lastName": "姓",
+        "firstName": "名",
+        "age": "年龄",
+        "gender": "性别",
+        "phone": "电话号码",
         "district": "区",
         "khoroo": "社区",
         "school": "毕业院校",
@@ -387,7 +380,7 @@
         "studyFrom": "入学年份",
         "studyTo": "毕业年份",
         "isStudying": "目前在读",
-        "noExperience": "无工作经验（应届毕业生）",
+        "noExperience": "暂无工作经验",
         "company": "公司名称",
         "role": "职位",
         "from": "开始年份",
@@ -395,23 +388,30 @@
         "duties": "主要职责",
         "languages": "外语能力",
         "software": "电脑与专业软件",
-        "otherSoftware": "其他软件（选填）",
-        "startDate": "可入职时间"
+        "otherSoftware": "其他软件",
+        "startDate": "可入职时间",
+        "soum": "省、县",
+        "isCurrentJob": "目前在职"
       },
       "placeholders": {
-        "name": "姓名",
-        "position": "例如：销售经理",
-        "khoroo": "例如：第 3 社区",
-        "school": "学校名称",
-        "degree": "例如：工商管理，学士",
         "studying": "在读",
-        "now": "至今",
-        "duties": "2-3 句话"
+        "now": "至今"
       },
       "errors": {
-        "name": "请输入姓名",
-        "position": "请输入意向职位",
-        "phone": "请输入 8 位电话号码"
+        "photo": "请上传照片",
+        "photoType": "无法读取该图片，请选择 JPG 或 PNG 照片",
+        "photoSize": "无法压缩该图片，请选择其他图片",
+        "lastName": "请输入姓",
+        "firstName": "请输入名",
+        "age": "请输入年龄",
+        "gender": "请选择性别",
+        "phone": "请输入 8 位电话号码",
+        "ageRange": "请输入 15 至 80 之间的年龄",
+        "summary": "有 {count} 个字段需要填写或修改",
+        "tooMany": "提交次数过多，请稍后再试",
+        "closed": "该职位已停止接收申请",
+        "failed": "申请提交失败，请重试",
+        "failedCall": "申请提交失败，请重试或拨打 {phone}"
       },
       "districts": {
         "bayangol": "巴彦戈勒区",
@@ -440,16 +440,80 @@
         "custom": "选择日期"
       },
       "choose": "请选择",
-      "lastTwoJobs": "最近 2 份工作",
-      "jobLabel": "工作 {number}",
-      "addJob": "添加另一份工作",
+      "lastTwoJobs": "最近 2 个工作单位",
+      "jobLabel": "工作单位 {number}",
+      "addJob": "添加其他工作单位",
       "remove": "删除",
-      "back": "上一步",
-      "next": "下一步",
       "submit": "提交申请",
       "thanksTitle": "谢谢，{name}！",
-      "thanksText": "我们已收到您的申请。有合适的职位时，我们会致电 {phone} 与您联系。",
-      "newForm": "新的申请"
+      "thanksText": "人力资源部已收到您申请「{job}」职位的简历。如符合要求，我们将拨打 {phone} 与您联系。",
+      "genders": {
+        "male": "男",
+        "female": "女"
+      },
+      "photoChoose": "选择照片",
+      "photoChange": "更换",
+      "photoProcessing": "请稍候…",
+      "photoHint": "面部清晰的照片",
+      "photoAdded": "已添加照片",
+      "noteRequired": "仅带此标记的字段为必填",
+      "notePrivacy": "您的申请仅由人力资源部查看",
+      "noteQuestions": "如有疑问",
+      "unavailableTitle": "该职位不再接收申请",
+      "unavailableText": "该职位已关闭或链接有误。请从当前招聘职位中选择。",
+      "sending": "正在提交…",
+      "otherJobs": "其他职位"
+    },
+    "jobs": {
+      "title": "招聘职位",
+      "intro": "加入我们，一起把国际品牌带给蒙古各地的消费者。",
+      "count": "{count} 个职位",
+      "heroButton": "招聘职位",
+      "columns": {
+        "position": "职位",
+        "stage": "进度",
+        "closes": "申请截止"
+      },
+      "stages": {
+        "OPEN": "接收简历中",
+        "INTERVIEW": "面试中",
+        "DECIDED": "已决定"
+      },
+      "types": {
+        "FULL_TIME": "全职",
+        "PART_TIME": "兼职",
+        "SHIFT": "轮班",
+        "CONTRACT": "合同制",
+        "INTERNSHIP": "实习"
+      },
+      "alwaysOpen": "长期招聘",
+      "until": "{date}",
+      "daysLeft": "剩余 {count} 天",
+      "lastDay": "今天截止",
+      "emptyTitle": "目前暂无招聘职位",
+      "emptyText": "新职位开放时将在此页面发布。",
+      "followText": "关注我们的 Facebook 主页，第一时间获取招聘信息。",
+      "followButton": "Facebook 主页",
+      "aboutTeam": "了解我们的团队",
+      "bandTitle": "目前有 {count} 个职位正在招聘",
+      "bandText": "选择职位并在线提交申请。",
+      "bandButton": "全部职位",
+      "location": "工作地点",
+      "workType": "工作类型",
+      "salary": "薪资",
+      "salaryNegotiable": "面议",
+      "published": "发布日期",
+      "deadline": "申请截止",
+      "apply": "提交申请",
+      "applyNote": "您的申请将直接发送给人力资源部。",
+      "closedNote": "该职位的招聘已结束，不再接收新的申请。",
+      "copyLink": "复制链接",
+      "copied": "已复制链接",
+      "duties": "工作职责",
+      "requirements": "任职要求",
+      "offers": "我们提供",
+      "otherJobs": "其他招聘职位",
+      "allJobs": "查看全部"
     }
   },
   "categories": {

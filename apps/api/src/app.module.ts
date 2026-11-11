@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { BrandsModule } from './brands/brands.module';
 import { ContactModule } from './contact/contact.module';
 import { HealthModule } from './health/health.module';
+import { JobsModule } from './jobs/jobs.module';
 import { MediaModule } from './media/media.module';
 import { MilestonesModule } from './milestones/milestones.module';
 import { NewsModule } from './news/news.module';
@@ -30,6 +31,7 @@ import { SlidesModule } from './slides/slides.module';
     SectionsModule,
     MilestonesModule,
     NewsModule,
+    JobsModule,
     RetailPartnersModule,
     SiteSettingsModule,
     ContactModule,

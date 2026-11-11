@@ -47,6 +47,7 @@ const urlField = z
 const siteSettingFormSchema = z.object({
   phone: z.string().trim().max(50),
   email: z.union([z.literal(""), z.email("Имэйл хаяг буруу байна")]),
+  hrEmail: z.union([z.literal(""), z.email("Имэйл хаяг буруу байна")]),
   mapEmbed: z
     .string()
     .trim()
@@ -80,6 +81,7 @@ function defaultValues(setting: SiteSetting): SiteSettingFormValues {
   return {
     phone: setting.phone ?? "",
     email: setting.email ?? "",
+    hrEmail: setting.hrEmail ?? "",
     mapEmbed: setting.mapEmbedUrl ?? "",
     mapUrl: setting.mapUrl ?? "",
     facebookUrl: setting.facebookUrl ?? "",
@@ -98,6 +100,7 @@ function toInput(values: SiteSettingFormValues): UpdateSiteSettingInput {
   return {
     phone: emptyToNull(values.phone),
     email: emptyToNull(values.email),
+    hrEmail: emptyToNull(values.hrEmail),
     mapEmbedUrl: extractMapEmbedUrl(values.mapEmbed),
     mapUrl: emptyToNull(values.mapUrl),
     facebookUrl: emptyToNull(values.facebookUrl),
@@ -189,6 +192,19 @@ export function SiteSettingForm({ setting }: SiteSettingFormProps) {
               placeholder="info@cosmo.mn"
               aria-invalid={Boolean(errors.email)}
               {...register("email")}
+            />
+          </FormField>
+          <FormField
+            label="Хүний нөөцийн имэйл"
+            htmlFor="setting-hr-email"
+            hint="Сайтаас илгээсэн ажлын анкет энд очно. Хоосон бол ерөнхий имэйл рүү очно"
+            error={errors.hrEmail?.message}
+          >
+            <Input
+              id="setting-hr-email"
+              type="email"
+              aria-invalid={Boolean(errors.hrEmail)}
+              {...register("hrEmail")}
             />
           </FormField>
         </div>

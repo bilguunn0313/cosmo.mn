@@ -1,19 +1,10 @@
-export const DEPARTMENT_KEYS = [
-  "warehouse",
-  "sales",
-  "administration",
-  "finance",
-  "management",
-  "businessDevelopment",
-  "marketing",
-  "it",
-] as const;
+import { JOB_DEPARTMENTS, type JobDepartment } from "@cosmo/shared";
 
-export type DepartmentKey = (typeof DEPARTMENT_KEYS)[number];
+export const DEPARTMENT_KEYS = JOB_DEPARTMENTS;
+
+export type DepartmentKey = JobDepartment;
 
 export const HR_FACTS = {
-  averageTenureYears: 6.1,
-  averageAge: 36.7,
   womenPercent: 34,
   departmentHeadcounts: {
     warehouse: 48,

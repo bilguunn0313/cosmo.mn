@@ -12,7 +12,7 @@ export function LineSelect({
       <select
         className={cn(
           inputClass,
-          "h-11 cursor-pointer appearance-none pr-8",
+          "h-11 cursor-pointer appearance-none pr-8 [&_option]:text-ink",
           className,
         )}
         {...props}

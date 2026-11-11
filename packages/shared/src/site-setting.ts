@@ -18,6 +18,7 @@ const statCountSchema = z
 export const updateSiteSettingSchema = z.object({
   phone: z.string().trim().max(50).nullable().optional(),
   email: z.email().nullable().optional(),
+  hrEmail: z.email().nullable().optional(),
   facebookUrl: optionalUrlSchema,
   instagramUrl: optionalUrlSchema,
   youtubeUrl: optionalUrlSchema,

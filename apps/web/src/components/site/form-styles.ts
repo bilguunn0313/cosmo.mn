@@ -1,12 +1,14 @@
 import type { FormEvent } from "react";
 
 export const inputClass =
-  "w-full rounded-none border-0 border-b border-ink/25 bg-transparent px-0 text-[17px] text-ink transition-[border-color,box-shadow] duration-150 placeholder:text-ink-3 focus-visible:border-brand focus-visible:shadow-[0_1px_0_var(--color-brand)] focus-visible:outline-none aria-invalid:border-danger disabled:border-ink/15 disabled:text-ink-3";
+  "w-full rounded-none border-0 border-b border-ink/50 bg-transparent px-0 text-[17px] text-ink transition-[border-color,box-shadow] duration-150 placeholder:text-ink-3 focus-visible:border-brand focus-visible:shadow-[0_1px_0_var(--color-brand)] focus-visible:outline-none aria-invalid:border-danger disabled:border-ink/15 disabled:text-ink-3";
 
 export const textareaClass =
   "block min-h-11 resize-none overflow-hidden py-2.5 leading-normal";
 
 export const labelClass = "text-[13px] font-medium text-ink-2";
+
+export const requiredMarkClass = "text-danger";
 
 export const errorClass = "text-[13px] font-semibold text-danger";
 
