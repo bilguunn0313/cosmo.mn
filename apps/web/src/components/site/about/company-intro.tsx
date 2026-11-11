@@ -1,60 +1,69 @@
 import { getTranslations } from "next-intl/server";
-import {
-  BrandsIcon,
-  DistributionIcon,
-  HomeIcon,
-  ShoppingIcon,
-  TeamIcon,
-} from "@/components/site/brand-icons";
+import Image from "next/image";
+import { ImageReveal } from "@/components/site/image-reveal";
 import { Reveal } from "@/components/site/reveal";
+import { SectionEyebrow } from "@/components/site/section-eyebrow";
 
-const SALES_CHANNELS = [
-  { key: "supermarket", icon: ShoppingIcon },
-  { key: "hypermarket", icon: BrandsIcon },
-  { key: "retail", icon: HomeIcon },
-  { key: "wholesale", icon: DistributionIcon },
-  { key: "horeca", icon: TeamIcon },
-] as const;
+const INTRO_IMAGE = "/images/about/intro-containers.webp";
 
 export async function CompanyIntro() {
   const t = await getTranslations("about.intro");
 
   return (
     <section
-      aria-label={t("label")}
-      className="site-container grid gap-8 pt-16 md:gap-10 md:pt-24"
+      aria-labelledby="intro-title"
+      className="relative overflow-hidden pb-20 lg:py-30"
     >
-      <Reveal>
-        <p className="max-w-240 type-h3 text-balance">{t("lead")}</p>
-      </Reveal>
+      <div className="relative h-65 sm:h-90 lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-1/2">
+        <ImageReveal>
+          <Image
+            src={INTRO_IMAGE}
+            alt={t("imageAlt")}
+            fill
+            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </ImageReveal>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-linear-to-t from-white to-white/0 to-50% lg:bg-linear-to-r lg:via-white/70 lg:via-22% lg:to-55%"
+        />
+      </div>
 
-      <Reveal
-        index={1}
-        className="grid gap-5 text-base leading-relaxed text-pretty text-ink-2 md:grid-cols-2 md:gap-10"
-      >
-        <p>{t("body1")}</p>
-        <p>{t("body2")}</p>
-      </Reveal>
-
-      <div className="grid gap-4">
-        <h2 className="font-display text-sm font-semibold text-ink-3">
-          {t("channelsTitle")}
-        </h2>
-        <ul className="flex flex-wrap gap-3">
-          {SALES_CHANNELS.map((channel, index) => (
-            <li key={channel.key}>
-              <Reveal
-                index={index}
-                className="flex items-center gap-3 rounded-control bg-brand-100 py-3 pr-5 pl-3"
-              >
-                <channel.icon className="h-8 w-auto shrink-0" />
-                <span className="font-display text-base font-medium">
-                  {t(`channels.${channel.key}`)}
-                </span>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+      <div className="site-container relative mt-8 lg:mt-0">
+        <div className="flex max-w-150 flex-col gap-5.5">
+          <Reveal>
+            <SectionEyebrow>{t("label")}</SectionEyebrow>
+          </Reveal>
+          <Reveal index={1}>
+            <h2
+              id="intro-title"
+              className="type-section text-balance text-ink"
+            >
+              {t.rich("title", {
+                highlight: (chunks) => (
+                  <span className="text-brand">{chunks}</span>
+                ),
+              })}
+            </h2>
+          </Reveal>
+          <Reveal index={2}>
+            <p className="text-lg leading-[1.65] text-pretty text-ink">
+              {t("lead")}
+            </p>
+          </Reveal>
+          <Reveal index={3}>
+            <p className="text-[17px] leading-[1.75] text-pretty text-ink-2">
+              {t("body1")}
+            </p>
+          </Reveal>
+          <Reveal index={4}>
+            <p className="text-[17px] leading-[1.75] text-pretty text-ink-2">
+              {t("body2")}
+            </p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import {
   translationsSchema,
 } from "./common";
 
+export const MAP_EMBED_PREFIX = "https://www.google.com/maps/embed";
+
 const statCountSchema = z
   .number()
   .int()
@@ -21,6 +23,16 @@ export const updateSiteSettingSchema = z.object({
   youtubeUrl: optionalUrlSchema,
   linkedinUrl: optionalUrlSchema,
   mapUrl: optionalUrlSchema,
+  mapEmbedUrl: z
+    .string()
+    .trim()
+    .max(2000)
+    .startsWith(
+      MAP_EMBED_PREFIX,
+      "Google Maps-ийн «Embed a map» код оруулна уу",
+    )
+    .nullable()
+    .optional(),
   mapImageId: optionalIdSchema,
   aboutBannerImageId: optionalIdSchema,
   careersBannerImageId: optionalIdSchema,

@@ -1,11 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 
-const REVEAL_OFFSET_PX = 24;
-const STAGGER_SECONDS = 0.06;
+export const STAGGER_MS = 90;
+export const VISIBLE_THRESHOLD = 0.15;
 
 interface RevealProps {
+  from?: "up" | "left" | "right" | "zoom";
   index?: number;
   delay?: number;
   className?: string;
@@ -13,29 +15,49 @@ interface RevealProps {
 }
 
 export function Reveal({
+  from = "up",
   index = 0,
   delay = 0,
   className,
   children,
 }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) {
+      return;
+    }
+
+    document.documentElement.dataset.revealReady = "true";
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          element.dataset.revealed = "true";
+          observer.disconnect();
+        }
+      },
+      { threshold: VISIBLE_THRESHOLD },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        transform: `translateY(${shouldReduceMotion ? 0 : REVEAL_OFFSET_PX}px)`,
-      }}
-      whileInView={{ opacity: 1, transform: "translateY(0px)" }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: shouldReduceMotion ? 0.2 : 0.6,
-        delay: delay + index * STAGGER_SECONDS,
-        ease: [0.23, 1, 0.32, 1],
-      }}
-      className={className}
+    <div
+      ref={ref}
+      data-from={from}
+      style={
+        {
+          "--reveal-delay": `${delay * 1000 + index * STAGGER_MS}ms`,
+        } as React.CSSProperties
+      }
+      className={cn("reveal", className)}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

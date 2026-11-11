@@ -1,92 +1,105 @@
-import { type LucideIcon, Target, Telescope } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
+import { StatNumber } from "@/components/site/home/stat-number";
+import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
-import { ABOUT_CONTENT, SLOGAN_IMAGE_PLACEHOLDER } from "@/lib/about";
+import { SectionEyebrow } from "@/components/site/section-eyebrow";
+import type { PublicSiteSetting } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
-interface StatementCardProps {
-  icon: LucideIcon;
-  label: string;
-  text: string;
-  className: string;
-  index: number;
+interface PurposeSectionProps {
+  setting: PublicSiteSetting | null;
 }
 
-function StatementCard({
-  icon: Icon,
-  label,
-  text,
-  className,
-  index,
-}: StatementCardProps) {
-  return (
-    <Reveal
-      index={index}
-      className={cn(
-        "flex flex-col justify-between gap-8 rounded-card p-6 md:p-8",
-        className,
-      )}
-    >
-      <Icon aria-hidden strokeWidth={1.5} className="size-12 text-brand" />
-      <div className="grid gap-3">
-        <h3 className="type-h4">{label}</h3>
-        <p className="max-w-130 text-base leading-relaxed text-pretty text-ink-2">
-          {text}
-        </p>
-      </div>
-    </Reveal>
-  );
-}
-
-export async function PurposeSection() {
+export async function PurposeSection({ setting }: PurposeSectionProps) {
   const t = await getTranslations("about");
+  const foundedYear = setting?.foundedYear;
+
+  const statements = [
+    { key: "mission", label: t("missionLabel"), text: t("missionText") },
+    { key: "vision", label: t("visionLabel"), text: t("visionText") },
+  ];
+
+  const stats = [
+    {
+      key: "years",
+      value: foundedYear ? new Date().getFullYear() - foundedYear : null,
+    },
+    { key: "products", value: setting?.productCount ?? null },
+    { key: "salesPoints", value: setting?.salesPointCount ?? null },
+    { key: "team", value: setting?.employeeCount ?? null },
+  ] as const;
+
+  const visibleStats = stats.filter((stat) => stat.value);
 
   return (
     <section
       aria-labelledby="purpose-title"
-      className="site-container pt-20 md:pt-32"
+      className="relative isolate overflow-hidden bg-brand py-20 text-white md:py-28"
     >
-      <h2 id="purpose-title" className="type-h2 pb-8 md:pb-10">
-        {t("purposeTitle")}
-      </h2>
+      <LogoMark className="absolute -top-30 -right-55 -z-10 w-225 text-white/6" />
 
-      <div className="grid gap-4 lg:h-[min(calc(100svh-14rem),640px)] lg:grid-cols-2 lg:grid-rows-2">
-        <Reveal className="relative flex aspect-4/3 flex-col justify-end overflow-hidden rounded-card bg-brand-night p-6 text-white md:p-8 lg:row-span-2 lg:aspect-auto">
-          <Image
-            src={ABOUT_CONTENT.sloganImageUrl ?? SLOGAN_IMAGE_PLACEHOLDER}
-            alt=""
-            fill
-            unoptimized
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-linear-to-t from-brand-night/90 via-brand-night/40 to-transparent"
-          />
-          <div className="relative grid gap-3">
-            <h3 className="text-sm font-semibold text-brand-300">
-              {t("sloganLabel")}
-            </h3>
-            <p className="type-h2 max-w-140 text-balance">{t("sloganText")}</p>
+      <div className="site-container flex flex-col gap-12">
+        <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+          <div className="flex max-w-170 flex-col gap-4.5">
+            <SectionEyebrow tone="white">{t("purposeTitle")}</SectionEyebrow>
+            <h2 id="purpose-title" className="type-section text-balance">
+              {t("sloganText")}
+            </h2>
           </div>
+          <p className="max-w-105 text-[17px] leading-relaxed text-pretty text-brand-200">
+            {t("description")}
+          </p>
         </Reveal>
 
-        <StatementCard
-          icon={Target}
-          label={t("missionLabel")}
-          text={t("missionText")}
-          className="bg-brand-100"
-          index={1}
-        />
-        <StatementCard
-          icon={Telescope}
-          label={t("visionLabel")}
-          text={t("visionText")}
-          className="bg-surface"
-          index={2}
-        />
+        <dl className="grid overflow-hidden rounded-card bg-white/8 md:grid-cols-2">
+          {statements.map((statement, index) => (
+            <Reveal
+              key={statement.key}
+              index={index}
+              className={cn(
+                "flex flex-col gap-3 px-8 py-8 md:px-10 md:py-9",
+                index > 0 &&
+                  "border-t border-white/18 md:border-t-0 md:border-l",
+              )}
+            >
+              <dt className="text-sm font-semibold text-brand-200">
+                {statement.label}
+              </dt>
+              <dd className="font-display text-[clamp(18px,1.4vw,22px)] leading-[1.4] font-medium tracking-[-0.01em] text-balance">
+                {statement.text}
+              </dd>
+            </Reveal>
+          ))}
+        </dl>
+
+        {visibleStats.length > 0 && (
+          <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {visibleStats.map((stat, index) => (
+              <li key={stat.key}>
+                <Reveal
+                  index={index}
+                  className="flex h-full flex-col gap-2.5 rounded-card bg-white/8 px-5 py-7 text-center"
+                >
+                  <span className="type-stat">
+                    <StatNumber value={stat.value ?? 0} />
+                    <span className="ml-0.5 align-top text-[0.5em] leading-none">
+                      +
+                    </span>
+                    {stat.key === "years" && (
+                      <span className="text-[0.42em] font-semibold">
+                        {" "}
+                        {t("stats.yearsUnit")}
+                      </span>
+                    )}
+                  </span>
+                  <span className="text-[15px] text-brand-200">
+                    {t(`stats.${stat.key}`)}
+                  </span>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

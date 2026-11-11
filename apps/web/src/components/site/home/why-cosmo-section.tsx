@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import type { HomeStats } from "@/lib/home-stats";
 
@@ -51,7 +52,7 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
       className="relative overflow-hidden bg-white pt-20 lg:pt-30 lg:pb-32"
     >
       <div className="site-container grid gap-10 lg:grid-cols-[5fr_6fr] lg:grid-rows-[auto_1fr] lg:gap-x-24 lg:gap-y-0">
-        <div className="flex max-w-130 flex-col gap-6 lg:col-start-1 lg:row-start-1">
+        <Reveal className="flex max-w-130 flex-col gap-6 lg:col-start-1 lg:row-start-1">
           <SectionEyebrow>{t("eyebrow")}</SectionEyebrow>
           <h2 id="why-title" className="type-section text-balance text-ink">
             {t("title")}
@@ -59,40 +60,51 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
           <p className="text-lg leading-[1.65] text-pretty text-ink-2">
             {t("text")}
           </p>
-        </div>
+        </Reveal>
 
         <ol className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
           {reasons.map((reason, index) => (
             <li
               key={reason.key}
-              className="grid grid-cols-[60px_1fr] gap-2 border-b border-rule py-6 first:pt-1 md:grid-cols-[88px_1fr] md:py-8 md:first:pt-1"
+              className="border-b border-rule py-6 first:pt-1 md:py-8 md:first:pt-1"
             >
-              <span
-                aria-hidden
-                className="font-display text-[38px] leading-none font-normal tracking-[-0.02em] text-brand tabular-nums md:text-[52px]"
+              <Reveal
+                from="right"
+                index={index}
+                className="grid grid-cols-[60px_1fr] gap-2 md:grid-cols-[88px_1fr]"
               >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 className="mt-1 mb-2.5 font-display text-[21px] leading-[1.3] font-semibold text-ink">
-                  {reason.title}
-                </h3>
-                <p className="text-base leading-relaxed text-pretty text-ink-2">
-                  {reason.text}
-                </p>
-              </div>
+                <span
+                  aria-hidden
+                  className="font-display text-[38px] leading-none font-normal tracking-[-0.02em] text-brand tabular-nums md:text-[52px]"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="mt-1 mb-2.5 font-display text-[21px] leading-[1.3] font-semibold text-ink">
+                    {reason.title}
+                  </h3>
+                  <p className="text-base leading-relaxed text-pretty text-ink-2">
+                    {reason.text}
+                  </p>
+                </div>
+              </Reveal>
             </li>
           ))}
         </ol>
 
-        <Image
-          src={PRODUCTS_IMAGE}
-          alt={t("imageAlt")}
-          width={604}
-          height={836}
-          unoptimized
+        <Reveal
+          from="left"
           className="mt-2 -mb-18 -ml-7 w-60 lg:col-start-1 lg:row-start-2 lg:-mb-67 lg:mt-0 lg:-ml-15 lg:w-102 lg:self-end"
-        />
+        >
+          <Image
+            src={PRODUCTS_IMAGE}
+            alt={t("imageAlt")}
+            width={604}
+            height={836}
+            unoptimized
+            className="h-auto w-full"
+          />
+        </Reveal>
       </div>
     </section>
   );

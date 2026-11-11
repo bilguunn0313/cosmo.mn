@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { ContactDetails } from "@/components/site/contact/contact-details";
 import { ContactForm } from "@/components/site/contact/contact-form";
-import { ContactInfo } from "@/components/site/contact/contact-info";
-import { PageBanner } from "@/components/site/page-banner";
+import { Reveal } from "@/components/site/reveal";
 import { getPageLocale } from "@/i18n/locale";
-import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchDepartments, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
@@ -43,24 +43,62 @@ export default async function ContactPage({
 
   return (
     <>
-      <PageBanner
-        title={t("nav.contact")}
-        description={t("contact.description")}
-        imageUrl={pageBannerUrl(setting, "contact")}
-      />
+      <div className="site-container pt-6 md:pt-8">
+        <Breadcrumbs
+          items={[
+            { label: t("nav.home"), href: "/" },
+            { label: t("nav.contact") },
+          ]}
+        />
+      </div>
 
-      <div className="site-container grid gap-4 pt-14 md:gap-6 md:pt-20 lg:grid-cols-2">
-        <section
-          aria-labelledby="contact-form-title"
-          className="grid content-start gap-8 rounded-card bg-paper px-5 py-8 sm:p-10"
-        >
-          <h2 id="contact-form-title" className="type-h3">
-            {t("contact.formTitle")}
-          </h2>
-          <ContactForm departments={departments} />
-        </section>
+      {setting?.mapEmbedUrl && (
+        <div className="site-container pt-4 md:pt-5">
+          <div className="relative h-60 overflow-hidden rounded-card bg-brand-100 md:h-[clamp(280px,40vh,420px)]">
+            <iframe
+              src={setting.mapEmbedUrl}
+              title={t("contact.mapTitle")}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="absolute inset-0 size-full border-0"
+            />
+          </div>
+        </div>
+      )}
 
-        <ContactInfo setting={setting} />
+      <div className="site-container grid gap-14 pt-10 md:pt-14 lg:grid-cols-2 lg:gap-14 xl:grid-cols-[5fr_7fr] xl:gap-20">
+        <Reveal>
+          <section
+            aria-labelledby="contact-title"
+            className="grid justify-items-start gap-4.5"
+          >
+            <h1
+              id="contact-title"
+              className="type-section text-balance text-ink"
+            >
+              {t("nav.contact")}
+            </h1>
+            <p className="text-[17px] leading-relaxed text-pretty text-ink-2">
+              {t("contact.description")}
+            </p>
+            <div className="mt-3 w-full">
+              <ContactDetails setting={setting} />
+            </div>
+          </section>
+        </Reveal>
+
+        <Reveal index={1}>
+          <section aria-labelledby="contact-form-title" className="grid gap-8">
+            <h2
+              id="contact-form-title"
+              className="type-h2 pt-2 text-ink md:pt-3"
+            >
+              {t("contact.formTitle")}
+            </h2>
+            <ContactForm departments={departments} />
+          </section>
+        </Reveal>
       </div>
     </>
   );

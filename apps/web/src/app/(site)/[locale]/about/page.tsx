@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { AboutHero } from "@/components/site/about/about-hero";
 import { CeoMessage } from "@/components/site/about/ceo-message";
 import { CompanyIntro } from "@/components/site/about/company-intro";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
+import { NetworkSection } from "@/components/site/about/network-section";
 import { PurposeSection } from "@/components/site/about/purpose-section";
-import { ValuesList } from "@/components/site/about/values-list";
-import { PageBanner } from "@/components/site/page-banner";
+import { WhatWeDoSection } from "@/components/site/about/what-we-do-section";
+import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { getPageLocale } from "@/i18n/locale";
+import { homeStats } from "@/lib/home-stats";
 import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchMilestones, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
@@ -34,22 +37,30 @@ export default async function AboutPage({
     fetchMilestones(locale),
     fetchSiteSetting(locale),
   ]);
+  const stats = homeStats(setting, locale);
 
   return (
     <>
-      <PageBanner
-        title={t("nav.about")}
-        description={t("about.description")}
-        imageUrl={pageBannerUrl(setting, "about")}
-      />
+      <AboutHero imageUrl={pageBannerUrl(setting, "about")} />
       <CompanyIntro />
       <CeoMessage />
-      <PurposeSection />
+      <PurposeSection setting={setting} />
       <HistoryTimeline
-        title={t("about.historyTitle")}
+        eyebrow={t("about.historyTitle")}
+        title={
+          stats.years
+            ? t("about.historyHeading", { years: stats.years })
+            : t("about.historyHeadingPlain")
+        }
         milestones={milestones}
       />
-      <ValuesList images={setting?.valueImages} />
+      <WhatWeDoSection />
+      <NetworkSection salesPoints={stats.salesPoints} />
+      <PartnerCtaSection
+        title={t("about.partnerTitle")}
+        text={t("about.partnerText")}
+        isDark
+      />
     </>
   );
 }

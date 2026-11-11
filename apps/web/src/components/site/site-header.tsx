@@ -10,6 +10,8 @@ import { MobileMenu } from "./mobile-menu";
 import { PAGE_BANNER_ID, SITE_NAV, isNavItemActive } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
+const HERO_PATHS = ["/", "/about"];
+
 export function SiteHeader() {
   const t = useTranslations();
   const pathname = usePathname();
@@ -17,8 +19,8 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverBanner, setIsOverBanner] = useState(false);
 
-  const isHome = pathname === "/";
-  const isOverHero = isHome && !isScrolled;
+  const hasHero = HERO_PATHS.includes(pathname);
+  const isOverHero = hasHero && !isScrolled;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const banner = document.getElementById(PAGE_BANNER_ID);
@@ -34,7 +36,7 @@ export function SiteHeader() {
       style={{ viewTransitionName: "site-header" }}
       className={cn(
         "top-0 z-40 transition-[translate,box-shadow,background-color] duration-300 ease-out motion-reduce:transition-none",
-        isHome ? "fixed inset-x-0" : "sticky",
+        hasHero ? "fixed inset-x-0" : "sticky",
         isOverHero ? "bg-transparent" : "bg-white",
         isScrolled &&
           "shadow-[0_1px_0_var(--color-rule),0_12px_32px_-16px_color-mix(in_srgb,var(--color-brand-night)_35%,transparent)]",

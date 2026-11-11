@@ -2,23 +2,23 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpdateSiteSettingInput } from "@cosmo/shared";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
-import { MediaField } from "@/components/admin/media/media-field";
 import { SaveBar } from "@/components/admin/save-bar";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useUpdateSiteSetting } from "@/lib/queries/site-settings";
+import { extractMapEmbedUrl } from "@/lib/map-embed";
 import { isExternalUrl, isValidLink } from "@/lib/site-links";
 import {
   formToTranslations,
   isTranslationFilled,
   translationsToForm,
 } from "@/lib/translations";
-import type { Media, SiteSetting } from "@/lib/types";
+import type { SiteSetting } from "@/lib/types";
 
 type SettingTranslationValues = {
   address: string;
@@ -47,7 +47,14 @@ const urlField = z
 const siteSettingFormSchema = z.object({
   phone: z.string().trim().max(50),
   email: z.union([z.literal(""), z.email("Имэйл хаяг буруу байна")]),
-  mapImage: z.custom<Media | null>(),
+  mapEmbed: z
+    .string()
+    .trim()
+    .max(4000)
+    .refine(
+      (value) => value === "" || extractMapEmbedUrl(value) !== null,
+      "Google Maps-ийн «Embed a map» кодыг бүтнээр нь буулгана уу",
+    ),
   mapUrl: urlField,
   facebookUrl: urlField,
   instagramUrl: urlField,
@@ -73,7 +80,7 @@ function defaultValues(setting: SiteSetting): SiteSettingFormValues {
   return {
     phone: setting.phone ?? "",
     email: setting.email ?? "",
-    mapImage: setting.mapImage,
+    mapEmbed: setting.mapEmbedUrl ?? "",
     mapUrl: setting.mapUrl ?? "",
     facebookUrl: setting.facebookUrl ?? "",
     instagramUrl: setting.instagramUrl ?? "",
@@ -91,7 +98,7 @@ function toInput(values: SiteSettingFormValues): UpdateSiteSettingInput {
   return {
     phone: emptyToNull(values.phone),
     email: emptyToNull(values.email),
-    mapImageId: values.mapImage?.id ?? null,
+    mapEmbedUrl: extractMapEmbedUrl(values.mapEmbed),
     mapUrl: emptyToNull(values.mapUrl),
     facebookUrl: emptyToNull(values.facebookUrl),
     instagramUrl: emptyToNull(values.instagramUrl),
@@ -225,30 +232,27 @@ export function SiteSettingForm({ setting }: SiteSettingFormProps) {
 
       <FormSection
         title="Байршил"
-        description="Google Maps Хятадад нээгдэхгүй тул сайт дээр газрын зургийн зураг харагдана. Зочин дарахад Google Maps нээгдэнэ."
+        description="Холбоо барих хуудасны дээд хэсэгт Google газрын зураг харагдана. Google Хятадад нээгдэхгүй ч хаяг, холбоос нь газрын зургаас тусдаа үргэлж харагдана."
       >
         <FormField
-          label="Газрын зургийн зураг"
-          htmlFor="setting-map-image"
-          hint="Google Maps дээр байршлаа томруулаад дэлгэцийн зураг авч оруулна. Хэвтээ зураг тохиромжтой"
+          label="Google Maps embed код"
+          htmlFor="setting-map-embed"
+          hint="Google Maps дээр байршлаа нээгээд «Хуваалцах» → «Газрын зураг оруулах» → «HTML хуулах». Хуулсан кодоо бүтнээр нь энд буулгана"
+          error={errors.mapEmbed?.message}
         >
-          <Controller
-            control={control}
-            name="mapImage"
-            render={({ field }) => (
-              <MediaField
-                value={field.value}
-                onChange={field.onChange}
-                pickerTitle="Газрын зургийн зураг сонгох"
-                removable
-              />
-            )}
+          <Textarea
+            id="setting-map-embed"
+            rows={4}
+            placeholder='<iframe src="https://www.google.com/maps/embed?pb=..."></iframe>'
+            aria-invalid={Boolean(errors.mapEmbed)}
+            className="font-mono text-xs"
+            {...register("mapEmbed")}
           />
         </FormField>
         <FormField
           label="Google Maps холбоос"
           htmlFor="setting-map-url"
-          hint="Google Maps дээр байршлаа нээгээд «Хуваалцах» → «Холбоос хуулах»"
+          hint="«Чиглэл авах» товч энэ холбоосыг нээнэ. Google Maps дээр байршлаа нээгээд «Хуваалцах» → «Холбоос хуулах»"
           error={errors.mapUrl?.message}
         >
           <Input

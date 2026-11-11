@@ -27,7 +27,8 @@
     "brands": "Brands",
     "careers": "Careers",
     "media": "Media",
-    "contact": "Contact"
+    "contact": "Contact",
+    "breadcrumb": "Breadcrumb"
   },
   "header": {
     "menu": "Menu",
@@ -47,25 +48,6 @@
     "heroTitle": "World brands for every Mongolian home",
     "officialDistributor": "Official distributor",
     "originEyebrow": "Origins",
-    "valuesTitle": "Our values",
-    "values": {
-      "people": {
-        "title": "People",
-        "text": "We strive to build a passionate, team-oriented workplace."
-      },
-      "satisfaction": {
-        "title": "Satisfaction",
-        "text": "We put the satisfaction of our customers and partners first."
-      },
-      "quality": {
-        "title": "Quality",
-        "text": "We follow international standards for warehousing, storage and distribution in our daily operations."
-      },
-      "responsibility": {
-        "title": "Social responsibility",
-        "text": "We value law and ethics in everything we do and aim to be a socially responsible company."
-      }
-    },
     "partnerEyebrow": "Partnership",
     "contactUs": "Get in touch",
     "mute": "Mute",
@@ -155,17 +137,35 @@
   },
   "brands": {
     "description": "International food, beauty and household brands.",
-    "filterLabel": "Filter by category",
-    "all": "All",
-    "empty": "No brands in this category yet.",
-    "showAll": "View all brands",
+    "chaptersLabel": "Categories",
+    "empty": "Brand information is not available right now. Please try again shortly.",
+    "chapters": {
+      "FOOD": {
+        "label": "Food",
+        "title": "Food products",
+        "text": "We supply food products for households as well as restaurants, lounges, fast-food outlets and other food-service businesses. We value choice, quality and reliable supply, and work to meet our partners’ everyday needs.",
+        "statValue": "30%",
+        "statLabel": "Share of the total canned food market"
+      },
+      "BEAUTY": {
+        "label": "Beauty and hygiene",
+        "title": "Beauty and hygiene products",
+        "text": "We have brought more than 10 international beauty, oral care and hygiene brands to the Mongolian market, and we keep growing our range to match consumers’ everyday needs and preferences."
+      },
+      "HOUSEHOLD": {
+        "label": "Household",
+        "title": "Household products",
+        "text": "We supply household products for the everyday needs of families and organisations. We value the right choice for customers, reliable supply and lasting partnerships."
+      }
+    },
     "website": "Website",
-    "products": "Products",
+    "productsTitle": "Our products",
+    "productPicker": "Choose a product",
+    "coverAlt": "{name} products",
     "related": "More brands",
     "partnerTitle": "Bring your brand to Mongolia?",
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
-    "partnerButton": "Partner with us",
-    "productCount": "{count, plural, one {# product} other {# products}}"
+    "partnerButton": "Partner with us"
   },
   "catalog": {
     "title": "Catalog",
@@ -190,12 +190,12 @@
     "description": "Send us your partnership ideas, questions or feedback.",
     "address": "Address",
     "hours": "Working hours",
-    "openMap": "Open in maps",
-    "formTitle": "Write to us",
+    "directions": "Get directions",
+    "mapTitle": "Cosmo Trade location on Google Maps",
+    "formTitle": "Send a request",
     "nameLabel": "Name",
     "emailLabel": "Email",
     "phoneLabel": "Phone",
-    "optional": "optional",
     "departmentLabel": "Department",
     "general": "General",
     "messageLabel": "Message",
@@ -206,6 +206,7 @@
     "sendAnother": "Write again",
     "errors": {
       "name": "Please enter your name",
+      "emailRequired": "Please enter your email address",
       "email": "Please enter a valid email",
       "phone": "Phone number is too long",
       "message": "Message must be at least 10 characters",
@@ -225,17 +226,11 @@
     "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
     "intro": {
       "label": "Company overview",
+      "title": "Creating <highlight>value in everyday life</highlight>",
       "lead": "Cosmo Trade LLC was founded in 1993 and has built many years of experience in importing, selling and distributing fast-moving consumer goods.",
       "body1": "We work with international and regional brands from the USA, Europe and Asia, supplying the Mongolian market with products that meet consumer needs and changes in the market. To make products more accessible to consumers, we keep expanding our partnerships through supermarkets, hypermarkets, retail and wholesale trade, and HORECA, the hotel, restaurant and catering sector.",
       "body2": "We also work to introduce and grow international brands in the Mongolian market, increase product sales and develop our own brands. Building on our experience, reliable partnerships and distribution capability, we aim to create long-term value for consumers, customers and business partners, and to contribute to the sustainable growth of our industry.",
-      "channelsTitle": "Sales channels",
-      "channels": {
-        "supermarket": "Supermarkets",
-        "hypermarket": "Hypermarkets",
-        "retail": "Retail",
-        "wholesale": "Wholesale",
-        "horeca": "HORECA"
-      }
+      "imageAlt": "Containers with the Cosmo logo"
     },
     "missionLabel": "Our mission",
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
@@ -245,8 +240,70 @@
     "purposeTitle": "Our purpose",
     "visionLabel": "Vision",
     "visionText": "To be the most trusted partner in Mongolia's consumer goods distribution.",
-    "sloganLabel": "Slogan",
-    "sloganText": "World brands for every Mongolian home."
+    "sloganText": "World brands for every Mongolian home",
+    "areasEyebrow": "What we do",
+    "areasTitle": "Integrated distribution solutions",
+    "network": {
+      "eyebrow": "Nationwide network",
+      "title": "A <highlight>distribution network</highlight> across Mongolia",
+      "text": "From our central warehouse in Ulaanbaatar we deliver regularly to the provinces of the Western, Khangai, Central and Eastern regions, staying close to every consumer.",
+      "points": {
+        "hub": "Warehouse and distribution centre",
+        "regions": "Regional branches and agents",
+        "salesPoints": "Coverage of {salesPoints}+ points of sale",
+        "channels": "Multi-channel market reach",
+        "fulfillment": "Logistics and order fulfilment"
+      },
+      "map": {
+        "label": "Distribution diagram from the central warehouse in Ulaanbaatar to the Western, Khangai, Central and Eastern regions",
+        "west": "Western",
+        "khangai": "Khangai",
+        "central": "Central",
+        "east": "Eastern",
+        "city": "Ulaanbaatar",
+        "hub": "Central warehouse",
+        "regional": "Regional distribution"
+      }
+    },
+    "historyHeading": "{years} years of growth",
+    "historyHeadingPlain": "Our journey",
+    "historyPrevious": "Earlier milestones",
+    "historyNext": "Later milestones",
+    "historyNow": "Today",
+    "stats": {
+      "years": "Years in business",
+      "yearsUnit": "yrs",
+      "products": "Products",
+      "salesPoints": "Points of sale reached",
+      "team": "Team members"
+    },
+    "areasText": "We handle every step of bringing a brand to consumers in Mongolia ourselves.",
+    "areasIllustrationLabel": "Illustration of products moving from the warehouse along a scanned conveyor and by truck to a store",
+    "areasStoreSign": "STORE",
+    "logistics": {
+      "eyebrow": "Logistics and warehousing",
+      "title": "Operations built on <highlight>logistics capability</highlight>",
+      "text": "From import to the shelf at the point of sale, we handle every step with our own warehouses and fleet.",
+      "imageAlt": "Warehouse shelves",
+      "items": {
+        "warehouse": {
+          "title": "Warehousing",
+          "text": "Food, beauty and household goods are stored separately according to their storage requirements."
+        },
+        "distribution": {
+          "title": "Distribution",
+          "text": "Our own fleet delivers on schedule to points of sale in the city and the provinces."
+        },
+        "inventory": {
+          "title": "Inventory management",
+          "text": "Stock is tracked by batch and expiry date (FEFO) and recorded in our ERP system."
+        },
+        "retail": {
+          "title": "Retail supply",
+          "text": "Orders are prepared for each point of sale and delivered complete and on time."
+        }
+      }
+    }
   },
   "careers": {
     "description": "About our team, workplace and hiring process.",

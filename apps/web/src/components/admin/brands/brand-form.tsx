@@ -37,13 +37,19 @@ import { CountrySelect } from "./country-select";
 
 type BrandTranslationValues = {
   name: string;
+  productTypes: string;
   summary: string;
 };
 
-const EMPTY_TRANSLATION: BrandTranslationValues = { name: "", summary: "" };
+const EMPTY_TRANSLATION: BrandTranslationValues = {
+  name: "",
+  productTypes: "",
+  summary: "",
+};
 
 const translationSchema = z.object({
   name: z.string().trim().max(200),
+  productTypes: z.string().trim().max(300),
   summary: z.string().trim().max(1000),
 });
 
@@ -233,9 +239,23 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
               />
             </FormField>
             <FormField
+              label="Бүтээгдэхүүний төрөл"
+              htmlFor={`brand-product-types-${locale}`}
+              hint="Брэндүүдийн хуудсанд нэрийн доор гарна. Жишээ: Соус, кетчуп, нөөшилсөн ногоо"
+              error={errors.translations?.[locale]?.productTypes?.message}
+            >
+              <Input
+                id={`brand-product-types-${locale}`}
+                aria-invalid={Boolean(
+                  errors.translations?.[locale]?.productTypes,
+                )}
+                {...register(`translations.${locale}.productTypes`)}
+              />
+            </FormField>
+            <FormField
               label="Товч танилцуулга"
               htmlFor={`brand-summary-${locale}`}
-              hint="Брэндүүдийн жагсаалт болон брэндийн хуудасны эхэнд гарна. 1–3 өгүүлбэр"
+              hint="Брэндийн хуудасны эхэнд гарна. 1–3 өгүүлбэр"
               error={errors.translations?.[locale]?.summary?.message}
             >
               <Textarea
@@ -340,9 +360,9 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
           />
         </FormField>
         <FormField
-          label="Нүүр зураг"
+          label="Бүх бүтээгдэхүүний зураг"
           htmlFor="brand-cover"
-          hint="Брэндийн хуудасны дээд хэсэгт. Хэвтээ, 1920×800 орчим"
+          hint="Брэндийн бүх бүтээгдэхүүн нэг дор байгаа зураг. Брэндийн хуудсанд танилцуулгын хажууд гарна. 1600×1280 орчим"
         >
           <Controller
             control={control}
@@ -351,16 +371,16 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
               <MediaField
                 value={field.value}
                 onChange={field.onChange}
-                pickerTitle="Нүүр зураг сонгох"
+                pickerTitle="Бүх бүтээгдэхүүний зураг сонгох"
                 removable
               />
             )}
           />
         </FormField>
         <FormField
-          label="Бүтээгдэхүүний зураг (нүүр хуудас)"
+          label="Картын зураг"
           htmlFor="brand-showcase"
-          hint="Нүүр хуудасны брэндийн картанд. Тунгалаг дэвсгэртэй, босоо PNG тохиромжтой"
+          hint="Брэндүүд хуудасны картанд логоны оронд гарна. Нэг бүтээгдэхүүний тунгалаг дэвсгэртэй PNG тохиромжтой"
         >
           <Controller
             control={control}

@@ -66,6 +66,7 @@ export class SiteSettingsService {
       youtubeUrl: setting.youtubeUrl,
       linkedinUrl: setting.linkedinUrl,
       mapUrl: setting.mapUrl,
+      mapEmbedUrl: setting.mapEmbedUrl,
       mapImageUrl: setting.mapImage?.url ?? null,
       foundedYear: setting.foundedYear,
       employeeCount: setting.employeeCount,

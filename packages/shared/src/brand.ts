@@ -29,6 +29,7 @@ const brandFields = z.object({
   translations: translationsSchema({
     name: z.string().trim().min(1).max(200),
     summary: z.string().trim().max(1000).optional(),
+    productTypes: z.string().trim().max(300).optional(),
   }),
 });
 

@@ -51,7 +51,7 @@ export function SlidesPanel() {
     <section className="grid gap-4">
       <PanelHeader
         step={1}
-        title="Дээд талын carousel"
+        title="Баннер зураг"
         description="Хуудасны хамгийн дээд талын том зураг, видео."
         action={
           <Button onClick={() => openForm(null)}>

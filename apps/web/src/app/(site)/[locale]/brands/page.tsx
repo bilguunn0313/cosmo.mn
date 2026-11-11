@@ -1,26 +1,21 @@
-import { BRAND_CATEGORIES, type BrandCategory } from "@cosmo/shared";
+import { BRAND_CATEGORIES } from "@cosmo/shared";
 import { ArrowDown } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BrandTile } from "@/components/site/brands/brand-tile";
+import {
+  BrandChapter,
+  chapterId,
+} from "@/components/site/brands/brand-chapter";
+import { BrandsHero } from "@/components/site/brands/brands-hero";
 import { CatalogBook } from "@/components/site/brands/catalog-book";
-import { CategoryFilter } from "@/components/site/brands/category-filter";
-import { PageBanner } from "@/components/site/page-banner";
+import { CategoryJumpNav } from "@/components/site/brands/category-jump-nav";
+import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
-import { Link } from "@/i18n/navigation";
 import { CATALOG } from "@/lib/catalog";
-import { pageBannerUrl } from "@/lib/page-banners";
-import { fetchBrands, fetchSiteSetting } from "@/lib/public-api";
-import type { PublicBrand } from "@/lib/public-api";
+import { fetchBrands } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
-
-const REVEAL_COLUMNS = 4;
-
-function parseCategory(value: unknown): BrandCategory | null {
-  return BRAND_CATEGORIES.find((category) => category === value) ?? null;
-}
 
 export async function generateMetadata({
   params,
@@ -38,80 +33,56 @@ export async function generateMetadata({
 
 export default async function BrandsPage({
   params,
-  searchParams,
 }: PageProps<"/[locale]/brands">) {
   const locale = await getPageLocale(params);
   const t = await getTranslations();
-  const activeCategory = parseCategory((await searchParams).category);
-  const [brands, setting] = await Promise.all([
-    fetchBrands(locale),
-    fetchSiteSetting(locale),
-  ]);
+  const brands = await fetchBrands(locale);
 
-  const inCategory = (category: BrandCategory) =>
-    brands.filter((brand) => brand.categories.includes(category));
-
-  const categories = BRAND_CATEGORIES.filter(
-    (category) => inCategory(category).length > 0,
-  );
-  const filterOptions = [
-    { category: null, count: brands.length },
-    ...categories.map((category) => ({
-      category,
-      count: inCategory(category).length,
-    })),
-  ];
-
-  const shownBrands = activeCategory ? inCategory(activeCategory) : brands;
-  const brandMeta = (brand: PublicBrand) =>
-    brand.categories.map((category) => t(`categories.${category}`)).join(", ");
+  const chapters = BRAND_CATEGORIES.map((category) => ({
+    category,
+    brands: brands.filter((brand) => brand.categories.includes(category)),
+  })).filter((chapter) => chapter.brands.length > 0);
+  const jumpItems = chapters.map(({ category }) => ({
+    id: chapterId(category),
+    label: t(`brands.chapters.${category}.label`),
+  }));
   const hasCatalog = CATALOG.pages.length > 0;
 
   return (
     <>
-      <PageBanner
-        title={t("nav.brands")}
-        imageUrl={pageBannerUrl(setting, "brands")}
-      >
+      <BrandsHero brands={brands}>
         {hasCatalog && (
           <a href="#catalog" className={siteButtonClass("white", "min-w-52.5")}>
             {t("catalog.view")}
             <ArrowDown className="size-4.5" />
           </a>
         )}
-      </PageBanner>
+      </BrandsHero>
 
-      <div className="site-container grid gap-6 pt-8 md:gap-8 md:pt-12">
-        <CategoryFilter
-          options={filterOptions}
-          activeCategory={activeCategory}
+      {chapters.length > 1 && (
+        <CategoryJumpNav label={t("brands.chaptersLabel")} items={jumpItems} />
+      )}
+
+      {chapters.length === 0 && (
+        <p className="site-container py-24 text-lg text-ink-2 md:py-32">
+          {t("brands.empty")}
+        </p>
+      )}
+
+      {chapters.map((chapter, index) => (
+        <BrandChapter
+          key={chapter.category}
+          category={chapter.category}
+          brands={chapter.brands}
+          isAlternate={index % 2 === 1}
         />
-
-        {shownBrands.length > 0 ? (
-          <ul className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-4 md:gap-y-10 xl:grid-cols-4">
-            {shownBrands.map((brand, index) => (
-              <li key={brand.slug}>
-                <Reveal index={index % REVEAL_COLUMNS} className="h-full">
-                  <BrandTile brand={brand} meta={brandMeta(brand)} />
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="grid justify-items-start gap-5 py-20">
-            <p className="type-h3">{t("brands.empty")}</p>
-            <Link href="/brands" className={siteButtonClass("secondary")}>
-              {t("brands.showAll")}
-            </Link>
-          </div>
-        )}
-      </div>
+      ))}
 
       {hasCatalog && (
         <section
           id="catalog"
           aria-labelledby="catalog-title"
-          className="site-container scroll-mt-28 pt-20 md:pt-32"
+          className="site-container scroll-mt-28 py-20 md:py-30"
         >
           <div className="flex flex-wrap items-end justify-between gap-4 pb-6 md:pb-8">
             <h2 id="catalog-title" className="type-h2">
@@ -135,6 +106,12 @@ export default async function BrandsPage({
           </Reveal>
         </section>
       )}
+
+      <PartnerCtaSection
+        title={t("brands.partnerTitle")}
+        text={t("brands.partnerText")}
+        isDark
+      />
     </>
   );
 }

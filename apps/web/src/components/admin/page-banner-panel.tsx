@@ -39,7 +39,7 @@ function PageBannerForm({ page, setting }: PageBannerFormProps) {
     updateSiteSetting.mutate(
       { [fields.id]: image?.id ?? null },
       {
-        onSuccess: () => toast.success("Толгой зураг хадгалагдлаа"),
+        onSuccess: () => toast.success("Баннер зураг хадгалагдлаа"),
         onError: (error) => toast.error(error.message),
       },
     );
@@ -50,7 +50,7 @@ function PageBannerForm({ page, setting }: PageBannerFormProps) {
       <MediaField
         value={image}
         onChange={setImage}
-        pickerTitle="Хуудасны толгой зураг"
+        pickerTitle="Хуудасны баннер зураг"
         removable
       />
       <p className="text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ export function PageBannerPanel({ page, step }: PageBannerPanelProps) {
     <section className="grid gap-4">
       <PanelHeader
         step={step}
-        title="Толгой зураг"
+        title="Баннер зураг"
         description="Хуудасны хамгийн дээд талын том зураг. Хэвтээ, 2400×1200 орчим зураг тохиромжтой. Доод хэсэгт гарчиг цагаанаар бичигдэнэ."
       />
       {setting.data ? (

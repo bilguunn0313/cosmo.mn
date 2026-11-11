@@ -128,8 +128,9 @@ model BrandTranslation {
   brandId Int
   brand   Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
   locale  Locale
-  name    String
-  summary String?
+  name         String
+  summary      String?
+  productTypes String?
 
   @@unique([brandId, locale])
 }
@@ -291,6 +292,7 @@ model SiteSetting {
   youtubeUrl                 String?
   linkedinUrl                String?
   mapUrl                     String?
+  mapEmbedUrl                String?
   mapImageId                 Int?
   mapImage                   Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
   aboutBannerImageId         Int?

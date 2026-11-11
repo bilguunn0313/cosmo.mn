@@ -4,7 +4,8 @@ import { ArrowLeft, ArrowRight, Check, Plus } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
-import { inputClass } from "@/components/site/form-styles";
+import { formButtonClass, inputClass } from "@/components/site/form-styles";
+import { LineSelect } from "@/components/site/line-select";
 import { siteButtonClass } from "@/components/site/site-button";
 import { cn } from "@/lib/utils";
 import { Checkbox, ChipGroup, Field, TextField } from "./form-fields";
@@ -247,7 +248,7 @@ export function ApplicationForm() {
                 onChange={updateValue}
                 error={visibleError("position")}
               />
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
                 <TextField
                   name="phone"
                   label={t("fields.phone")}
@@ -258,13 +259,12 @@ export function ApplicationForm() {
                   isNumeric
                 />
                 <Field id="anket-district" label={t("fields.district")}>
-                  <select
+                  <LineSelect
                     id="anket-district"
                     value={values.district}
                     onChange={(event) =>
                       updateValue("district", event.target.value)
                     }
-                    className={cn(inputClass, "h-12")}
                   >
                     <option value="">{t("choose")}</option>
                     {DISTRICT_KEYS.map((key) => (
@@ -272,7 +272,7 @@ export function ApplicationForm() {
                         {t(`districts.${key}`)}
                       </option>
                     ))}
-                  </select>
+                  </LineSelect>
                 </Field>
               </div>
               <TextField
@@ -302,7 +302,7 @@ export function ApplicationForm() {
                 value={values.degree}
                 onChange={updateValue}
               />
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
                 <TextField
                   name="studyFrom"
                   label={t("fields.studyFrom")}
@@ -425,7 +425,7 @@ export function ApplicationForm() {
                     onChange={(event) =>
                       updateValue("startDate", event.target.value)
                     }
-                    className={cn(inputClass, "h-12 max-w-70")}
+                    className={cn(inputClass, "h-11 max-w-70")}
                   />
                 )}
               </div>
@@ -438,10 +438,7 @@ export function ApplicationForm() {
             <button
               type="button"
               onClick={() => goToStep(step - 1)}
-              className={siteButtonClass(
-                "secondary",
-                "min-w-35 justify-start gap-2.5",
-              )}
+              className="inline-flex h-12 items-center gap-2.5 px-1 text-base font-medium text-ink-2 transition-colors duration-150 hover:text-brand-700"
             >
               <ArrowLeft className="size-4.5" />
               {t("back")}
@@ -449,10 +446,7 @@ export function ApplicationForm() {
           ) : (
             <span />
           )}
-          <button
-            type="submit"
-            className={siteButtonClass("primary", "min-w-50 sm:min-w-60")}
-          >
+          <button type="submit" className={formButtonClass}>
             {step === LAST_STEP ? t("submit") : t("next")}
             <ArrowRight className="size-4.5" />
           </button>
@@ -498,7 +492,7 @@ function ExperienceFields({
           </button>
         )}
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
         <TextField
           name={company}
           label={t("fields.company")}

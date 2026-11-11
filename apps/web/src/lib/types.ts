@@ -116,6 +116,7 @@ export interface BrandTranslation {
   locale: Locale;
   name: string;
   summary: string | null;
+  productTypes: string | null;
 }
 
 export interface Brand {
@@ -190,6 +191,7 @@ export interface SiteSetting {
   youtubeUrl: string | null;
   linkedinUrl: string | null;
   mapUrl: string | null;
+  mapEmbedUrl: string | null;
   mapImageId: number | null;
   mapImage: Media | null;
   aboutBannerImageId: number | null;

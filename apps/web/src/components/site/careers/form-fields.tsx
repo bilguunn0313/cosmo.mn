@@ -1,7 +1,9 @@
 import {
   errorClass,
+  growTextarea,
   inputClass,
   labelClass,
+  textareaClass,
 } from "@/components/site/form-styles";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +17,7 @@ interface FieldProps {
 
 export function Field({ id, label, error, className, children }: FieldProps) {
   return (
-    <div className={cn("grid content-start gap-1.5", className)}>
+    <div className={cn("grid content-start gap-1", className)}>
       <label htmlFor={id} className={labelClass}>
         {label}
       </label>
@@ -70,16 +72,17 @@ export function TextField({
       {isMultiline ? (
         <textarea
           {...sharedProps}
-          rows={3}
+          rows={1}
           onChange={(event) => onChange(name, event.target.value)}
-          className={cn(inputClass, "resize-y py-3")}
+          onInput={growTextarea}
+          className={cn(inputClass, textareaClass)}
         />
       ) : (
         <input
           {...sharedProps}
           inputMode={isNumeric ? "numeric" : undefined}
           onChange={(event) => onChange(name, event.target.value)}
-          className={cn(inputClass, "h-12")}
+          className={cn(inputClass, "h-11")}
         />
       )}
     </Field>

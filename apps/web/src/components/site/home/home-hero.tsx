@@ -9,9 +9,6 @@ import { HeroCarousel } from "./hero-carousel";
 
 const HERO_PLACEHOLDER = "/images/home/hero-building.webp";
 
-const RISE_IN =
-  "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700 motion-safe:ease-out motion-safe:fill-mode-backwards";
-
 interface HomeHeroProps {
   slides: PublicSlide[];
   stats: HomeStats;
@@ -59,16 +56,14 @@ export async function HomeHero({ slides, stats }: HomeHeroProps) {
       <div className="site-container pointer-events-none relative flex h-full flex-col justify-end gap-6 pt-21 pb-28 lg:justify-center lg:pb-14">
         <h1
           id="hero-title"
-          className={`max-w-165 type-hero text-balance ${RISE_IN}`}
+          className="hero-rise max-w-165 type-hero text-balance [--rise-delay:100ms]"
         >
           {t("home.heroTitle")}
         </h1>
-        <p
-          className={`max-w-130 text-lg/relaxed text-pretty text-white/88 md:text-[19px] ${RISE_IN} motion-safe:delay-75`}
-        >
+        <p className="hero-rise max-w-130 text-lg/relaxed text-pretty text-white/88 [--rise-delay:240ms] md:text-[19px]">
           {text}
         </p>
-        <div className={`${RISE_IN} motion-safe:delay-150`}>
+        <div className="hero-rise [--rise-delay:380ms]">
           <Link
             href="/about"
             className={siteButtonClass(

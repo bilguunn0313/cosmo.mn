@@ -27,7 +27,8 @@
     "brands": "品牌",
     "careers": "人才招聘",
     "media": "新闻中心",
-    "contact": "联系我们"
+    "contact": "联系我们",
+    "breadcrumb": "页面路径"
   },
   "header": {
     "menu": "菜单",
@@ -47,25 +48,6 @@
     "heroTitle": "将世界品牌带进每个蒙古家庭",
     "officialDistributor": "官方经销商",
     "originEyebrow": "品牌来源",
-    "valuesTitle": "核心价值观",
-    "values": {
-      "people": {
-        "title": "以人为本",
-        "text": "我们致力于营造充满热情、团结协作的工作环境。"
-      },
-      "satisfaction": {
-        "title": "客户满意",
-        "text": "我们始终把客户与合作伙伴的满意放在首位。"
-      },
-      "quality": {
-        "title": "品质",
-        "text": "我们在日常运营中遵循国际仓储、保管与配送标准。"
-      },
-      "responsibility": {
-        "title": "社会责任",
-        "text": "我们在一切经营活动中恪守法律与道德，致力于成为有社会责任感的企业。"
-      }
-    },
     "partnerEyebrow": "商务合作",
     "contactUs": "联系我们",
     "mute": "静音",
@@ -155,17 +137,35 @@
   },
   "brands": {
     "description": "国际食品、美妆与家居用品品牌。",
-    "filterLabel": "按品类筛选",
-    "all": "全部",
-    "empty": "该品类暂无品牌。",
-    "showAll": "查看全部品牌",
+    "chaptersLabel": "类别",
+    "empty": "品牌信息暂时无法显示，请稍后再试。",
+    "chapters": {
+      "FOOD": {
+        "label": "食品",
+        "title": "食品",
+        "text": "我们为家庭以及餐厅、酒廊、快餐店等餐饮服务机构供应符合其需求的食品。我们注重产品选择、品质和稳定供应，致力于满足合作伙伴的日常需求。",
+        "statValue": "30%",
+        "statLabel": "罐头食品市场总份额"
+      },
+      "BEAUTY": {
+        "label": "美妆与个人护理",
+        "title": "美妆与个人护理产品",
+        "text": "我们已将十余个国际美妆、口腔护理和个人卫生品牌引入蒙古市场，并不断丰富产品种类，以满足消费者的日常需求和选择。"
+      },
+      "HOUSEHOLD": {
+        "label": "家居用品",
+        "title": "家居用品",
+        "text": "我们为家庭和机构的日常使用供应家居用品，注重满足客户需求的选择、可靠的供应以及与合作伙伴的长期合作。"
+      }
+    },
     "website": "官方网站",
-    "products": "产品",
+    "productsTitle": "产品系列",
+    "productPicker": "选择产品",
+    "coverAlt": "{name} 品牌产品",
     "related": "更多品牌",
     "partnerTitle": "想将您的品牌引入蒙古吗？",
     "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
-    "partnerButton": "洽谈合作",
-    "productCount": "{count} 款产品"
+    "partnerButton": "洽谈合作"
   },
   "catalog": {
     "title": "产品目录",
@@ -190,12 +190,12 @@
     "description": "欢迎与我们洽谈合作或提出建议。",
     "address": "地址",
     "hours": "工作时间",
-    "openMap": "在地图中打开",
-    "formTitle": "给我们留言",
+    "directions": "获取路线",
+    "mapTitle": "Cosmo Trade 在 Google 地图上的位置",
+    "formTitle": "发送咨询",
     "nameLabel": "姓名",
     "emailLabel": "邮箱",
     "phoneLabel": "电话",
-    "optional": "选填",
     "departmentLabel": "联系部门",
     "general": "综合",
     "messageLabel": "留言内容",
@@ -206,6 +206,7 @@
     "sendAnother": "再写一条",
     "errors": {
       "name": "请输入姓名",
+      "emailRequired": "请输入您的电子邮箱",
       "email": "邮箱格式不正确",
       "phone": "电话号码过长",
       "message": "留言至少需要 10 个字符",
@@ -225,17 +226,11 @@
     "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
     "intro": {
       "label": "公司简介",
+      "title": "为日常生活<highlight>创造价值</highlight>",
       "lead": "Cosmo Trade LLC 成立于1993年，在快速消费品的进口、销售和分销领域积累了多年经验。",
       "body1": "我们与美国、欧洲和亚洲的国际及区域品牌合作，向蒙古市场供应符合消费者需求和市场变化的产品。为让产品更便捷地触达消费者，我们通过超市、大卖场、零售和批发贸易以及HORECA（酒店、餐厅和餐饮服务业）等销售渠道不断扩大合作。",
       "body2": "此外，我们致力于在蒙古市场推广和发展国际品牌、提升产品销量并发展自有品牌。依托多年的经验、可靠的合作关系和分销能力，我们努力为消费者、客户和商业伙伴创造长期价值，并为行业的可持续发展做出贡献。",
-      "channelsTitle": "销售渠道",
-      "channels": {
-        "supermarket": "超市",
-        "hypermarket": "大卖场",
-        "retail": "零售",
-        "wholesale": "批发",
-        "horeca": "HORECA"
-      }
+      "imageAlt": "印有Cosmo标志的集装箱"
     },
     "missionLabel": "使命",
     "missionText": "让顾客满意与快乐是我们的目标。",
@@ -245,8 +240,70 @@
     "purposeTitle": "我们的使命",
     "visionLabel": "愿景",
     "visionText": "成为蒙古消费品分销领域最值得信赖的合作伙伴。",
-    "sloganLabel": "口号",
-    "sloganText": "让世界品牌走进每一个蒙古家庭。"
+    "sloganText": "让世界品牌走进每一个蒙古家庭",
+    "areasEyebrow": "我们做什么",
+    "areasTitle": "一体化分销解决方案",
+    "network": {
+      "eyebrow": "全国网络",
+      "title": "覆盖全蒙古的<highlight>分销网络</highlight>",
+      "text": "我们从乌兰巴托的中央仓库定期向西部、杭爱、中部和东部地区各省配送产品，力求贴近每一位消费者。",
+      "points": {
+        "hub": "仓储与配送中心",
+        "regions": "区域分支与代理",
+        "salesPoints": "覆盖{salesPoints}多个销售网点",
+        "channels": "多渠道市场覆盖",
+        "fulfillment": "物流与订单履行"
+      },
+      "map": {
+        "label": "从乌兰巴托中央仓库向西部、杭爱、中部和东部地区配送的示意图",
+        "west": "西部地区",
+        "khangai": "杭爱地区",
+        "central": "中部地区",
+        "east": "东部地区",
+        "city": "乌兰巴托",
+        "hub": "中央仓库",
+        "regional": "区域配送"
+      }
+    },
+    "historyHeading": "{years}年发展历程",
+    "historyHeadingPlain": "发展历程",
+    "historyPrevious": "上一组里程碑",
+    "historyNext": "下一组里程碑",
+    "historyNow": "至今",
+    "stats": {
+      "years": "经营经验",
+      "yearsUnit": "年",
+      "products": "产品",
+      "salesPoints": "覆盖销售网点",
+      "team": "团队成员"
+    },
+    "areasText": "从品牌引进到送达蒙古消费者，每个环节都由我们亲自负责。",
+    "areasIllustrationLabel": "产品从仓库经扫描传送带，再由卡车运送到商店的示意图",
+    "areasStoreSign": "商店",
+    "logistics": {
+      "eyebrow": "物流与仓储",
+      "title": "以<highlight>物流能力</highlight>为基础的运营",
+      "text": "从进口到销售网点的货架，每个环节都由我们自己的仓库和车队负责。",
+      "imageAlt": "仓库货架",
+      "items": {
+        "warehouse": {
+          "title": "仓储",
+          "text": "食品、美妆和家居用品按照储存要求分类存放。"
+        },
+        "distribution": {
+          "title": "配送",
+          "text": "自有车队按计划向城市和地方的网点配送。"
+        },
+        "inventory": {
+          "title": "库存管理",
+          "text": "按批次和保质期（FEFO）管理库存，并在ERP系统中记录。"
+        },
+        "retail": {
+          "title": "零售供货",
+          "text": "按网点备货，完整、准时地交付订单。"
+        }
+      }
+    }
   },
   "careers": {
     "description": "了解我们的团队、工作环境与招聘流程。",
