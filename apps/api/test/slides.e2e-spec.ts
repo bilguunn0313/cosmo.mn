@@ -16,87 +16,61 @@ describe('Slides', () => {
     await context.app.close();
   });
 
-  function createSlide(title: string, isActive = true) {
+  function createSlide(isActive = true) {
     return context.admin
       .post('/admin/slides')
-      .send({
-        mediaId: videoId,
-        posterId,
-        linkUrl: '/mn/brands',
-        isActive,
-        translations: [
-          { locale: 'mn', title },
-          { locale: 'en', title: `${title} EN` },
-        ],
-      })
+      .send({ mediaId: videoId, posterId, isActive })
       .expect(201);
   }
 
   it('видео слайдыг poster зурагтай нь үүсгэнэ', async () => {
-    const response = await createSlide('Эхний слайд');
+    const response = await createSlide();
 
     expect(response.body.media.type).toBe('VIDEO');
     expect(response.body.poster.id).toBe(posterId);
-    expect(response.body.translations).toHaveLength(2);
   });
 
   it('шинэ слайдыг хамгийн сүүлд байрлуулна', async () => {
-    const first = await createSlide('Нэг');
-    const second = await createSlide('Хоёр');
+    const first = await createSlide();
+    const second = await createSlide();
 
     expect(second.body.order).toBe(first.body.order + 1);
   });
 
-  it('монгол орчуулгагүй слайдыг хүлээж авахгүй', async () => {
-    const response = await context.admin
-      .post('/admin/slides')
-      .send({ mediaId: videoId, translations: [{ locale: 'en', title: 'x' }] })
-      .expect(400);
-
-    expect(JSON.stringify(response.body)).toContain('Монгол орчуулга');
+  it('видео эсвэл зураггүй слайдыг хүлээж авахгүй', async () => {
+    await context.admin.post('/admin/slides').send({}).expect(400);
   });
 
-  it('нийтийн API зөвхөн идэвхтэй слайдуудыг сонгосон хэлээр буцаана', async () => {
-    await createSlide('Нуусан слайд', false);
+  it('нийтийн API зөвхөн идэвхтэй слайдуудыг буцаана', async () => {
+    const visible = await createSlide();
+    const hidden = await createSlide(false);
 
-    const response = await context.guest
-      .get('/public/slides?locale=en')
-      .expect(200);
+    const response = await context.guest.get('/public/slides').expect(200);
 
-    const titles = response.body.map((slide: { title: string }) => slide.title);
-    expect(titles).toContain('Эхний слайд EN');
-    expect(titles).not.toContain('Нуусан слайд EN');
+    const ids = response.body.map((slide: { id: number }) => slide.id);
+    expect(ids).toContain(visible.body.id);
+    expect(ids).not.toContain(hidden.body.id);
     expect(response.body[0]).toMatchObject({
       mediaType: 'VIDEO',
       posterUrl: expect.stringMatching(/^\/uploads\//),
     });
   });
 
-  it('хятад орчуулга байхгүй бол монголыг харуулна', async () => {
-    const response = await context.guest
-      .get('/public/slides?locale=zh')
-      .expect(200);
-
-    expect(
-      response.body.map((slide: { title: string }) => slide.title),
-    ).toContain('Эхний слайд');
-  });
-
   it('засахад илгээгээгүй талбарууд өөрчлөгдөхгүй', async () => {
-    const slide = await createSlide('Идэвхгүй болох', false);
+    const slide = await createSlide(false);
 
     const response = await context.admin
       .patch(`/admin/slides/${slide.body.id}`)
-      .send({ linkUrl: '/mn/news' })
+      .send({ posterId: null })
       .expect(200);
 
     expect(response.body.isActive).toBe(false);
-    expect(response.body.linkUrl).toBe('/mn/news');
+    expect(response.body.poster).toBeNull();
   });
 
   it('дарааллыг сольж чадна', async () => {
-    const first = await createSlide('A');
-    const second = await createSlide('B');
+    const first = await createSlide();
+    const second = await createSlide();
 
     await context.admin
       .patch('/admin/slides/reorder')
@@ -115,7 +89,7 @@ describe('Slides', () => {
   });
 
   it('устгасан слайд олдохгүй', async () => {
-    const slide = await createSlide('Устгах');
+    const slide = await createSlide();
 
     await context.admin.delete(`/admin/slides/${slide.body.id}`).expect(204);
     await context.admin.get(`/admin/slides/${slide.body.id}`).expect(404);

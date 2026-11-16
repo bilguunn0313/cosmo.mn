@@ -65,9 +65,7 @@ export async function PurposeSection({ setting }: PurposeSectionProps) {
               <dt className="text-sm font-semibold text-brand-200">
                 {statement.label}
               </dt>
-              <dd className="font-display text-[clamp(18px,1.4vw,22px)] leading-[1.4] font-medium tracking-[-0.01em] text-balance">
-                {statement.text}
-              </dd>
+              <dd className="type-h4 text-balance">{statement.text}</dd>
             </Reveal>
           ))}
         </dl>

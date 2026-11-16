@@ -1,8 +1,5 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { LOCALES, localeSchema } from '@cosmo/shared';
-import type { Locale } from '@cosmo/shared';
-import { ZodValidationPipe } from '../common/zod-validation.pipe';
+import { Controller, Get } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SlidesService } from './slides.service';
 
 @ApiTags('Public / Slides')
@@ -11,10 +8,7 @@ export class PublicSlidesController {
   constructor(private readonly slidesService: SlidesService) {}
 
   @Get()
-  @ApiQuery({ name: 'locale', enum: LOCALES, required: false })
-  findActive(
-    @Query('locale', new ZodValidationPipe(localeSchema)) locale: Locale,
-  ) {
-    return this.slidesService.findActive(locale);
+  findActive() {
+    return this.slidesService.findActive();
   }
 }

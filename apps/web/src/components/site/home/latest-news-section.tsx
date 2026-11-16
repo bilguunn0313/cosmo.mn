@@ -1,11 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { NewsCard } from "@/components/site/media/news-card";
+import { NewsSlide } from "@/components/site/media/news-slide";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { siteButtonClass } from "@/components/site/site-button";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
+import { cn } from "@/lib/utils";
 
 interface LatestNewsSectionProps {
   news: PublicNewsItem[];
@@ -37,15 +39,26 @@ export async function LatestNewsSection({ news }: LatestNewsSectionProps) {
           </Link>
         </Reveal>
 
-        <ul className="grid gap-x-6 gap-y-10 md:grid-cols-3">
-          {news.map((item, index) => (
-            <li key={item.slug}>
-              <Reveal index={index}>
-                <NewsCard news={item} />
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        {news.length === 1 ? (
+          <Reveal>
+            <NewsSlide news={news[0]} titleTag="h3" />
+          </Reveal>
+        ) : (
+          <ul
+            className={cn(
+              "grid gap-x-6 gap-y-10",
+              news.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3",
+            )}
+          >
+            {news.map((item, index) => (
+              <li key={item.slug}>
+                <Reveal index={index}>
+                  <NewsCard news={item} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

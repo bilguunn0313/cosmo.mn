@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import type { CreateSlideInput, Locale, UpdateSlideInput } from '@cosmo/shared';
-import { pickTranslation } from '../common/pick-translation';
+import type { CreateSlideInput, UpdateSlideInput } from '@cosmo/shared';
 import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 const slideInclude = {
   media: true,
   poster: true,
-  translations: true,
 } satisfies Prisma.SlideInclude;
 
 @Injectable()
@@ -21,27 +19,19 @@ export class SlidesService {
     });
   }
 
-  async findActive(locale: Locale) {
+  async findActive() {
     const slides = await this.prisma.slide.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' },
       include: slideInclude,
     });
 
-    return slides.map((slide) => {
-      const translation = pickTranslation(slide.translations, locale);
-
-      return {
-        id: slide.id,
-        mediaType: slide.media.type,
-        mediaUrl: slide.media.url,
-        posterUrl: slide.poster?.url ?? null,
-        linkUrl: slide.linkUrl,
-        title: translation?.title ?? '',
-        subtitle: translation?.subtitle ?? null,
-        buttonText: translation?.buttonText ?? null,
-      };
-    });
+    return slides.map((slide) => ({
+      id: slide.id,
+      mediaType: slide.media.type,
+      mediaUrl: slide.media.url,
+      posterUrl: slide.poster?.url ?? null,
+    }));
   }
 
   async findOne(id: number) {
@@ -67,10 +57,8 @@ export class SlidesService {
       data: {
         mediaId: input.mediaId,
         posterId: input.posterId,
-        linkUrl: input.linkUrl,
         isActive: input.isActive,
         order: nextOrder,
-        translations: { create: input.translations },
       },
       include: slideInclude,
     });
@@ -79,19 +67,9 @@ export class SlidesService {
   async update(id: number, input: UpdateSlideInput) {
     await this.findOne(id);
 
-    const { translations, ...fields } = input;
-    const data: Prisma.SlideUncheckedUpdateInput = { ...fields };
-
-    if (translations) {
-      data.translations = {
-        deleteMany: {},
-        create: translations,
-      };
-    }
-
     return this.prisma.slide.update({
       where: { id },
-      data,
+      data: input,
       include: slideInclude,
     });
   }

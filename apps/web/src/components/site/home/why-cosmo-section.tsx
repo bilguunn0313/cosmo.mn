@@ -80,7 +80,7 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="mt-1 mb-2.5 font-display text-[21px] leading-[1.3] font-semibold text-ink">
+                  <h3 className="mt-1 mb-2.5 type-h4 font-semibold text-ink">
                     {reason.title}
                   </h3>
                   <p className="text-base leading-relaxed text-pretty text-ink-2">

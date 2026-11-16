@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BusinessAreasPanel } from "@/components/admin/home/business-areas-panel";
 import { RetailPartnersPanel } from "@/components/admin/home/retail-partners-panel";
 import { SlidesPanel } from "@/components/admin/home/slides-panel";
 import { StatsPanel } from "@/components/admin/home/stats-panel";
@@ -16,9 +17,11 @@ export default function HomePageAdmin() {
 
       <SlidesPanel />
 
-      <StatsPanel step={2} />
+      <BusinessAreasPanel step={2} />
 
-      <RetailPartnersPanel step={3} />
+      <StatsPanel step={3} />
+
+      <RetailPartnersPanel step={4} />
     </div>
   );
 }

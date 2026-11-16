@@ -102,25 +102,10 @@ model Slide {
   media     Media    @relation("SlideMedia", fields: [mediaId], references: [id])
   posterId  Int?
   poster    Media?   @relation("SlidePoster", fields: [posterId], references: [id])
-  linkUrl   String?
   order     Int      @default(0)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  translations SlideTranslation[]
-}
-
-model SlideTranslation {
-  id         Int     @id @default(autoincrement())
-  slideId    Int
-  slide      Slide   @relation(fields: [slideId], references: [id], onDelete: Cascade)
-  locale     Locale
-  title      String
-  subtitle   String?
-  buttonText String?
-
-  @@unique([slideId, locale])
 }
 
 model Brand {

@@ -28,6 +28,7 @@ interface SectionsPanelProps {
   emptyText: string;
   showLink?: boolean;
   bodyMode?: SectionBodyMode;
+  isImageRequired?: boolean;
 }
 
 function SectionThumbnail({ section }: { section: Section }) {
@@ -50,6 +51,7 @@ export function SectionsPanel({
   emptyText,
   showLink = false,
   bodyMode = "plain",
+  isImageRequired = false,
 }: SectionsPanelProps) {
   const sections = useSections(source);
   const toggleSection = useToggleSection(source);
@@ -131,6 +133,7 @@ export function SectionsPanel({
         onOpenChange={setIsFormOpen}
         showLink={showLink}
         bodyMode={bodyMode}
+        isImageRequired={isImageRequired}
       />
 
       <ConfirmDialog

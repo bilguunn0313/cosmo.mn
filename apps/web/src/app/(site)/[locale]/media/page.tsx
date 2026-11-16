@@ -2,19 +2,20 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { FeaturedNews } from "@/components/site/media/featured-news";
-import { NewsGrid } from "@/components/site/media/news-grid";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { FollowFacebookBand } from "@/components/site/follow-facebook-band";
 import { NewsPagination } from "@/components/site/media/news-pagination";
-import { PageBanner } from "@/components/site/page-banner";
+import { NewsShowcase } from "@/components/site/media/news-showcase";
+import { NewsSlide } from "@/components/site/media/news-slide";
+import { NewsThumb } from "@/components/site/media/news-thumb";
+import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
-import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchNewsPage, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const NEWS_PER_PAGE = 10;
-const MIN_ITEMS_FOR_FEATURED = 4;
+const NEWS_PER_PAGE = 24;
 
 function parsePage(value: unknown) {
   const page = Number(value);
@@ -54,21 +55,40 @@ export default async function MediaPage({
     notFound();
   }
 
-  const hasFeatured = page === 1 && items.length >= MIN_ITEMS_FOR_FEATURED;
-  const featured = hasFeatured ? items[0] : undefined;
-  const gridItems = hasFeatured ? items.slice(1) : items;
+  const showcaseItems = items.map((news, index) => ({
+    id: news.slug,
+    slide: <NewsSlide news={news} priority={index === 0} />,
+    thumb: <NewsThumb news={news} priority={index === 0} />,
+  }));
 
   return (
     <>
-      <PageBanner
-        title={t("nav.media")}
-        description={t("media.description")}
-        imageUrl={pageBannerUrl(setting, "media")}
-      />
+      <div className="site-container pt-6 md:pt-8">
+        <Breadcrumbs
+          items={[
+            { label: t("nav.home"), href: "/" },
+            { label: t("nav.media") },
+          ]}
+        />
+      </div>
 
-      <div className="site-container grid gap-12 pt-14 md:gap-16 md:pt-20">
+      <header className="site-container pt-10 md:pt-14">
+        <Reveal className="grid max-w-190 gap-5">
+          <h1 className="type-section text-balance text-ink">
+            {t("media.title")}
+          </h1>
+          <p className="text-lg leading-relaxed text-pretty text-ink-2">
+            {t("media.description")}
+          </p>
+        </Reveal>
+      </header>
+
+      <section
+        aria-label={t("media.title")}
+        className="site-container grid gap-12 pt-10 md:pt-14"
+      >
         {items.length === 0 ? (
-          <div className="grid justify-items-start gap-5 pb-20">
+          <div className="grid justify-items-start gap-5">
             <p className="type-h3">{t("media.empty")}</p>
             <Link href="/" className={siteButtonClass("secondary")}>
               {t("notFound.backHome")}
@@ -76,14 +96,18 @@ export default async function MediaPage({
             </Link>
           </div>
         ) : (
-          <>
-            {featured && <FeaturedNews news={featured} priority />}
-            {gridItems.length > 0 && <NewsGrid items={gridItems} />}
-          </>
+          <Reveal>
+            <NewsShowcase
+              items={showcaseItems}
+              stripLabel={t("media.stripLabel")}
+            />
+          </Reveal>
         )}
 
         <NewsPagination page={page} totalPages={totalPages} />
-      </div>
+      </section>
+
+      {setting?.facebookUrl && <FollowFacebookBand url={setting.facebookUrl} />}
     </>
   );
 }

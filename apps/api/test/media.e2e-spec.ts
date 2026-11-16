@@ -114,10 +114,7 @@ describe('Media', () => {
       const image = await uploadImage();
       await context.admin
         .post('/admin/slides')
-        .send({
-          mediaId: image.id,
-          translations: [{ locale: 'mn', title: 'Нүүр слайд' }],
-        })
+        .send({ mediaId: image.id })
         .expect(201);
 
       const response = await context.admin
@@ -125,7 +122,7 @@ describe('Media', () => {
         .expect(409);
 
       expect(response.body.usages).toEqual([
-        expect.objectContaining({ type: 'slide', title: 'Нүүр слайд' }),
+        expect.objectContaining({ type: 'slide' }),
       ]);
     });
 

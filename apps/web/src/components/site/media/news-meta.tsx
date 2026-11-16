@@ -18,7 +18,7 @@ export async function NewsMeta({ news, className }: NewsMetaProps) {
         className,
       )}
     >
-      <NewsDate publishedAt={news.publishedAt} isShort />
+      <NewsDate publishedAt={news.publishedAt} variant="short" />
       {news.videoUrl && (
         <>
           <span aria-hidden>·</span>

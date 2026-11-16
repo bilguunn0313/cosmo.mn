@@ -32,7 +32,7 @@ export async function WorldMapSection({
       <div className="site-container grid gap-y-10 py-16 md:py-22 lg:grid-cols-12 lg:gap-x-6">
         <Reveal className="grid content-start gap-5 lg:col-span-4">
           <SectionEyebrow tone="white">{t("originEyebrow")}</SectionEyebrow>
-          <h2 id="world-map-title" className="type-h2 text-balance">
+          <h2 id="world-map-title" className="type-section text-balance">
             {t("mapTitle", { count: layout.origins.length })}
           </h2>
           <p className="text-base text-night-text">{t("mapDescription")}</p>

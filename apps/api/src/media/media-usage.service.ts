@@ -70,7 +70,6 @@ export class MediaUsageService {
     ] = await Promise.all([
       this.prisma.slide.findMany({
         where: { OR: [{ mediaId: id }, { posterId: id }] },
-        include: { translations: true },
       }),
       this.prisma.brand.findMany({
         where: {
@@ -138,7 +137,7 @@ export class MediaUsageService {
       ...slides.map((slide) => ({
         type: 'slide' as const,
         id: slide.id,
-        title: pickTranslation(slide.translations, DEFAULT_LOCALE)?.title ?? '',
+        title: `Слайд ${slide.order + 1}`,
       })),
       ...brands.map((brand) => ({
         type: 'brand' as const,

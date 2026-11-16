@@ -1,13 +1,16 @@
 "use client";
 
 import { Check, Link2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 const RESET_MS = 2000;
 
-export function CopyLinkButton() {
-  const t = useTranslations("careers.jobs");
+interface CopyLinkButtonProps {
+  label: string;
+  copiedLabel: string;
+}
+
+export function CopyLinkButton({ label, copiedLabel }: CopyLinkButtonProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
@@ -39,7 +42,7 @@ export function CopyLinkButton() {
       ) : (
         <Link2 className="size-4.5" />
       )}
-      <span aria-live="polite">{isCopied ? t("copied") : t("copyLink")}</span>
+      <span aria-live="polite">{isCopied ? copiedLabel : label}</span>
     </button>
   );
 }

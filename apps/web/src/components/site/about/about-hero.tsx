@@ -35,7 +35,7 @@ export async function AboutHero({ imageUrl }: AboutHeroProps) {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-50 bg-linear-to-b from-brand-700/72 to-brand-700/0"
+        className="pointer-events-none absolute inset-x-0 top-0 h-50 bg-linear-to-b from-brand-700/85 from-30% via-brand-700/40 via-60% to-brand-700/0"
       />
 
       <div className="site-container relative flex h-full flex-col justify-end gap-4.5 pb-14 md:pb-18">

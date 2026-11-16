@@ -56,7 +56,7 @@ export async function WhatWeDoSection() {
                   className="size-6 text-brand"
                   strokeWidth={1.5}
                 />
-                <h3 className="text-lg leading-snug font-semibold text-ink">
+                <h3 className="type-h4 font-semibold text-ink">
                   {t(`about.logistics.items.${step.key}.title`)}
                 </h3>
                 <p className="text-[15px] leading-relaxed text-pretty text-ink-2">

@@ -126,7 +126,7 @@
     },
     "retail": {
       "eyebrow": "销售网络",
-      "title": "遍及蒙古所有主要零售渠道",
+      "title": "我们的合作伙伴",
       "text": "我们的产品通过超市、大卖场、零售、批发和餐饮渠道送达消费者。",
       "partners": "销售网络合作伙伴"
     },
@@ -178,15 +178,20 @@
     "fullscreen": "全屏查看"
   },
   "media": {
+    "title": "新闻与动态",
     "description": "公司新闻、活动及新品发布。",
     "empty": "暂无新闻。",
     "pagination": "分页",
     "previous": "上一页",
     "next": "下一页",
     "pageOf": "第 {page} 页，共 {total} 页",
-    "related": "更多新闻",
-    "allNews": "全部新闻",
-    "published": "发布日期"
+    "stripLabel": "选择新闻",
+    "followTitle": "关注我们的 Facebook 主页",
+    "followButton": "Facebook 主页",
+    "newsNavigation": "上一篇和下一篇新闻",
+    "previousNews": "上一篇",
+    "nextNews": "下一篇",
+    "playVideo": "播放视频"
   },
   "contact": {
     "description": "欢迎与我们洽谈合作或提出建议。",
@@ -283,10 +288,6 @@
     "areasIllustrationLabel": "产品从仓库经扫描传送带，再由卡车运送到商店的示意图",
     "areasStoreSign": "商店",
     "logistics": {
-      "eyebrow": "物流与仓储",
-      "title": "以<highlight>物流能力</highlight>为基础的运营",
-      "text": "从进口到销售网点的货架，每个环节都由我们自己的仓库和车队负责。",
-      "imageAlt": "仓库货架",
       "items": {
         "warehouse": {
           "title": "仓储",

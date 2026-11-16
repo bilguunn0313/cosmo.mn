@@ -53,10 +53,6 @@ export interface PublicSlide {
   mediaType: "IMAGE" | "VIDEO";
   mediaUrl: string;
   posterUrl: string | null;
-  linkUrl: string | null;
-  title: string;
-  subtitle: string | null;
-  buttonText: string | null;
 }
 
 export function fetchSlides(locale: Locale) {
@@ -179,6 +175,8 @@ export function fetchLatestNews(locale: Locale, limit: number) {
 
 export interface PublicNewsDetail extends PublicNewsItem {
   content: string;
+  previous: PublicNewsItem | null;
+  next: PublicNewsItem | null;
 }
 
 export function fetchNews(slug: string, locale: Locale) {

@@ -14,7 +14,7 @@ export function FadeInImage({ alt, className, ...props }: ImageProps) {
       onLoad={() => setIsLoaded(true)}
       className={cn(
         "transition-opacity duration-300 ease-out motion-reduce:transition-none",
-        !isLoaded && "opacity-0",
+        !isLoaded && !props.priority && "opacity-0",
         className,
       )}
     />

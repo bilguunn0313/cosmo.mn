@@ -126,7 +126,7 @@
     },
     "retail": {
       "eyebrow": "Retail network",
-      "title": "In every major retail channel in Mongolia",
+      "title": "Our partners",
       "text": "Our products reach customers through supermarkets, hypermarkets, retail, wholesale and HORECA.",
       "partners": "Retail network partners"
     },
@@ -178,15 +178,20 @@
     "fullscreen": "Full screen"
   },
   "media": {
+    "title": "News and events",
     "description": "Company news, events and new product launches.",
     "empty": "No news yet.",
     "pagination": "Pagination",
     "previous": "Previous",
     "next": "Next",
     "pageOf": "{page} of {total}",
-    "related": "More news",
-    "allNews": "All news",
-    "published": "Published"
+    "stripLabel": "Choose a story",
+    "followTitle": "Follow our Facebook page",
+    "followButton": "Facebook page",
+    "newsNavigation": "Previous and next story",
+    "previousNews": "Previous story",
+    "nextNews": "Next story",
+    "playVideo": "Play video"
   },
   "contact": {
     "description": "Send us your partnership ideas, questions or feedback.",
@@ -283,10 +288,6 @@
     "areasIllustrationLabel": "Illustration of products moving from the warehouse along a scanned conveyor and by truck to a store",
     "areasStoreSign": "STORE",
     "logistics": {
-      "eyebrow": "Logistics and warehousing",
-      "title": "Operations built on <highlight>logistics capability</highlight>",
-      "text": "From import to the shelf at the point of sale, we handle every step with our own warehouses and fleet.",
-      "imageAlt": "Warehouse shelves",
       "items": {
         "warehouse": {
           "title": "Warehousing",

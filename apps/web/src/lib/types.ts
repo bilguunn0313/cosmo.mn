@@ -50,24 +50,14 @@ export type MediaUsageType =
 
 export type Locale = "mn" | "en" | "zh";
 
-export interface SlideTranslation {
-  id: number;
-  locale: Locale;
-  title: string;
-  subtitle: string | null;
-  buttonText: string | null;
-}
-
 export interface Slide {
   id: number;
   mediaId: number;
   media: Media;
   posterId: number | null;
   poster: Media | null;
-  linkUrl: string | null;
   order: number;
   isActive: boolean;
-  translations: SlideTranslation[];
 }
 
 export type SectionPage = "home" | "about" | "human-resources";

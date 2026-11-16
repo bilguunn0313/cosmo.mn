@@ -50,7 +50,7 @@ export async function HomeHero({ slides, stats }: HomeHeroProps) {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-50 bg-linear-to-b from-brand-700/72 to-brand-700/0"
+        className="pointer-events-none absolute inset-x-0 top-0 h-50 bg-linear-to-b from-brand-700/85 from-30% via-brand-700/40 via-60% to-brand-700/0"
       />
 
       <div className="site-container pointer-events-none relative flex h-full flex-col justify-end gap-6 pt-21 pb-28 lg:justify-center lg:pb-14">

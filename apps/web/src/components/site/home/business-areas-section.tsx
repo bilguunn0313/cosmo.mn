@@ -3,20 +3,67 @@ import Image from "next/image";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
+import { DEFAULT_BUSINESS_AREAS } from "@/lib/business-areas";
+import { htmlToPlainText } from "@/lib/plain-text";
+import type { PublicSection } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
-const BUSINESS_AREAS = [
-  { key: "import", imageUrl: "/images/home/area-import.webp" },
-  { key: "warehouse", imageUrl: "/images/home/area-warehouse.webp" },
-  { key: "distribution", imageUrl: "/images/home/area-distribution.webp" },
-  { key: "sales", imageUrl: "/images/home/area-sales.webp" },
-  { key: "marketing", imageUrl: "/images/home/area-marketing.webp" },
-] as const;
+interface BusinessArea {
+  id: string;
+  title: string;
+  text: string;
+  imageUrl: string | null;
+}
 
-const TOP_ROW_SIZE = 3;
+function pairRowItemCount(count: number) {
+  const remainder = count % 3;
 
-export async function BusinessAreasSection() {
+  if (remainder === 2) {
+    return 2;
+  }
+
+  if (remainder === 1 && count > 1) {
+    return 4;
+  }
+
+  return 0;
+}
+
+function cardLayoutClass(index: number, count: number) {
+  const isLastOfOddCount = count % 2 === 1 && index === count - 1;
+  const isInPairRow = index >= count - pairRowItemCount(count);
+
+  return cn(
+    "h-80",
+    isLastOfOddCount && "md:col-span-2",
+    count === 1 && "lg:col-span-6 lg:h-95",
+    count > 1 && (isInPairRow ? "lg:col-span-3" : "lg:col-span-2 lg:h-95"),
+  );
+}
+
+interface BusinessAreasSectionProps {
+  sections: PublicSection[];
+}
+
+export async function BusinessAreasSection({
+  sections,
+}: BusinessAreasSectionProps) {
   const t = await getTranslations("home.areas");
+
+  const areas: BusinessArea[] =
+    sections.length > 0
+      ? sections.map((section) => ({
+          id: String(section.id),
+          title: section.title,
+          text: htmlToPlainText(section.body),
+          imageUrl: section.imageUrl,
+        }))
+      : DEFAULT_BUSINESS_AREAS.map((area) => ({
+          id: area.key,
+          title: t(`items.${area.key}.title`),
+          text: t(`items.${area.key}.text`),
+          imageUrl: area.imageUrl,
+        }));
 
   return (
     <section
@@ -35,30 +82,23 @@ export async function BusinessAreasSection() {
         </Reveal>
 
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-6">
-          {BUSINESS_AREAS.map((area, index) => (
-            <li
-              key={area.key}
-              className={cn(
-                "h-80",
-                index === BUSINESS_AREAS.length - 1 && "md:col-span-2",
-                index < TOP_ROW_SIZE
-                  ? "lg:col-span-2 lg:h-95"
-                  : "lg:col-span-3",
-              )}
-            >
+          {areas.map((area, index) => (
+            <li key={area.id} className={cardLayoutClass(index, areas.length)}>
               <Reveal
                 from="zoom"
                 index={index}
                 className="relative h-full overflow-hidden rounded-[20px] bg-brand-900"
               >
-                <Image
-                  src={area.imageUrl}
-                  alt=""
-                  fill
-                  unoptimized
-                  sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
-                />
+                {area.imageUrl && (
+                  <Image
+                    src={area.imageUrl}
+                    alt=""
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                )}
                 <div
                   aria-hidden
                   className="absolute inset-0 bg-linear-to-t from-brand-900/90 via-brand-900/25 via-55% to-brand-900/0"
@@ -68,11 +108,11 @@ export async function BusinessAreasSection() {
                   delay={0.3}
                   className="absolute inset-x-6 bottom-6 flex max-w-115 flex-col gap-2"
                 >
-                  <h3 className="font-display text-[26px] leading-tight font-semibold">
-                    {t(`items.${area.key}.title`)}
+                  <h3 className="type-h3 leading-tight font-semibold">
+                    {area.title}
                   </h3>
                   <p className="text-[15px] leading-normal text-pretty text-white/88">
-                    {t(`items.${area.key}.text`)}
+                    {area.text}
                   </p>
                 </Reveal>
               </Reveal>

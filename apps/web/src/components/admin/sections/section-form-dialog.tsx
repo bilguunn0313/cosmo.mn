@@ -55,14 +55,19 @@ function isFilled(values: SectionTranslationValues, bodyMode: SectionBodyMode) {
   return values.title.trim() !== "" || !isBodyEmpty(values.body, bodyMode);
 }
 
-function buildSchema(bodyMode: SectionBodyMode) {
+function buildSchema(bodyMode: SectionBodyMode, isImageRequired: boolean) {
   const translation = z.object({
     title: z.string().trim().max(200),
     body: z.string().max(bodyMode === "rich" ? 50000 : 5000),
   });
 
   return z.object({
-    image: z.custom<Media | null>(),
+    image: z
+      .custom<Media | null>()
+      .refine(
+        (image) => !isImageRequired || image !== null,
+        "Зураг сонгоно уу",
+      ),
     linkUrl: z
       .string()
       .trim()
@@ -168,6 +173,7 @@ interface SectionFormProps {
   section: Section | null;
   showLink: boolean;
   bodyMode: SectionBodyMode;
+  isImageRequired: boolean;
   onDone: () => void;
 }
 
@@ -176,6 +182,7 @@ function SectionForm({
   section,
   showLink,
   bodyMode,
+  isImageRequired,
   onDone,
 }: SectionFormProps) {
   const saveSection = useSaveSection(source);
@@ -186,7 +193,7 @@ function SectionForm({
     setError,
     formState: { errors },
   } = useForm<SectionFormValues>({
-    resolver: zodResolver(buildSchema(bodyMode)),
+    resolver: zodResolver(buildSchema(bodyMode, isImageRequired)),
     defaultValues: defaultValues(section, bodyMode),
   });
 
@@ -221,7 +228,13 @@ function SectionForm({
       <FormField
         label="Зураг"
         htmlFor="section-image"
-        hint="Заавал биш. Хэвтээ, 1600×1000 орчим харьцаатай зураг тохиромжтой"
+        required={isImageRequired}
+        error={errors.image?.message}
+        hint={
+          isImageRequired
+            ? "Хэвтээ, 1600×1000 орчим харьцаатай зураг тохиромжтой"
+            : "Заавал биш. Хэвтээ, 1600×1000 орчим харьцаатай зураг тохиромжтой"
+        }
       >
         <Controller
           control={control}
@@ -230,6 +243,7 @@ function SectionForm({
             <MediaField
               value={field.value}
               onChange={field.onChange}
+              invalid={Boolean(errors.image)}
               removable
             />
           )}
@@ -348,6 +362,7 @@ interface SectionFormDialogProps {
   onOpenChange: (open: boolean) => void;
   showLink?: boolean;
   bodyMode?: SectionBodyMode;
+  isImageRequired?: boolean;
 }
 
 export function SectionFormDialog({
@@ -357,6 +372,7 @@ export function SectionFormDialog({
   onOpenChange,
   showLink = false,
   bodyMode = "plain",
+  isImageRequired = false,
 }: SectionFormDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -371,6 +387,7 @@ export function SectionFormDialog({
             section={section}
             showLink={showLink}
             bodyMode={bodyMode}
+            isImageRequired={isImageRequired}
             onDone={() => onOpenChange(false)}
           />
         )}

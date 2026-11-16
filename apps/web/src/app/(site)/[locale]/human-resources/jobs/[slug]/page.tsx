@@ -10,7 +10,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
-import { CopyLinkButton } from "@/components/site/careers/copy-link-button";
+import { CopyLinkButton } from "@/components/site/copy-link-button";
 import { JobsTable } from "@/components/site/careers/jobs-table";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
@@ -196,7 +196,10 @@ export default async function JobPage({
           )}
 
           <div className="border-t border-rule pt-3">
-            <CopyLinkButton />
+            <CopyLinkButton
+              label={t("careers.jobs.copyLink")}
+              copiedLabel={t("careers.jobs.copied")}
+            />
           </div>
         </aside>
 

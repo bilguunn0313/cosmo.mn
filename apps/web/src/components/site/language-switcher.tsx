@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const TONE_CLASSES = {
   light: "text-ink-3 hover:text-brand-700 aria-[current=true]:text-ink",
-  dark: "text-white/75 hover:text-white aria-[current=true]:text-white",
+  dark: "text-white/85 hover:text-white aria-[current=true]:text-white",
 } as const;
 
 interface LanguageSwitcherProps {

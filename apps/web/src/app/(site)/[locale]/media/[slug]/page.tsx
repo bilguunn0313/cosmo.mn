@@ -1,20 +1,18 @@
-import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { FollowFacebookBand } from "@/components/site/follow-facebook-band";
 import { ImageReveal } from "@/components/site/image-reveal";
 import { NewsDate } from "@/components/site/media/news-date";
-import { NewsGrid } from "@/components/site/media/news-grid";
+import { NewsPrevNext } from "@/components/site/media/news-prev-next";
+import { NewsVideo } from "@/components/site/media/news-video";
 import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
 import { getPageLocale } from "@/i18n/locale";
-import { Link } from "@/i18n/navigation";
-import { fetchLatestNews, fetchNews } from "@/lib/public-api";
+import { fetchNews, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 import { newsPath } from "@/lib/site-links";
-
-const MAX_RELATED = 3;
 
 export async function generateMetadata({
   params,
@@ -44,35 +42,41 @@ export default async function NewsPage({
   const locale = await getPageLocale(params);
   const { slug } = await params;
   const t = await getTranslations();
-  const [news, latest] = await Promise.all([
+  const [news, setting] = await Promise.all([
     fetchNews(slug, locale),
-    fetchLatestNews(locale, MAX_RELATED + 1),
+    fetchSiteSetting(locale),
   ]);
 
   if (!news) {
     notFound();
   }
 
-  const related = latest
-    .filter((item) => item.slug !== news.slug)
-    .slice(0, MAX_RELATED);
-
   return (
     <>
       <article>
         <header className="site-container pt-6 md:pt-8">
-          <Link
-            href="/media"
-            className="group inline-flex items-center gap-2 py-1.5 text-sm font-medium text-brand-700"
-          >
-            <ArrowLeft className="size-4 transition-[translate] duration-200 ease-out group-hover:-translate-x-0.5" />
-            {t("media.allNews")}
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: t("nav.home"), href: "/" },
+              { label: t("nav.media"), href: "/media" },
+            ]}
+          />
 
-          <Reveal className="mt-8 grid max-w-275 gap-6 md:mt-12">
-            <h1 className="type-display text-balance">{news.title}</h1>
+          <Reveal className="mx-auto mt-10 grid max-w-205 gap-5 md:mt-14">
+            <p className="flex gap-2.5 text-[15px] font-medium text-ink-2">
+              <NewsDate publishedAt={news.publishedAt} variant="month" />
+              {news.videoUrl && (
+                <>
+                  <span aria-hidden>·</span>
+                  <span className="font-semibold text-brand-700">
+                    {t("home.video")}
+                  </span>
+                </>
+              )}
+            </p>
+            <h1 className="type-section text-balance text-ink">{news.title}</h1>
             {news.summary && (
-              <p className="max-w-215 text-lg leading-[1.5] font-semibold text-pretty text-ink-2">
+              <p className="text-lg leading-relaxed text-pretty text-ink-2 md:text-xl">
                 {news.summary}
               </p>
             )}
@@ -80,20 +84,19 @@ export default async function NewsPage({
         </header>
 
         {news.videoUrl ? (
-          <div className="site-container mt-10 md:mt-14">
-            <video
-              src={news.videoUrl}
-              poster={news.coverUrl ?? undefined}
-              controls
-              playsInline
-              preload="metadata"
-              className="aspect-video w-full bg-brand-night object-contain"
-            />
-          </div>
+          <Reveal className="site-container mt-8 md:mt-12">
+            <div className="mx-auto max-w-280">
+              <NewsVideo
+                src={news.videoUrl}
+                poster={news.coverUrl}
+                playLabel={t("media.playVideo")}
+              />
+            </div>
+          </Reveal>
         ) : (
           news.coverUrl && (
-            <div className="site-container mt-10 md:mt-14">
-              <div className="relative h-[min(70vh,640px)] overflow-hidden bg-surface">
+            <div className="site-container mt-8 md:mt-12">
+              <div className="relative mx-auto aspect-video max-w-280 overflow-hidden rounded-card bg-surface">
                 <ImageReveal delay={0.15}>
                   <Image
                     src={news.coverUrl}
@@ -101,7 +104,7 @@ export default async function NewsPage({
                     fill
                     unoptimized
                     priority
-                    sizes="100vw"
+                    sizes="(min-width: 1200px) 1120px, 100vw"
                     className="object-cover"
                   />
                 </ImageReveal>
@@ -110,36 +113,19 @@ export default async function NewsPage({
           )
         )}
 
-        <div className="site-container grid gap-8 pt-10 md:pt-16 lg:grid-cols-12 lg:gap-x-6">
-          <dl className="grid content-start gap-1 pt-4 lg:sticky lg:top-30 lg:col-span-3 lg:self-start">
-            <dt className="text-[13px] text-ink-3">{t("media.published")}</dt>
-            <dd className="text-lg font-medium">
-              <NewsDate publishedAt={news.publishedAt} />
-            </dd>
-          </dl>
-
+        <div className="site-container pt-10 md:pt-16">
           {news.content && (
             <div
-              className="rich-text max-w-[68ch] text-base text-ink lg:col-span-7 lg:col-start-5"
+              className="rich-text mx-auto max-w-175 text-[17px] leading-[1.75] text-ink md:text-lg"
               dangerouslySetInnerHTML={{ __html: news.content }}
             />
           )}
         </div>
       </article>
 
-      {related.length > 0 && (
-        <section
-          aria-labelledby="related-news-title"
-          className="site-container grid gap-6 pt-20 md:pt-32"
-        >
-          <SectionHeader
-            id="related-news-title"
-            title={t("media.related")}
-            link={{ href: "/media", label: t("media.allNews") }}
-          />
-          <NewsGrid items={related} />
-        </section>
-      )}
+      <NewsPrevNext previous={news.previous} next={news.next} />
+
+      {setting?.facebookUrl && <FollowFacebookBand url={setting.facebookUrl} />}
     </>
   );
 }

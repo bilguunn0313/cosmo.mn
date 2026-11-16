@@ -253,7 +253,7 @@ export function HistoryTimeline({
                   )}
                 />
               </span>
-              <h3 className="text-lg leading-[1.35] font-semibold tracking-[-0.015em] text-balance text-ink">
+              <h3 className="type-h4 font-semibold text-balance text-ink">
                 {item.title}
               </h3>
               {item.lines.map((line) => (

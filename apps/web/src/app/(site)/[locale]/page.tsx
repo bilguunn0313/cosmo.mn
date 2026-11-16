@@ -15,6 +15,7 @@ import {
   fetchLatestNews,
   fetchOriginCountries,
   fetchRetailPartners,
+  fetchSections,
   fetchSiteSetting,
   fetchSlides,
 } from "@/lib/public-api";
@@ -39,10 +40,11 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = await getPageLocale(params);
-  const [slides, brands, setting, countries, partners, news] =
+  const [slides, brands, areas, setting, countries, partners, news] =
     await Promise.all([
       fetchSlides(locale),
       fetchBrands(locale),
+      fetchSections("home", locale),
       fetchSiteSetting(locale),
       fetchOriginCountries(locale),
       fetchRetailPartners(locale),
@@ -54,7 +56,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <HomeHero slides={slides} stats={stats} />
       <BrandMarquee brands={brands} />
-      <BusinessAreasSection />
+      <BusinessAreasSection sections={areas} />
       <WhyCosmoSection stats={stats} />
       <WorldMapSection countries={countries} locale={locale} />
       <RetailPartnersSection partners={partners} />
