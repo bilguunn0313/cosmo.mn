@@ -5,16 +5,13 @@ function unsplashUrl(photoId: string) {
 }
 
 const STOCK_BANNERS: Record<BannerPage, string> = {
-  about: unsplashUrl("photo-1586528116311-ad8dd3c8310d"),
-  careers: unsplashUrl("photo-1786719664257-1bc47a776f4c"),
+  about: "/images/about/cosmo-aerial.webp",
+  careers: unsplashUrl("photo-1552664730-d307ca884978"),
   media: unsplashUrl("photo-1475721027785-f74eccf877e2"),
   brands: unsplashUrl("photo-1578916171728-46686eac8d58"),
   contact: unsplashUrl("photo-1653380550474-56f0b47da4cf"),
+  hrGovernance: unsplashUrl("photo-1786719664257-1bc47a776f4c"),
 };
-
-export const CONTACT_MAP_PLACEHOLDER = unsplashUrl(
-  "photo-1653356549582-311057045381",
-);
 
 export function pageBannerUrl(
   setting: PublicSiteSetting | null,

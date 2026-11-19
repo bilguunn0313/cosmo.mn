@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JobsPanel } from "@/components/admin/jobs/jobs-panel";
 import { PageBannerPanel } from "@/components/admin/page-banner-panel";
 import { PageHeader } from "@/components/admin/page-header";
 import { SectionsPanel } from "@/components/admin/sections/sections-panel";
@@ -13,16 +14,30 @@ export default function HumanResourcesPageAdmin() {
         description="Сайтын «Хүний нөөц» хуудас. Хэсгүүд дээрээс доош энэ дарааллаар харагдана."
       />
 
-      <PageBannerPanel page="careers" step={1} />
+      <PageBannerPanel
+        page="careers"
+        step={1}
+        title="Хүний нөөцийн бодлогын зураг"
+        description="Хуудасны эхэнд, «Хүний нөөцийн бодлого» текстийн баруун талд гарах зураг. Хэвтээ, 1600×1200 орчим зураг тохиромжтой."
+      />
+
+      <PageBannerPanel
+        page="hrGovernance"
+        step={2}
+        title="Хүний нөөцийн засаглалын зураг"
+        description="«Хүний нөөцийн засаглал» хэсгийн зүүн талд гарах зураг. Доод хэсэгт нь «Хүний нөөцийн мэргэжилтнүүд» гэсэн бичиг цагаанаар давхарлан бичигдэх тул доод хэсэг нь хэт цайвар биш зураг тохиромжтой. 1200×1200 орчим."
+      />
 
       <SectionsPanel
         source={{ page: "human-resources" }}
-        step={2}
+        step={3}
         title="Хэсгүүд"
-        description="Жишээ нь «Хүний нөөцийн бодлого», «Байгууллагын соёл», «Сургалт, хөгжил»."
-        emptyText="Одоогоор хэсэг алга. «Хэсэг нэмэх» дээр дарж «Хүний нөөцийн бодлого» хэсгээс эхэлнэ үү."
+        description="«Хүний нөөцийн засаглал» хэсгийн доор харагдана. Жишээ нь «Байгууллагын соёл», «Сургалт, хөгжил»."
+        emptyText="Одоогоор нэмэлт хэсэг алга."
         bodyMode="rich"
       />
+
+      <JobsPanel step={4} />
     </div>
   );
 }

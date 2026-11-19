@@ -1,5 +1,11 @@
-import type { BrandCategory, CountryCode, SectionPage } from "@cosmo/shared";
-import type { ValueKey } from "./about";
+import type {
+  BrandCategory,
+  CountryCode,
+  EmploymentType,
+  JobDepartment,
+  JobStage,
+  SectionPage,
+} from "@cosmo/shared";
 import type { Locale } from "./types";
 
 export const API_URL = process.env.API_URL ?? "http://localhost:4000";
@@ -21,7 +27,8 @@ export async function fetchPublic<T>(path: string, locale: Locale): Promise<T> {
   return (await response.json()) as T;
 }
 
-export type BannerPage = "about" | "careers" | "media" | "brands" | "contact";
+export type BannerPage =
+  "about" | "careers" | "media" | "brands" | "contact" | "hrGovernance";
 
 export interface PublicSiteSetting {
   phone: string | null;
@@ -31,14 +38,14 @@ export interface PublicSiteSetting {
   youtubeUrl: string | null;
   linkedinUrl: string | null;
   mapUrl: string | null;
-  mapImageUrl: string | null;
+  mapEmbedUrl: string | null;
   foundedYear: number | null;
   employeeCount: number | null;
   salesPointCount: number | null;
   productCount: number | null;
   pageBanners: Record<BannerPage, string | null>;
-  valueImages: Record<ValueKey, string | null>;
   homeAboutImageUrl: string | null;
+  ceoImageUrl: string | null;
   address: string | null;
   workingHours: string | null;
 }
@@ -48,10 +55,6 @@ export interface PublicSlide {
   mediaType: "IMAGE" | "VIDEO";
   mediaUrl: string;
   posterUrl: string | null;
-  linkUrl: string | null;
-  title: string;
-  subtitle: string | null;
-  buttonText: string | null;
 }
 
 export function fetchSlides(locale: Locale) {
@@ -65,10 +68,12 @@ export interface PublicBrand {
   categories: BrandCategory[];
   name: string;
   summary: string | null;
+  productTypes: string | null;
   logoUrl: string | null;
+  logoWidth: number | null;
+  logoHeight: number | null;
   coverUrl: string | null;
   showcaseImageUrl: string | null;
-  originCountry: CountryCode | null;
   featuredOrder: number | null;
 }
 
@@ -76,6 +81,25 @@ export function fetchBrands(locale: Locale) {
   return fetchPublic<PublicBrand[]>("/public/brands", locale).catch(
     (): PublicBrand[] => [],
   );
+}
+
+export function fetchOriginCountries(locale: Locale) {
+  return fetchPublic<CountryCode[]>("/public/origin-countries", locale).catch(
+    (): CountryCode[] => [],
+  );
+}
+
+export interface PublicRetailPartner {
+  id: number;
+  name: string;
+  logoUrl: string;
+}
+
+export function fetchRetailPartners(locale: Locale) {
+  return fetchPublic<PublicRetailPartner[]>(
+    "/public/retail-partners",
+    locale,
+  ).catch((): PublicRetailPartner[] => []);
 }
 
 export interface PublicSection {
@@ -153,11 +177,45 @@ export function fetchLatestNews(locale: Locale, limit: number) {
 
 export interface PublicNewsDetail extends PublicNewsItem {
   content: string;
+  previous: PublicNewsItem | null;
+  next: PublicNewsItem | null;
 }
 
 export function fetchNews(slug: string, locale: Locale) {
   return fetchPublic<PublicNewsDetail>(
     `/public/news/${encodeURIComponent(slug)}`,
+    locale,
+  ).catch(() => null);
+}
+
+export interface PublicJob {
+  slug: string;
+  title: string;
+  department: JobDepartment;
+  employmentType: EmploymentType;
+  stage: JobStage;
+  location: string | null;
+  openedAt: string;
+  closesAt: string | null;
+}
+
+export interface PublicJobDetail extends PublicJob {
+  salary: string | null;
+  summary: string | null;
+  duties: string[];
+  requirements: string[];
+  offers: string[];
+}
+
+export function fetchJobs(locale: Locale) {
+  return fetchPublic<PublicJob[]>("/public/jobs", locale).catch(
+    (): PublicJob[] => [],
+  );
+}
+
+export function fetchJob(slug: string, locale: Locale) {
+  return fetchPublic<PublicJobDetail>(
+    `/public/jobs/${encodeURIComponent(slug)}`,
     locale,
   ).catch(() => null);
 }

@@ -1,4 +1,9 @@
-import type { CountryCode } from "@cosmo/shared";
+import type {
+  CountryCode,
+  EmploymentType,
+  JobDepartment,
+  JobStage,
+} from "@cosmo/shared";
 
 export interface AuthAdmin {
   id: number;
@@ -39,18 +44,11 @@ export type MediaUsageType =
   | "product"
   | "section"
   | "milestone"
+  | "retailPartner"
   | "news"
   | "siteSetting";
 
 export type Locale = "mn" | "en" | "zh";
-
-export interface SlideTranslation {
-  id: number;
-  locale: Locale;
-  title: string;
-  subtitle: string | null;
-  buttonText: string | null;
-}
 
 export interface Slide {
   id: number;
@@ -58,10 +56,8 @@ export interface Slide {
   media: Media;
   posterId: number | null;
   poster: Media | null;
-  linkUrl: string | null;
   order: number;
   isActive: boolean;
-  translations: SlideTranslation[];
 }
 
 export type SectionPage = "home" | "about" | "human-resources";
@@ -99,6 +95,15 @@ export interface Milestone {
   translations: MilestoneTranslation[];
 }
 
+export interface RetailPartner {
+  id: number;
+  name: string;
+  logoId: number;
+  logo: Media;
+  order: number;
+  isVisible: boolean;
+}
+
 export type BrandCategory = "FOOD" | "BEAUTY" | "HOUSEHOLD";
 
 export interface BrandTranslation {
@@ -106,6 +111,7 @@ export interface BrandTranslation {
   locale: Locale;
   name: string;
   summary: string | null;
+  productTypes: string | null;
 }
 
 export interface Brand {
@@ -175,11 +181,13 @@ export interface SiteSetting {
   id: number;
   phone: string | null;
   email: string | null;
+  hrEmail: string | null;
   facebookUrl: string | null;
   instagramUrl: string | null;
   youtubeUrl: string | null;
   linkedinUrl: string | null;
   mapUrl: string | null;
+  mapEmbedUrl: string | null;
   mapImageId: number | null;
   mapImage: Media | null;
   aboutBannerImageId: number | null;
@@ -192,6 +200,10 @@ export interface SiteSetting {
   brandsBannerImage: Media | null;
   contactBannerImageId: number | null;
   contactBannerImage: Media | null;
+  hrGovernanceImageId: number | null;
+  hrGovernanceImage: Media | null;
+  ceoImageId: number | null;
+  ceoImage: Media | null;
   valuePeopleImageId: number | null;
   valuePeopleImage: Media | null;
   valueSatisfactionImageId: number | null;
@@ -228,4 +240,28 @@ export interface MediaUsage {
   type: MediaUsageType;
   id: number;
   title: string;
+}
+
+export interface JobPostingTranslation {
+  id: number;
+  locale: Locale;
+  title: string;
+  location: string | null;
+  salary: string | null;
+  summary: string | null;
+  duties: string | null;
+  requirements: string | null;
+  offers: string | null;
+}
+
+export interface JobPosting {
+  id: number;
+  slug: string;
+  department: JobDepartment;
+  employmentType: EmploymentType;
+  stage: JobStage;
+  openedAt: string;
+  closesAt: string | null;
+  isPublished: boolean;
+  translations: JobPostingTranslation[];
 }

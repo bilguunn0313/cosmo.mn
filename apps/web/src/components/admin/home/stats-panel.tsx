@@ -154,10 +154,6 @@ function StatsForm({ setting }: { setting: SiteSetting }) {
         </FormField>
       </div>
 
-      <p className="text-sm text-muted-foreground">
-        Хоосон үлдээсэн үзүүлэлт сайт дээр харагдахгүй.
-      </p>
-
       <Button
         type="submit"
         className="w-fit"
@@ -182,7 +178,7 @@ export function StatsPanel({ step }: StatsPanelProps) {
       <PanelHeader
         step={step}
         title="Тоон үзүүлэлт"
-        description="Нүүр хуудасны slide-ийн доорх цайвар хөх туузанд 4 тоогоор харагдана. Зочин хэсэг рүү гүйлгэхэд 0-ээс тоологдож гарна."
+        description="«Яагаад Космо Трейд» хэсгийн бичвэрт орох тоонууд."
       />
       {setting.data ? (
         <StatsForm setting={setting.data} />

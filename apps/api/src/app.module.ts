@@ -7,10 +7,12 @@ import { AuthModule } from './auth/auth.module';
 import { BrandsModule } from './brands/brands.module';
 import { ContactModule } from './contact/contact.module';
 import { HealthModule } from './health/health.module';
+import { JobsModule } from './jobs/jobs.module';
 import { MediaModule } from './media/media.module';
 import { MilestonesModule } from './milestones/milestones.module';
 import { NewsModule } from './news/news.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RetailPartnersModule } from './retail-partners/retail-partners.module';
 import { SectionsModule } from './sections/sections.module';
 import { SiteSettingsModule } from './site-settings/site-settings.module';
 import { SlidesModule } from './slides/slides.module';
@@ -29,6 +31,8 @@ import { SlidesModule } from './slides/slides.module';
     SectionsModule,
     MilestonesModule,
     NewsModule,
+    JobsModule,
+    RetailPartnersModule,
     SiteSettingsModule,
     ContactModule,
   ],

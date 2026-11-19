@@ -18,6 +18,24 @@ const newsInclude = {
 } satisfies Prisma.NewsInclude;
 
 type NewsTranslations = CreateNewsInput['translations'];
+type NewsWithRelations = Prisma.NewsGetPayload<{ include: typeof newsInclude }>;
+
+function visibleNewsWhere(now: Date): Prisma.NewsWhereInput {
+  return { isPublished: true, publishedAt: { lte: now } };
+}
+
+function toPublicListItem(news: NewsWithRelations, locale: Locale) {
+  const translation = pickTranslation(news.translations, locale);
+
+  return {
+    slug: news.slug,
+    title: translation?.title ?? '',
+    summary: translation?.summary ?? null,
+    coverUrl: news.coverImage?.url ?? null,
+    videoUrl: news.video?.url ?? null,
+    publishedAt: news.publishedAt,
+  };
+}
 
 function sanitizeTranslations(translations: NewsTranslations) {
   return translations.map((translation) => ({
@@ -124,10 +142,7 @@ export class NewsService {
   }
 
   async findPublished(query: PublicNewsQuery) {
-    const where: Prisma.NewsWhereInput = {
-      isPublished: true,
-      publishedAt: { lte: new Date() },
-    };
+    const where = visibleNewsWhere(new Date());
 
     const [items, total] = await Promise.all([
       this.prisma.news.findMany({
@@ -141,18 +156,7 @@ export class NewsService {
     ]);
 
     return {
-      items: items.map((news) => {
-        const translation = pickTranslation(news.translations, query.locale);
-
-        return {
-          slug: news.slug,
-          title: translation?.title ?? '',
-          summary: translation?.summary ?? null,
-          coverUrl: news.coverImage?.url ?? null,
-          videoUrl: news.video?.url ?? null,
-          publishedAt: news.publishedAt,
-        };
-      }),
+      items: items.map((news) => toPublicListItem(news, query.locale)),
       total,
       page: query.page,
       limit: query.limit,
@@ -165,23 +169,37 @@ export class NewsService {
       include: newsInclude,
     });
 
-    const isVisible =
-      news?.isPublished && news.publishedAt && news.publishedAt <= new Date();
+    const now = new Date();
+    const publishedAt = news?.isPublished ? news.publishedAt : null;
 
-    if (!news || !isVisible) {
+    if (!news || !publishedAt || publishedAt > now) {
       throw new NotFoundException('Мэдээ олдсонгүй');
     }
+
+    const [previous, next] = await Promise.all([
+      this.prisma.news.findFirst({
+        where: {
+          AND: [visibleNewsWhere(now), { publishedAt: { lt: publishedAt } }],
+        },
+        orderBy: { publishedAt: 'desc' },
+        include: newsInclude,
+      }),
+      this.prisma.news.findFirst({
+        where: {
+          AND: [visibleNewsWhere(now), { publishedAt: { gt: publishedAt } }],
+        },
+        orderBy: { publishedAt: 'asc' },
+        include: newsInclude,
+      }),
+    ]);
 
     const translation = pickTranslation(news.translations, locale);
 
     return {
-      slug: news.slug,
-      title: translation?.title ?? '',
-      summary: translation?.summary ?? null,
+      ...toPublicListItem(news, locale),
       content: translation?.content ?? '',
-      coverUrl: news.coverImage?.url ?? null,
-      videoUrl: news.video?.url ?? null,
-      publishedAt: news.publishedAt,
+      previous: previous ? toPublicListItem(previous, locale) : null,
+      next: next ? toPublicListItem(next, locale) : null,
     };
   }
 }

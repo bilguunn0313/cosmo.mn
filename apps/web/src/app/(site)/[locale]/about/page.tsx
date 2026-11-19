@@ -4,8 +4,8 @@ import { CeoMessage } from "@/components/site/about/ceo-message";
 import { CompanyIntro } from "@/components/site/about/company-intro";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
 import { PurposeSection } from "@/components/site/about/purpose-section";
-import { ValuesList } from "@/components/site/about/values-list";
-import { PageBanner } from "@/components/site/page-banner";
+import { ValuesSection } from "@/components/site/about/values-section";
+import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { getPageLocale } from "@/i18n/locale";
 import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchMilestones, fetchSiteSetting } from "@/lib/public-api";
@@ -37,19 +37,19 @@ export default async function AboutPage({
 
   return (
     <>
-      <PageBanner
-        title={t("nav.about")}
-        description={t("about.description")}
-        imageUrl={pageBannerUrl(setting, "about")}
-      />
-      <CompanyIntro />
-      <CeoMessage />
       <PurposeSection />
+      <CompanyIntro imageUrl={pageBannerUrl(setting, "about")} />
+      <CeoMessage photoUrl={setting?.ceoImageUrl ?? null} />
+      <ValuesSection />
       <HistoryTimeline
-        title={t("about.historyTitle")}
+        eyebrow={t("about.historyTitle")}
         milestones={milestones}
       />
-      <ValuesList images={setting?.valueImages} />
+      <PartnerCtaSection
+        title={t("about.partnerTitle")}
+        text={t("about.partnerText")}
+        isDark
+      />
     </>
   );
 }

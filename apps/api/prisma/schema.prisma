@@ -25,6 +25,31 @@ enum BrandCategory {
   HOUSEHOLD
 }
 
+enum JobDepartment {
+  warehouse
+  sales
+  administration
+  finance
+  management
+  businessDevelopment
+  marketing
+  it
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  SHIFT
+  CONTRACT
+  INTERNSHIP
+}
+
+enum JobStage {
+  OPEN
+  INTERVIEW
+  DECIDED
+}
+
 model Admin {
   id           Int      @id @default(autoincrement())
   email        String   @unique
@@ -46,28 +71,31 @@ model Media {
   duration     Int?
   createdAt    DateTime  @default(now())
 
-  slides                         Slide[]        @relation("SlideMedia")
-  slidePosters                   Slide[]        @relation("SlidePoster")
-  brandLogos                     Brand[]        @relation("BrandLogo")
-  brandCovers                    Brand[]        @relation("BrandCover")
-  brandShowcases                 Brand[]        @relation("BrandShowcase")
+  slides                         Slide[]         @relation("SlideMedia")
+  slidePosters                   Slide[]         @relation("SlidePoster")
+  brandLogos                     Brand[]         @relation("BrandLogo")
+  brandCovers                    Brand[]         @relation("BrandCover")
+  brandShowcases                 Brand[]         @relation("BrandShowcase")
   brandSections                  BrandSection[]
   products                       Product[]
   sections                       Section[]
   milestones                     Milestone[]
-  newsCovers                     News[]         @relation("NewsCover")
-  newsVideos                     News[]         @relation("NewsVideo")
-  siteSettingMaps                SiteSetting[]  @relation("SiteSettingMap")
-  siteSettingAbouts              SiteSetting[]  @relation("SiteSettingAboutBanner")
-  siteSettingCareers             SiteSetting[]  @relation("SiteSettingCareersBanner")
-  siteSettingMedias              SiteSetting[]  @relation("SiteSettingMediaBanner")
-  siteSettingBrands              SiteSetting[]  @relation("SiteSettingBrandsBanner")
-  siteSettingContacts            SiteSetting[]  @relation("SiteSettingContactBanner")
-  siteSettingValuePeople         SiteSetting[]  @relation("SiteSettingValuePeople")
-  siteSettingValueSatisfaction   SiteSetting[]  @relation("SiteSettingValueSatisfaction")
-  siteSettingValueQuality        SiteSetting[]  @relation("SiteSettingValueQuality")
-  siteSettingValueResponsibility SiteSetting[]  @relation("SiteSettingValueResponsibility")
-  siteSettingHomeAbout           SiteSetting[]  @relation("SiteSettingHomeAbout")
+  retailPartners                 RetailPartner[]
+  newsCovers                     News[]          @relation("NewsCover")
+  newsVideos                     News[]          @relation("NewsVideo")
+  siteSettingMaps                SiteSetting[]   @relation("SiteSettingMap")
+  siteSettingAbouts              SiteSetting[]   @relation("SiteSettingAboutBanner")
+  siteSettingCareers             SiteSetting[]   @relation("SiteSettingCareersBanner")
+  siteSettingMedias              SiteSetting[]   @relation("SiteSettingMediaBanner")
+  siteSettingBrands              SiteSetting[]   @relation("SiteSettingBrandsBanner")
+  siteSettingContacts            SiteSetting[]   @relation("SiteSettingContactBanner")
+  siteSettingHrGovernances       SiteSetting[]   @relation("SiteSettingHrGovernance")
+  siteSettingCeos                SiteSetting[]   @relation("SiteSettingCeo")
+  siteSettingValuePeople         SiteSetting[]   @relation("SiteSettingValuePeople")
+  siteSettingValueSatisfaction   SiteSetting[]   @relation("SiteSettingValueSatisfaction")
+  siteSettingValueQuality        SiteSetting[]   @relation("SiteSettingValueQuality")
+  siteSettingValueResponsibility SiteSetting[]   @relation("SiteSettingValueResponsibility")
+  siteSettingHomeAbout           SiteSetting[]   @relation("SiteSettingHomeAbout")
 }
 
 model Slide {
@@ -76,25 +104,10 @@ model Slide {
   media     Media    @relation("SlideMedia", fields: [mediaId], references: [id])
   posterId  Int?
   poster    Media?   @relation("SlidePoster", fields: [posterId], references: [id])
-  linkUrl   String?
   order     Int      @default(0)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  translations SlideTranslation[]
-}
-
-model SlideTranslation {
-  id         Int     @id @default(autoincrement())
-  slideId    Int
-  slide      Slide   @relation(fields: [slideId], references: [id], onDelete: Cascade)
-  locale     Locale
-  title      String
-  subtitle   String?
-  buttonText String?
-
-  @@unique([slideId, locale])
 }
 
 model Brand {
@@ -123,12 +136,13 @@ model Brand {
 }
 
 model BrandTranslation {
-  id      Int     @id @default(autoincrement())
-  brandId Int
-  brand   Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  locale  Locale
-  name    String
-  summary String?
+  id           Int     @id @default(autoincrement())
+  brandId      Int
+  brand        Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale       Locale
+  name         String
+  summary      String?
+  productTypes String?
 
   @@unique([brandId, locale])
 }
@@ -239,6 +253,19 @@ model MilestoneTranslation {
   @@unique([milestoneId, locale])
 }
 
+model RetailPartner {
+  id        Int      @id @default(autoincrement())
+  name      String
+  logoId    Int
+  logo      Media    @relation(fields: [logoId], references: [id])
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVisible, order])
+}
+
 model News {
   id           Int       @id @default(autoincrement())
   slug         String    @unique
@@ -268,15 +295,50 @@ model NewsTranslation {
   @@unique([newsId, locale])
 }
 
+model JobPosting {
+  id             Int            @id @default(autoincrement())
+  slug           String         @unique
+  department     JobDepartment
+  employmentType EmploymentType
+  stage          JobStage       @default(OPEN)
+  openedAt       DateTime
+  closesAt       DateTime?
+  isPublished    Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  translations JobPostingTranslation[]
+
+  @@index([isPublished, openedAt])
+}
+
+model JobPostingTranslation {
+  id           Int        @id @default(autoincrement())
+  jobPostingId Int
+  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  locale       Locale
+  title        String
+  location     String?
+  salary       String?
+  summary      String?
+  duties       String?
+  requirements String?
+  offers       String?
+
+  @@unique([jobPostingId, locale])
+}
+
 model SiteSetting {
   id                         Int      @id @default(1)
   phone                      String?
   email                      String?
+  hrEmail                    String?
   facebookUrl                String?
   instagramUrl               String?
   youtubeUrl                 String?
   linkedinUrl                String?
   mapUrl                     String?
+  mapEmbedUrl                String?
   mapImageId                 Int?
   mapImage                   Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
   aboutBannerImageId         Int?
@@ -289,6 +351,10 @@ model SiteSetting {
   brandsBannerImage          Media?   @relation("SiteSettingBrandsBanner", fields: [brandsBannerImageId], references: [id])
   contactBannerImageId       Int?
   contactBannerImage         Media?   @relation("SiteSettingContactBanner", fields: [contactBannerImageId], references: [id])
+  hrGovernanceImageId        Int?
+  hrGovernanceImage          Media?   @relation("SiteSettingHrGovernance", fields: [hrGovernanceImageId], references: [id])
+  ceoImageId                 Int?
+  ceoImage                   Media?   @relation("SiteSettingCeo", fields: [ceoImageId], references: [id])
   valuePeopleImageId         Int?
   valuePeopleImage           Media?   @relation("SiteSettingValuePeople", fields: [valuePeopleImageId], references: [id])
   valueSatisfactionImageId   Int?

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 const BASE_CLASS =
-  "inline-flex h-13 items-center justify-between gap-6 rounded-control px-5 text-sm font-semibold transition-[background-color,color] duration-150 ease-out";
+  "inline-flex h-13 items-center justify-between gap-6 rounded-control px-5 text-sm font-semibold transition-[background-color,color,scale] duration-150 ease-out motion-safe:active:scale-[0.97]";
 
 const VARIANT_CLASSES = {
   primary: "bg-brand text-white hover:bg-brand-600",

@@ -11,10 +11,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Link, usePathname } from "@/i18n/navigation";
-import { LanguageSwitcher } from "./language-switcher";
+import { cn } from "@/lib/utils";
 import { SITE_NAV, isNavItemActive } from "./site-nav";
 
-export function MobileMenu() {
+const TRIGGER_TONE_CLASSES = {
+  light: "text-ink hover:bg-brand-100",
+  dark: "text-white hover:bg-white/10",
+} as const;
+
+interface MobileMenuProps {
+  tone?: keyof typeof TRIGGER_TONE_CLASSES;
+}
+
+export function MobileMenu({ tone = "light" }: MobileMenuProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +34,10 @@ export function MobileMenu() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger
         aria-label={t("header.openMenu")}
-        className="flex size-11 items-center justify-center text-ink transition-colors duration-150 hover:bg-brand-100 lg:hidden"
+        className={cn(
+          "flex size-11 items-center justify-center transition-colors duration-150 lg:hidden",
+          TRIGGER_TONE_CLASSES[tone],
+        )}
       >
         <Menu className="size-6" />
       </SheetTrigger>
@@ -54,10 +66,6 @@ export function MobileMenu() {
             </Link>
           ))}
         </nav>
-
-        <div className="mt-auto p-4">
-          <LanguageSwitcher className="-mx-1.5" />
-        </div>
       </SheetContent>
     </Sheet>
   );

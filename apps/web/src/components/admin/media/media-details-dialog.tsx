@@ -27,12 +27,13 @@ import { useDeleteMedia, useMediaUsages } from "@/lib/queries/media";
 import type { Media, MediaUsageType } from "@/lib/types";
 
 const USAGE_LABELS: Record<MediaUsageType, string> = {
-  slide: "Нүүр хуудасны carousel",
+  slide: "Нүүр хуудасны баннер",
   brand: "Брэнд",
   brandSection: "Брэндийн хэсэг",
   product: "Брэндийн бүтээгдэхүүн",
   section: "Хуудасны хэсэг",
   milestone: "Компанийн түүх",
+  retailPartner: "Нүүр хуудасны харилцагч",
   news: "Медиа",
   siteSetting: "Холбоо барих",
 };

@@ -19,7 +19,9 @@
     "careersTitle": "招聘信息",
     "careersDescription": "加入 Cosmo Trade，了解我们的团队、工作环境与招聘职位。",
     "mediaDescription": "Cosmo Trade 的新闻、活动及新品发布。",
-    "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。"
+    "contactDescription": "Cosmo Trade 地址：{address}。电话：{phone}。",
+    "jobsTitle": "招聘职位",
+    "jobsDescription": "Cosmo Trade 的招聘职位。选择职位并在线提交申请。"
   },
   "nav": {
     "home": "首页",
@@ -27,7 +29,8 @@
     "brands": "品牌",
     "careers": "人才招聘",
     "media": "新闻中心",
-    "contact": "联系我们"
+    "contact": "联系我们",
+    "breadcrumb": "页面路径"
   },
   "header": {
     "menu": "菜单",
@@ -36,39 +39,15 @@
     "language": "选择语言"
   },
   "footer": {
-    "description": "我们将国际食品、美妆和家居品牌带给蒙古消费者。",
-    "menu": "菜单",
+    "tagline": "每日独特之选",
     "contact": "联系我们",
     "socials": "社交媒体",
     "rights": "版权所有。"
   },
   "home": {
     "featured": "精选",
-    "heroTitle": "将世界品牌带进每个蒙古家庭",
+    "heroTitle": "<line>每日</line><line><accent>独特</accent></line><line>之选</line>",
     "officialDistributor": "官方经销商",
-    "partnersTitle": "我们的合作伙伴",
-    "aboutTitle": "为日常消费创造价值",
-    "aboutText": "自1993年以来，Cosmo Trade 一直专注于快速消费品的进口、销售与分销业务。我们将国际及区域品牌带给蒙古消费者，并依托广泛的分销网络和基于互信的合作，致力于提升产品的可及性。",
-    "originEyebrow": "品牌来源",
-    "valuesTitle": "核心价值观",
-    "values": {
-      "people": {
-        "title": "以人为本",
-        "text": "我们致力于营造充满热情、团结协作的工作环境。"
-      },
-      "satisfaction": {
-        "title": "客户满意",
-        "text": "我们始终把客户与合作伙伴的满意放在首位。"
-      },
-      "quality": {
-        "title": "品质",
-        "text": "我们在日常运营中遵循国际仓储、保管与配送标准。"
-      },
-      "responsibility": {
-        "title": "社会责任",
-        "text": "我们在一切经营活动中恪守法律与道德，致力于成为有社会责任感的企业。"
-      }
-    },
     "partnerEyebrow": "商务合作",
     "contactUs": "联系我们",
     "mute": "静音",
@@ -79,46 +58,147 @@
     "goToSlide": "第 {number} 张",
     "previous": "上一张",
     "next": "下一张",
-    "brandsTitle": "我们的品牌",
-    "mapTitle": "从 {count} 个国家来到蒙古",
-    "mapDescription": "我们的品牌来自这些国家。",
-    "brandCount": "{count} 个品牌",
-    "statsTitle": "关键数据",
-    "keyStats": {
-      "founded": {
-        "label": "运营经验",
-        "suffix": "+ 年"
-      },
-      "products": {
-        "label": "产品品类"
-      },
-      "salesPoints": {
-        "label": "覆盖销售网点"
-      },
-      "team": {
-        "label": "团队成员"
-      }
-    },
-    "categoriesTitle": "按品类浏览品牌",
-    "allBrands": "全部品牌",
+    "mapDescription": "我们与10多个国家的品牌合作，将国际品质与标准引入蒙古市场。",
     "newsTitle": "最新动态",
     "allNews": "全部新闻",
-    "video": "视频"
+    "video": "视频",
+    "slideIndicators": "幻灯片",
+    "areas": {
+      "eyebrow": "我们做什么",
+      "text": "我们在每一个环节全面负责众多品牌的产品。",
+      "items": {
+        "import": {
+          "title": "进口",
+          "text": "按照质量标准，从国际生产商处将产品进口到蒙古。"
+        },
+        "warehouse": {
+          "title": "物流与仓储",
+          "text": "可靠的运输，以及在符合标准的仓库中储存和配送商品。"
+        },
+        "distribution": {
+          "title": "配送",
+          "text": "按订单时间，向各销售网点提供快速、可靠的配送。"
+        },
+        "sales": {
+          "title": "销售与陈列",
+          "text": "产品销售支持、零售推广活动以及市场执行服务。"
+        },
+        "marketing": {
+          "title": "市场营销",
+          "text": "提升品牌在市场上的知名度，激发消费者的购买意愿。"
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "为什么选择 Cosmo Trade",
+      "title": "全球品牌值得信赖的合作伙伴",
+      "text": "广泛的分销网络、多年的经验以及基于互信的合作，使我们成为希望进入蒙古市场并拓展业务的国际品牌值得信赖的合作伙伴。",
+      "reasons": {
+        "experience": {
+          "title": "多年经验，运营可靠",
+          "text": "自{foundedYear}年起，我们在进口、销售和分销领域深耕蒙古市场，推广并发展品牌。",
+          "textPlain": "多年来，我们在进口、销售和分销领域深耕蒙古市场，推广并发展品牌。"
+        },
+        "brands": {
+          "title": "丰富的国际品牌与产品选择",
+          "text": "我们从全球10多个国家进口{products}多种品牌产品并供应市场。",
+          "textPlain": "我们从全球10多个国家进口多种品牌产品并供应市场。"
+        },
+        "network": {
+          "title": "广泛的分销网络",
+          "text": "我们的产品送达蒙古全国{salesPoints}多个零售和服务网点。",
+          "textPlain": "我们的产品送达蒙古全国各地的零售和服务网点。"
+        },
+        "products": {
+          "title": "满足消费者需求的产品",
+          "text": "我们供应食品、美妆和家居用品等多品类产品，并开发自有品牌。"
+        }
+      }
+    },
+    "retail": {
+      "title": "我们的合作范围",
+      "text": "我们通过零售和批发、超市、大卖场以及酒店餐饮业等多种销售渠道，将产品送达消费者。",
+      "partners": "销售网络合作伙伴"
+    },
+    "channels": {
+      "eyebrow": "零售渠道",
+      "title": "<count></count>+ 个销售网点，覆盖所有主要渠道",
+      "titlePlain": "覆盖所有主要零售渠道",
+      "text": "我们的产品从大型超市、超市一直送达社区杂货店。",
+      "hub": "Cosmo Trade",
+      "items": {
+        "supermarket": "超市",
+        "hypermarket": "大型超市",
+        "pharmacy": "药店",
+        "wholesale": "零售批发",
+        "convenience": "24小时便利店",
+        "grocery": "食品杂货店"
+      }
+    },
+    "newsEyebrow": "新闻中心",
+    "cta": {
+      "title": "携手在蒙古发展您的品牌",
+      "text": "如果您计划进入蒙古市场或扩大销售，欢迎与我们联系。"
+    },
+    "mapTitle": "国际合作",
+    "supplyChain": {
+      "title": "一体化分销解决方案",
+      "illustrationLabel": "产品从仓库经扫描传送带，再由卡车运送到商店的示意图",
+      "storeSign": "商店",
+      "items": {
+        "warehouse": {
+          "title": "仓储",
+          "text": "食品、美妆和家居用品按标准分类存放。"
+        },
+        "distribution": {
+          "title": "配送",
+          "text": "配送车辆按计划将产品送达城市和地方的客户网点。"
+        },
+        "inventory": {
+          "title": "库存管理",
+          "text": "监控产品库存、批次和保质期，并在ERP系统中登记管理。"
+        },
+        "retail": {
+          "title": "品牌展示与可及性",
+          "text": "在每个销售网点按标准陈列产品，让消费者看得见、买得到，从而促进销售。"
+        }
+      }
+    },
+    "stats": {
+      "label": "关键数据",
+      "years": "经营经验",
+      "yearsUnit": "年",
+      "products": "产品",
+      "salesPoints": "覆盖销售网点",
+      "team": "团队成员"
+    }
   },
   "brands": {
     "description": "国际食品、美妆与家居用品品牌。",
-    "filterLabel": "按品类筛选",
-    "all": "全部",
-    "empty": "该品类暂无品牌。",
-    "showAll": "查看全部品牌",
-    "website": "官方网站",
-    "products": "产品",
-    "related": "更多品牌",
+    "empty": "品牌信息暂时无法显示，请稍后再试。",
+    "chapters": {
+      "FOOD": {
+        "label": "食品",
+        "title": "食品",
+        "text": "我们为家庭以及餐厅、酒廊、快餐店等餐饮服务机构供应符合其需求的食品。我们注重产品选择、品质和稳定供应，致力于满足合作伙伴的日常需求。我们在罐头食品市场的总份额达30%。"
+      },
+      "BEAUTY": {
+        "label": "美妆与个人护理",
+        "title": "美妆与个人护理产品",
+        "text": "我们已将十余个国际美妆、口腔护理和个人卫生品牌引入蒙古市场，并不断丰富产品种类，以满足消费者的日常需求和选择。"
+      },
+      "HOUSEHOLD": {
+        "label": "家居用品",
+        "title": "家居用品",
+        "text": "我们为家庭和机构的日常使用供应家居用品，注重满足客户需求的选择、可靠的供应以及与合作伙伴的长期合作。"
+      }
+    },
+    "productsTitle": "产品系列",
+    "coverAlt": "{name} 品牌产品",
     "partnerTitle": "想将您的品牌引入蒙古吗？",
     "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
     "partnerButton": "洽谈合作",
-    "origin": "原产地",
-    "productCount": "{count} 款产品"
+    "marqueeLabel": "我们的品牌"
   },
   "catalog": {
     "title": "产品目录",
@@ -129,26 +209,31 @@
     "fullscreen": "全屏查看"
   },
   "media": {
+    "title": "新闻与动态",
     "description": "公司新闻、活动及新品发布。",
     "empty": "暂无新闻。",
     "pagination": "分页",
     "previous": "上一页",
     "next": "下一页",
     "pageOf": "第 {page} 页，共 {total} 页",
-    "related": "更多新闻",
-    "allNews": "全部新闻",
-    "published": "发布日期"
+    "stripLabel": "选择新闻",
+    "followTitle": "关注我们的 Facebook 主页",
+    "followButton": "Facebook 主页",
+    "newsNavigation": "上一篇和下一篇新闻",
+    "previousNews": "上一篇",
+    "nextNews": "下一篇",
+    "playVideo": "播放视频"
   },
   "contact": {
     "description": "欢迎与我们洽谈合作或提出建议。",
     "address": "地址",
     "hours": "工作时间",
-    "openMap": "在地图中打开",
-    "formTitle": "给我们留言",
+    "directions": "获取路线",
+    "mapTitle": "Cosmo Trade 在 Google 地图上的位置",
+    "formTitle": "发送咨询",
     "nameLabel": "姓名",
     "emailLabel": "邮箱",
     "phoneLabel": "电话",
-    "optional": "选填",
     "departmentLabel": "联系部门",
     "general": "综合",
     "messageLabel": "留言内容",
@@ -159,6 +244,7 @@
     "sendAnother": "再写一条",
     "errors": {
       "name": "请输入姓名",
+      "emailRequired": "请输入您的电子邮箱",
       "email": "邮箱格式不正确",
       "phone": "电话号码过长",
       "message": "留言至少需要 10 个字符",
@@ -170,53 +256,56 @@
     "heroTitle": "Cosmo Trade",
     "ceo": {
       "title": "总经理致辞",
-      "quote": "总经理致辞的核心内容，用一两句话写在这里。",
-      "body": "致辞的其余部分：公司愿景、团队以及对合作伙伴的话。",
-      "name": "姓名",
+      "quote": "我们相信，企业的成功不仅体现在数字的增长上，更在于为消费者的生活创造真正的价值，并长期赢得合作伙伴的信任。",
+      "body1": "我们的历程始于1993年，如今已发展成为将国际一流食品和家居品牌带给蒙古消费者的综合业务。依托专业的团队、符合标准的物流和广泛的分销网络，我们全面保障产品质量与安全，致力于稳步提升合作品牌的市场地位。",
+      "body2": "在此，谨向重视长期合作、信任我们并与我们共同成长的所有合作伙伴、客户和同事致以诚挚的谢意。",
+      "name": "Yaasim Maigul",
       "role": "总经理"
     },
-    "description": "我们将国际食品、美妆与家居用品品牌带给蒙古消费者。",
     "intro": {
-      "label": "公司简介",
-      "lead": "Cosmo Trade LLC 成立于1993年，在快速消费品的进口、销售和分销领域积累了多年经验。",
-      "body1": "我们与美国、欧洲和亚洲的国际及区域品牌合作，向蒙古市场供应符合消费者需求和市场变化的产品。为让产品更便捷地触达消费者，我们通过超市、大卖场、零售和批发贸易以及HORECA（酒店、餐厅和餐饮服务业）等销售渠道不断扩大合作。",
-      "body2": "此外，我们致力于在蒙古市场推广和发展国际品牌、提升产品销量并发展自有品牌。依托多年的经验、可靠的合作关系和分销能力，我们努力为消费者、客户和商业伙伴创造长期价值，并为行业的可持续发展做出贡献。",
-      "channelsTitle": "销售渠道",
-      "channels": {
-        "supermarket": "超市",
-        "hypermarket": "大卖场",
-        "retail": "零售",
-        "wholesale": "批发",
-        "horeca": "HORECA"
-      }
+      "title": "为日常生活<highlight>创造价值</highlight>",
+      "lead": "Cosmo Trade 拥有7个专业部门、150多名专业人才，是一支经验丰富的团队。",
+      "body": "我们拥有符合国际标准、全面保障产品质量与安全的3,500平方米食品和家居用品专用仓库及配送中心，将产品快速送达乌兰巴托市内4,500个网点，以及全国21个省各苏木和居民点的3,000多家商业中心。",
+      "imageAlt": "Cosmo Trade 总部办公楼与仓库鸟瞰"
     },
-    "missionLabel": "使命",
     "missionText": "让顾客满意与快乐是我们的目标。",
     "historyTitle": "发展历程",
+    "historyHeading": "<highlight>30余年</highlight>的发展历程",
+    "historyIndexLabel": "跳转到年份",
+    "historyHint": "滑动",
     "partnerTitle": "期待与您合作",
     "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。",
-    "purposeTitle": "我们的使命",
-    "visionLabel": "愿景",
     "visionText": "成为蒙古消费品分销领域最值得信赖的合作伙伴。",
-    "sloganLabel": "口号",
-    "sloganText": "让世界品牌走进每一个蒙古家庭。"
+    "values": {
+      "missionTitle": "我们的<highlight>使命</highlight>",
+      "title": "我们每天<highlight>坚守</highlight>的原则",
+      "visionTitle": "我们的<highlight>愿景</highlight>",
+      "missionArt": "房子、一家人、Cosmo购物袋和一颗心",
+      "art": "团队、Cosmo购物袋、带品质标记的箱子和一棵树",
+      "visionArt": "Cosmo货车沿着路线驶向山顶的旗帜",
+      "items": {
+        "people": {
+          "title": "以人为本",
+          "text": "我们致力于营造充满热情、团结协作的工作环境。"
+        },
+        "satisfaction": {
+          "title": "客户满意",
+          "text": "我们始终把客户与合作伙伴的满意放在首位。"
+        },
+        "quality": {
+          "title": "品质",
+          "text": "我们在日常运营中遵循国际仓储、保管与配送标准。"
+        },
+        "responsibility": {
+          "title": "社会责任",
+          "text": "我们在一切经营活动中恪守法律与道德，致力于成为有社会责任感的企业。"
+        }
+      },
+      "purposeEyebrow": "我们的目标",
+      "eyebrow": "价值观"
+    }
   },
   "careers": {
-    "description": "了解我们的团队、工作环境与招聘流程。",
-    "joinTitle": "加入我们",
-    "joinText": "请通过邮件发送您的简历。有合适的职位时，我们会与您联系。",
-    "sendCv": "发送简历",
-    "fillForm": "立即申请",
-    "statsLabel": "团队数据",
-    "statEmployees": "员工",
-    "statTenure": "平均工龄（年）",
-    "statAge": "平均年龄",
-    "statGender": "性别比例",
-    "women": "女性 {percent}%",
-    "men": "男性 {percent}%",
-    "structureEyebrow": "组织结构与编制",
-    "structureTitle": "{departments} 个部门，{people} 名员工",
-    "structureText": "仓储、物流与销售团队占公司员工总数的 60% 以上。",
     "departments": {
       "warehouse": "仓储物流部",
       "sales": "销售部",
@@ -227,45 +316,54 @@
       "marketing": "市场部",
       "it": "信息技术部"
     },
-    "growth": {
-      "training": {
-        "title": "培训与发展",
-        "text": "我们支持员工持续成长，提供学习国际经验与职业晋升的机会。"
-      },
-      "rewards": {
-        "title": "奖励与表彰",
-        "text": "我们重视员工的成绩与贡献，并推荐优秀员工参评行业及国家荣誉。"
-      },
-      "highlights": {
-        "training": {
-          "value": "2-10",
-          "text": "名员工每年参加海外培训与考察"
-        },
-        "bonus": {
-          "value": "10%",
-          "text": "的员工每年获得现金奖励"
-        },
-        "trip": {
-          "value": "10-14",
-          "text": "人的团队每 2-3 年获得旅行奖励"
-        }
+    "directions": {
+      "lead": "Cosmo Trade 的人力资源政策由以下",
+      "title": "{count}个方向组成",
+      "items": {
+        "transparency": "人力资源透明度",
+        "inclusion": "多元、平等与包容",
+        "culture": "加强企业文化",
+        "development": "培养员工、提升能力",
+        "wellbeing": "员工福祉",
+        "engagement": "保障员工参与",
+        "safeWorkplace": "反对歧视与职场骚扰",
+        "innovation": "支持创新发展",
+        "leadership": "领导力"
       }
     },
-    "principlesEyebrow": "劳动关系",
-    "principlesTitle": "我们的原则",
-    "principles": {
-      "nonDiscrimination": "反对歧视",
-      "freedomToWork": "保障劳动自由：自由择业、良好工作条件、获得报酬与休息",
-      "noHarassment": "禁止骚扰、暴力及性骚扰",
-      "noForcedLabor": "禁止强迫劳动",
-      "humanRights": "公正、人道，尊重人权与自由",
-      "reputation": "珍视公司声誉",
-      "respectCustomers": "尊重合作伙伴与客户"
+    "policy": {
+      "title": "人力资源政策",
+      "principlesLabel": "我们的政策：",
+      "principles": {
+        "open": "公开透明",
+        "accessible": "普惠可及",
+        "clear": "明确清晰"
+      },
+      "body1": "我们招聘能够为公司目标做出贡献的人才，培养和发展他们，并支持其职业成长。所有人力资源工作均依法依规，以公平、透明、专业的方式开展。",
+      "body2": "我们的人力资源政策致力于强化关爱员工的企业文化，降低风险，支持公司长期可持续发展。",
+      "imageAlt": "团队会议"
+    },
+    "governance": {
+      "title": "人力资源治理",
+      "text": "参与执行人力资源政策的各级管理人员遵循以下原则：",
+      "values": {
+        "ethical": "遵守道德",
+        "professional": "专业",
+        "accountable": "负责",
+        "transparent": "透明"
+      },
+      "closing": "管理人员在日常工作中践行这些原则，并主动避免利益冲突及其他风险。",
+      "specialistsLabel": "我们的人力资源专员：",
+      "traits": {
+        "open": "公开透明",
+        "flexible": "灵活变通",
+        "feedback": "重视反馈"
+      },
+      "imageAlt": "正在卸货的团队"
     },
     "form": {
       "eyebrow": "求职申请",
-      "title": "在线提交申请",
-      "intro": "共 4 步，约 5 分钟。有合适的职位时，我们会与您联系。",
+      "intro": "在线申请 Cosmo Trade 的招聘职位。",
       "steps": {
         "basic": "基本信息",
         "education": "教育背景",
@@ -273,9 +371,12 @@
         "skills": "技能与其他信息"
       },
       "fields": {
-        "name": "姓名 *",
-        "position": "意向职位 *",
-        "phone": "电话号码 *",
+        "photo": "证件照",
+        "lastName": "姓",
+        "firstName": "名",
+        "age": "年龄",
+        "gender": "性别",
+        "phone": "电话号码",
         "district": "区",
         "khoroo": "社区",
         "school": "毕业院校",
@@ -283,7 +384,7 @@
         "studyFrom": "入学年份",
         "studyTo": "毕业年份",
         "isStudying": "目前在读",
-        "noExperience": "无工作经验（应届毕业生）",
+        "noExperience": "暂无工作经验",
         "company": "公司名称",
         "role": "职位",
         "from": "开始年份",
@@ -291,23 +392,30 @@
         "duties": "主要职责",
         "languages": "外语能力",
         "software": "电脑与专业软件",
-        "otherSoftware": "其他软件（选填）",
-        "startDate": "可入职时间"
+        "otherSoftware": "其他软件",
+        "startDate": "可入职时间",
+        "soum": "省、县",
+        "isCurrentJob": "目前在职"
       },
       "placeholders": {
-        "name": "姓名",
-        "position": "例如：销售经理",
-        "khoroo": "例如：第 3 社区",
-        "school": "学校名称",
-        "degree": "例如：工商管理，学士",
         "studying": "在读",
-        "now": "至今",
-        "duties": "2-3 句话"
+        "now": "至今"
       },
       "errors": {
-        "name": "请输入姓名",
-        "position": "请输入意向职位",
-        "phone": "请输入 8 位电话号码"
+        "photo": "请上传照片",
+        "photoType": "无法读取该图片，请选择 JPG 或 PNG 照片",
+        "photoSize": "无法压缩该图片，请选择其他图片",
+        "lastName": "请输入姓",
+        "firstName": "请输入名",
+        "age": "请输入年龄",
+        "gender": "请选择性别",
+        "phone": "请输入 8 位电话号码",
+        "ageRange": "请输入 15 至 80 之间的年龄",
+        "summary": "有 {count} 个字段需要填写或修改",
+        "tooMany": "提交次数过多，请稍后再试",
+        "closed": "该职位已停止接收申请",
+        "failed": "申请提交失败，请重试",
+        "failedCall": "申请提交失败，请重试或拨打 {phone}"
       },
       "districts": {
         "bayangol": "巴彦戈勒区",
@@ -336,16 +444,80 @@
         "custom": "选择日期"
       },
       "choose": "请选择",
-      "lastTwoJobs": "最近 2 份工作",
-      "jobLabel": "工作 {number}",
-      "addJob": "添加另一份工作",
+      "lastTwoJobs": "最近 2 个工作单位",
+      "jobLabel": "工作单位 {number}",
+      "addJob": "添加其他工作单位",
       "remove": "删除",
-      "back": "上一步",
-      "next": "下一步",
       "submit": "提交申请",
       "thanksTitle": "谢谢，{name}！",
-      "thanksText": "我们已收到您的申请。有合适的职位时，我们会致电 {phone} 与您联系。",
-      "newForm": "新的申请"
+      "thanksText": "人力资源部已收到您申请「{job}」职位的简历。如符合要求，我们将拨打 {phone} 与您联系。",
+      "genders": {
+        "male": "男",
+        "female": "女"
+      },
+      "photoChoose": "选择照片",
+      "photoChange": "更换",
+      "photoProcessing": "请稍候…",
+      "photoHint": "面部清晰的照片",
+      "photoAdded": "已添加照片",
+      "noteRequired": "仅带此标记的字段为必填",
+      "notePrivacy": "您的申请仅由人力资源部查看",
+      "noteQuestions": "如有疑问",
+      "unavailableTitle": "该职位不再接收申请",
+      "unavailableText": "该职位已关闭或链接有误。请从当前招聘职位中选择。",
+      "sending": "正在提交…",
+      "otherJobs": "其他职位"
+    },
+    "jobs": {
+      "title": "招聘职位",
+      "intro": "加入我们，一起把国际品牌带给蒙古各地的消费者。",
+      "count": "{count} 个职位",
+      "heroButton": "招聘职位",
+      "columns": {
+        "position": "职位",
+        "stage": "进度",
+        "closes": "申请截止"
+      },
+      "stages": {
+        "OPEN": "接收简历中",
+        "INTERVIEW": "面试中",
+        "DECIDED": "已决定"
+      },
+      "types": {
+        "FULL_TIME": "全职",
+        "PART_TIME": "兼职",
+        "SHIFT": "轮班",
+        "CONTRACT": "合同制",
+        "INTERNSHIP": "实习"
+      },
+      "alwaysOpen": "长期招聘",
+      "until": "{date}",
+      "daysLeft": "剩余 {count} 天",
+      "lastDay": "今天截止",
+      "emptyTitle": "目前暂无招聘职位",
+      "emptyText": "新职位开放时将在此页面发布。",
+      "followText": "关注我们的 Facebook 主页，第一时间获取招聘信息。",
+      "followButton": "Facebook 主页",
+      "aboutTeam": "了解我们的团队",
+      "bandTitle": "目前有 {count} 个职位正在招聘",
+      "bandText": "选择职位并在线提交申请。",
+      "bandButton": "全部职位",
+      "location": "工作地点",
+      "workType": "工作类型",
+      "salary": "薪资",
+      "salaryNegotiable": "面议",
+      "published": "发布日期",
+      "deadline": "申请截止",
+      "apply": "提交申请",
+      "applyNote": "您的申请将直接发送给人力资源部。",
+      "closedNote": "该职位的招聘已结束，不再接收新的申请。",
+      "copyLink": "复制链接",
+      "copied": "已复制链接",
+      "duties": "工作职责",
+      "requirements": "任职要求",
+      "offers": "我们提供",
+      "otherJobs": "其他招聘职位",
+      "allJobs": "查看全部"
     }
   },
   "categories": {

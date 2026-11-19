@@ -13,7 +13,6 @@ import {
   useSlides,
   useToggleSlide,
 } from "@/lib/queries/slides";
-import { pickDefaultTranslation } from "@/lib/translations";
 import type { Slide } from "@/lib/types";
 import { PanelHeader } from "@/components/admin/panel-header";
 import { SlideFormDialog } from "./slide-form-dialog";
@@ -51,8 +50,8 @@ export function SlidesPanel() {
     <section className="grid gap-4">
       <PanelHeader
         step={1}
-        title="Дээд талын carousel"
-        description="Сайтад орж ирэхэд дэлгэц дүүрэн харагдах видео эсвэл зургууд. Дээрээс доош дарааллаар солигдоно."
+        title="Баннер зураг"
+        description="Хуудасны хамгийн дээд талын том зураг, видео."
         action={
           <Button onClick={() => openForm(null)}>
             <Plus />
@@ -64,17 +63,14 @@ export function SlidesPanel() {
       <ContentList
         items={slides.data}
         emptyText="Одоогоор слайд алга. «Слайд нэмэх» дээр дарж эхний слайдаа нэмнэ үү."
-        view={(slide) => {
-          const translation = pickDefaultTranslation(slide.translations);
-          return {
-            thumbnail: (
-              <MediaThumbnail media={slide.media} className="aspect-video" />
-            ),
-            title: translation?.title ?? "Гарчиггүй",
-            subtitle: translation?.subtitle ?? undefined,
-            isVisible: slide.isActive,
-          };
-        }}
+        view={(slide) => ({
+          thumbnail: (
+            <MediaThumbnail media={slide.media} className="aspect-video" />
+          ),
+          title: slide.media.originalName,
+          subtitle: slide.media.type === "VIDEO" ? "Видео" : "Зураг",
+          isVisible: slide.isActive,
+        })}
         onEdit={openForm}
         onDelete={setDeletingSlide}
         onToggleVisible={(slide, isActive) =>

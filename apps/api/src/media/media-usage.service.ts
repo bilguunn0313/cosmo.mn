@@ -10,6 +10,7 @@ export type MediaUsageType =
   | 'product'
   | 'section'
   | 'milestone'
+  | 'retailPartner'
   | 'news'
   | 'siteSetting';
 
@@ -26,7 +27,9 @@ interface SiteSettingImageIds {
   mediaBannerImageId: number | null;
   brandsBannerImageId: number | null;
   contactBannerImageId: number | null;
+  hrGovernanceImageId: number | null;
   homeAboutImageId: number | null;
+  ceoImageId: number | null;
 }
 
 function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
@@ -38,12 +41,17 @@ function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
     return 'Нүүр хуудасны «Бидний тухай» зураг';
   }
 
+  if (setting.ceoImageId === id) {
+    return 'Гүйцэтгэх захирлын зураг';
+  }
+
   const bannerIds = [
     setting.aboutBannerImageId,
     setting.careersBannerImageId,
     setting.mediaBannerImageId,
     setting.brandsBannerImageId,
     setting.contactBannerImageId,
+    setting.hrGovernanceImageId,
   ];
 
   return bannerIds.includes(id) ? 'Хуудасны баннер' : 'Үнэт зүйлсийн зураг';
@@ -63,12 +71,12 @@ export class MediaUsageService {
       products,
       sections,
       milestones,
+      retailPartners,
       news,
       siteSettings,
     ] = await Promise.all([
       this.prisma.slide.findMany({
         where: { OR: [{ mediaId: id }, { posterId: id }] },
-        include: { translations: true },
       }),
       this.prisma.brand.findMany({
         where: {
@@ -102,6 +110,7 @@ export class MediaUsageService {
         where: { imageId: id },
         include: { translations: true },
       }),
+      this.prisma.retailPartner.findMany({ where: { logoId: id } }),
       this.prisma.news.findMany({
         where: {
           OR: [
@@ -121,11 +130,13 @@ export class MediaUsageService {
             { mediaBannerImageId: id },
             { brandsBannerImageId: id },
             { contactBannerImageId: id },
+            { hrGovernanceImageId: id },
             { valuePeopleImageId: id },
             { valueSatisfactionImageId: id },
             { valueQualityImageId: id },
             { valueResponsibilityImageId: id },
             { homeAboutImageId: id },
+            { ceoImageId: id },
           ],
         },
       }),
@@ -135,7 +146,7 @@ export class MediaUsageService {
       ...slides.map((slide) => ({
         type: 'slide' as const,
         id: slide.id,
-        title: pickTranslation(slide.translations, DEFAULT_LOCALE)?.title ?? '',
+        title: `Слайд ${slide.order + 1}`,
       })),
       ...brands.map((brand) => ({
         type: 'brand' as const,
@@ -166,6 +177,11 @@ export class MediaUsageService {
         title: `${milestone.year} ${
           pickTranslation(milestone.translations, DEFAULT_LOCALE)?.title ?? ''
         }`,
+      })),
+      ...retailPartners.map((partner) => ({
+        type: 'retailPartner' as const,
+        id: partner.id,
+        title: partner.name,
       })),
       ...news.map((item) => ({
         type: 'news' as const,

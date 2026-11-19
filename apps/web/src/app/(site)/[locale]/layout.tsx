@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getPageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
+import { fetchSiteSetting } from "@/lib/public-api";
 import { SITE_URL, siteNameFor } from "@/lib/seo";
 
 const roboto = Roboto({
@@ -50,6 +51,7 @@ export default async function SiteLayout({
 }: LayoutProps<"/[locale]">) {
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale, namespace: "notFound" });
+  const setting = await fetchSiteSetting(locale);
 
   return (
     <html
@@ -57,6 +59,13 @@ export default async function SiteLayout({
       className={`${roboto.variable} ${ibmPlexSans.variable} ${notoSansSc.variable} h-full antialiased`}
     >
       <body className="site flex min-h-full flex-col bg-white text-ink">
+        <noscript>
+          <style>
+            {
+              ".reveal { opacity: 1 !important; translate: none !important; scale: none !important; }"
+            }
+          </style>
+        </noscript>
         <a
           href="#main"
           className="sr-only z-50 bg-brand px-5 py-3 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
@@ -64,7 +73,7 @@ export default async function SiteLayout({
           {t("skipToContent")}
         </a>
         <NextIntlClientProvider>
-          <SiteHeader />
+          <SiteHeader facebookUrl={setting?.facebookUrl ?? null} />
           <main id="main" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>

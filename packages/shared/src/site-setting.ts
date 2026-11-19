@@ -5,6 +5,8 @@ import {
   translationsSchema,
 } from "./common";
 
+export const MAP_EMBED_PREFIX = "https://www.google.com/maps/embed";
+
 const statCountSchema = z
   .number()
   .int()
@@ -16,17 +18,30 @@ const statCountSchema = z
 export const updateSiteSettingSchema = z.object({
   phone: z.string().trim().max(50).nullable().optional(),
   email: z.email().nullable().optional(),
+  hrEmail: z.email().nullable().optional(),
   facebookUrl: optionalUrlSchema,
   instagramUrl: optionalUrlSchema,
   youtubeUrl: optionalUrlSchema,
   linkedinUrl: optionalUrlSchema,
   mapUrl: optionalUrlSchema,
+  mapEmbedUrl: z
+    .string()
+    .trim()
+    .max(2000)
+    .startsWith(
+      MAP_EMBED_PREFIX,
+      "Google Maps-ийн «Embed a map» код оруулна уу",
+    )
+    .nullable()
+    .optional(),
   mapImageId: optionalIdSchema,
   aboutBannerImageId: optionalIdSchema,
   careersBannerImageId: optionalIdSchema,
   mediaBannerImageId: optionalIdSchema,
   brandsBannerImageId: optionalIdSchema,
   contactBannerImageId: optionalIdSchema,
+  hrGovernanceImageId: optionalIdSchema,
+  ceoImageId: optionalIdSchema,
   valuePeopleImageId: optionalIdSchema,
   valueSatisfactionImageId: optionalIdSchema,
   valueQualityImageId: optionalIdSchema,

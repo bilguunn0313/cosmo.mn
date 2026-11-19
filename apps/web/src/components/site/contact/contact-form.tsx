@@ -9,10 +9,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   errorClass,
+  formButtonClass,
+  growTextarea,
   inputClass,
   labelClass,
+  requiredMarkClass,
+  textareaClass,
 } from "@/components/site/form-styles";
-import { siteButtonClass } from "@/components/site/site-button";
+import { LineSelect } from "@/components/site/line-select";
 import type { PublicDepartment } from "@/lib/public-api";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -24,7 +28,11 @@ type Translate = ReturnType<typeof useTranslations<"contact">>;
 function buildSchema(t: Translate) {
   return z.object({
     name: z.string().trim().min(2, t("errors.name")).max(100, t("errors.name")),
-    email: z.email(t("errors.email")),
+    email: z
+      .string()
+      .trim()
+      .min(1, t("errors.emailRequired"))
+      .pipe(z.email(t("errors.email"))),
     phone: z.string().trim().max(30, t("errors.phone")),
     departmentId: z.string(),
     message: z
@@ -59,17 +67,30 @@ function toInput(values: ContactFormValues, locale: Locale): ContactInput {
 interface FieldProps {
   id: string;
   label: string;
-  hint?: string;
   error?: string;
+  isRequired?: boolean;
+  className?: string;
   children: React.ReactNode;
 }
 
-function Field({ id, label, hint, error, children }: FieldProps) {
+function Field({
+  id,
+  label,
+  error,
+  isRequired = false,
+  className,
+  children,
+}: FieldProps) {
   return (
-    <div className="grid content-start gap-1.5">
+    <div className={cn("grid content-start gap-1", className)}>
       <label htmlFor={id} className={labelClass}>
         {label}
-        {hint && <span className="font-normal text-ink-3"> ({hint})</span>}
+        {isRequired && (
+          <span aria-hidden className={requiredMarkClass}>
+            {" "}
+            *
+          </span>
+        )}
       </label>
       {children}
       {error && (
@@ -139,7 +160,7 @@ export function ContactForm({ departments }: ContactFormProps) {
         <button
           type="button"
           onClick={() => setIsSent(false)}
-          className={siteButtonClass("secondary", "min-w-50")}
+          className={formButtonClass}
         >
           {t("sendAnother")}
           <ArrowRight className="size-4.5" />
@@ -152,93 +173,98 @@ export function ContactForm({ departments }: ContactFormProps) {
     errors[field] ? `contact-${field}-error` : undefined;
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-5">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className="grid gap-x-8 gap-y-7 sm:grid-cols-2"
+    >
       <Field
         id="contact-name"
         label={t("nameLabel")}
+        isRequired
         error={errors.name?.message}
       >
         <input
           id="contact-name"
           autoComplete="name"
+          aria-required
           aria-invalid={Boolean(errors.name)}
           aria-describedby={describedBy("name")}
-          className={cn(inputClass, "h-12")}
+          className={cn(inputClass, "h-11")}
           {...register("name")}
         />
       </Field>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
+      <Field
+        id="contact-email"
+        label={t("emailLabel")}
+        isRequired
+        error={errors.email?.message}
+      >
+        <input
           id="contact-email"
-          label={t("emailLabel")}
-          error={errors.email?.message}
-        >
-          <input
-            id="contact-email"
-            type="email"
-            autoComplete="email"
-            aria-invalid={Boolean(errors.email)}
-            aria-describedby={describedBy("email")}
-            className={cn(inputClass, "h-12")}
-            {...register("email")}
-          />
-        </Field>
-        <Field
+          type="email"
+          autoComplete="email"
+          aria-required
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={describedBy("email")}
+          className={cn(inputClass, "h-11")}
+          {...register("email")}
+        />
+      </Field>
+      <Field
+        id="contact-phone"
+        label={t("phoneLabel")}
+        error={errors.phone?.message}
+      >
+        <input
           id="contact-phone"
-          label={t("phoneLabel")}
-          hint={t("optional")}
-          error={errors.phone?.message}
-        >
-          <input
-            id="contact-phone"
-            type="tel"
-            autoComplete="tel"
-            aria-invalid={Boolean(errors.phone)}
-            aria-describedby={describedBy("phone")}
-            className={cn(inputClass, "h-12")}
-            {...register("phone")}
-          />
-        </Field>
-      </div>
+          type="tel"
+          autoComplete="tel"
+          aria-invalid={Boolean(errors.phone)}
+          aria-describedby={describedBy("phone")}
+          className={cn(inputClass, "h-11")}
+          {...register("phone")}
+        />
+      </Field>
 
       {departments.length > 0 && (
         <Field id="contact-department" label={t("departmentLabel")}>
-          <select
-            id="contact-department"
-            className={cn(inputClass, "h-12 cursor-pointer")}
-            {...register("departmentId")}
-          >
+          <LineSelect id="contact-department" {...register("departmentId")}>
             <option value="">{t("general")}</option>
             {departments.map((department) => (
               <option key={department.id} value={department.id}>
                 {department.name}
               </option>
             ))}
-          </select>
+          </LineSelect>
         </Field>
       )}
 
       <Field
         id="contact-message"
         label={t("messageLabel")}
+        isRequired
         error={errors.message?.message}
+        className="sm:col-span-2"
       >
         <textarea
           id="contact-message"
-          rows={6}
+          rows={1}
+          aria-required
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy("message")}
-          className={cn(inputClass, "resize-y py-3")}
+          onInput={growTextarea}
+          className={cn(inputClass, textareaClass)}
           {...register("message")}
         />
       </Field>
 
-      <div className="grid gap-3 pt-2">
+      <div className="grid justify-items-start gap-3 sm:col-span-2">
         <button
           type="submit"
           disabled={isSubmitting}
-          className={siteButtonClass("primary", "w-full disabled:opacity-70")}
+          className={formButtonClass}
         >
           {isSubmitting ? t("sending") : t("submit")}
           {isSubmitting ? (
