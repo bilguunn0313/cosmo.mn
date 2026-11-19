@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { HrDirectionsSection } from "@/components/site/careers/hr-directions-section";
-import { HrGovernanceSection } from "@/components/site/careers/hr-governance-section";
+import { HrCultureSection } from "@/components/site/careers/hr-culture-section";
 import { HrPolicySection } from "@/components/site/careers/hr-policy-section";
 import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { StorySections } from "@/components/site/story-sections";
@@ -44,7 +44,7 @@ export default async function HumanResourcesPage({
     <>
       <HrPolicySection imageUrl={pageBannerUrl(setting, "careers")} />
       <HrDirectionsSection />
-      <HrGovernanceSection imageUrl={pageBannerUrl(setting, "hrGovernance")} />
+      <HrCultureSection imageUrl={pageBannerUrl(setting, "hrGovernance")} />
 
       {sections.length > 0 && (
         <div className="site-container pt-20 md:pt-32">

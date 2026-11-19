@@ -1,7 +1,13 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import {
+  BrandsIcon,
+  DistributionIcon,
+  GrowthIcon,
+  NetworkIcon,
+} from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
 import type { PublicSiteSetting } from "@/lib/public-api";
-import { StatNumber } from "./stat-number";
+import { StatOdometer } from "./stat-odometer";
 
 const YEARS_STEP = 10;
 
@@ -16,16 +22,26 @@ interface StatsSectionProps {
 
 export async function StatsSection({ setting }: StatsSectionProps) {
   const t = await getTranslations("home.stats");
+  const locale = await getLocale();
   const foundedYear = setting?.foundedYear;
 
   const stats = [
     {
       key: "years",
+      icon: GrowthIcon,
       value: foundedYear ? roundedYearsSince(foundedYear) : null,
     },
-    { key: "products", value: setting?.productCount ?? null },
-    { key: "salesPoints", value: setting?.salesPointCount ?? null },
-    { key: "team", value: setting?.employeeCount ?? null },
+    {
+      key: "products",
+      icon: BrandsIcon,
+      value: setting?.productCount ?? null,
+    },
+    {
+      key: "salesPoints",
+      icon: DistributionIcon,
+      value: setting?.salesPointCount ?? null,
+    },
+    { key: "team", icon: NetworkIcon, value: setting?.employeeCount ?? null },
   ] as const;
 
   const visibleStats = stats.filter((stat) => stat.value);
@@ -35,27 +51,23 @@ export async function StatsSection({ setting }: StatsSectionProps) {
   }
 
   return (
-    <section aria-label={t("label")} className="bg-white py-8 md:py-12">
-      <ul className="site-container grid grid-cols-2 gap-3 md:gap-4 lg:auto-cols-fr lg:grid-flow-col">
+    <section aria-label={t("label")} className="bg-white py-9 md:py-14">
+      <ul className="site-container grid grid-cols-2 gap-y-8 lg:auto-cols-fr lg:grid-flow-col">
         {visibleStats.map((stat, index) => (
-          <li key={stat.key}>
-            <Reveal
-              index={index}
-              className="flex h-full flex-col gap-2.5 rounded-card bg-brand-100 px-5 py-7 text-center"
-            >
-              <span className="type-stat text-brand">
-                <StatNumber value={stat.value ?? 0} />
-                <span className="ml-0.5 align-top text-[0.5em] leading-none">
-                  +
-                </span>
-                {stat.key === "years" && (
-                  <span className="text-[0.42em] font-semibold">
-                    {" "}
-                    {t("yearsUnit")}
-                  </span>
-                )}
+          <li
+            key={stat.key}
+            className="border-rule max-lg:even:border-l max-lg:even:pl-5 lg:pr-8 lg:not-first:border-l lg:not-first:pl-8"
+          >
+            <Reveal index={index} className="flex flex-col gap-3 md:gap-4">
+              <StatOdometer
+                value={stat.value ?? 0}
+                locale={locale}
+                unit={stat.key === "years" ? t("yearsUnit") : undefined}
+              />
+              <span className="flex items-start gap-2 text-[13px] leading-snug font-medium text-ink-2 md:items-center md:gap-2.5 md:text-[15px]">
+                <stat.icon className="h-4.5 w-5 shrink-0 md:h-5.5 md:w-6.5" />
+                {t(stat.key)}
               </span>
-              <span className="text-[15px] text-ink-2">{t(stat.key)}</span>
             </Reveal>
           </li>
         ))}

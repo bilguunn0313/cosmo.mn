@@ -4,21 +4,29 @@ import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import type { HomeStats } from "@/lib/home-stats";
 import { DeliveryTruck } from "./delivery-truck";
 
+const YEARS_STEP = 10;
+
+function roundedYears(years: string | null) {
+  return years ? Math.floor(Number(years) / YEARS_STEP) * YEARS_STEP : null;
+}
+
 interface WhyCosmoSectionProps {
   stats: HomeStats;
 }
 
 export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
   const t = await getTranslations("home.why");
-  const { foundedYear, salesPoints, products } = stats;
+  const { foundedYear, products } = stats;
+  const years = roundedYears(stats.years);
 
   const reasons = [
     {
       key: "experience",
       title: t("reasons.experience.title"),
-      text: foundedYear
-        ? t("reasons.experience.text", { foundedYear })
-        : t("reasons.experience.textPlain"),
+      text:
+        foundedYear && years
+          ? t("reasons.experience.text", { foundedYear, years })
+          : t("reasons.experience.textPlain"),
     },
     {
       key: "brands",
@@ -30,9 +38,7 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
     {
       key: "network",
       title: t("reasons.network.title"),
-      text: salesPoints
-        ? t("reasons.network.text", { salesPoints })
-        : t("reasons.network.textPlain"),
+      text: t("reasons.network.text"),
     },
     {
       key: "products",

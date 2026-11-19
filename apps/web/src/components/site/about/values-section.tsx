@@ -10,10 +10,6 @@ const VALUE_KEYS = [
   "responsibility",
 ] as const;
 
-function highlight(chunks: React.ReactNode) {
-  return <span className="text-brand">{chunks}</span>;
-}
-
 export async function ValuesSection() {
   const t = await getTranslations("about");
 
@@ -23,11 +19,10 @@ export async function ValuesSection() {
       className="values-block bg-brand-100 py-16 md:py-18"
     >
       <div className="site-container">
-        <Reveal className="flex flex-col items-center gap-4.5 text-center">
-          <SectionEyebrow>{t("values.eyebrow")}</SectionEyebrow>
-          <h2 id="values-title" className="type-section text-balance text-ink">
-            {t.rich("values.title", { highlight })}
-          </h2>
+        <Reveal className="flex justify-center">
+          <SectionEyebrow as="h2" id="values-title">
+            {t("values.eyebrow")}
+          </SectionEyebrow>
         </Reveal>
         <div className="mt-8 grid items-center gap-6 md:mt-12 lg:grid-cols-[6fr_5fr] lg:gap-16">
           <Reveal delay={0.1}>

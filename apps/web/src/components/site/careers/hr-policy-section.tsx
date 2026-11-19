@@ -1,15 +1,19 @@
-import { Eye, Globe, ListChecks } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import {
+  BulletPointIcon,
+  GlobalSourcingIcon,
+  QualityIcon,
+} from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
 
 const PRINCIPLES = [
-  { key: "open", icon: Eye },
-  { key: "accessible", icon: Globe },
-  { key: "clear", icon: ListChecks },
+  { key: "open", icon: BulletPointIcon },
+  { key: "accessible", icon: GlobalSourcingIcon },
+  { key: "clear", icon: QualityIcon },
 ] as const;
 
-const BODY_KEYS = ["body1", "body2"] as const;
+const BENEFIT_KEYS = ["pay", "career"] as const;
 
 interface HrPolicySectionProps {
   imageUrl: string;
@@ -40,8 +44,8 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
             <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-7">
               {PRINCIPLES.map(({ key, icon: Icon }) => (
                 <li key={key} className="flex items-center gap-3">
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-control bg-brand-100 text-brand">
-                    <Icon aria-hidden strokeWidth={1.5} className="size-6" />
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-control bg-brand-100">
+                    <Icon className="h-7 w-8" />
                   </span>
                   <span className="text-base font-medium text-ink">
                     {t(`principles.${key}`)}
@@ -51,16 +55,9 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
             </ul>
           </div>
 
-          <div className="flex max-w-[66ch] flex-col gap-4">
-            {BODY_KEYS.map((key) => (
-              <p
-                key={key}
-                className="text-[17px] leading-[1.75] text-pretty text-even text-ink-2"
-              >
-                {t(key)}
-              </p>
-            ))}
-          </div>
+          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
+            {t("body")}
+          </p>
         </Reveal>
 
         <Reveal
@@ -79,6 +76,24 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
           />
         </Reveal>
       </div>
+
+      <ul className="site-container mt-14 grid gap-10 md:mt-20 md:grid-cols-2 md:gap-x-16">
+        {BENEFIT_KEYS.map((key, index) => (
+          <li key={key}>
+            <Reveal
+              index={index}
+              className="flex h-full flex-col gap-3 border-t-2 border-brand pt-6"
+            >
+              <h3 className="type-h4 font-semibold text-ink">
+                {t(`benefits.${key}.title`)}
+              </h3>
+              <p className="text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
+                {t(`benefits.${key}.text`)}
+              </p>
+            </Reveal>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -95,23 +95,22 @@
       "text": "Our wide distribution network, years of experience and partnerships built on mutual trust make us a trusted partner for international brands looking to enter the Mongolian market and grow their business.",
       "reasons": {
         "experience": {
-          "title": "Long experience, reliable operations",
-          "text": "Since {foundedYear} we have been building brands in the Mongolian market through import, sales and distribution.",
-          "textPlain": "For many years we have been building brands in the Mongolian market through import, sales and distribution."
+          "title": "An experienced team",
+          "text": "{years}+ years of experience in import, sales and distribution since we started in {foundedYear}.",
+          "textPlain": "Many years of experience in import, sales and distribution."
         },
         "brands": {
           "title": "A wide choice of international brands",
-          "text": "We import more than {products} branded products from over 10 countries and supply them to the market.",
-          "textPlain": "We import a wide range of branded products from over 10 countries and supply them to the market."
+          "text": "We import more than {products} branded products from over 10 countries, successfully bring them to market and keep growing them.",
+          "textPlain": "We import a wide range of branded products from over 10 countries, successfully bring them to market and keep growing them."
         },
         "network": {
           "title": "A wide distribution network",
-          "text": "We deliver our products to more than {salesPoints} retail and service outlets across Mongolia.",
-          "textPlain": "We deliver our products to retail and service outlets across Mongolia."
+          "text": "We reach every corner of Mongolia."
         },
         "products": {
           "title": "Products that meet consumer needs",
-          "text": "We supply a specialised range of food, beauty and household products, and develop brands of our own."
+          "text": "Just as consumer habits change over time, our brands grow together with our customers."
         }
       }
     },
@@ -272,7 +271,7 @@
     },
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
     "historyTitle": "Our history",
-    "historyHeading": "<highlight>30+ years</highlight> of history",
+    "historyHeading": "<highlight>Our</highlight> journey",
     "historyIndexLabel": "Jump to a year",
     "historyHint": "Scroll",
     "partnerTitle": "Let's work together",
@@ -280,27 +279,26 @@
     "visionText": "To be the most trusted partner in Mongolia's consumer goods distribution.",
     "values": {
       "missionTitle": "Our <highlight>mission</highlight>",
-      "title": "Principles we <highlight>live by</highlight> every day",
       "visionTitle": "Our <highlight>vision</highlight>",
       "missionArt": "A home, a family, a Cosmo shopping bag and a heart",
       "art": "A team, a Cosmo shopping bag, a box with a quality check mark and a tree",
       "visionArt": "A Cosmo truck heading along a route to a flag on a hilltop",
       "items": {
         "people": {
-          "title": "People",
-          "text": "We strive to build a passionate, team-oriented workplace."
+          "title": "Our people",
+          "text": "We build a workplace based on mutual trust, respect and teamwork, and support every employee’s involvement, knowledge, skills and ambitions."
         },
         "satisfaction": {
           "title": "Satisfaction",
-          "text": "We put the satisfaction of our customers and partners first."
+          "text": "We put the needs and expectations of our customers, clients and business partners first, and value long-term trust and lasting relationships."
         },
         "quality": {
           "title": "Quality",
-          "text": "We follow international standards for warehousing, storage and distribution in our daily operations."
+          "text": "We follow international quality and safety standards at every stage, from product selection and storage to warehouse management and distribution."
         },
         "responsibility": {
           "title": "Social responsibility",
-          "text": "We value law and ethics in everything we do and aim to be a socially responsible company."
+          "text": "We strictly follow the law and ethical principles, take our responsibilities to society, the environment and the public seriously, and are committed to sustainable development."
         }
       },
       "purposeEyebrow": "Our purpose",
@@ -341,20 +339,35 @@
         "accessible": "Accessible",
         "clear": "Clear"
       },
-      "body1": "We hire people who can contribute to the company's goals, train and develop them, and support their career growth. All HR activities are carried out fairly, transparently and professionally, in line with the law and our regulations.",
-      "body2": "Our HR policy aims to strengthen an employee-friendly culture, reduce risk and support the company's long-term, sustainable growth.",
+      "body": "Cosmo Trade LLC sees every employee as the company’s most valuable asset. We fairly recognise each person’s skills and effort, provide a good place to work and follow a transparent human resources policy.",
+      "benefits": {
+        "pay": {
+          "title": "Competitive pay and rewards",
+          "text": "We give every employee an equal opportunity and recognise your effort with competitive, performance-based pay and a real rewards system."
+        },
+        "career": {
+          "title": "Career growth",
+          "text": "We develop our own people first, giving employees who lead with skill and initiative open opportunities to be promoted and move into management roles."
+        }
+      },
       "imageAlt": "A team meeting"
     },
-    "governance": {
-      "title": "HR governance",
-      "text": "Managers at every level who carry out our HR policy follow these principles:",
-      "values": {
-        "ethical": "Ethical",
-        "professional": "Professional",
-        "accountable": "Accountable",
-        "transparent": "Transparent"
+    "culture": {
+      "title": "Work environment and company culture",
+      "items": {
+        "team": {
+          "title": "A positive, open team",
+          "text": "A friendly, close-knit team built on mutual respect and trust is ready to welcome you."
+        },
+        "office": {
+          "title": "A modern, comfortable office",
+          "text": "A healthy, safe and comfortable workplace that supports productivity, fully equipped with the technology and tools you need."
+        },
+        "balance": {
+          "title": "Work–life balance",
+          "text": "We respect our employees’ families and personal lives, offer flexible arrangements and fully support time to rest and recharge."
+        }
       },
-      "closing": "Managers apply these principles in their daily work and consciously avoid conflicts of interest and other risks.",
       "imageAlt": "The team unloading goods"
     },
     "form": {
