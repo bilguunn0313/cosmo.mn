@@ -5,14 +5,19 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { FollowFacebookBand } from "@/components/site/follow-facebook-band";
 import { ImageReveal } from "@/components/site/image-reveal";
+import { MoreNewsSection } from "@/components/site/media/more-news-section";
 import { NewsDate } from "@/components/site/media/news-date";
 import { NewsPrevNext } from "@/components/site/media/news-prev-next";
+import { NewsShare } from "@/components/site/media/news-share";
 import { NewsVideo } from "@/components/site/media/news-video";
 import { Reveal } from "@/components/site/reveal";
 import { getPageLocale } from "@/i18n/locale";
-import { fetchNews, fetchSiteSetting } from "@/lib/public-api";
+import { fetchLatestNews, fetchNews, fetchSiteSetting } from "@/lib/public-api";
+import { paragraphsFromLineBreaks } from "@/lib/rich-text";
 import { pageMetadata } from "@/lib/seo";
 import { newsPath } from "@/lib/site-links";
+
+const MORE_NEWS_COUNT = 3;
 
 export async function generateMetadata({
   params,
@@ -42,14 +47,19 @@ export default async function NewsPage({
   const locale = await getPageLocale(params);
   const { slug } = await params;
   const t = await getTranslations();
-  const [news, setting] = await Promise.all([
+  const [news, setting, latest] = await Promise.all([
     fetchNews(slug, locale),
     fetchSiteSetting(locale),
+    fetchLatestNews(locale, MORE_NEWS_COUNT + 1),
   ]);
 
   if (!news) {
     notFound();
   }
+
+  const moreNews = latest
+    .filter((item) => item.slug !== news.slug)
+    .slice(0, MORE_NEWS_COUNT);
 
   return (
     <>
@@ -62,9 +72,9 @@ export default async function NewsPage({
             ]}
           />
 
-          <Reveal className="mx-auto mt-10 grid max-w-205 gap-5 md:mt-14">
-            <p className="flex gap-2.5 text-[15px] font-medium text-ink-2">
-              <NewsDate publishedAt={news.publishedAt} variant="month" />
+          <Reveal className="mx-auto mt-10 grid max-w-190 gap-4 md:mt-14">
+            <p className="flex gap-2.5 text-[15px] font-medium text-ink-3">
+              <NewsDate publishedAt={news.publishedAt} variant="short" />
               {news.videoUrl && (
                 <>
                   <span aria-hidden>·</span>
@@ -74,9 +84,11 @@ export default async function NewsPage({
                 </>
               )}
             </p>
-            <h1 className="type-section text-balance text-ink">{news.title}</h1>
+            <h1 className="type-display text-pretty text-ink max-sm:text-[28px] max-sm:leading-[1.15]">
+              {news.title}
+            </h1>
             {news.summary && (
-              <p className="text-lg leading-relaxed text-pretty text-even text-ink-2 md:text-xl">
+              <p className="mt-2 text-lg leading-[1.65] text-pretty text-even text-ink-2 md:text-xl">
                 {news.summary}
               </p>
             )}
@@ -84,8 +96,8 @@ export default async function NewsPage({
         </header>
 
         {news.videoUrl ? (
-          <Reveal className="site-container mt-8 md:mt-12">
-            <div className="mx-auto max-w-280">
+          <Reveal className="site-container mt-8 md:mt-14">
+            <div className="mx-auto max-w-260">
               <NewsVideo
                 src={news.videoUrl}
                 poster={news.coverUrl}
@@ -95,8 +107,8 @@ export default async function NewsPage({
           </Reveal>
         ) : (
           news.coverUrl && (
-            <div className="site-container mt-8 md:mt-12">
-              <div className="relative mx-auto aspect-video max-w-280 overflow-hidden rounded-card bg-surface">
+            <div className="site-container mt-8 md:mt-14">
+              <div className="relative mx-auto aspect-video max-w-260 overflow-hidden rounded-card bg-surface">
                 <ImageReveal delay={0.15}>
                   <Image
                     src={news.coverUrl}
@@ -104,7 +116,7 @@ export default async function NewsPage({
                     fill
                     unoptimized
                     priority
-                    sizes="(min-width: 1200px) 1120px, 100vw"
+                    sizes="(min-width: 1120px) 1040px, 100vw"
                     className="object-cover"
                   />
                 </ImageReveal>
@@ -113,17 +125,23 @@ export default async function NewsPage({
           )
         )}
 
-        <div className="site-container pt-10 md:pt-16">
-          {news.content && (
-            <div
-              className="rich-text mx-auto max-w-175 text-[17px] leading-[1.75] text-even text-ink md:text-lg"
-              dangerouslySetInnerHTML={{ __html: news.content }}
-            />
-          )}
+        <div className="site-container pt-10 md:pt-14">
+          <div className="mx-auto grid max-w-190 gap-10 md:gap-12">
+            {news.content && (
+              <div
+                className="rich-text text-[17px] leading-[1.8] text-pretty text-even text-ink md:text-lg"
+                dangerouslySetInnerHTML={{
+                  __html: paragraphsFromLineBreaks(news.content),
+                }}
+              />
+            )}
+            <NewsShare slug={news.slug} locale={locale} />
+          </div>
         </div>
       </article>
 
       <NewsPrevNext previous={news.previous} next={news.next} />
+      <MoreNewsSection news={moreNews} />
 
       {setting?.facebookUrl && <FollowFacebookBand url={setting.facebookUrl} />}
     </>

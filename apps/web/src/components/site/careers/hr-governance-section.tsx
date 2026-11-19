@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Reveal } from "@/components/site/reveal";
 
-const TRAIT_KEYS = ["open", "flexible", "feedback"] as const;
 const VALUE_KEYS = [
   "ethical",
   "professional",
@@ -28,7 +27,7 @@ export async function HrGovernanceSection({
       <div className="site-container grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Reveal
           from="left"
-          className="relative order-last min-h-110 overflow-hidden rounded-card bg-surface sm:min-h-120 lg:order-first"
+          className="relative order-last aspect-4/3 overflow-hidden rounded-card bg-surface lg:order-first lg:aspect-auto lg:min-h-120"
         >
           <Image
             src={imageUrl}
@@ -38,25 +37,6 @@ export async function HrGovernanceSection({
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-linear-to-t from-brand-night/90 via-brand-night/35 via-45% to-transparent to-75%"
-          />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-5 sm:p-8">
-            <p className="type-h4 font-semibold text-white">
-              {t("specialistsLabel")}
-            </p>
-            <ul className="flex flex-col gap-2.5">
-              {TRAIT_KEYS.map((key) => (
-                <li
-                  key={key}
-                  className="rounded-full bg-brand/90 px-6 py-3 text-[15px] font-medium text-white"
-                >
-                  {t(`traits.${key}`)}
-                </li>
-              ))}
-            </ul>
-          </div>
         </Reveal>
 
         <Reveal
@@ -70,7 +50,7 @@ export async function HrGovernanceSection({
           >
             {t("title")}
           </h2>
-          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
+          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-ink-2">
             {t("text")}
           </p>
           <ul className="grid grid-cols-2 gap-3 md:gap-4">
@@ -83,7 +63,7 @@ export async function HrGovernanceSection({
               </li>
             ))}
           </ul>
-          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
+          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-ink-2">
             {t("closing")}
           </p>
         </Reveal>

@@ -52,7 +52,7 @@ function NeighborLink({ news, label, isNext, className }: NeighborLinkProps) {
         </span>
         <NewsDate
           publishedAt={news.publishedAt}
-          variant="month"
+          variant="short"
           className="text-sm text-ink-3"
         />
       </span>
@@ -77,7 +77,7 @@ export async function NewsPrevNext({ previous, next }: NewsPrevNextProps) {
       aria-label={t("newsNavigation")}
       className="site-container pt-20 md:pt-28"
     >
-      <div className="grid divide-y divide-rule border-y border-rule md:grid-cols-2 md:divide-y-0">
+      <div className="mx-auto grid max-w-260 divide-y divide-rule border-y border-rule md:grid-cols-2 md:divide-y-0">
         {previous && (
           <NeighborLink
             news={previous}

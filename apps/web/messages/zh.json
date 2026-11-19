@@ -211,18 +211,20 @@
   "media": {
     "title": "新闻与动态",
     "description": "公司新闻、活动及新品发布。",
+    "featured": "精选新闻",
     "empty": "暂无新闻。",
     "pagination": "分页",
     "previous": "上一页",
     "next": "下一页",
     "pageOf": "第 {page} 页，共 {total} 页",
-    "stripLabel": "选择新闻",
     "followTitle": "关注我们的 Facebook 主页",
     "followButton": "Facebook 主页",
     "newsNavigation": "上一篇和下一篇新闻",
     "previousNews": "上一篇",
     "nextNews": "下一篇",
-    "playVideo": "播放视频"
+    "playVideo": "播放视频",
+    "share": "分享",
+    "moreNews": "更多新闻"
   },
   "contact": {
     "description": "欢迎与我们洽谈合作或提出建议。",
@@ -353,12 +355,6 @@
         "transparent": "透明"
       },
       "closing": "管理人员在日常工作中践行这些原则，并主动避免利益冲突及其他风险。",
-      "specialistsLabel": "我们的人力资源专员：",
-      "traits": {
-        "open": "公开透明",
-        "flexible": "灵活变通",
-        "feedback": "重视反馈"
-      },
       "imageAlt": "正在卸货的团队"
     },
     "form": {

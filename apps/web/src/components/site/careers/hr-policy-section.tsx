@@ -33,20 +33,17 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
             {t("title")}
           </h1>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <h2 className="type-h4 font-semibold text-ink">
               {t("principlesLabel")}
             </h2>
-            <ul className="grid max-w-120 grid-cols-3 gap-3 sm:gap-6">
+            <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-7">
               {PRINCIPLES.map(({ key, icon: Icon }) => (
-                <li
-                  key={key}
-                  className="flex flex-col items-center gap-3 text-center"
-                >
-                  <span className="flex size-18 items-center justify-center rounded-card bg-brand-100 text-brand sm:size-20">
-                    <Icon aria-hidden strokeWidth={1.5} className="size-9" />
+                <li key={key} className="flex items-center gap-3">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-control bg-brand-100 text-brand">
+                    <Icon aria-hidden strokeWidth={1.5} className="size-6" />
                   </span>
-                  <span className="text-[15px] leading-snug font-medium text-balance text-ink">
+                  <span className="text-base font-medium text-ink">
                     {t(`principles.${key}`)}
                   </span>
                 </li>

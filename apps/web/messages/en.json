@@ -211,18 +211,20 @@
   "media": {
     "title": "News and events",
     "description": "Company news, events and new product launches.",
+    "featured": "Featured story",
     "empty": "No news yet.",
     "pagination": "Pagination",
     "previous": "Previous",
     "next": "Next",
     "pageOf": "{page} of {total}",
-    "stripLabel": "Choose a story",
     "followTitle": "Follow our Facebook page",
     "followButton": "Facebook page",
     "newsNavigation": "Previous and next story",
     "previousNews": "Previous story",
     "nextNews": "Next story",
-    "playVideo": "Play video"
+    "playVideo": "Play video",
+    "share": "Share",
+    "moreNews": "More news"
   },
   "contact": {
     "description": "Send us your partnership ideas, questions or feedback.",
@@ -353,12 +355,6 @@
         "transparent": "Transparent"
       },
       "closing": "Managers apply these principles in their daily work and consciously avoid conflicts of interest and other risks.",
-      "specialistsLabel": "Our HR specialists are:",
-      "traits": {
-        "open": "Open and transparent",
-        "flexible": "Flexible",
-        "feedback": "Responsive to feedback"
-      },
       "imageAlt": "The team unloading goods"
     },
     "form": {

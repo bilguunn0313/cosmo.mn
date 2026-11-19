@@ -4,10 +4,9 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { FollowFacebookBand } from "@/components/site/follow-facebook-band";
+import { NewsCard } from "@/components/site/media/news-card";
 import { NewsPagination } from "@/components/site/media/news-pagination";
-import { NewsShowcase } from "@/components/site/media/news-showcase";
 import { NewsSlide } from "@/components/site/media/news-slide";
-import { NewsThumb } from "@/components/site/media/news-thumb";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
@@ -55,11 +54,8 @@ export default async function MediaPage({
     notFound();
   }
 
-  const showcaseItems = items.map((news, index) => ({
-    id: news.slug,
-    slide: <NewsSlide news={news} priority={index === 0} />,
-    thumb: <NewsThumb news={news} priority={index === 0} />,
-  }));
+  const featured = page === 1 ? items[0] : null;
+  const gridItems = featured ? items.slice(1) : items;
 
   return (
     <>
@@ -85,7 +81,7 @@ export default async function MediaPage({
 
       <section
         aria-label={t("media.title")}
-        className="site-container grid gap-12 pt-10 md:pt-14"
+        className="site-container grid gap-12 pt-10 md:gap-14 md:pt-14"
       >
         {items.length === 0 ? (
           <div className="grid justify-items-start gap-5">
@@ -96,12 +92,28 @@ export default async function MediaPage({
             </Link>
           </div>
         ) : (
-          <Reveal>
-            <NewsShowcase
-              items={showcaseItems}
-              stripLabel={t("media.stripLabel")}
-            />
-          </Reveal>
+          <>
+            {featured && (
+              <Reveal className="border-b border-rule pb-12 md:pb-14">
+                <NewsSlide
+                  news={featured}
+                  priority
+                  eyebrow={t("media.featured")}
+                />
+              </Reveal>
+            )}
+            {gridItems.length > 0 && (
+              <ul className="grid gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-14 lg:grid-cols-3">
+                {gridItems.map((news, index) => (
+                  <li key={news.slug}>
+                    <Reveal index={index % 3} className="h-full">
+                      <NewsCard news={news} />
+                    </Reveal>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
         )}
 
         <NewsPagination page={page} totalPages={totalPages} />
