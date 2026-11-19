@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getPageLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
+import { fetchSiteSetting } from "@/lib/public-api";
 import { SITE_URL, siteNameFor } from "@/lib/seo";
 
 const roboto = Roboto({
@@ -50,6 +51,7 @@ export default async function SiteLayout({
 }: LayoutProps<"/[locale]">) {
   const locale = await getPageLocale(params);
   const t = await getTranslations({ locale, namespace: "notFound" });
+  const setting = await fetchSiteSetting(locale);
 
   return (
     <html
@@ -71,7 +73,7 @@ export default async function SiteLayout({
           {t("skipToContent")}
         </a>
         <NextIntlClientProvider>
-          <SiteHeader />
+          <SiteHeader facebookUrl={setting?.facebookUrl ?? null} />
           <main id="main" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>

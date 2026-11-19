@@ -48,7 +48,7 @@ export async function PartnerCtaSection({
       />
 
       <Reveal className="site-container flex max-w-205 flex-col items-center gap-5 text-center">
-        <SectionEyebrow tone={isDark ? "white" : "brand"}>
+        <SectionEyebrow tone={isDark ? "white" : "coral"}>
           {eyebrow ?? t("home.partnerEyebrow")}
         </SectionEyebrow>
         <h2

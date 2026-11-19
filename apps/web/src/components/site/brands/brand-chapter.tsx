@@ -54,22 +54,10 @@ export async function BrandChapter({
               </h2>
             </Reveal>
             <Reveal index={2}>
-              <p className="text-lg leading-[1.65] text-pretty text-ink-2">
+              <p className="text-lg leading-[1.65] text-pretty text-even text-ink-2">
                 {t(`brands.chapters.${category}.text`)}
               </p>
             </Reveal>
-            {category === "FOOD" && (
-              <Reveal index={3}>
-                <p className="mt-1 flex items-center gap-5 border-t border-rule pt-6">
-                  <span className="font-display text-5xl leading-none font-semibold tracking-[-0.04em] text-coral md:text-[64px]">
-                    {t("brands.chapters.FOOD.statValue")}
-                  </span>
-                  <span className="max-w-65 text-[15px] leading-normal text-ink">
-                    {t("brands.chapters.FOOD.statLabel")}
-                  </span>
-                </p>
-              </Reveal>
-            )}
           </div>
 
           <Reveal className="max-sm:hidden">

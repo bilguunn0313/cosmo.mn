@@ -13,6 +13,8 @@ const siteSettingInclude = {
   mediaBannerImage: true,
   brandsBannerImage: true,
   contactBannerImage: true,
+  hrGovernanceImage: true,
+  ceoImage: true,
   valuePeopleImage: true,
   valueSatisfactionImage: true,
   valueQualityImage: true,
@@ -78,6 +80,7 @@ export class SiteSettingsService {
         media: setting.mediaBannerImage?.url ?? null,
         brands: setting.brandsBannerImage?.url ?? null,
         contact: setting.contactBannerImage?.url ?? null,
+        hrGovernance: setting.hrGovernanceImage?.url ?? null,
       },
       valueImages: {
         people: setting.valuePeopleImage?.url ?? null,
@@ -86,6 +89,7 @@ export class SiteSettingsService {
         responsibility: setting.valueResponsibilityImage?.url ?? null,
       },
       homeAboutImageUrl: setting.homeAboutImage?.url ?? null,
+      ceoImageUrl: setting.ceoImage?.url ?? null,
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

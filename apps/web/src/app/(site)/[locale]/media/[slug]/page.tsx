@@ -76,7 +76,7 @@ export default async function NewsPage({
             </p>
             <h1 className="type-section text-balance text-ink">{news.title}</h1>
             {news.summary && (
-              <p className="text-lg leading-relaxed text-pretty text-ink-2 md:text-xl">
+              <p className="text-lg leading-relaxed text-pretty text-even text-ink-2 md:text-xl">
                 {news.summary}
               </p>
             )}
@@ -116,7 +116,7 @@ export default async function NewsPage({
         <div className="site-container pt-10 md:pt-16">
           {news.content && (
             <div
-              className="rich-text mx-auto max-w-175 text-[17px] leading-[1.75] text-ink md:text-lg"
+              className="rich-text mx-auto max-w-175 text-[17px] leading-[1.75] text-even text-ink md:text-lg"
               dangerouslySetInnerHTML={{ __html: news.content }}
             />
           )}

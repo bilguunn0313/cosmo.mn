@@ -114,6 +114,48 @@ describe('Site settings', () => {
     ]);
   });
 
+  it('хүний нөөцийн засаглалын зургийг хадгалж нийтэд өгнө', async () => {
+    const hrGovernanceImageId = await uploadTestImage(context);
+
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ hrGovernanceImageId })
+      .expect(200);
+
+    const response = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(response.body.pageBanners.hrGovernance).toMatch(/^\/uploads\//);
+
+    await context.admin
+      .delete(`/admin/media/${hrGovernanceImageId}`)
+      .expect(409);
+  });
+
+  it('гүйцэтгэх захирлын зургийг хадгалж нийтэд өгнө', async () => {
+    const ceoImageId = await uploadTestImage(context);
+
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ ceoImageId })
+      .expect(200);
+
+    const response = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(response.body.ceoImageUrl).toMatch(/^\/uploads\//);
+
+    const deletion = await context.admin
+      .delete(`/admin/media/${ceoImageId}`)
+      .expect(409);
+    expect(deletion.body.usages).toEqual([
+      expect.objectContaining({
+        type: 'siteSetting',
+        title: 'Гүйцэтгэх захирлын зураг',
+      }),
+    ]);
+  });
+
   it('тоон үзүүлэлтүүдийг хадгалж нийтэд өгнө', async () => {
     await context.admin
       .put('/admin/site-settings')

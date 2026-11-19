@@ -39,17 +39,15 @@
     "language": "Choose language"
   },
   "footer": {
-    "description": "We bring international food, beauty and household brands to customers in Mongolia.",
-    "menu": "Menu",
+    "tagline": "Unique everyday essentials",
     "contact": "Contact",
     "socials": "Social",
     "rights": "All rights reserved."
   },
   "home": {
     "featured": "Featured",
-    "heroTitle": "World brands for every Mongolian home",
+    "heroTitle": "<line><accent>Unique</accent></line> <line>everyday</line> <line>essentials</line>",
     "officialDistributor": "Official distributor",
-    "originEyebrow": "Origins",
     "partnerEyebrow": "Partnership",
     "contactUs": "Get in touch",
     "mute": "Mute",
@@ -60,94 +58,129 @@
     "goToSlide": "Go to slide {number}",
     "previous": "Previous",
     "next": "Next",
-    "brandsTitle": "Our brands",
-    "mapDescription": "Our brands come from these countries.",
-    "allBrands": "All brands",
+    "mapDescription": "We work with brands from more than 10 countries and bring global quality and standards to the Mongolian market.",
     "newsTitle": "Latest news",
     "allNews": "All news",
     "video": "Video",
-    "heroText": "Since {foundedYear} we have imported international food, beauty and household brands and delivered them to more than {salesPoints} points of sale.",
-    "heroTextPlain": "We import international food, beauty and household brands and deliver them across Mongolia.",
     "slideIndicators": "Slides",
     "areas": {
       "eyebrow": "What we do",
-      "title": "From import to the store shelf",
-      "text": "We handle every step of bringing a brand to customers in Mongolia ourselves.",
+      "text": "We manage a wide range of branded products at every stage of the way.",
       "items": {
         "import": {
           "title": "Import",
-          "text": "We bring products into Mongolia from manufacturers around the world."
+          "text": "We import products from international manufacturers into Mongolia in line with quality standards."
         },
         "warehouse": {
-          "title": "Warehousing and logistics",
-          "text": "We store goods to standard and prepare every order on time."
+          "title": "Logistics and warehousing",
+          "text": "Reliable transport, and storage of goods in warehouses that meet the required standards."
         },
         "distribution": {
           "title": "Distribution",
-          "text": "We deliver to points of sale on a regular, reliable schedule."
+          "text": "Fast, reliable delivery to points of sale, on time for every order."
         },
         "sales": {
           "title": "Sales and merchandising",
-          "text": "We sell through supermarket, retail, wholesale and HORECA channels and look after shelf placement."
+          "text": "Sales support, retail activation and in-market execution services for our products."
         },
         "marketing": {
-          "title": "Marketing support",
-          "text": "We run advertising and in-store activations for every brand."
+          "title": "Marketing",
+          "text": "Introducing brands to the market and making consumers want to buy them."
         }
       }
     },
     "why": {
       "eyebrow": "Why Cosmo Trade",
-      "title": "A trusted partner to leading brands",
-      "text": "A wide distribution network, long experience and partnerships built on mutual trust make us the partner of choice for international brands entering or growing in the Mongolian market.",
-      "imageAlt": "Products distributed by Cosmo Trade",
+      "title": "A trusted partner to global brands",
+      "text": "Our wide distribution network, years of experience and partnerships built on mutual trust make us a trusted partner for international brands looking to enter the Mongolian market and grow their business.",
       "reasons": {
-        "network": {
-          "title": "A nationwide distribution network",
-          "text": "We reach more than {salesPoints} points of sale through supermarkets, hypermarkets, retail, wholesale and HORECA.",
-          "textPlain": "We reach customers nationwide through supermarkets, hypermarkets, retail, wholesale and HORECA."
-        },
-        "oneStop": {
-          "title": "One partner from import to shelf",
-          "text": "We handle import, warehousing, logistics, distribution and sales ourselves, so a brand works with a single partner."
-        },
         "experience": {
-          "title": "{years} years of experience",
-          "text": "Since {foundedYear} we have introduced and grown more than {products} products in the Mongolian market.",
-          "titlePlain": "Long experience",
-          "textPlain": "We have introduced and grown international brands in the Mongolian market."
+          "title": "Long experience, reliable operations",
+          "text": "Since {foundedYear} we have been building brands in the Mongolian market through import, sales and distribution.",
+          "textPlain": "For many years we have been building brands in the Mongolian market through import, sales and distribution."
         },
-        "marketing": {
-          "title": "Trade marketing and merchandising",
-          "text": "Our team of more than {team} people looks after shelf placement, advertising and in-store activation for every brand.",
-          "textPlain": "Our team looks after shelf placement, advertising and in-store activation for every brand."
+        "brands": {
+          "title": "A wide choice of international brands",
+          "text": "We import more than {products} branded products from over 10 countries and supply them to the market.",
+          "textPlain": "We import a wide range of branded products from over 10 countries and supply them to the market."
+        },
+        "network": {
+          "title": "A wide distribution network",
+          "text": "We deliver our products to more than {salesPoints} retail and service outlets across Mongolia.",
+          "textPlain": "We deliver our products to retail and service outlets across Mongolia."
+        },
+        "products": {
+          "title": "Products that meet consumer needs",
+          "text": "We supply a specialised range of food, beauty and household products, and develop brands of our own."
         }
       }
     },
     "retail": {
-      "eyebrow": "Retail network",
-      "title": "Our partners",
-      "text": "Our products reach customers through supermarkets, hypermarkets, retail, wholesale and HORECA.",
+      "title": "The reach of our partnerships",
+      "text": "We deliver our products to consumers through a wide range of sales channels, including retail and wholesale, supermarkets, hypermarkets and the hospitality sector.",
       "partners": "Retail network partners"
+    },
+    "channels": {
+      "eyebrow": "Retail channels",
+      "title": "<count></count>+ points of sale across every major channel",
+      "titlePlain": "Across every major retail channel",
+      "text": "Our products reach shoppers everywhere from hypermarkets and supermarkets to neighbourhood grocery stores.",
+      "hub": "Cosmo Trade",
+      "items": {
+        "supermarket": "Supermarkets",
+        "hypermarket": "Hypermarkets",
+        "pharmacy": "Pharmacies",
+        "wholesale": "Retail & wholesale",
+        "convenience": "24/7 stores",
+        "grocery": "Grocery stores"
+      }
     },
     "newsEyebrow": "Media",
     "cta": {
       "title": "Let's grow your brand in Mongolia together",
       "text": "Planning to enter the Mongolian market or grow your sales? Get in touch with us."
     },
-    "mapTitle": "From {count, plural, one {# country} other {# countries}} to Mongolia"
+    "mapTitle": "International partnerships",
+    "supplyChain": {
+      "title": "Integrated distribution solutions",
+      "illustrationLabel": "Illustration of products moving from the warehouse along a scanned conveyor and by truck to a store",
+      "storeSign": "STORE",
+      "items": {
+        "warehouse": {
+          "title": "Warehousing",
+          "text": "Food, beauty and household goods are sorted and stored according to standards."
+        },
+        "distribution": {
+          "title": "Distribution",
+          "text": "Our delivery vehicles bring products to customer locations in the city and the provinces on schedule."
+        },
+        "inventory": {
+          "title": "Inventory management",
+          "text": "We track stock levels, batches and expiry dates and manage them in our ERP system."
+        },
+        "retail": {
+          "title": "Brand visibility and availability",
+          "text": "We merchandise products to standard at every point of sale, keeping them visible and within reach of consumers to support sales."
+        }
+      }
+    },
+    "stats": {
+      "label": "Key figures",
+      "years": "Years in business",
+      "yearsUnit": "yrs",
+      "products": "Products",
+      "salesPoints": "Points of sale reached",
+      "team": "Team members"
+    }
   },
   "brands": {
     "description": "International food, beauty and household brands.",
-    "chaptersLabel": "Categories",
     "empty": "Brand information is not available right now. Please try again shortly.",
     "chapters": {
       "FOOD": {
         "label": "Food",
         "title": "Food products",
-        "text": "We supply food products for households as well as restaurants, lounges, fast-food outlets and other food-service businesses. We value choice, quality and reliable supply, and work to meet our partners’ everyday needs.",
-        "statValue": "30%",
-        "statLabel": "Share of the total canned food market"
+        "text": "We supply food products for households as well as restaurants, lounges, fast-food outlets and other food-service businesses. We value choice, quality and reliable supply, and work to meet our partners’ everyday needs. Our share of the total canned food market is 30%."
       },
       "BEAUTY": {
         "label": "Beauty and hygiene",
@@ -160,14 +193,12 @@
         "text": "We supply household products for the everyday needs of families and organisations. We value the right choice for customers, reliable supply and lasting partnerships."
       }
     },
-    "website": "Website",
     "productsTitle": "Our products",
-    "productPicker": "Choose a product",
     "coverAlt": "{name} products",
-    "related": "More brands",
     "partnerTitle": "Bring your brand to Mongolia?",
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
-    "partnerButton": "Partner with us"
+    "partnerButton": "Partner with us",
+    "marqueeLabel": "Our brands"
   },
   "catalog": {
     "title": "Catalog",
@@ -225,102 +256,56 @@
     "heroTitle": "Cosmo Trade",
     "ceo": {
       "title": "Message from the CEO",
-      "quote": "The main idea of the CEO's message goes here in one or two sentences.",
-      "body": "The rest of the message: the company's vision, its team and a word to partners.",
-      "name": "Full Name",
+      "quote": "We believe that business success is measured not only by numerical growth, but by creating real value in our consumers' lives and keeping our partners' trust over the long term.",
+      "body1": "Our journey, which began in 1993, has grown into a complete operation that brings leading international food and household brands to consumers in Mongolia. Building on our skilled team, standards-compliant logistics and wide distribution network, we fully ensure product quality and safety and strive to steadily strengthen our partner brands' position in the market.",
+      "body2": "I would like to express my deep gratitude to all our partners, customers and colleagues who value lasting cooperation, place their trust in us and grow together with us.",
+      "name": "Yaasim Maigul",
       "role": "Chief Executive Officer"
     },
-    "description": "We bring international food, beauty and household brands to consumers in Mongolia.",
     "intro": {
-      "label": "Company overview",
       "title": "Creating <highlight>value in everyday life</highlight>",
-      "lead": "Cosmo Trade LLC was founded in 1993 and has built many years of experience in importing, selling and distributing fast-moving consumer goods.",
-      "body1": "We work with international and regional brands from the USA, Europe and Asia, supplying the Mongolian market with products that meet consumer needs and changes in the market. To make products more accessible to consumers, we keep expanding our partnerships through supermarkets, hypermarkets, retail and wholesale trade, and HORECA, the hotel, restaurant and catering sector.",
-      "body2": "We also work to introduce and grow international brands in the Mongolian market, increase product sales and develop our own brands. Building on our experience, reliable partnerships and distribution capability, we aim to create long-term value for consumers, customers and business partners, and to contribute to the sustainable growth of our industry.",
-      "imageAlt": "Containers with the Cosmo logo"
+      "lead": "Cosmo Trade is an experienced team of more than 150 skilled professionals across 7 specialised departments.",
+      "body": "We operate a dedicated 3,500-square-metre warehouse and distribution centre for food and household goods that meets international standards and fully ensures product quality and safety. From there we deliver our products quickly to 4,500 outlets across Ulaanbaatar and to more than 3,000 shopping centres in towns and settlements across all 21 provinces.",
+      "imageAlt": "Cosmo Trade head office and warehouse from above"
     },
-    "missionLabel": "Our mission",
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
     "historyTitle": "Our history",
+    "historyHeading": "<highlight>30+ years</highlight> of history",
+    "historyIndexLabel": "Jump to a year",
+    "historyHint": "Scroll",
     "partnerTitle": "Let's work together",
     "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us.",
-    "purposeTitle": "Our purpose",
-    "visionLabel": "Vision",
     "visionText": "To be the most trusted partner in Mongolia's consumer goods distribution.",
-    "sloganText": "World brands for every Mongolian home",
-    "areasEyebrow": "What we do",
-    "areasTitle": "Integrated distribution solutions",
-    "network": {
-      "eyebrow": "Nationwide network",
-      "title": "A <highlight>distribution network</highlight> across Mongolia",
-      "text": "From our central warehouse in Ulaanbaatar we deliver regularly to the provinces of the Western, Khangai, Central and Eastern regions, staying close to every consumer.",
-      "points": {
-        "hub": "Warehouse and distribution centre",
-        "regions": "Regional branches and agents",
-        "salesPoints": "Coverage of {salesPoints}+ points of sale",
-        "channels": "Multi-channel market reach",
-        "fulfillment": "Logistics and order fulfilment"
-      },
-      "map": {
-        "label": "Distribution diagram from the central warehouse in Ulaanbaatar to the Western, Khangai, Central and Eastern regions",
-        "west": "Western",
-        "khangai": "Khangai",
-        "central": "Central",
-        "east": "Eastern",
-        "city": "Ulaanbaatar",
-        "hub": "Central warehouse",
-        "regional": "Regional distribution"
-      }
-    },
-    "historyHeading": "{years} years of growth",
-    "historyHeadingPlain": "Our journey",
-    "historyPrevious": "Earlier milestones",
-    "historyNext": "Later milestones",
-    "historyNow": "Today",
-    "stats": {
-      "years": "Years in business",
-      "yearsUnit": "yrs",
-      "products": "Products",
-      "salesPoints": "Points of sale reached",
-      "team": "Team members"
-    },
-    "areasText": "We handle every step of bringing a brand to consumers in Mongolia ourselves.",
-    "areasIllustrationLabel": "Illustration of products moving from the warehouse along a scanned conveyor and by truck to a store",
-    "areasStoreSign": "STORE",
-    "logistics": {
+    "values": {
+      "missionTitle": "Our <highlight>mission</highlight>",
+      "title": "Principles we <highlight>live by</highlight> every day",
+      "visionTitle": "Our <highlight>vision</highlight>",
+      "missionArt": "A home, a family, a Cosmo shopping bag and a heart",
+      "art": "A team, a Cosmo shopping bag, a box with a quality check mark and a tree",
+      "visionArt": "A Cosmo truck heading along a route to a flag on a hilltop",
       "items": {
-        "warehouse": {
-          "title": "Warehousing",
-          "text": "Food, beauty and household goods are stored separately according to their storage requirements."
+        "people": {
+          "title": "People",
+          "text": "We strive to build a passionate, team-oriented workplace."
         },
-        "distribution": {
-          "title": "Distribution",
-          "text": "Our own fleet delivers on schedule to points of sale in the city and the provinces."
+        "satisfaction": {
+          "title": "Satisfaction",
+          "text": "We put the satisfaction of our customers and partners first."
         },
-        "inventory": {
-          "title": "Inventory management",
-          "text": "Stock is tracked by batch and expiry date (FEFO) and recorded in our ERP system."
+        "quality": {
+          "title": "Quality",
+          "text": "We follow international standards for warehousing, storage and distribution in our daily operations."
         },
-        "retail": {
-          "title": "Retail supply",
-          "text": "Orders are prepared for each point of sale and delivered complete and on time."
+        "responsibility": {
+          "title": "Social responsibility",
+          "text": "We value law and ethics in everything we do and aim to be a socially responsible company."
         }
-      }
+      },
+      "purposeEyebrow": "Our purpose",
+      "eyebrow": "Values"
     }
   },
   "careers": {
-    "description": "About our team, workplace and hiring process.",
-    "joinTitle": "Join our team",
-    "joinText": "Send us your CV by email. We will contact you when a suitable position opens.",
-    "sendCv": "Send CV",
-    "statsLabel": "Our team in numbers",
-    "statEmployees": "Employees",
-    "statGender": "Gender ratio",
-    "women": "{percent}% women",
-    "men": "{percent}% men",
-    "structureEyebrow": "Structure and headcount",
-    "structureTitle": "{departments} departments, {people} people",
-    "structureText": "Our warehouse, distribution and sales teams make up more than 60% of the company.",
     "departments": {
       "warehouse": "Warehouse and distribution",
       "sales": "Sales",
@@ -331,32 +316,50 @@
       "marketing": "Marketing",
       "it": "Information technology"
     },
-    "growth": {
-      "training": {
-        "title": "Training and growth",
-        "text": "We support continuous development by giving our people the chance to learn from international practice and grow in their profession."
-      },
-      "rewards": {
-        "title": "Rewards and recognition",
-        "text": "We value our employees' achievements and real contribution, and nominate them for industry and state honors."
-      },
-      "highlights": {
-        "training": {
-          "value": "2-10",
-          "text": "employees join training trips abroad every year"
-        }
+    "directions": {
+      "lead": "Cosmo Trade's human resources policy is built on",
+      "title": "{count} directions",
+      "items": {
+        "transparency": "Transparency in HR",
+        "inclusion": "Diversity, equity and inclusion",
+        "culture": "Strengthening our company culture",
+        "development": "Developing employees and their skills",
+        "wellbeing": "Employee well-being",
+        "engagement": "Employee engagement",
+        "safeWorkplace": "Against discrimination and workplace harassment",
+        "innovation": "Supporting innovation",
+        "leadership": "Leadership"
       }
     },
-    "principlesEyebrow": "Workplace relations",
-    "principlesTitle": "Our principles",
-    "principles": {
-      "nonDiscrimination": "No discrimination",
-      "freedomToWork": "Freedom to work: choosing one's job freely, fair working conditions, fair pay and rest",
-      "noHarassment": "No harassment, violence or sexual harassment",
-      "noForcedLabor": "No forced labor",
-      "humanRights": "Fairness, humanity and respect for human rights and freedoms",
-      "reputation": "Protecting the company's good name",
-      "respectCustomers": "Respect for partners, customers and clients"
+    "policy": {
+      "title": "Human resources policy",
+      "principlesLabel": "Our policy is:",
+      "principles": {
+        "open": "Open and transparent",
+        "accessible": "Accessible",
+        "clear": "Clear"
+      },
+      "body1": "We hire people who can contribute to the company's goals, train and develop them, and support their career growth. All HR activities are carried out fairly, transparently and professionally, in line with the law and our regulations.",
+      "body2": "Our HR policy aims to strengthen an employee-friendly culture, reduce risk and support the company's long-term, sustainable growth.",
+      "imageAlt": "A team meeting"
+    },
+    "governance": {
+      "title": "HR governance",
+      "text": "Managers at every level who carry out our HR policy follow these principles:",
+      "values": {
+        "ethical": "Ethical",
+        "professional": "Professional",
+        "accountable": "Accountable",
+        "transparent": "Transparent"
+      },
+      "closing": "Managers apply these principles in their daily work and consciously avoid conflicts of interest and other risks.",
+      "specialistsLabel": "Our HR specialists are:",
+      "traits": {
+        "open": "Open and transparent",
+        "flexible": "Flexible",
+        "feedback": "Responsive to feedback"
+      },
+      "imageAlt": "The team unloading goods"
     },
     "form": {
       "eyebrow": "Job application",

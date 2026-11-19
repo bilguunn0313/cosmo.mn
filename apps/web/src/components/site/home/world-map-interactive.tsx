@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { CountryFlag } from "@/components/site/country-flag";
+import { Reveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 import type { MapOrigin, MapPoint, WorldMapLayout } from "@/lib/world-map";
 
@@ -76,11 +77,13 @@ function CountryTooltip({
 interface WorldMapInteractiveProps {
   layout: WorldMapLayout;
   countryNames: Record<string, string>;
+  children: React.ReactNode;
 }
 
 export function WorldMapInteractive({
   layout,
   countryNames,
+  children,
 }: WorldMapInteractiveProps) {
   const shouldReduceMotion = useReducedMotion();
   const [activeCode, setActiveCode] = useState<CountryCode | null>(null);
@@ -111,151 +114,186 @@ export function WorldMapInteractive({
     setActiveCode((current) => (current === code ? null : code));
 
   return (
-    <div
-      className="relative mx-auto w-full max-w-[1400px]"
-      style={{ aspectRatio: `${width} / ${height}` }}
-    >
-      <Image src={WORLD_MAP_SRC} alt="" fill unoptimized />
+    <div className="site-container grid gap-y-10 py-16 md:py-22 lg:grid-cols-12 lg:items-center lg:gap-x-6">
+      <Reveal className="flex flex-col gap-5 lg:col-span-4 lg:pr-4">
+        {children}
+        <ul className="mt-3 grid grid-cols-2 gap-x-5 border-t border-white/14">
+          {origins.map((origin) => {
+            const isActive = activeCode === origin.code;
 
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        className="absolute inset-0 size-full overflow-visible"
-        aria-hidden
-      >
-        <defs>
-          {origins.map((origin) => (
-            <linearGradient
-              key={origin.code}
-              id={`arc-${origin.code}`}
-              gradientUnits="userSpaceOnUse"
-              x1={origin.pin.x}
-              y1={origin.pin.y}
-              x2={mongolia.pin.x}
-              y2={mongolia.pin.y}
-            >
-              <stop offset="0%" stopColor="var(--color-brand-400)" />
-              <stop offset="100%" stopColor="white" />
-            </linearGradient>
-          ))}
-          <filter
-            id="mongolia-glow"
-            x="-200%"
-            y="-200%"
-            width="500%"
-            height="500%"
+            return (
+              <li
+                key={origin.code}
+                className="border-b border-white/14 odd:last:col-span-2"
+              >
+                <button
+                  type="button"
+                  aria-pressed={isActive}
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse") {
+                      open(origin.code);
+                    }
+                  }}
+                  onPointerLeave={scheduleClose}
+                  onFocus={() => open(origin.code)}
+                  onBlur={scheduleClose}
+                  onClick={() => open(origin.code)}
+                  className={cn(
+                    "flex w-full items-center gap-3 py-3 text-left text-[15px] font-medium transition-colors duration-150 ease-(--ease-out)",
+                    isActive ? "text-white" : "text-brand-200",
+                  )}
+                >
+                  <CountryFlag code={origin.code} />
+                  {countryNames[origin.code]}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </Reveal>
+
+      <div className="border-2 border-white/28 p-3 md:p-6 lg:col-span-8">
+        <div
+          className="relative mx-auto w-full max-w-[1400px]"
+          style={{ aspectRatio: `${width} / ${height}` }}
+        >
+          <Image src={WORLD_MAP_SRC} alt="" fill unoptimized />
+
+          <svg
+            viewBox={`0 0 ${width} ${height}`}
+            className="absolute inset-0 size-full overflow-visible"
+            aria-hidden
           >
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
-        </defs>
+            <defs>
+              {origins.map((origin) => (
+                <linearGradient
+                  key={origin.code}
+                  id={`arc-${origin.code}`}
+                  gradientUnits="userSpaceOnUse"
+                  x1={origin.pin.x}
+                  y1={origin.pin.y}
+                  x2={mongolia.pin.x}
+                  y2={mongolia.pin.y}
+                >
+                  <stop offset="0%" stopColor="var(--color-brand-400)" />
+                  <stop offset="100%" stopColor="white" />
+                </linearGradient>
+              ))}
+              <filter
+                id="mongolia-glow"
+                x="-200%"
+                y="-200%"
+                width="500%"
+                height="500%"
+              >
+                <feGaussianBlur stdDeviation="8" />
+              </filter>
+            </defs>
 
-        {mongolia.shape && (
-          <path
-            d={mongolia.shape}
-            fill="white"
-            opacity={0.92}
-            stroke="white"
-            strokeWidth={0.6}
-          />
-        )}
-
-        {origins.map((origin, index) => {
-          const isActive = activeCode === origin.code;
-          const isDimmed = activeCode !== null && !isActive;
-
-          return (
-            <g
-              key={origin.code}
-              onPointerEnter={(event) => {
-                if (event.pointerType === "mouse") {
-                  open(origin.code);
-                }
-              }}
-              onPointerLeave={scheduleClose}
-              onClick={() => toggle(origin.code)}
-              className={cn(
-                "cursor-pointer transition-opacity duration-200 ease-(--ease-out)",
-                isDimmed && "opacity-30",
-              )}
-            >
-              {origin.shape && (
-                <path
-                  d={origin.shape}
-                  fill="var(--color-brand-400)"
-                  stroke={isActive ? "white" : "var(--color-brand-400)"}
-                  strokeWidth={isActive ? 1.2 : 0.6}
-                  className="transition-[stroke] duration-150"
-                />
-              )}
-              <motion.path
-                d={arcPath(origin.pin, mongolia.pin)}
-                fill="none"
-                stroke={`url(#arc-${origin.code})`}
-                strokeWidth={isActive ? 2.4 : 1.6}
-                strokeLinecap="butt"
-                initial={
-                  shouldReduceMotion ? false : { pathLength: 0, opacity: 0 }
-                }
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{
-                  duration: 1.2,
-                  delay: index * ARC_STAGGER_SECONDS,
-                  ease: [0.23, 1, 0.32, 1],
-                }}
-                className="pointer-events-none"
-              />
-              <circle
-                cx={origin.pin.x}
-                cy={origin.pin.y}
-                r={16}
-                fill="transparent"
-              />
-              <circle
-                cx={origin.pin.x}
-                cy={origin.pin.y}
-                r={3.5}
+            {mongolia.shape && (
+              <path
+                d={mongolia.shape}
                 fill="white"
+                opacity={0.92}
+                stroke="white"
+                strokeWidth={0.6}
               />
-            </g>
-          );
-        })}
+            )}
 
-        <circle
-          cx={mongolia.pin.x}
-          cy={mongolia.pin.y}
-          r={16}
-          fill="var(--color-brand-400)"
-          opacity={0.6}
-          filter="url(#mongolia-glow)"
-        />
-        <circle
-          cx={mongolia.pin.x}
-          cy={mongolia.pin.y}
-          r={5}
-          fill="white"
-          stroke="var(--color-brand-400)"
-          strokeWidth={2}
-        />
-      </svg>
+            {origins.map((origin, index) => {
+              const isActive = activeCode === origin.code;
+              const isDimmed = activeCode !== null && !isActive;
 
-      <AnimatePresence>
-        {activeOrigin && (
-          <CountryTooltip
-            key="tooltip"
-            origin={activeOrigin}
-            layout={layout}
-            countryName={countryNames[activeOrigin.code]}
-            onPointerEnter={cancelClose}
-            onPointerLeave={scheduleClose}
-          />
-        )}
-      </AnimatePresence>
+              return (
+                <g
+                  key={origin.code}
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse") {
+                      open(origin.code);
+                    }
+                  }}
+                  onPointerLeave={scheduleClose}
+                  onClick={() => toggle(origin.code)}
+                  className={cn(
+                    "cursor-pointer transition-opacity duration-200 ease-(--ease-out)",
+                    isDimmed && "opacity-30",
+                  )}
+                >
+                  {origin.shape && (
+                    <path
+                      d={origin.shape}
+                      fill="var(--color-brand-400)"
+                      stroke={isActive ? "white" : "var(--color-brand-400)"}
+                      strokeWidth={isActive ? 1.2 : 0.6}
+                      className="transition-[stroke] duration-150"
+                    />
+                  )}
+                  <motion.path
+                    d={arcPath(origin.pin, mongolia.pin)}
+                    fill="none"
+                    stroke={`url(#arc-${origin.code})`}
+                    strokeWidth={isActive ? 2.4 : 1.6}
+                    strokeLinecap="butt"
+                    initial={
+                      shouldReduceMotion ? false : { pathLength: 0, opacity: 0 }
+                    }
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{
+                      duration: 1.2,
+                      delay: index * ARC_STAGGER_SECONDS,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                    className="pointer-events-none"
+                  />
+                  <circle
+                    cx={origin.pin.x}
+                    cy={origin.pin.y}
+                    r={16}
+                    fill="transparent"
+                  />
+                  <circle
+                    cx={origin.pin.x}
+                    cy={origin.pin.y}
+                    r={3.5}
+                    fill="white"
+                  />
+                </g>
+              );
+            })}
 
-      <ul className="sr-only">
-        {origins.map((origin) => (
-          <li key={origin.code}>{countryNames[origin.code]}</li>
-        ))}
-      </ul>
+            <circle
+              cx={mongolia.pin.x}
+              cy={mongolia.pin.y}
+              r={16}
+              fill="var(--color-brand-400)"
+              opacity={0.6}
+              filter="url(#mongolia-glow)"
+            />
+            <circle
+              cx={mongolia.pin.x}
+              cy={mongolia.pin.y}
+              r={5}
+              fill="white"
+              stroke="var(--color-brand-400)"
+              strokeWidth={2}
+            />
+          </svg>
+
+          <AnimatePresence>
+            {activeOrigin && (
+              <CountryTooltip
+                key="tooltip"
+                origin={activeOrigin}
+                layout={layout}
+                countryName={countryNames[activeOrigin.code]}
+                onPointerEnter={cancelClose}
+                onPointerLeave={scheduleClose}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 }

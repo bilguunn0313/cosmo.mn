@@ -221,7 +221,7 @@ export default async function JobPage({
                 {list.items.map((item) => (
                   <li
                     key={item}
-                    className="relative pl-7.5 text-[17px] leading-relaxed text-pretty text-ink before:absolute before:top-[0.8em] before:left-0 before:h-0.5 before:w-3.5 before:rounded-full before:bg-brand"
+                    className="relative pl-7.5 text-[17px] leading-relaxed text-pretty text-ink before:absolute before:top-[0.8em] before:left-0 before:h-0.5 before:w-3.5 before:rounded-full before:bg-coral"
                   >
                     {item}
                   </li>

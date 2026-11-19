@@ -1,16 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { CareersIntro } from "@/components/site/careers/careers-intro";
-import { CareersStats } from "@/components/site/careers/careers-stats";
-import { DepartmentChart } from "@/components/site/careers/department-chart";
-import { GrowthSection } from "@/components/site/careers/growth-section";
-import { PrinciplesBand } from "@/components/site/careers/principles-band";
+// import { HrDirectionsSection } from "@/components/site/careers/hr-directions-section";
+import { HrGovernanceSection } from "@/components/site/careers/hr-governance-section";
+import { HrPolicySection } from "@/components/site/careers/hr-policy-section";
 import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
-import { totalEmployees } from "@/lib/hr-facts";
 import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchJobs, fetchSections, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
@@ -45,21 +42,15 @@ export default async function HumanResourcesPage({
 
   return (
     <>
-      <CareersIntro
-        imageUrl={pageBannerUrl(setting, "careers")}
-        hasOpenJobs={jobs.length > 0}
-      />
-      <CareersStats employeeCount={totalEmployees()} />
-      <DepartmentChart />
-      <GrowthSection />
+      <HrPolicySection imageUrl={pageBannerUrl(setting, "careers")} />
+      {/* <HrDirectionsSection /> */}
+      <HrGovernanceSection imageUrl={pageBannerUrl(setting, "hrGovernance")} />
 
       {sections.length > 0 && (
         <div className="site-container pt-20 md:pt-32">
           <StorySections sections={sections} />
         </div>
       )}
-
-      <PrinciplesBand />
 
       {jobs.length > 0 ? (
         <PartnerCtaSection

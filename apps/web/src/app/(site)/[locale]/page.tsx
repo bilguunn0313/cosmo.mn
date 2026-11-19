@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BrandMarquee } from "@/components/site/home/brand-marquee";
 import { BusinessAreasSection } from "@/components/site/home/business-areas-section";
 import { HomeHero } from "@/components/site/home/home-hero";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
 import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
+import { RetailChannelsSection } from "@/components/site/home/retail-channels-section";
 import { RetailPartnersSection } from "@/components/site/home/retail-partners-section";
+import { StatsSection } from "@/components/site/home/stats-section";
+import { SupplyChainSection } from "@/components/site/home/supply-chain-section";
 import { WhyCosmoSection } from "@/components/site/home/why-cosmo-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
 import { homeStats } from "@/lib/home-stats";
 import {
-  fetchBrands,
   fetchLatestNews,
   fetchOriginCountries,
   fetchRetailPartners,
@@ -40,26 +41,30 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = await getPageLocale(params);
-  const [slides, brands, areas, setting, countries, partners, news] =
-    await Promise.all([
+  const [slides, areas, setting, countries, partners, news] = await Promise.all(
+    [
       fetchSlides(locale),
-      fetchBrands(locale),
       fetchSections("home", locale),
       fetchSiteSetting(locale),
       fetchOriginCountries(locale),
       fetchRetailPartners(locale),
       fetchLatestNews(locale, HOME_NEWS_COUNT),
-    ]);
+    ],
+  );
   const stats = homeStats(setting, locale);
 
   return (
     <>
-      <HomeHero slides={slides} stats={stats} />
-      <BrandMarquee brands={brands} />
+      <HomeHero slides={slides} />
+      <StatsSection setting={setting} />
       <BusinessAreasSection sections={areas} />
       <WhyCosmoSection stats={stats} />
       <WorldMapSection countries={countries} locale={locale} />
       <RetailPartnersSection partners={partners} />
+      <RetailChannelsSection
+        salesPointCount={setting?.salesPointCount ?? null}
+      />
+      <SupplyChainSection />
       <LatestNewsSection news={news} />
       <PartnerCtaSection />
     </>

@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Reveal } from "@/components/site/reveal";
-import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { repeatToFill } from "@/lib/marquee";
 import type { PublicRetailPartner } from "@/lib/public-api";
 import { LogoMarquee } from "./logo-marquee";
@@ -31,7 +30,6 @@ export async function RetailPartnersSection({
     >
       <div className="site-container">
         <Reveal className="mx-auto mb-10 flex max-w-190 flex-col items-center gap-4.5 text-center md:mb-12">
-          <SectionEyebrow>{t("eyebrow")}</SectionEyebrow>
           <h2 id="retail-title" className="type-section text-balance text-ink">
             {t("title")}
           </h2>

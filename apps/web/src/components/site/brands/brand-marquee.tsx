@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { LogoMarquee } from "@/components/site/home/logo-marquee";
 import { Link } from "@/i18n/navigation";
 import { repeatToFill } from "@/lib/marquee";
 import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
-import { LogoMarquee } from "./logo-marquee";
 
 const MAX_VISIBLE_TILES = 8;
 const SECONDS_PER_TILE = 2.5;
@@ -14,7 +14,7 @@ interface BrandMarqueeProps {
 }
 
 export async function BrandMarquee({ brands }: BrandMarqueeProps) {
-  const t = await getTranslations("home");
+  const t = await getTranslations("brands");
 
   if (brands.length === 0) {
     return null;
@@ -23,7 +23,7 @@ export async function BrandMarquee({ brands }: BrandMarqueeProps) {
   const tiles = repeatToFill(brands, MAX_VISIBLE_TILES + 1);
 
   return (
-    <section aria-label={t("brandsTitle")} className="bg-white py-1">
+    <section aria-label={t("marqueeLabel")} className="bg-white py-1">
       <LogoMarquee tileCount={tiles.length} secondsPerTile={SECONDS_PER_TILE}>
         {tiles.map((brand, index) => (
           <Link

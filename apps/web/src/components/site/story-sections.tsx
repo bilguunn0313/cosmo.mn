@@ -72,7 +72,7 @@ export function StorySections({
       imageUrl={section.imageUrl}
     >
       <div
-        className="rich-text max-w-150 text-base text-ink-2"
+        className="rich-text max-w-150 text-base text-even text-ink-2"
         dangerouslySetInnerHTML={{ __html: section.body }}
       />
     </StoryRow>

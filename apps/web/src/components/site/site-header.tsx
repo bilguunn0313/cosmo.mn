@@ -5,22 +5,26 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "./language-switcher";
+import { HeaderFacebookLink } from "./header-facebook-link";
+import { LanguageMenu } from "./language-menu";
 import { MobileMenu } from "./mobile-menu";
 import { PAGE_BANNER_ID, SITE_NAV, isNavItemActive } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
-const HERO_PATHS = ["/", "/about"];
+interface SiteHeaderProps {
+  facebookUrl: string | null;
+}
 
-export function SiteHeader() {
+export function SiteHeader({ facebookUrl }: SiteHeaderProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverBanner, setIsOverBanner] = useState(false);
 
-  const hasHero = HERO_PATHS.includes(pathname);
+  const hasHero = pathname === "/";
   const isOverHero = hasHero && !isScrolled;
+  const tone = isOverHero ? "dark" : "light";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const banner = document.getElementById(PAGE_BANNER_ID);
@@ -37,7 +41,9 @@ export function SiteHeader() {
       className={cn(
         "top-0 z-40 transition-[translate,box-shadow,background-color] duration-300 ease-out motion-reduce:transition-none",
         hasHero ? "fixed inset-x-0" : "sticky",
-        isOverHero ? "bg-transparent" : "bg-white",
+        isOverHero
+          ? "bg-transparent [--focus-ring:var(--color-white)]"
+          : "bg-white",
         isScrolled &&
           "shadow-[0_1px_0_var(--color-rule),0_12px_32px_-16px_color-mix(in_srgb,var(--color-brand-night)_35%,transparent)]",
         isOverBanner && "-translate-y-full focus-within:translate-y-0",
@@ -77,12 +83,10 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-self-end gap-5">
-          <LanguageSwitcher
-            tone={isOverHero ? "dark" : "light"}
-            className="hidden lg:flex"
-          />
-          <MobileMenu tone={isOverHero ? "dark" : "light"} />
+        <div className="flex items-center justify-self-end gap-1 lg:-mr-2.5">
+          <LanguageMenu tone={tone} />
+          {facebookUrl && <HeaderFacebookLink url={facebookUrl} tone={tone} />}
+          <MobileMenu tone={tone} />
         </div>
       </div>
     </header>

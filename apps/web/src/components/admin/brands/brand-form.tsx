@@ -41,6 +41,12 @@ type BrandTranslationValues = {
   summary: string;
 };
 
+const MIN_COVER_WIDTH = 1200;
+
+function isLowResolution(media: Media) {
+  return media.width !== null && media.width < MIN_COVER_WIDTH;
+}
+
 const EMPTY_TRANSLATION: BrandTranslationValues = {
   name: "",
   productTypes: "",
@@ -368,12 +374,21 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
             control={control}
             name="cover"
             render={({ field }) => (
-              <MediaField
-                value={field.value}
-                onChange={field.onChange}
-                pickerTitle="Бүх бүтээгдэхүүний зураг сонгох"
-                removable
-              />
+              <>
+                <MediaField
+                  value={field.value}
+                  onChange={field.onChange}
+                  pickerTitle="Бүх бүтээгдэхүүний зураг сонгох"
+                  removable
+                />
+                {field.value && isLowResolution(field.value) && (
+                  <p className="text-sm text-amber-700">
+                    Зураг жижиг байна ({field.value.width}×{field.value.height}
+                    ). Сайтад бүдэг харагдана, {MIN_COVER_WIDTH}px-ээс өргөн
+                    зураг оруулна уу.
+                  </p>
+                )}
+              </>
             )}
           />
         </FormField>

@@ -27,7 +27,8 @@ export async function fetchPublic<T>(path: string, locale: Locale): Promise<T> {
   return (await response.json()) as T;
 }
 
-export type BannerPage = "about" | "careers" | "media" | "brands" | "contact";
+export type BannerPage =
+  "about" | "careers" | "media" | "brands" | "contact" | "hrGovernance";
 
 export interface PublicSiteSetting {
   phone: string | null;
@@ -44,6 +45,7 @@ export interface PublicSiteSetting {
   productCount: number | null;
   pageBanners: Record<BannerPage, string | null>;
   homeAboutImageUrl: string | null;
+  ceoImageUrl: string | null;
   address: string | null;
   workingHours: string | null;
 }

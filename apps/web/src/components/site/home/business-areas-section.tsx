@@ -74,10 +74,9 @@ export async function BusinessAreasSection({
 
       <div className="site-container">
         <Reveal className="mx-auto mb-12 flex max-w-190 flex-col items-center gap-4 text-center md:mb-14">
-          <SectionEyebrow tone="white">{t("eyebrow")}</SectionEyebrow>
-          <h2 id="areas-title" className="type-section text-balance">
-            {t("title")}
-          </h2>
+          <SectionEyebrow as="h2" id="areas-title" tone="white">
+            {t("eyebrow")}
+          </SectionEyebrow>
           <p className="text-lg text-pretty text-brand-200">{t("text")}</p>
         </Reveal>
 

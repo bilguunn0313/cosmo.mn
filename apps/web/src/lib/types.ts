@@ -200,6 +200,10 @@ export interface SiteSetting {
   brandsBannerImage: Media | null;
   contactBannerImageId: number | null;
   contactBannerImage: Media | null;
+  hrGovernanceImageId: number | null;
+  hrGovernanceImage: Media | null;
+  ceoImageId: number | null;
+  ceoImage: Media | null;
   valuePeopleImageId: number | null;
   valuePeopleImage: Media | null;
   valueSatisfactionImageId: number | null;

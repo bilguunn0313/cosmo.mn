@@ -19,6 +19,8 @@ const BANNER_FIELDS = {
   media: { id: "mediaBannerImageId", media: "mediaBannerImage" },
   brands: { id: "brandsBannerImageId", media: "brandsBannerImage" },
   contact: { id: "contactBannerImageId", media: "contactBannerImage" },
+  hrGovernance: { id: "hrGovernanceImageId", media: "hrGovernanceImage" },
+  ceo: { id: "ceoImageId", media: "ceoImage" },
 } as const;
 
 type BannerPage = keyof typeof BANNER_FIELDS;
@@ -26,9 +28,16 @@ type BannerPage = keyof typeof BANNER_FIELDS;
 interface PageBannerFormProps {
   page: BannerPage;
   setting: SiteSetting;
+  pickerTitle: string;
+  emptyHint: string;
 }
 
-function PageBannerForm({ page, setting }: PageBannerFormProps) {
+function PageBannerForm({
+  page,
+  setting,
+  pickerTitle,
+  emptyHint,
+}: PageBannerFormProps) {
   const fields = BANNER_FIELDS[page];
   const savedImage = setting[fields.media];
   const updateSiteSetting = useUpdateSiteSetting();
@@ -39,7 +48,7 @@ function PageBannerForm({ page, setting }: PageBannerFormProps) {
     updateSiteSetting.mutate(
       { [fields.id]: image?.id ?? null },
       {
-        onSuccess: () => toast.success("Баннер зураг хадгалагдлаа"),
+        onSuccess: () => toast.success("Зураг хадгалагдлаа"),
         onError: (error) => toast.error(error.message),
       },
     );
@@ -50,12 +59,10 @@ function PageBannerForm({ page, setting }: PageBannerFormProps) {
       <MediaField
         value={image}
         onChange={setImage}
-        pickerTitle="Хуудасны баннер зураг"
+        pickerTitle={pickerTitle}
         removable
       />
-      <p className="text-sm text-muted-foreground">
-        Зураг оруулаагүй үед түр жишээ зураг харагдана.
-      </p>
+      <p className="text-sm text-muted-foreground">{emptyHint}</p>
       <Button
         type="button"
         className="w-fit"
@@ -69,26 +76,38 @@ function PageBannerForm({ page, setting }: PageBannerFormProps) {
   );
 }
 
+const DEFAULT_TITLE = "Баннер зураг";
+const DEFAULT_EMPTY_HINT = "Зураг оруулаагүй үед түр жишээ зураг харагдана.";
+const DEFAULT_DESCRIPTION =
+  "Хуудасны хамгийн дээд талын том зураг. Хэвтээ, 2400×1200 орчим зураг тохиромжтой. Доод хэсэгт гарчиг цагаанаар бичигдэнэ.";
+
 interface PageBannerPanelProps {
   page: BannerPage;
   step?: number;
+  title?: string;
+  description?: string;
+  emptyHint?: string;
 }
 
-export function PageBannerPanel({ page, step }: PageBannerPanelProps) {
+export function PageBannerPanel({
+  page,
+  step,
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  emptyHint = DEFAULT_EMPTY_HINT,
+}: PageBannerPanelProps) {
   const setting = useSiteSetting();
 
   return (
     <section className="grid gap-4">
-      <PanelHeader
-        step={step}
-        title="Баннер зураг"
-        description="Хуудасны хамгийн дээд талын том зураг. Хэвтээ, 2400×1200 орчим зураг тохиромжтой. Доод хэсэгт гарчиг цагаанаар бичигдэнэ."
-      />
+      <PanelHeader step={step} title={title} description={description} />
       {setting.data ? (
         <PageBannerForm
           key={setting.data.updatedAt}
           page={page}
           setting={setting.data}
+          pickerTitle={title}
+          emptyHint={emptyHint}
         />
       ) : (
         <Skeleton className="h-40 max-w-xl rounded-xl" />

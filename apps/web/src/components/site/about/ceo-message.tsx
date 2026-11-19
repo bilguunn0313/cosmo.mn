@@ -3,14 +3,21 @@ import Image from "next/image";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
-import { ABOUT_CONTENT } from "@/lib/about";
 
-export async function CeoMessage() {
+const BODY_KEYS = ["body1", "body2"] as const;
+
+interface CeoMessageProps {
+  photoUrl: string | null;
+}
+
+export async function CeoMessage({ photoUrl }: CeoMessageProps) {
   const t = await getTranslations("about.ceo");
-  const photoUrl = ABOUT_CONTENT.ceoPhotoUrl;
 
   return (
-    <section aria-labelledby="ceo-title" className="py-20 md:py-30">
+    <section
+      aria-labelledby="ceo-title"
+      className="overflow-x-clip py-20 md:py-30"
+    >
       <div className="site-container grid items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-22">
         <Reveal
           from="left"
@@ -30,23 +37,30 @@ export async function CeoMessage() {
           )}
         </Reveal>
 
-        <Reveal from="right" delay={0.09} className="flex flex-col gap-6">
+        <Reveal from="right" delay={0.09} className="flex flex-col">
           <SectionEyebrow as="h2" id="ceo-title">
             {t("title")}
           </SectionEyebrow>
           <span
             aria-hidden
-            className="block h-11 font-display text-[104px] leading-[0.85] font-semibold text-brand"
+            className="mt-8 block h-9 font-display text-[88px] leading-[0.85] font-semibold text-brand"
           >
             “
           </span>
-          <blockquote className="font-display text-[clamp(24px,2.6vw,38px)] leading-[1.3] font-medium tracking-[-0.015em] text-balance text-ink">
+          <blockquote className="mt-4 font-display text-[clamp(22px,1.6vw_+_8px,29px)] leading-[1.4] font-medium tracking-[-0.01em] text-balance text-ink">
             {t("quote")}
           </blockquote>
-          <p className="text-[17px] leading-[1.75] text-pretty text-ink-2">
-            {t("body")}
-          </p>
-          <div className="flex flex-col gap-1 border-t border-rule pt-5">
+          <div className="mt-8 flex max-w-[66ch] flex-col gap-4">
+            {BODY_KEYS.map((key) => (
+              <p
+                key={key}
+                className="text-[17px] leading-[1.75] text-pretty text-even text-ink-2"
+              >
+                {t(key)}
+              </p>
+            ))}
+          </div>
+          <div className="mt-9 flex max-w-[66ch] flex-col gap-1 border-t border-rule pt-6">
             <span className="font-display text-lg font-semibold text-ink">
               {t("name")}
             </span>

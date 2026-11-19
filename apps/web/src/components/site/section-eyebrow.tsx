@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 const TONE_CLASSES = {
-  brand: "text-brand",
+  coral: "text-coral-700",
   white: "text-white",
 } as const;
 
@@ -16,7 +16,7 @@ interface SectionEyebrowProps {
 export function SectionEyebrow({
   as: Tag = "p",
   id,
-  tone = "brand",
+  tone = "coral",
   className,
   children,
 }: SectionEyebrowProps) {
@@ -31,7 +31,7 @@ export function SectionEyebrow({
     >
       <span
         aria-hidden
-        className="h-[3px] w-7 shrink-0 rounded-full bg-current"
+        className="h-[3px] w-7 shrink-0 rounded-full bg-coral"
       />
       {children}
     </Tag>

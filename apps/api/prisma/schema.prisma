@@ -89,6 +89,8 @@ model Media {
   siteSettingMedias              SiteSetting[]   @relation("SiteSettingMediaBanner")
   siteSettingBrands              SiteSetting[]   @relation("SiteSettingBrandsBanner")
   siteSettingContacts            SiteSetting[]   @relation("SiteSettingContactBanner")
+  siteSettingHrGovernances       SiteSetting[]   @relation("SiteSettingHrGovernance")
+  siteSettingCeos                SiteSetting[]   @relation("SiteSettingCeo")
   siteSettingValuePeople         SiteSetting[]   @relation("SiteSettingValuePeople")
   siteSettingValueSatisfaction   SiteSetting[]   @relation("SiteSettingValueSatisfaction")
   siteSettingValueQuality        SiteSetting[]   @relation("SiteSettingValueQuality")
@@ -134,10 +136,10 @@ model Brand {
 }
 
 model BrandTranslation {
-  id      Int     @id @default(autoincrement())
-  brandId Int
-  brand   Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  locale  Locale
+  id           Int     @id @default(autoincrement())
+  brandId      Int
+  brand        Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale       Locale
   name         String
   summary      String?
   productTypes String?
@@ -349,6 +351,10 @@ model SiteSetting {
   brandsBannerImage          Media?   @relation("SiteSettingBrandsBanner", fields: [brandsBannerImageId], references: [id])
   contactBannerImageId       Int?
   contactBannerImage         Media?   @relation("SiteSettingContactBanner", fields: [contactBannerImageId], references: [id])
+  hrGovernanceImageId        Int?
+  hrGovernanceImage          Media?   @relation("SiteSettingHrGovernance", fields: [hrGovernanceImageId], references: [id])
+  ceoImageId                 Int?
+  ceoImage                   Media?   @relation("SiteSettingCeo", fields: [ceoImageId], references: [id])
   valuePeopleImageId         Int?
   valuePeopleImage           Media?   @relation("SiteSettingValuePeople", fields: [valuePeopleImageId], references: [id])
   valueSatisfactionImageId   Int?

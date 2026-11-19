@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sheet";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "./language-switcher";
 import { SITE_NAV, isNavItemActive } from "./site-nav";
 
 const TRIGGER_TONE_CLASSES = {
@@ -67,10 +66,6 @@ export function MobileMenu({ tone = "light" }: MobileMenuProps) {
             </Link>
           ))}
         </nav>
-
-        <div className="mt-auto p-4">
-          <LanguageSwitcher className="-mx-1.5" />
-        </div>
       </SheetContent>
     </Sheet>
   );

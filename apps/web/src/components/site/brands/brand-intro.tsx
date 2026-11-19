@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
@@ -8,14 +7,6 @@ import type { PublicBrandDetail } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "./brand-logo";
 import { BRAND_TILE_BACKGROUND } from "./brand-tile-background";
-
-function displayHost(url: string) {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return url;
-  }
-}
 
 interface BrandIntroProps {
   brand: PublicBrandDetail;
@@ -52,26 +43,10 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
           >
             {brand.name}
           </h1>
-          {brand.productTypes && (
-            <p className="hero-rise text-lg font-medium text-brand [--rise-delay:260ms]">
-              {brand.productTypes}
-            </p>
-          )}
           {brand.summary && (
-            <p className="hero-rise text-lg leading-[1.7] text-pretty whitespace-pre-line text-ink-2 [--rise-delay:320ms]">
+            <p className="hero-rise max-w-[56ch] text-lg leading-[1.7] text-pretty whitespace-pre-line text-ink-2 [--rise-delay:320ms]">
               {brand.summary}
             </p>
-          )}
-          {brand.websiteUrl && (
-            <a
-              href={brand.websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-rise inline-flex items-center gap-1.5 text-[15px] font-medium text-brand-700 transition-colors duration-150 [--rise-delay:380ms] hover:text-brand"
-            >
-              {t("brands.website")}: {displayHost(brand.websiteUrl)}
-              <ArrowUpRight className="size-4.5" />
-            </a>
           )}
         </div>
 

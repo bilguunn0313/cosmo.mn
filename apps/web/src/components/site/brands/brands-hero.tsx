@@ -56,7 +56,7 @@ export async function BrandsHero({ brands, children }: BrandsHeroProps) {
             {t("brands.description")}
           </p>
           {children && (
-            <div className="hero-rise mt-2 [--rise-delay:380ms]">
+            <div className="hero-rise mt-3 flex flex-col items-start gap-5 [--rise-delay:380ms]">
               {children}
             </div>
           )}

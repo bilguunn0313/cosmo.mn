@@ -1,10 +1,8 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
-const CLIP_HIDDEN = "inset(100% 0% 0% 0%)";
-const CLIP_SHOWN = "inset(0% 0% 0% 0%)";
+const VISIBLE_SHARE = 0.25;
 
 interface ImageRevealProps {
   delay?: number;
@@ -13,41 +11,39 @@ interface ImageRevealProps {
 
 export function ImageReveal({ delay = 0, children }: ImageRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.25 });
-  const shouldReduceMotion = useReducedMotion();
 
-  if (shouldReduceMotion) {
-    return (
-      <div ref={ref} className="absolute inset-0">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isInView ? 1 : 0 }}
-          transition={{ duration: 0.3, delay }}
-          className="absolute inset-0"
-        >
-          {children}
-        </motion.div>
-      </div>
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) {
+      return;
+    }
+
+    document.documentElement.dataset.revealReady = "true";
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          element.dataset.revealed = "true";
+          observer.disconnect();
+        }
+      },
+      { threshold: VISIBLE_SHARE },
     );
-  }
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div ref={ref} className="absolute inset-0">
-      <motion.div
-        initial={{ clipPath: CLIP_HIDDEN }}
-        animate={{ clipPath: isInView ? CLIP_SHOWN : CLIP_HIDDEN }}
-        transition={{ duration: 1, delay, ease: [0.77, 0, 0.175, 1] }}
-        className="absolute inset-0"
-      >
-        <motion.div
-          initial={{ transform: "scale(1.15)" }}
-          animate={{ transform: isInView ? "scale(1)" : "scale(1.15)" }}
-          transition={{ duration: 1.4, delay, ease: [0.23, 1, 0.32, 1] }}
-          className="absolute inset-0"
-        >
-          {children}
-        </motion.div>
-      </motion.div>
+    <div
+      ref={ref}
+      style={{ "--reveal-delay": `${delay * 1000}ms` } as React.CSSProperties}
+      className="image-reveal absolute inset-0"
+    >
+      <div className="image-reveal-clip absolute inset-0">
+        <div className="image-reveal-zoom absolute inset-0">{children}</div>
+      </div>
     </div>
   );
 }

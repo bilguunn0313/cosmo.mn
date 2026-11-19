@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { AboutHero } from "@/components/site/about/about-hero";
 import { CeoMessage } from "@/components/site/about/ceo-message";
 import { CompanyIntro } from "@/components/site/about/company-intro";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
-import { NetworkSection } from "@/components/site/about/network-section";
 import { PurposeSection } from "@/components/site/about/purpose-section";
-import { WhatWeDoSection } from "@/components/site/about/what-we-do-section";
+import { ValuesSection } from "@/components/site/about/values-section";
 import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { getPageLocale } from "@/i18n/locale";
-import { homeStats } from "@/lib/home-stats";
 import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchMilestones, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
@@ -37,25 +34,17 @@ export default async function AboutPage({
     fetchMilestones(locale),
     fetchSiteSetting(locale),
   ]);
-  const stats = homeStats(setting, locale);
 
   return (
     <>
-      <AboutHero imageUrl={pageBannerUrl(setting, "about")} />
-      <CompanyIntro />
-      <CeoMessage />
-      <PurposeSection setting={setting} />
+      <PurposeSection />
+      <CompanyIntro imageUrl={pageBannerUrl(setting, "about")} />
+      <CeoMessage photoUrl={setting?.ceoImageUrl ?? null} />
+      <ValuesSection />
       <HistoryTimeline
         eyebrow={t("about.historyTitle")}
-        title={
-          stats.years
-            ? t("about.historyHeading", { years: stats.years })
-            : t("about.historyHeadingPlain")
-        }
         milestones={milestones}
       />
-      <WhatWeDoSection />
-      <NetworkSection salesPoints={stats.salesPoints} />
       <PartnerCtaSection
         title={t("about.partnerTitle")}
         text={t("about.partnerText")}
