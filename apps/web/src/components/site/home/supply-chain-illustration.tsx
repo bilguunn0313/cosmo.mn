@@ -1,4 +1,5 @@
 import { DeliveryTruck } from "./delivery-truck";
+import { SupplyImport } from "./supply-import";
 
 type Fill =
   | "fill-brand"
@@ -79,14 +80,14 @@ export function SupplyChainIllustration({
 }: SupplyChainIllustrationProps) {
   return (
     <svg
-      viewBox="0 0 1120 380"
+      viewBox="-400 0 1520 380"
       role="img"
       aria-label={label}
-      className="block h-auto w-full"
+      className="block h-auto w-full max-sm:w-190 max-sm:max-w-none"
     >
       <path
         className="supply-dash stroke-brand-300"
-        d="M150 62 C400 6 720 6 980 62"
+        d="M-300 74 C30 -8 700 -8 980 62"
         fill="none"
         strokeWidth="2"
         strokeDasharray="4 8"
@@ -108,6 +109,8 @@ export function SupplyChainIllustration({
         y2="340"
         strokeWidth="2"
       />
+
+      <SupplyImport />
 
       <g className="supply-zone" data-zone="warehouse">
         <path className="fill-brand" d="M40 160 L180 96 L320 160 Z" />

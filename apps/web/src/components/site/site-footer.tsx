@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { siFacebook, siInstagram, siYoutube } from "simple-icons";
+import { Clock, Mail, MapPin, Phone, type LucideIcon } from "lucide-react";
+import { siInstagram, siYoutube } from "simple-icons";
 import { Link } from "@/i18n/navigation";
 import { fetchSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
@@ -9,23 +10,34 @@ import { LanguageSwitcher } from "./language-switcher";
 import { linkedinIcon, SocialIcon } from "./social-icon";
 import { Wordmark } from "./wordmark";
 
-interface FooterColumnProps {
-  title: string;
-  className?: string;
+interface ContactItemProps {
+  icon: LucideIcon;
+  wide?: boolean;
   children: React.ReactNode;
 }
 
-function FooterColumn({ title, className, children }: FooterColumnProps) {
+function ContactItem({ icon: Icon, wide = false, children }: ContactItemProps) {
   return (
-    <div className={cn("grid content-start gap-4", className)}>
-      <h2 className="eyebrow text-brand-300">{title}</h2>
-      <div className="grid gap-2 text-sm/6">{children}</div>
-    </div>
+    <li className={cn("flex justify-center", wide && "sm:basis-full")}>
+      <span
+        className={cn(
+          "inline-flex items-start gap-2.5",
+          wide && "max-sm:flex-col max-sm:items-center max-sm:gap-1.5",
+        )}
+      >
+        <Icon
+          aria-hidden
+          className="mt-1 size-4 shrink-0 text-brand-300"
+          strokeWidth={1.75}
+        />
+        {children}
+      </span>
+    </li>
   );
 }
 
 const footerLinkClass =
-  "w-fit decoration-white/50 underline-offset-4 transition-colors duration-150 hover:text-white hover:underline";
+  "decoration-white/50 underline-offset-4 transition-colors duration-150 hover:text-white hover:underline";
 
 interface SiteFooterProps {
   locale: Locale;
@@ -36,53 +48,74 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   const setting = await fetchSiteSetting(locale);
 
   const socials = [
-    { label: "Facebook", url: setting?.facebookUrl, icon: siFacebook },
     { label: "Instagram", url: setting?.instagramUrl, icon: siInstagram },
     { label: "YouTube", url: setting?.youtubeUrl, icon: siYoutube },
     { label: "LinkedIn", url: setting?.linkedinUrl, icon: linkedinIcon },
   ].filter((social) => social.url);
 
+  const hasContact = Boolean(
+    setting?.address ||
+    setting?.phone ||
+    setting?.email ||
+    setting?.workingHours,
+  );
+
   return (
     <footer className="mt-20 bg-brand text-night-text md:mt-32 [main:has([data-flush-footer])+&]:mt-0">
       <div className="site-container pt-16 pb-7 md:pt-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-6">
-          <div className="grid content-start gap-3 sm:col-span-2 lg:col-span-5">
-            <Link href="/" className="w-fit">
-              <Wordmark className="text-white" />
-            </Link>
-            <p className="font-display text-lg font-semibold text-white">
-              {t("tagline")}
-            </p>
-          </div>
+        <div className="flex flex-col items-center text-center">
+          <Link href="/" className="w-fit">
+            <Wordmark className="text-[44px] text-white md:text-[56px]" />
+          </Link>
+          <p className="mt-4 font-display text-lg font-semibold text-white md:text-xl">
+            {t("tagline")}
+          </p>
 
-          <FooterColumn
-            title={t("contact")}
-            className="lg:col-span-4 lg:col-start-7"
-          >
-            {setting?.address && (
-              <p className="max-w-[46ch] whitespace-pre-line text-balance">
-                {setting.address}
-              </p>
-            )}
-            {setting?.phone && (
-              <a href={phoneHref(setting.phone)} className={footerLinkClass}>
-                {setting.phone}
-              </a>
-            )}
-            {setting?.email && (
-              <a href={`mailto:${setting.email}`} className={footerLinkClass}>
-                {setting.email}
-              </a>
-            )}
-            {setting?.workingHours && <p>{setting.workingHours}</p>}
-          </FooterColumn>
+          {hasContact && (
+            <>
+              <h2 className="sr-only">{t("contact")}</h2>
+              <ul className="mt-10 flex flex-col items-center gap-x-10 gap-y-3 text-sm/6 sm:flex-row sm:flex-wrap sm:justify-center md:mt-12 md:text-[15px]/6">
+                {setting?.address && (
+                  <ContactItem icon={MapPin} wide>
+                    <span className="whitespace-pre-line text-balance">
+                      {setting.address}
+                    </span>
+                  </ContactItem>
+                )}
+                {setting?.phone && (
+                  <ContactItem icon={Phone}>
+                    <a
+                      href={phoneHref(setting.phone)}
+                      className={footerLinkClass}
+                    >
+                      {setting.phone}
+                    </a>
+                  </ContactItem>
+                )}
+                {setting?.email && (
+                  <ContactItem icon={Mail}>
+                    <a
+                      href={`mailto:${setting.email}`}
+                      className={footerLinkClass}
+                    >
+                      {setting.email}
+                    </a>
+                  </ContactItem>
+                )}
+                {setting?.workingHours && (
+                  <ContactItem icon={Clock}>
+                    <span>{setting.workingHours}</span>
+                  </ContactItem>
+                )}
+              </ul>
+            </>
+          )}
 
           {socials.length > 0 && (
-            <FooterColumn title={t("socials")} className="lg:col-span-2">
-              <div className="flex flex-wrap gap-2">
-                {socials.map((social) => (
+            <ul aria-label={t("socials")} className="mt-8 flex gap-2">
+              {socials.map((social) => (
+                <li key={social.label}>
                   <a
-                    key={social.label}
                     href={social.url ?? undefined}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -92,13 +125,13 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
                   >
                     <SocialIcon icon={social.icon} className="size-5" />
                   </a>
-                ))}
-              </div>
-            </FooterColumn>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
-        <div className="mt-14 flex flex-col-reverse justify-between gap-3 border-t border-white/20 pt-5 text-[13px] text-white/75 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col-reverse items-center gap-3 border-t border-white/20 pt-5 text-[13px] text-white/75 sm:flex-row sm:justify-between">
           <p>
             © {new Date().getFullYear()} Cosmo. {t("rights")}
           </p>

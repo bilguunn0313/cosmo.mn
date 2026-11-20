@@ -92,7 +92,6 @@
     "why": {
       "eyebrow": "Why Cosmo Trade",
       "title": "A trusted partner to global brands",
-      "text": "Our wide distribution network, years of experience and partnerships built on mutual trust make us a trusted partner for international brands looking to enter the Mongolian market and grow their business.",
       "reasons": {
         "experience": {
           "title": "An experienced team",
@@ -142,9 +141,13 @@
     "mapTitle": "International partnerships",
     "supplyChain": {
       "title": "Integrated distribution solutions",
-      "illustrationLabel": "Illustration of products moving from the warehouse along a scanned conveyor and by truck to a store",
+      "illustrationLabel": "Products travelling from the factory by container train to the warehouse, then along a conveyor and scanner, and by truck to a store",
       "storeSign": "STORE",
       "items": {
+        "import": {
+          "title": "Factory",
+          "text": "We order directly from manufacturers and handle container rail and road freight and customs clearance all the way to our warehouse."
+        },
         "warehouse": {
           "title": "Warehousing",
           "text": "Food, beauty and household goods are sorted and stored according to standards."
@@ -265,8 +268,8 @@
     },
     "intro": {
       "title": "Creating <highlight>value in everyday life</highlight>",
-      "lead": "Cosmo Trade is an experienced team of more than 150 skilled professionals across 7 specialised departments.",
-      "body": "We operate a dedicated 3,500-square-metre warehouse and distribution centre for food and household goods that meets international standards and fully ensures product quality and safety. From there we deliver our products quickly to 4,500 outlets across Ulaanbaatar and to more than 3,000 shopping centres in towns and settlements across all 21 provinces.",
+      "lead": "Cosmo Trade LLC is one of the longest-established companies in the import and wholesale of fast-moving consumer goods.",
+      "body": "Since our founding in 1993, for more than 30 years we have successfully supplied the Mongolian FMCG market with brands from Europe and Southeast Asia that compete on quality and standards. At the same time we develop our own brands, steadily broadening the range, reach and value of our products and services and making a real contribution to the growth of our industry.",
       "imageAlt": "Cosmo Trade head office and warehouse from above"
     },
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
@@ -316,19 +319,17 @@
       "marketing": "Marketing",
       "it": "Information technology"
     },
-    "directions": {
-      "lead": "Cosmo Trade's human resources policy is built on",
-      "title": "{count} directions",
+    "benefits": {
+      "lead": "What we offer our people",
+      "title": "Benefits and rewards",
       "items": {
-        "transparency": "Transparency in HR",
-        "inclusion": "Diversity, equity and inclusion",
-        "culture": "Strengthening our company culture",
-        "development": "Developing employees and their skills",
-        "wellbeing": "Employee well-being",
-        "engagement": "Employee engagement",
-        "safeWorkplace": "Against discrimination and workplace harassment",
-        "innovation": "Supporting innovation",
-        "leadership": "Leadership"
+        "health": "Health support",
+        "bonus": "Bonuses and allowances",
+        "perks": "Benefits and discounts",
+        "paidLeave": "Paid leave",
+        "lifeMoments": "Support for life's important moments",
+        "gifts": "Gifts for holidays and special occasions",
+        "events": "Social and community events"
       }
     },
     "policy": {
@@ -369,6 +370,17 @@
         }
       },
       "imageAlt": "The team unloading goods"
+    },
+    "selection": {
+      "title": "Selection process",
+      "lead": "From application to final decision, there are {count} stages.",
+      "stepLabel": "Stage {number}",
+      "steps": {
+        "application": "Application screening",
+        "interview": "Initial interview",
+        "assessment": "Further assessment",
+        "decision": "Final decision"
+      }
     },
     "form": {
       "eyebrow": "Job application",

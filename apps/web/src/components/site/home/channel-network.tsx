@@ -96,6 +96,22 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
           aria-hidden
           className="absolute inset-0 size-full overflow-visible"
         >
+          <defs>
+            {points.map((point, index) => (
+              <linearGradient
+                key={channels[index].key}
+                id={`channel-gradient-${index}`}
+                gradientUnits="userSpaceOnUse"
+                x1={point.x}
+                y1={point.y}
+                x2={HUB.x}
+                y2={HUB.y}
+              >
+                <stop offset="0" stopColor="var(--color-amber)" />
+                <stop offset="1" stopColor="var(--color-coral)" />
+              </linearGradient>
+            ))}
+          </defs>
           {points.map((point, index) => (
             <path
               key={channels[index].key}
@@ -103,6 +119,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
               className="channel-line"
               pathLength={1}
               d={spokePath(point)}
+              stroke={`url(#channel-gradient-${index})`}
               style={delay(300 + index * LINE_STEP_MS)}
             />
           ))}
@@ -114,9 +131,9 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
                 return (
                   <circle
                     key={`${channel.key}-${round}`}
-                    r="4"
+                    r="3.5"
                     opacity="0"
-                    className="fill-amber"
+                    className="channel-dot fill-white"
                   >
                     <set attributeName="opacity" to="1" begin={begin} />
                     <animateMotion
@@ -141,7 +158,8 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
           }}
         >
           <span className="relative grid size-28 place-items-center rounded-full bg-white text-brand">
-            <span className="channel-ring absolute inset-0 rounded-full border-2 border-white" />
+            <span className="channel-ring absolute inset-0 rounded-full border-2 border-coral" />
+            <span className="channel-ring channel-ring-late absolute inset-0 rounded-full border-2 border-coral" />
             <LogoMark className="w-13" />
           </span>
           <span className="font-display text-[13px] font-semibold tracking-[0.14em] whitespace-nowrap text-night-text uppercase">
@@ -160,7 +178,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
                 ...delay(900 + index * LINE_STEP_MS),
               }}
             >
-              <span className="grid size-21 place-items-center rounded-full bg-white/10 ring-1 ring-white/30 ring-inset [&_svg]:size-9">
+              <span className="grid size-21 place-items-center rounded-full bg-white shadow-[0_12px_28px_-10px_rgb(11_31_51/0.55)] [&_svg]:size-11">
                 {channels[index].icon}
               </span>
               <span className="font-display text-[17px] leading-snug font-medium text-balance">
@@ -183,7 +201,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
         <ul className="relative flex flex-col pt-2 pl-7">
           <li
             aria-hidden
-            className="channel-trunk absolute top-0 bottom-9 left-7 w-0.5 bg-white/30"
+            className="channel-trunk absolute top-0 bottom-9 left-7 w-0.5 bg-linear-to-b from-coral to-amber"
           >
             <i className="channel-trunk-dot" />
             <i className="channel-trunk-dot" />
@@ -192,9 +210,9 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
             <li
               key={channel.key}
               style={delay(500 + index * 120)}
-              className="channel-branch relative flex items-center gap-3.5 py-2 pl-7.5 before:absolute before:top-1/2 before:left-0 before:h-0.5 before:w-7.5 before:bg-white/30"
+              className="channel-branch relative flex items-center gap-3.5 py-2 pl-7.5 before:absolute before:top-1/2 before:left-0 before:h-0.5 before:w-7.5 before:bg-amber"
             >
-              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white/10 ring-1 ring-white/30 ring-inset [&_svg]:size-6.5">
+              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_20px_-8px_rgb(11_31_51/0.55)] [&_svg]:size-7">
                 {channel.icon}
               </span>
               <span className="font-display text-base leading-snug font-medium">

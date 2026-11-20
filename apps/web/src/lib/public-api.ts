@@ -73,6 +73,8 @@ export interface PublicBrand {
   logoWidth: number | null;
   logoHeight: number | null;
   coverUrl: string | null;
+  coverWidth: number | null;
+  coverHeight: number | null;
   showcaseImageUrl: string | null;
   featuredOrder: number | null;
 }
@@ -121,6 +123,7 @@ export interface PublicProduct {
   name: string;
   description: string | null;
   imageUrl: string;
+  imageIsCutout: boolean;
 }
 
 export interface PublicMilestone {

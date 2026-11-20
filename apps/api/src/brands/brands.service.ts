@@ -11,6 +11,7 @@ import type {
 } from '@cosmo/shared';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
+import { isCutoutImage } from '../media/image-background';
 import { PrismaService } from '../prisma/prisma.service';
 
 const brandInclude = {
@@ -147,6 +148,8 @@ export class BrandsService {
         logoWidth: brand.logo?.width ?? null,
         logoHeight: brand.logo?.height ?? null,
         coverUrl: brand.cover?.url ?? null,
+        coverWidth: brand.cover?.width ?? null,
+        coverHeight: brand.cover?.height ?? null,
         showcaseImageUrl: brand.showcaseImage?.url ?? null,
         featuredOrder: brand.featuredOrder,
       };
@@ -200,6 +203,8 @@ export class BrandsService {
       logoWidth: brand.logo?.width ?? null,
       logoHeight: brand.logo?.height ?? null,
       coverUrl: brand.cover?.url ?? null,
+      coverWidth: brand.cover?.width ?? null,
+      coverHeight: brand.cover?.height ?? null,
       showcaseImageUrl: brand.showcaseImage?.url ?? null,
       websiteUrl: brand.websiteUrl,
       sections: brand.sections.map((section) => {
@@ -215,19 +220,22 @@ export class BrandsService {
           imageUrl: section.image?.url ?? null,
         };
       }),
-      products: brand.products.map((product) => {
-        const productTranslation = pickTranslation(
-          product.translations,
-          locale,
-        );
+      products: await Promise.all(
+        brand.products.map(async (product) => {
+          const productTranslation = pickTranslation(
+            product.translations,
+            locale,
+          );
 
-        return {
-          id: product.id,
-          name: productTranslation?.name ?? '',
-          description: productTranslation?.description ?? null,
-          imageUrl: product.image.url,
-        };
-      }),
+          return {
+            id: product.id,
+            name: productTranslation?.name ?? '',
+            description: productTranslation?.description ?? null,
+            imageUrl: product.image.url,
+            imageIsCutout: await isCutoutImage(product.image.url),
+          };
+        }),
+      ),
     };
   }
 }

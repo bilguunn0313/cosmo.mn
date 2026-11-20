@@ -31,11 +31,21 @@ export function NewsCover({
           <FadeInImage
             src={news.coverUrl}
             alt=""
+            aria-hidden
             fill
             unoptimized
             priority={priority}
             sizes={sizes}
-            className="object-cover"
+            className="scale-110 object-cover opacity-60 blur-2xl"
+          />
+          <FadeInImage
+            src={news.coverUrl}
+            alt=""
+            fill
+            unoptimized
+            priority={priority}
+            sizes={sizes}
+            className="object-contain"
           />
         </div>
       ) : (

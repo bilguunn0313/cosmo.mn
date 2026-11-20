@@ -92,7 +92,6 @@
     "why": {
       "eyebrow": "为什么选择 Cosmo Trade",
       "title": "全球品牌值得信赖的合作伙伴",
-      "text": "广泛的分销网络、多年的经验以及基于互信的合作，使我们成为希望进入蒙古市场并拓展业务的国际品牌值得信赖的合作伙伴。",
       "reasons": {
         "experience": {
           "title": "经验丰富的团队",
@@ -142,9 +141,13 @@
     "mapTitle": "国际合作",
     "supplyChain": {
       "title": "一体化分销解决方案",
-      "illustrationLabel": "产品从仓库经扫描传送带，再由卡车运送到商店的示意图",
+      "illustrationLabel": "产品从工厂经集装箱列车运抵仓库，再经传送带和扫描，由货车送达门店的示意图",
       "storeSign": "商店",
       "items": {
+        "import": {
+          "title": "工厂",
+          "text": "我们直接向生产商订货，负责集装箱铁路与公路运输及清关手续，直至货物入库。"
+        },
         "warehouse": {
           "title": "仓储",
           "text": "食品、美妆和家居用品按标准分类存放。"
@@ -265,8 +268,8 @@
     },
     "intro": {
       "title": "为日常生活<highlight>创造价值</highlight>",
-      "lead": "Cosmo Trade 拥有7个专业部门、150多名专业人才，是一支经验丰富的团队。",
-      "body": "我们拥有符合国际标准、全面保障产品质量与安全的3,500平方米食品和家居用品专用仓库及配送中心，将产品快速送达乌兰巴托市内4,500个网点，以及全国21个省各苏木和居民点的3,000多家商业中心。",
+      "lead": "Cosmo Trade 有限责任公司是最早从事快速消费品进口与批发业务的企业之一。",
+      "body": "自1993年成立以来，30多年来我们一直将来自欧洲和东南亚、以品质和标准见长的品牌产品成功引入蒙古快消品市场。与此同时，我们发展自有品牌，不断丰富产品与服务的品类、扩大覆盖范围、提升价值，为行业发展做出切实贡献。",
       "imageAlt": "Cosmo Trade 总部办公楼与仓库鸟瞰"
     },
     "missionText": "让顾客满意与快乐是我们的目标。",
@@ -316,19 +319,17 @@
       "marketing": "市场部",
       "it": "信息技术部"
     },
-    "directions": {
-      "lead": "Cosmo Trade 的人力资源政策由以下",
-      "title": "{count}个方向组成",
+    "benefits": {
+      "lead": "我们为员工提供",
+      "title": "福利与奖励",
       "items": {
-        "transparency": "人力资源透明度",
-        "inclusion": "多元、平等与包容",
-        "culture": "加强企业文化",
-        "development": "培养员工、提升能力",
-        "wellbeing": "员工福祉",
-        "engagement": "保障员工参与",
-        "safeWorkplace": "反对歧视与职场骚扰",
-        "innovation": "支持创新发展",
-        "leadership": "领导力"
+        "health": "健康支持",
+        "bonus": "奖金与津贴",
+        "perks": "福利与优惠",
+        "paidLeave": "带薪休假",
+        "lifeMoments": "人生重要时刻的关怀",
+        "gifts": "节日与纪念日礼物",
+        "events": "集体与社区活动"
       }
     },
     "policy": {
@@ -369,6 +370,17 @@
         }
       },
       "imageAlt": "正在卸货的团队"
+    },
+    "selection": {
+      "title": "招聘流程",
+      "lead": "从提交简历到最终决定，共分为{count}个阶段。",
+      "stepLabel": "第{number}阶段",
+      "steps": {
+        "application": "简历筛选",
+        "interview": "初步面试",
+        "assessment": "进一步考核",
+        "decision": "录用决定"
+      }
     },
     "form": {
       "eyebrow": "求职申请",

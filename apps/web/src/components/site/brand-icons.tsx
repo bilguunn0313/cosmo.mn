@@ -246,3 +246,205 @@ export function GlobalSourcingIcon({ className }: BrandIconProps) {
     </svg>
   );
 }
+
+function StrokeIcon({
+  className,
+  children,
+}: BrandIconProps & { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 96 96"
+      fill="none"
+      strokeWidth={7}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      {children}
+    </svg>
+  );
+}
+
+export function BasketIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M12 40H84L76.6 78.4A6 6 0 0 1 70.7 83H25.3A6 6 0 0 1 19.4 78.4Z"
+      />
+      <path className="stroke-brand" d="M38 54V69M58 54V69" />
+      <path
+        className="stroke-coral"
+        d="M28 40C28 24 37 13 48 13C59 13 68 24 68 40"
+      />
+    </StrokeIcon>
+  );
+}
+
+export function PharmacyIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M30 12H66A18 18 0 0 1 84 30V66A18 18 0 0 1 66 84H30A18 18 0 0 1 12 66V30A18 18 0 0 1 30 12Z"
+      />
+      <path className="stroke-coral" d="M48 31V65M31 48H65" />
+    </StrokeIcon>
+  );
+}
+
+export function WarehouseIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M12 39L48 15L84 39V78A6 6 0 0 1 78 84H18A6 6 0 0 1 12 78Z"
+      />
+      <path className="stroke-brand" d="M30 84V54H66V84" />
+      <path className="stroke-coral" d="M38 65H58M38 75H58" />
+    </StrokeIcon>
+  );
+}
+
+export function ClockIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M48 12A36 36 0 1 1 48 84A36 36 0 1 1 48 12Z"
+      />
+      <path className="stroke-coral" d="M48 29V48L61 57" />
+    </StrokeIcon>
+  );
+}
+
+export function StoreIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M19 46V78A6 6 0 0 0 25 84H71A6 6 0 0 0 77 78V46"
+      />
+      <path className="stroke-brand" d="M40 84V63H56V84" />
+      <path
+        className="stroke-coral"
+        d="M18 13H78L86 32A9.5 9.5 0 0 1 67 32A9.5 9.5 0 0 1 48 32A9.5 9.5 0 0 1 29 32A9.5 9.5 0 0 1 10 32Z"
+      />
+    </StrokeIcon>
+  );
+}
+
+export function ApplicationIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M27 8H57L77 28V79A9 9 0 0 1 68 88H27A9 9 0 0 1 18 79V17A9 9 0 0 1 27 8Z"
+      />
+      <path className="stroke-brand" d="M57 9V21A7 7 0 0 0 64 28H76" />
+      <path className="stroke-brand" d="M33 53H62M33 68H52" />
+      <circle className="fill-coral" cx="36" cy="33" r="8" />
+    </StrokeIcon>
+  );
+}
+
+function Grid24StrokeIcon({
+  className,
+  children,
+}: BrandIconProps & { children: React.ReactNode }) {
+  return (
+    <StrokeIcon className={className}>
+      <g transform="translate(-3.6 -3.6) scale(4.3)" strokeWidth={1.63}>
+        {children}
+      </g>
+    </StrokeIcon>
+  );
+}
+
+export function HealthIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"
+      />
+      <path className="stroke-coral" d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function BanknoteIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <rect className="stroke-brand" x="2" y="6" width="20" height="12" rx="2" />
+      <path className="stroke-brand" d="M6 12h.01M18 12h.01" />
+      <circle className="stroke-coral" cx="12" cy="12" r="2.5" />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function DiscountIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+      />
+      <path className="stroke-coral" d="m15 9-6 6M9 9h.01M15 15h.01" />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function CalendarCheckIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <rect className="stroke-brand" x="3" y="3" width="18" height="18" rx="2" />
+      <path className="stroke-brand" d="M8 2v3M16 2v3M3 9h18" />
+      <path className="stroke-coral" d="m9 15 2 2 4-4" />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function HandHeartIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16M2 15l6 6M7 20l1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a1 1 0 0 0-2.75-2.91"
+      />
+      <path
+        className="stroke-coral"
+        d="m14.45 13.39 5.05-4.694C20.196 8 21 6.85 21 5.75a2.75 2.75 0 0 0-4.797-1.837.276.276 0 0 1-.406 0A2.75 2.75 0 0 0 11 5.75c0 1.2.802 2.248 1.5 2.946L16 11.95"
+      />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function GiftIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path className="stroke-brand" d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" />
+      <rect className="stroke-brand" x="3" y="7" width="18" height="4" rx="1" />
+      <path
+        className="stroke-coral"
+        d="M12 7v14M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"
+      />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function CelebrationIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M5.8 11.3 2 22l10.7-3.79M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"
+      />
+      <path
+        className="stroke-coral"
+        d="M4 3h.01M22 8h.01M15 2h.01M22 20h.01M22 2l-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10M22 13l-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17M11 2l.33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"
+      />
+    </Grid24StrokeIcon>
+  );
+}

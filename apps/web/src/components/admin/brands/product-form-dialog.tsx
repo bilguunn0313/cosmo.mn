@@ -142,7 +142,7 @@ function ProductForm({ brandId, product, onDone }: ProductFormProps) {
         label="Зураг"
         htmlFor="product-image"
         required
-        hint="Цагаан эсвэл тунгалаг дэвсгэртэй, дөрвөлжин зураг тохиромжтой"
+        hint="Цагаан эсвэл тунгалаг дэвсгэртэй зураг цайвар хавтан дээр голдоо гарна. Өнгөт дэвсгэртэй зураг картыг бүтэн дүүргэж, дөрвөлжин хайчлагдана"
         error={errors.image?.message}
       >
         <Controller

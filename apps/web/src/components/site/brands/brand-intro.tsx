@@ -8,6 +8,18 @@ import { cn } from "@/lib/utils";
 import { BrandLogo } from "./brand-logo";
 import { BRAND_TILE_BACKGROUND } from "./brand-tile-background";
 
+const DEFAULT_COVER_RATIO = 5 / 4;
+const MIN_COVER_RATIO = 4 / 5;
+const MAX_COVER_RATIO = 2;
+
+function coverRatio(width: number | null, height: number | null) {
+  if (!width || !height) {
+    return DEFAULT_COVER_RATIO;
+  }
+
+  return Math.min(MAX_COVER_RATIO, Math.max(MIN_COVER_RATIO, width / height));
+}
+
 interface BrandIntroProps {
   brand: PublicBrandDetail;
 }
@@ -52,7 +64,12 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
 
         <Reveal from="zoom">
           {brand.coverUrl ? (
-            <div className="relative aspect-5/4 overflow-hidden rounded-[28px] bg-surface">
+            <div
+              className="relative overflow-hidden rounded-[28px] bg-surface"
+              style={{
+                aspectRatio: coverRatio(brand.coverWidth, brand.coverHeight),
+              }}
+            >
               <Image
                 src={brand.coverUrl}
                 alt={t("brands.coverAlt", { name: brand.name })}

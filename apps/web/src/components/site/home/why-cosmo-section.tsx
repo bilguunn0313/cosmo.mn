@@ -58,9 +58,6 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
           <h2 id="why-title" className="type-section text-balance text-ink">
             {t("title")}
           </h2>
-          <p className="text-lg leading-[1.65] text-pretty text-even text-ink-2">
-            {t("text")}
-          </p>
         </Reveal>
 
         <ol className="lg:col-start-2 lg:row-span-2 lg:row-start-1">

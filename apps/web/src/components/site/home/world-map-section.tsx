@@ -4,6 +4,8 @@ import type { Locale } from "@/lib/types";
 import { buildWorldMapLayout } from "@/lib/world-map";
 import { WorldMapInteractive } from "./world-map-interactive";
 
+const MONGOLIA_REGION = "MN";
+
 interface WorldMapSectionProps {
   countries: CountryCode[];
   locale: Locale;
@@ -26,12 +28,19 @@ export async function WorldMapSection({
   );
 
   return (
-    <section aria-labelledby="world-map-title" className="bg-brand text-white">
-      <WorldMapInteractive layout={layout} countryNames={countryNames}>
+    <section
+      aria-labelledby="world-map-title"
+      className="world-map-section overflow-hidden text-white"
+    >
+      <WorldMapInteractive
+        layout={layout}
+        countryNames={countryNames}
+        mongoliaName={displayNames.of(MONGOLIA_REGION) ?? MONGOLIA_REGION}
+      >
         <h2 id="world-map-title" className="type-section text-balance">
           {t("mapTitle")}
         </h2>
-        <p className="text-lg leading-relaxed text-pretty text-night-text">
+        <p className="text-lg leading-relaxed text-balance text-night-text">
           {t("mapDescription")}
         </p>
       </WorldMapInteractive>

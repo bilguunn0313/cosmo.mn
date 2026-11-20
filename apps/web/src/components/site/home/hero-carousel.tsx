@@ -1,84 +1,16 @@
 "use client";
 
 import { Volume2, VolumeX } from "lucide-react";
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-} from "motion/react";
-import type { PanInfo } from "motion/react";
+import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/site/logo-mark";
+import { useSlideCarousel } from "@/components/site/use-slide-carousel";
 import type { PublicSlide } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
 const SLIDE_DURATION_MS = 4000;
-const SWIPE_THRESHOLD_PX = 50;
-const SWIPE_VELOCITY_PX = 500;
-const SLIDE_TRANSITION = { duration: 0.6, ease: [0.32, 0.72, 0, 1] } as const;
-
-type Direction = 1 | -1;
-
-interface PendingSlide {
-  index: number;
-  direction: Direction;
-}
-
-function swipeStep({ offset, velocity }: PanInfo): Direction | 0 {
-  const isFlick = Math.abs(velocity.x) > SWIPE_VELOCITY_PX;
-
-  if (!isFlick && Math.abs(offset.x) <= SWIPE_THRESHOLD_PX) {
-    return 0;
-  }
-
-  const direction = isFlick ? velocity.x : offset.x;
-
-  return direction < 0 ? 1 : -1;
-}
-
-interface SlidePositionInput {
-  index: number;
-  activeIndex: number;
-  pending: PendingSlide | null;
-  count: number;
-  revealSide: Direction;
-}
-
-function slidePosition({
-  index,
-  activeIndex,
-  pending,
-  count,
-  revealSide,
-}: SlidePositionInput) {
-  if (index === activeIndex) {
-    return 0;
-  }
-
-  if (pending) {
-    return index === pending.index ? pending.direction : null;
-  }
-
-  if (count === 2) {
-    return revealSide;
-  }
-
-  const stepsForward = (index - activeIndex + count) % count;
-
-  if (stepsForward === 1) {
-    return 1;
-  }
-
-  if (stepsForward === count - 1) {
-    return -1;
-  }
-
-  return null;
-}
 
 interface SlideMediaProps {
   slide: PublicSlide;
@@ -166,94 +98,33 @@ interface HeroCarouselProps {
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
   const t = useTranslations();
-  const shouldReduceMotion = useReducedMotion() ?? false;
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const trackX = useMotionValue(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [pending, setPending] = useState<PendingSlide | null>(null);
-  const [revealSide, setRevealSide] = useState<Direction>(1);
-  const [isDragging, setIsDragging] = useState(false);
+  const {
+    viewportRef,
+    activeIndex,
+    hasMany,
+    shouldReduceMotion,
+    isBusy,
+    positionOf,
+    goTo,
+    goBy,
+    trackProps,
+  } = useSlideCarousel(slides.length);
   const [isMuted, setIsMuted] = useState(true);
 
   const count = slides.length;
-  const hasMany = count > 1;
-  const isPlaying = hasMany && !shouldReduceMotion && !isDragging && !pending;
+  const isPlaying = hasMany && !shouldReduceMotion && !isBusy;
   const activeSlide = slides[activeIndex];
   const isVideoActive = activeSlide.mediaType === "VIDEO";
-
-  useMotionValueEvent(trackX, "change", (latest) => {
-    const side = latest > 0 ? -1 : 1;
-
-    if (side !== revealSide) {
-      setRevealSide(side);
-    }
-  });
-
-  useEffect(() => {
-    if (!pending) {
-      return;
-    }
-
-    let isCancelled = false;
-    const width = viewportRef.current?.offsetWidth ?? 0;
-    const controls = animate(
-      trackX,
-      -pending.direction * width,
-      shouldReduceMotion ? { duration: 0 } : SLIDE_TRANSITION,
-    );
-
-    controls.then(() => {
-      if (!isCancelled) {
-        setActiveIndex(pending.index);
-        setPending(null);
-      }
-    });
-
-    return () => {
-      isCancelled = true;
-      controls.stop();
-    };
-  }, [pending, shouldReduceMotion, trackX]);
-
-  useLayoutEffect(() => {
-    trackX.set(0);
-  }, [activeIndex, trackX]);
 
   useEffect(() => {
     if (!isPlaying) {
       return;
     }
 
-    const timer = setTimeout(() => {
-      setPending({ index: (activeIndex + 1) % count, direction: 1 });
-    }, SLIDE_DURATION_MS);
+    const timer = setTimeout(() => goBy(1), SLIDE_DURATION_MS);
 
     return () => clearTimeout(timer);
-  }, [isPlaying, activeIndex, count]);
-
-  const goTo = (index: number, direction: Direction) => {
-    if (pending || index === activeIndex) {
-      return;
-    }
-
-    setPending({ index, direction });
-  };
-
-  const goBy = (step: Direction) => {
-    goTo((activeIndex + step + count) % count, step);
-  };
-
-  const handleDragEnd = (info: PanInfo) => {
-    setIsDragging(false);
-    const step = swipeStep(info);
-
-    if (step === 0) {
-      animate(trackX, 0, SLIDE_TRANSITION);
-      return;
-    }
-
-    goBy(step);
-  };
+  }, [isPlaying, activeIndex, goBy]);
 
   return (
     <div
@@ -263,24 +134,14 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       className="absolute inset-0 overflow-hidden"
     >
       <motion.div
-        style={{ x: trackX }}
-        drag={hasMany && !pending ? "x" : false}
-        dragMomentum={false}
-        onDragStart={() => setIsDragging(true)}
-        onDragEnd={(_, info) => handleDragEnd(info)}
+        {...trackProps}
         className={cn(
           "absolute inset-0 touch-pan-y select-none",
           hasMany && "cursor-grab active:cursor-grabbing",
         )}
       >
         {slides.map((slide, index) => {
-          const position = slidePosition({
-            index,
-            activeIndex,
-            pending,
-            count,
-            revealSide,
-          });
+          const position = positionOf(index);
 
           return (
             <div

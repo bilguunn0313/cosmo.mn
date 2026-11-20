@@ -11,6 +11,8 @@ import { MobileMenu } from "./mobile-menu";
 import { PAGE_BANNER_ID, SITE_NAV, isNavItemActive } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
+const HERO_PATHS = ["/", "/brands"];
+
 interface SiteHeaderProps {
   facebookUrl: string | null;
 }
@@ -22,7 +24,7 @@ export function SiteHeader({ facebookUrl }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverBanner, setIsOverBanner] = useState(false);
 
-  const hasHero = pathname === "/";
+  const hasHero = HERO_PATHS.includes(pathname);
   const isOverHero = hasHero && !isScrolled;
   const tone = isOverHero ? "dark" : "light";
 

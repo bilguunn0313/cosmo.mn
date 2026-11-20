@@ -1,12 +1,12 @@
-import {
-  Clock,
-  Pill,
-  ShoppingBasket,
-  ShoppingCart,
-  Store,
-  Warehouse,
-} from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {
+  BasketIcon,
+  ClockIcon,
+  PharmacyIcon,
+  ShoppingIcon,
+  StoreIcon,
+  WarehouseIcon,
+} from "@/components/site/brand-icons";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
@@ -14,12 +14,12 @@ import { ChannelNetwork } from "./channel-network";
 import { StatNumber } from "./stat-number";
 
 const CHANNELS = [
-  { key: "supermarket", icon: ShoppingBasket },
-  { key: "hypermarket", icon: ShoppingCart },
-  { key: "pharmacy", icon: Pill },
-  { key: "wholesale", icon: Warehouse },
-  { key: "convenience", icon: Clock },
-  { key: "grocery", icon: Store },
+  { key: "supermarket", icon: BasketIcon },
+  { key: "hypermarket", icon: ShoppingIcon },
+  { key: "pharmacy", icon: PharmacyIcon },
+  { key: "wholesale", icon: WarehouseIcon },
+  { key: "convenience", icon: ClockIcon },
+  { key: "grocery", icon: StoreIcon },
 ] as const;
 
 interface RetailChannelsSectionProps {
@@ -33,13 +33,13 @@ export async function RetailChannelsSection({
   const channels = CHANNELS.map((channel) => ({
     key: channel.key,
     label: t(`items.${channel.key}`),
-    icon: <channel.icon aria-hidden className="text-white" strokeWidth={1.5} />,
+    icon: <channel.icon />,
   }));
 
   return (
     <section
       aria-labelledby="channels-title"
-      className="relative isolate overflow-hidden bg-brand py-20 text-white md:py-26"
+      className="channels-section relative isolate overflow-hidden py-20 text-white md:py-26"
     >
       <LogoMark className="absolute top-1/2 -left-48 -z-10 w-150 -translate-y-1/2 text-white/6" />
 

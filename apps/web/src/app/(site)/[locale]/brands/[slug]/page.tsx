@@ -15,6 +15,8 @@ import { fetchBrand } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 import { brandPath } from "@/lib/site-links";
 
+const SHOW_BRAND_SECTIONS = false;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/brands/[slug]">): Promise<Metadata> {
@@ -87,7 +89,7 @@ export default async function BrandPage({
         </section>
       )}
 
-      {brand.sections.length > 0 && (
+      {SHOW_BRAND_SECTIONS && brand.sections.length > 0 && (
         <div className="site-container pt-20 md:pt-32">
           <StorySections sections={brand.sections} />
         </div>

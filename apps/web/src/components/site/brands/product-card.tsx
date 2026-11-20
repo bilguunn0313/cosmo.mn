@@ -3,6 +3,13 @@ import type { PublicProduct } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 import { BRAND_TILE_BACKGROUND } from "./brand-tile-background";
 
+const CUTOUT_IMAGE_CLASS = "object-contain p-[14%] mix-blend-multiply";
+const PHOTO_IMAGE_CLASS = "object-cover";
+
+function imageClass(product: PublicProduct) {
+  return product.imageIsCutout ? CUTOUT_IMAGE_CLASS : PHOTO_IMAGE_CLASS;
+}
+
 interface ProductCardProps {
   product: PublicProduct;
 }
@@ -22,7 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
           fill
           unoptimized
           sizes="(min-width: 1024px) 320px, (min-width: 768px) 33vw, 50vw"
-          className="object-contain p-[14%] mix-blend-multiply"
+          className={imageClass(product)}
         />
       </div>
       <h3 className="font-display text-base leading-snug font-semibold text-balance text-ink md:text-lg">
@@ -52,7 +59,7 @@ export function ProductFeature({ product }: ProductCardProps) {
           fill
           unoptimized
           sizes="(min-width: 1024px) 560px, 100vw"
-          className="object-contain p-[14%] mix-blend-multiply"
+          className={imageClass(product)}
         />
       </div>
       <div className="flex flex-col gap-4">

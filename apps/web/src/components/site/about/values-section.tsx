@@ -39,7 +39,7 @@ export async function ValuesSection() {
                   <dt className="type-h4 font-semibold text-brand">
                     {t(`values.items.${key}.title`)}
                   </dt>
-                  <dd className="mt-1.5 text-base leading-[1.65] text-pretty text-ink-2 md:text-[17px]">
+                  <dd className="mt-1.5 text-base leading-[1.65] text-pretty text-ink-2 sm:text-justify md:text-[17px]">
                     {t(`values.items.${key}.text`)}
                   </dd>
                 </div>

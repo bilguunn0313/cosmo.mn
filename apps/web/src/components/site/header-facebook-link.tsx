@@ -1,10 +1,9 @@
 import { siFacebook } from "simple-icons";
 import { cn } from "@/lib/utils";
-import { SocialIcon } from "./social-icon";
 
 const TONE_CLASSES = {
-  light: "text-ink-2 hover:bg-brand-100 hover:text-brand-700",
-  dark: "text-white/85 hover:bg-white/10 hover:text-white",
+  light: "hover:bg-brand-100",
+  dark: "hover:bg-white/10",
 } as const;
 
 interface HeaderFacebookLinkProps {
@@ -27,7 +26,10 @@ export function HeaderFacebookLink({
         TONE_CLASSES[tone],
       )}
     >
-      <SocialIcon icon={siFacebook} className="size-5" />
+      <svg viewBox="0 0 24 24" aria-hidden className="size-6">
+        <circle cx="12" cy="12" r="11.8" className="fill-white" />
+        <path d={siFacebook.path} fill={`#${siFacebook.hex}`} />
+      </svg>
     </a>
   );
 }
