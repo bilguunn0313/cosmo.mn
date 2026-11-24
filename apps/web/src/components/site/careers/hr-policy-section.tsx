@@ -6,14 +6,13 @@ import {
   QualityIcon,
 } from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
+import { imageFrameStyle } from "@/lib/image-frame";
 
-const PRINCIPLES = [
+const POLICY_ITEMS = [
   { key: "open", icon: BulletPointIcon },
   { key: "accessible", icon: GlobalSourcingIcon },
   { key: "clear", icon: QualityIcon },
 ] as const;
-
-const BENEFIT_KEYS = ["pay", "career"] as const;
 
 interface HrPolicySectionProps {
   imageUrl: string;
@@ -37,36 +36,33 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
             {t("title")}
           </h1>
 
-          <div className="flex flex-col gap-4">
-            <h2 className="type-h4 font-semibold text-ink">
-              {t("principlesLabel")}
-            </h2>
-            <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-7">
-              {PRINCIPLES.map(({ key, icon: Icon }) => (
-                <li key={key} className="flex items-center gap-3">
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-control bg-brand-100">
-                    <Icon className="h-7 w-8" />
-                  </span>
-                  <span className="text-base font-medium text-ink">
-                    {t(`principles.${key}`)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <p className="max-w-[66ch] text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
-            {t("body")}
-          </p>
+          <ul className="flex flex-col gap-7">
+            {POLICY_ITEMS.map(({ key, icon: Icon }) => (
+              <li key={key} className="flex gap-4 md:gap-5">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-control bg-brand-100">
+                  <Icon className="h-7 w-8" />
+                </span>
+                <div className="flex flex-col gap-1.5 pt-0.5">
+                  <h2 className="type-h4 font-semibold text-ink">
+                    {t(`items.${key}.title`)}
+                  </h2>
+                  <p className="text-[17px] leading-[1.7] text-pretty text-ink-2">
+                    {t(`items.${key}.text`)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </Reveal>
 
         <Reveal
           from="right"
           delay={0.1}
-          className="relative aspect-4/3 overflow-hidden rounded-card bg-surface"
+          className="relative aspect-4/3 overflow-hidden rounded-card bg-surface lg:aspect-auto lg:min-h-120 lg:self-stretch"
         >
           <Image
             src={imageUrl}
+            style={imageFrameStyle(imageUrl)}
             alt={t("imageAlt")}
             fill
             priority
@@ -76,24 +72,6 @@ export async function HrPolicySection({ imageUrl }: HrPolicySectionProps) {
           />
         </Reveal>
       </div>
-
-      <ul className="site-container mt-14 grid gap-10 md:mt-20 md:grid-cols-2 md:gap-x-16">
-        {BENEFIT_KEYS.map((key, index) => (
-          <li key={key}>
-            <Reveal
-              index={index}
-              className="flex h-full flex-col gap-3 border-t-2 border-brand pt-6"
-            >
-              <h3 className="type-h4 font-semibold text-ink">
-                {t(`benefits.${key}.title`)}
-              </h3>
-              <p className="text-[17px] leading-[1.75] text-pretty text-even text-ink-2">
-                {t(`benefits.${key}.text`)}
-              </p>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

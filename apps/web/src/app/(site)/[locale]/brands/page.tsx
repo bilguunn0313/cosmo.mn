@@ -3,10 +3,8 @@ import { ArrowDown } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { BrandChapter } from "@/components/site/brands/brand-chapter";
-import { BrandMarquee } from "@/components/site/brands/brand-marquee";
 import { BrandsHero } from "@/components/site/brands/brands-hero";
 import { CatalogBook } from "@/components/site/brands/catalog-book";
-import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
@@ -52,8 +50,6 @@ export default async function BrandsPage({
         )}
       </BrandsHero>
 
-      <BrandMarquee brands={brands} />
-
       {chapters.length === 0 && (
         <p className="site-container py-24 text-lg text-ink-2 md:py-32">
           {t("brands.empty")}
@@ -97,12 +93,6 @@ export default async function BrandsPage({
           </Reveal>
         </section>
       )}
-
-      <PartnerCtaSection
-        title={t("brands.partnerTitle")}
-        text={t("brands.partnerText")}
-        isDark
-      />
     </>
   );
 }

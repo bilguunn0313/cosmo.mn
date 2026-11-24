@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CeoMessage } from "@/components/site/about/ceo-message";
-import { CompanyIntro } from "@/components/site/about/company-intro";
 import { HistoryTimeline } from "@/components/site/about/history-timeline";
 import { PurposeSection } from "@/components/site/about/purpose-section";
 import { ValuesSection } from "@/components/site/about/values-section";
-import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { getPageLocale } from "@/i18n/locale";
-import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchMilestones, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
@@ -37,19 +34,11 @@ export default async function AboutPage({
 
   return (
     <>
-      <PurposeSection />
-      <CompanyIntro imageUrl={pageBannerUrl(setting, "about")} />
+      <h1 className="sr-only">{t("nav.about")}</h1>
       <CeoMessage photoUrl={setting?.ceoImageUrl ?? null} />
+      <PurposeSection imageUrl={setting?.purposeImageUrl ?? null} />
       <ValuesSection />
-      <HistoryTimeline
-        eyebrow={t("about.historyTitle")}
-        milestones={milestones}
-      />
-      <PartnerCtaSection
-        title={t("about.partnerTitle")}
-        text={t("about.partnerText")}
-        isDark
-      />
+      <HistoryTimeline milestones={milestones} />
     </>
   );
 }

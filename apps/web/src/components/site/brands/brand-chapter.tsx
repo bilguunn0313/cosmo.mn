@@ -1,7 +1,6 @@
 import type { BrandCategory } from "@cosmo/shared";
 import { getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/site/reveal";
-import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import type { PublicBrand } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 import { BrandLogoCard } from "./brand-logo-card";
@@ -32,6 +31,7 @@ export async function BrandChapter({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
+      data-flush-footer
       className={cn(
         "scroll-mt-16 py-18 md:py-26 lg:scroll-mt-21",
         isAlternate && "bg-brand-100/50",
@@ -41,11 +41,6 @@ export async function BrandChapter({
         <div className="grid items-center gap-9 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col gap-5">
             <Reveal>
-              <SectionEyebrow>
-                {t(`brands.chapters.${category}.label`)}
-              </SectionEyebrow>
-            </Reveal>
-            <Reveal index={1}>
               <h2
                 id={`${id}-title`}
                 className="type-section text-balance text-ink"
@@ -53,8 +48,8 @@ export async function BrandChapter({
                 {title}
               </h2>
             </Reveal>
-            <Reveal index={2}>
-              <p className="text-lg leading-[1.65] text-pretty text-even text-ink-2">
+            <Reveal index={1}>
+              <p className="text-lg leading-[1.65] text-pretty text-ink-2">
                 {t(`brands.chapters.${category}.text`)}
               </p>
             </Reveal>

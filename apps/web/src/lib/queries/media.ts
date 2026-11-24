@@ -5,6 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { api } from "@/lib/api";
+import type { ImageFrame } from "@/lib/image-frame";
 import type { Media, MediaType, MediaUsage, Paginated } from "@/lib/types";
 
 const PAGE_SIZE = 24;
@@ -41,6 +42,16 @@ export function useDeleteMedia() {
     mutationFn: (id: number) =>
       api<void>(`/admin/media/${id}`, { method: "DELETE" }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: mediaQueryKey }),
+  });
+}
+
+export function useUpdateMediaFrame() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, frame }: { id: number; frame: ImageFrame }) =>
+      api<Media>(`/admin/media/${id}`, { method: "PATCH", body: frame }),
+    onSuccess: () => queryClient.invalidateQueries(),
   });
 }
 

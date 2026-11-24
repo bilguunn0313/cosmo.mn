@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ImageReveal } from "@/components/site/image-reveal";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
+import { imageFrameStyle } from "@/lib/image-frame";
 import type { PublicSection } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +28,7 @@ export function StoryRow({ index, label, imageUrl, children }: StoryRowProps) {
           <ImageReveal>
             <Image
               src={imageUrl}
+              style={imageFrameStyle(imageUrl)}
               alt=""
               fill
               unoptimized
@@ -72,7 +74,7 @@ export function StorySections({
       imageUrl={section.imageUrl}
     >
       <div
-        className="rich-text max-w-150 text-base text-even text-ink-2"
+        className="rich-text max-w-150 text-base text-ink-2"
         dangerouslySetInnerHTML={{ __html: section.body }}
       />
     </StoryRow>

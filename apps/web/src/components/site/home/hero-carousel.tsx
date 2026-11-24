@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/site/logo-mark";
 import { useSlideCarousel } from "@/components/site/use-slide-carousel";
+import { imageFrameStyle } from "@/lib/image-frame";
 import type { PublicSlide } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
@@ -62,6 +63,7 @@ function SlideMedia({
   return (
     <Image
       src={slide.mediaUrl}
+      style={imageFrameStyle(slide.mediaUrl)}
       alt=""
       fill
       unoptimized

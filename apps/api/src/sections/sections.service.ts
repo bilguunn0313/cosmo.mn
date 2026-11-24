@@ -5,6 +5,7 @@ import type {
   SectionPage,
   UpdateSectionInput,
 } from '@cosmo/shared';
+import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { sanitizeRichText } from '../common/sanitize-rich-text';
 import { Prisma } from '../generated/prisma/client';
@@ -116,7 +117,7 @@ export class SectionsService {
         id: section.id,
         title: translation?.title ?? '',
         body: translation?.body ?? '',
-        imageUrl: section.image?.url ?? null,
+        imageUrl: framedImageUrl(section.image),
         linkUrl: section.linkUrl,
       };
     });

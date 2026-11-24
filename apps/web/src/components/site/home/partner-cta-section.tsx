@@ -59,7 +59,7 @@ export async function PartnerCtaSection({
         </h2>
         <p
           className={cn(
-            "text-lg text-pretty",
+            "text-lg text-balance",
             isDark ? "text-brand-200" : "text-ink-2",
           )}
         >

@@ -5,26 +5,19 @@ import { Link } from "@/i18n/navigation";
 import { fetchSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
 import type { Locale } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
 import { linkedinIcon, SocialIcon } from "./social-icon";
 import { Wordmark } from "./wordmark";
 
 interface ContactItemProps {
   icon: LucideIcon;
-  wide?: boolean;
   children: React.ReactNode;
 }
 
-function ContactItem({ icon: Icon, wide = false, children }: ContactItemProps) {
+function ContactItem({ icon: Icon, children }: ContactItemProps) {
   return (
-    <li className={cn("flex justify-center", wide && "sm:basis-full")}>
-      <span
-        className={cn(
-          "inline-flex items-start gap-2.5",
-          wide && "max-sm:flex-col max-sm:items-center max-sm:gap-1.5",
-        )}
-      >
+    <li className="flex justify-center md:justify-start">
+      <span className="inline-flex items-start gap-2.5 text-left">
         <Icon
           aria-hidden
           className="mt-1 size-4 shrink-0 text-brand-300"
@@ -63,21 +56,42 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
   return (
     <footer className="mt-20 bg-brand text-night-text md:mt-32 [main:has([data-flush-footer])+&]:mt-0">
       <div className="site-container pt-16 pb-7 md:pt-20">
-        <div className="flex flex-col items-center text-center">
-          <Link href="/" className="w-fit">
-            <Wordmark className="text-[44px] text-white md:text-[56px]" />
-          </Link>
-          <p className="mt-4 font-display text-lg font-semibold text-white md:text-xl">
-            {t("tagline")}
-          </p>
+        <div className="mx-auto grid max-w-260 gap-10 text-center md:grid-cols-2 md:items-center md:gap-16 md:text-left">
+          <div className="flex flex-col items-center md:items-start">
+            <Link href="/" className="w-fit">
+              <Wordmark className="text-[44px] text-white md:text-[56px]" />
+            </Link>
+            <p className="mt-4 font-display text-lg font-semibold text-white md:text-xl">
+              {t("tagline")}
+            </p>
+
+            {socials.length > 0 && (
+              <ul aria-label={t("socials")} className="mt-8 flex gap-2">
+                {socials.map((social) => (
+                  <li key={social.label}>
+                    <a
+                      href={social.url ?? undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      title={social.label}
+                      className="grid size-10 place-items-center rounded-control bg-white/10 text-white transition-colors duration-150 hover:bg-white/20"
+                    >
+                      <SocialIcon icon={social.icon} className="size-5" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {hasContact && (
-            <>
+            <div className="md:justify-self-end">
               <h2 className="sr-only">{t("contact")}</h2>
-              <ul className="mt-10 flex flex-col items-center gap-x-10 gap-y-3 text-sm/6 sm:flex-row sm:flex-wrap sm:justify-center md:mt-12 md:text-[15px]/6">
+              <ul className="grid gap-3 text-sm/6 md:text-[15px]/6">
                 {setting?.address && (
-                  <ContactItem icon={MapPin} wide>
-                    <span className="whitespace-pre-line text-balance">
+                  <ContactItem icon={MapPin}>
+                    <span className="max-w-[44ch] whitespace-pre-line text-balance">
                       {setting.address}
                     </span>
                   </ContactItem>
@@ -108,26 +122,7 @@ export async function SiteFooter({ locale }: SiteFooterProps) {
                   </ContactItem>
                 )}
               </ul>
-            </>
-          )}
-
-          {socials.length > 0 && (
-            <ul aria-label={t("socials")} className="mt-8 flex gap-2">
-              {socials.map((social) => (
-                <li key={social.label}>
-                  <a
-                    href={social.url ?? undefined}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    title={social.label}
-                    className="grid size-10 place-items-center rounded-control bg-white/10 text-white transition-colors duration-150 hover:bg-white/20"
-                  >
-                    <SocialIcon icon={social.icon} className="size-5" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            </div>
           )}
         </div>
 

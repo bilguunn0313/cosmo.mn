@@ -7,6 +7,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
+import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { PrefixedInput } from "@/components/admin/prefixed-input";
 import { RichTextEditor } from "@/components/admin/rich-text/rich-text-editor";
@@ -307,6 +308,7 @@ export function NewsForm({ news, onCreated }: NewsFormProps) {
                 onChange={field.onChange}
                 pickerTitle="Нүүр зураг сонгох"
                 removable
+                framePreviews={DEFAULT_FRAME_PREVIEWS}
               />
             )}
           />

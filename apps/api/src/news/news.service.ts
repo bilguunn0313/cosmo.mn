@@ -6,6 +6,7 @@ import type {
   PublicNewsQuery,
   UpdateNewsInput,
 } from '@cosmo/shared';
+import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { sanitizeRichText } from '../common/sanitize-rich-text';
 import { Prisma } from '../generated/prisma/client';
@@ -31,7 +32,7 @@ function toPublicListItem(news: NewsWithRelations, locale: Locale) {
     slug: news.slug,
     title: translation?.title ?? '',
     summary: translation?.summary ?? null,
-    coverUrl: news.coverImage?.url ?? null,
+    coverUrl: framedImageUrl(news.coverImage),
     videoUrl: news.video?.url ?? null,
     publishedAt: news.publishedAt,
   };
@@ -197,6 +198,8 @@ export class NewsService {
 
     return {
       ...toPublicListItem(news, locale),
+      coverWidth: news.coverImage?.width ?? null,
+      coverHeight: news.coverImage?.height ?? null,
       content: translation?.content ?? '',
       previous: previous ? toPublicListItem(previous, locale) : null,
       next: next ? toPublicListItem(next, locale) : null,

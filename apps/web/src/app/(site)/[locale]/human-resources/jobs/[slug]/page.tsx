@@ -9,7 +9,6 @@ import {
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { CopyLinkButton } from "@/components/site/copy-link-button";
 import { JobsTable } from "@/components/site/careers/jobs-table";
 import { Reveal } from "@/components/site/reveal";
@@ -112,18 +111,7 @@ export default async function JobPage({
 
   return (
     <>
-      <div className="site-container pt-6 md:pt-8">
-        <Breadcrumbs
-          items={[
-            { label: t("nav.home"), href: "/" },
-            { label: t("nav.careers"), href: "/human-resources" },
-            { label: t("careers.jobs.title"), href: JOBS_PATH },
-            { label: job.title },
-          ]}
-        />
-      </div>
-
-      <header className="site-container pt-10 md:pt-14">
+      <header className="site-container pt-8 md:pt-14">
         <Reveal className="grid max-w-230 gap-5">
           <SectionEyebrow>
             {t(`careers.departments.${job.department}`)}

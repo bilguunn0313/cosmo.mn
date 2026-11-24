@@ -44,8 +44,8 @@ export default async function HumanResourcesPage({
   return (
     <>
       <HrPolicySection imageUrl={pageBannerUrl(setting, "careers")} />
-      <HrBenefitsSection />
       <HrCultureSection imageUrl={pageBannerUrl(setting, "hrGovernance")} />
+      <HrBenefitsSection />
       <HrSelectionSection />
 
       {sections.length > 0 && (

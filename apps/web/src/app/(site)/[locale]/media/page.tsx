@@ -2,16 +2,13 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
-import { FollowFacebookBand } from "@/components/site/follow-facebook-band";
 import { NewsCard } from "@/components/site/media/news-card";
 import { NewsPagination } from "@/components/site/media/news-pagination";
-import { NewsSlide } from "@/components/site/media/news-slide";
 import { Reveal } from "@/components/site/reveal";
 import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
-import { fetchNewsPage, fetchSiteSetting } from "@/lib/public-api";
+import { fetchNewsPage } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
 const NEWS_PER_PAGE = 24;
@@ -44,38 +41,20 @@ export default async function MediaPage({
   const locale = await getPageLocale(params);
   const t = await getTranslations();
   const page = parsePage((await searchParams).page);
-  const [{ items, total }, setting] = await Promise.all([
-    fetchNewsPage(locale, page, NEWS_PER_PAGE),
-    fetchSiteSetting(locale),
-  ]);
+  const { items, total } = await fetchNewsPage(locale, page, NEWS_PER_PAGE);
   const totalPages = Math.ceil(total / NEWS_PER_PAGE);
 
   if (page > 1 && items.length === 0) {
     notFound();
   }
 
-  const featured = page === 1 ? items[0] : null;
-  const gridItems = featured ? items.slice(1) : items;
-
   return (
     <>
-      <div className="site-container pt-6 md:pt-8">
-        <Breadcrumbs
-          items={[
-            { label: t("nav.home"), href: "/" },
-            { label: t("nav.media") },
-          ]}
-        />
-      </div>
-
-      <header className="site-container pt-10 md:pt-14">
-        <Reveal className="grid max-w-190 gap-5">
+      <header className="site-container pt-8 md:pt-14">
+        <Reveal className="max-w-190">
           <h1 className="type-section text-balance text-ink">
             {t("media.title")}
           </h1>
-          <p className="text-lg leading-relaxed text-pretty text-ink-2">
-            {t("media.description")}
-          </p>
         </Reveal>
       </header>
 
@@ -92,34 +71,19 @@ export default async function MediaPage({
             </Link>
           </div>
         ) : (
-          <>
-            {featured && (
-              <Reveal className="border-b border-rule pb-12 md:pb-14">
-                <NewsSlide
-                  news={featured}
-                  priority
-                  eyebrow={t("media.featured")}
-                />
-              </Reveal>
-            )}
-            {gridItems.length > 0 && (
-              <ul className="grid gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-14 lg:grid-cols-3">
-                {gridItems.map((news, index) => (
-                  <li key={news.slug}>
-                    <Reveal index={index % 3} className="h-full">
-                      <NewsCard news={news} />
-                    </Reveal>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
+          <ul className="grid gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-14 lg:grid-cols-3">
+            {items.map((news, index) => (
+              <li key={news.slug}>
+                <Reveal index={index % 3} className="h-full">
+                  <NewsCard news={news} priority={page === 1 && index < 3} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         )}
 
         <NewsPagination page={page} totalPages={totalPages} />
       </section>
-
-      {setting?.facebookUrl && <FollowFacebookBand url={setting.facebookUrl} />}
     </>
   );
 }

@@ -65,7 +65,7 @@ export async function HrSelectionSection() {
                 <li
                   key={key}
                   style={arrivalStyle(index)}
-                  className="flex items-center gap-4.5 py-3 lg:flex-col lg:gap-5.5 lg:px-3.5 lg:py-0 lg:text-center"
+                  className="flex items-center gap-4.5 py-3 lg:flex-col lg:gap-5.5 lg:px-3.5 lg:py-0 lg:text-center lg:text-last-center"
                 >
                   <span className="selection-node relative grid size-16 shrink-0 place-items-center rounded-full bg-white lg:size-24">
                     <Icon className="selection-icon h-7.5 w-auto max-w-8.5 lg:h-11.5 lg:max-w-13" />

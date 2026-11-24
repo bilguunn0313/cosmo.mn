@@ -1,5 +1,6 @@
-import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { formButtonClass } from "@/components/site/form-styles";
 import type { PublicSiteSetting } from "@/lib/public-api";
 import { phoneHref } from "@/lib/site-links";
 
@@ -8,9 +9,6 @@ interface DetailRow {
   label: string;
   value: React.ReactNode;
 }
-
-const linkClass =
-  "group inline-flex items-center gap-2 justify-self-start text-[15px] font-medium text-brand-700 transition-colors duration-150 hover:text-brand";
 
 interface ContactDetailsProps {
   setting: PublicSiteSetting | null;
@@ -63,9 +61,9 @@ export async function ContactDetails({ setting }: ContactDetailsProps) {
   }
 
   return (
-    <div className="grid w-full gap-6">
+    <div className="flex w-full flex-1 flex-col items-start gap-6">
       {rows.length > 0 && (
-        <dl className="grid">
+        <dl className="grid w-full">
           {rows.map(({ icon: Icon, label, value }) => (
             <div
               key={label}
@@ -89,10 +87,9 @@ export async function ContactDetails({ setting }: ContactDetailsProps) {
           href={setting.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={linkClass}
+          className={`${formButtonClass} lg:mt-auto`}
         >
           {t("directions")}
-          <ArrowUpRight className="size-4.5 transition-[translate] duration-200 ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       )}
     </div>

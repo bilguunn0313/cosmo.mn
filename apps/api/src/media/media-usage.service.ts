@@ -30,6 +30,7 @@ interface SiteSettingImageIds {
   hrGovernanceImageId: number | null;
   homeAboutImageId: number | null;
   ceoImageId: number | null;
+  purposeImageId: number | null;
 }
 
 function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
@@ -43,6 +44,10 @@ function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
 
   if (setting.ceoImageId === id) {
     return 'Гүйцэтгэх захирлын зураг';
+  }
+
+  if (setting.purposeImageId === id) {
+    return 'Эрхэм зорилго, алсын харааны зураг';
   }
 
   const bannerIds = [
@@ -137,6 +142,7 @@ export class MediaUsageService {
             { valueResponsibilityImageId: id },
             { homeAboutImageId: id },
             { ceoImageId: id },
+            { purposeImageId: id },
           ],
         },
       }),
@@ -174,9 +180,12 @@ export class MediaUsageService {
       ...milestones.map((milestone) => ({
         type: 'milestone' as const,
         id: milestone.id,
-        title: `${milestone.year} ${
-          pickTranslation(milestone.translations, DEFAULT_LOCALE)?.title ?? ''
-        }`,
+        title: [
+          milestone.year,
+          pickTranslation(milestone.translations, DEFAULT_LOCALE)?.title,
+        ]
+          .filter(Boolean)
+          .join(' '),
       })),
       ...retailPartners.map((partner) => ({
         type: 'retailPartner' as const,

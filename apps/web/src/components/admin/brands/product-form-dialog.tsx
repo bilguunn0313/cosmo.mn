@@ -7,6 +7,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
+import type { FramePreview } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,11 @@ import {
   translationsToForm,
 } from "@/lib/translations";
 import type { Media, Product } from "@/lib/types";
+
+const PRODUCT_FRAME_PREVIEWS: FramePreview[] = [
+  { label: "Бүтээгдэхүүний карт", ratio: 1 },
+  { label: "Онцлох бүтээгдэхүүн", ratio: 5 / 4 },
+];
 
 type ProductTranslationValues = {
   name: string;
@@ -153,6 +159,7 @@ function ProductForm({ brandId, product, onDone }: ProductFormProps) {
               value={field.value}
               onChange={field.onChange}
               invalid={Boolean(errors.image)}
+              framePreviews={PRODUCT_FRAME_PREVIEWS}
             />
           )}
         />

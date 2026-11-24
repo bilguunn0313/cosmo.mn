@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateSlideInput, UpdateSlideInput } from '@cosmo/shared';
+import { framedImageUrl } from '../common/framed-image-url';
 import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -29,7 +30,7 @@ export class SlidesService {
     return slides.map((slide) => ({
       id: slide.id,
       mediaType: slide.media.type,
-      mediaUrl: slide.media.url,
+      mediaUrl: framedImageUrl(slide.media),
       posterUrl: slide.poster?.url ?? null,
     }));
   }

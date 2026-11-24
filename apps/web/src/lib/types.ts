@@ -34,6 +34,9 @@ export interface Media {
   width: number | null;
   height: number | null;
   duration: number | null;
+  focusX: number;
+  focusY: number;
+  zoom: number;
   createdAt: string;
 }
 
@@ -204,6 +207,8 @@ export interface SiteSetting {
   hrGovernanceImage: Media | null;
   ceoImageId: number | null;
   ceoImage: Media | null;
+  purposeImageId: number | null;
+  purposeImage: Media | null;
   valuePeopleImageId: number | null;
   valuePeopleImage: Media | null;
   valueSatisfactionImageId: number | null;

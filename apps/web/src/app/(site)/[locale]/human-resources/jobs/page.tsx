@@ -1,7 +1,6 @@
 import { ArrowUpRight, BriefcaseBusiness } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { JobsTable } from "@/components/site/careers/jobs-table";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
@@ -40,17 +39,7 @@ export default async function JobsPage({
 
   return (
     <>
-      <div className="site-container pt-6 md:pt-8">
-        <Breadcrumbs
-          items={[
-            { label: t("nav.home"), href: "/" },
-            { label: t("nav.careers"), href: "/human-resources" },
-            { label: t("careers.jobs.title") },
-          ]}
-        />
-      </div>
-
-      <header className="site-container flex flex-wrap items-end justify-between gap-x-12 gap-y-5 pt-10 md:pt-14">
+      <header className="site-container flex flex-wrap items-end justify-between gap-x-12 gap-y-5 pt-8 md:pt-14">
         <Reveal className="grid max-w-190 gap-5">
           <SectionEyebrow>{t("nav.careers")}</SectionEyebrow>
           <h1 className="type-section text-balance text-ink">

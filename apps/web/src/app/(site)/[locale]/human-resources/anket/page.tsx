@@ -6,7 +6,6 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { ApplicationForm } from "@/components/site/careers/application-form";
 import { LogoMark } from "@/components/site/logo-mark";
 import { requiredMarkClass } from "@/components/site/form-styles";
@@ -21,12 +20,7 @@ import {
   type PublicJobDetail,
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
-import {
-  APPLICATION_PATH,
-  JOBS_PATH,
-  jobPath,
-  phoneHref,
-} from "@/lib/site-links";
+import { APPLICATION_PATH, JOBS_PATH, phoneHref } from "@/lib/site-links";
 
 export async function generateMetadata({
   params,
@@ -145,18 +139,9 @@ export default async function ApplicationPage({
   if (!job) {
     return (
       <>
-        <div className="site-container pt-6 md:pt-8">
-          <Breadcrumbs
-            items={[
-              { label: t("nav.home"), href: "/" },
-              { label: t("nav.careers"), href: "/human-resources" },
-              { label: t("careers.form.eyebrow") },
-            ]}
-          />
-        </div>
         <section
           aria-labelledby="anket-unavailable-title"
-          className="site-container pt-12 md:pt-16"
+          className="site-container pt-8 md:pt-14"
         >
           <div className="relative isolate flex flex-col items-center gap-4.5 overflow-hidden rounded-card bg-brand-100 px-6 py-16 text-center md:py-24">
             <LogoMark className="absolute -right-30 -bottom-35 -z-10 w-130 text-brand/7" />
@@ -187,20 +172,9 @@ export default async function ApplicationPage({
 
   return (
     <>
-      <div className="site-container pt-6 md:pt-8">
-        <Breadcrumbs
-          items={[
-            { label: t("nav.home"), href: "/" },
-            { label: t("careers.jobs.title"), href: JOBS_PATH },
-            { label: job.title, href: jobPath(job.slug) },
-            { label: t("careers.form.eyebrow") },
-          ]}
-        />
-      </div>
-
       <section
         aria-labelledby="application-title"
-        className="site-container grid gap-10 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-x-6"
+        className="site-container grid gap-10 pt-8 md:pt-14 lg:grid-cols-12 lg:gap-x-6"
       >
         <header className="grid gap-4 lg:col-span-8">
           <SectionEyebrow>{t("careers.form.eyebrow")}</SectionEyebrow>

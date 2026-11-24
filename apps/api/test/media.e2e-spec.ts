@@ -84,6 +84,54 @@ describe('Media', () => {
     ).toBe(true);
   });
 
+  it('зургийн гол цэг, томруулалтыг хадгалж нийтийн хаягт нэмнэ', async () => {
+    const upload = await context.admin
+      .post('/admin/media')
+      .attach('file', await createTestImage(), {
+        filename: 'frame.png',
+        contentType: 'image/png',
+      })
+      .expect(201);
+    expect(upload.body).toMatchObject({ focusX: 50, focusY: 50, zoom: 1 });
+
+    const frame = { focusX: 25, focusY: 35, zoom: 1.4 };
+    const updated = await context.admin
+      .patch(`/admin/media/${upload.body.id}`)
+      .send(frame)
+      .expect(200);
+    expect(updated.body).toMatchObject(frame);
+
+    await context.admin
+      .put('/admin/site-settings')
+      .send({ ceoImageId: upload.body.id })
+      .expect(200);
+
+    const setting = await context.guest
+      .get('/public/site-settings')
+      .expect(200);
+    expect(setting.body.ceoImageUrl).toBe(`${upload.body.url}?frame=25,35,1.4`);
+    await context.guest.get(setting.body.ceoImageUrl).expect(200);
+  });
+
+  it('хэт их томруулалт, хүрээнээс гарсан цэгийг хүлээж авахгүй', async () => {
+    const upload = await context.admin
+      .post('/admin/media')
+      .attach('file', await createTestImage(), {
+        filename: 'frame-invalid.png',
+        contentType: 'image/png',
+      })
+      .expect(201);
+
+    await context.admin
+      .patch(`/admin/media/${upload.body.id}`)
+      .send({ focusX: 120, focusY: 50, zoom: 1 })
+      .expect(400);
+    await context.admin
+      .patch(`/admin/media/${upload.body.id}`)
+      .send({ focusX: 50, focusY: 50, zoom: 5 })
+      .expect(400);
+  });
+
   it('устгахад файл нь хамт устана', async () => {
     const upload = await context.admin
       .post('/admin/media')

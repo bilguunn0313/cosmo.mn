@@ -46,6 +46,7 @@ export interface PublicSiteSetting {
   pageBanners: Record<BannerPage, string | null>;
   homeAboutImageUrl: string | null;
   ceoImageUrl: string | null;
+  purposeImageUrl: string | null;
   address: string | null;
   workingHours: string | null;
 }
@@ -179,6 +180,8 @@ export function fetchLatestNews(locale: Locale, limit: number) {
 }
 
 export interface PublicNewsDetail extends PublicNewsItem {
+  coverWidth: number | null;
+  coverHeight: number | null;
   content: string;
   previous: PublicNewsItem | null;
   next: PublicNewsItem | null;

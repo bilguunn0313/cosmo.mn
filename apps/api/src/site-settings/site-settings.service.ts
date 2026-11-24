@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Locale, UpdateSiteSettingInput } from '@cosmo/shared';
+import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -15,6 +16,7 @@ const siteSettingInclude = {
   contactBannerImage: true,
   hrGovernanceImage: true,
   ceoImage: true,
+  purposeImage: true,
   valuePeopleImage: true,
   valueSatisfactionImage: true,
   valueQualityImage: true,
@@ -75,21 +77,22 @@ export class SiteSettingsService {
       salesPointCount: setting.salesPointCount,
       productCount: setting.productCount,
       pageBanners: {
-        about: setting.aboutBannerImage?.url ?? null,
-        careers: setting.careersBannerImage?.url ?? null,
-        media: setting.mediaBannerImage?.url ?? null,
-        brands: setting.brandsBannerImage?.url ?? null,
-        contact: setting.contactBannerImage?.url ?? null,
-        hrGovernance: setting.hrGovernanceImage?.url ?? null,
+        about: framedImageUrl(setting.aboutBannerImage),
+        careers: framedImageUrl(setting.careersBannerImage),
+        media: framedImageUrl(setting.mediaBannerImage),
+        brands: framedImageUrl(setting.brandsBannerImage),
+        contact: framedImageUrl(setting.contactBannerImage),
+        hrGovernance: framedImageUrl(setting.hrGovernanceImage),
       },
       valueImages: {
-        people: setting.valuePeopleImage?.url ?? null,
-        satisfaction: setting.valueSatisfactionImage?.url ?? null,
-        quality: setting.valueQualityImage?.url ?? null,
-        responsibility: setting.valueResponsibilityImage?.url ?? null,
+        people: framedImageUrl(setting.valuePeopleImage),
+        satisfaction: framedImageUrl(setting.valueSatisfactionImage),
+        quality: framedImageUrl(setting.valueQualityImage),
+        responsibility: framedImageUrl(setting.valueResponsibilityImage),
       },
-      homeAboutImageUrl: setting.homeAboutImage?.url ?? null,
-      ceoImageUrl: setting.ceoImage?.url ?? null,
+      homeAboutImageUrl: framedImageUrl(setting.homeAboutImage),
+      ceoImageUrl: framedImageUrl(setting.ceoImage),
+      purposeImageUrl: framedImageUrl(setting.purposeImage),
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

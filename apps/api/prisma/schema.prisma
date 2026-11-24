@@ -69,6 +69,9 @@ model Media {
   width        Int?
   height       Int?
   duration     Int?
+  focusX       Float     @default(50)
+  focusY       Float     @default(50)
+  zoom         Float     @default(1)
   createdAt    DateTime  @default(now())
 
   slides                         Slide[]         @relation("SlideMedia")
@@ -91,6 +94,7 @@ model Media {
   siteSettingContacts            SiteSetting[]   @relation("SiteSettingContactBanner")
   siteSettingHrGovernances       SiteSetting[]   @relation("SiteSettingHrGovernance")
   siteSettingCeos                SiteSetting[]   @relation("SiteSettingCeo")
+  siteSettingPurposes            SiteSetting[]   @relation("SiteSettingPurpose")
   siteSettingValuePeople         SiteSetting[]   @relation("SiteSettingValuePeople")
   siteSettingValueSatisfaction   SiteSetting[]   @relation("SiteSettingValueSatisfaction")
   siteSettingValueQuality        SiteSetting[]   @relation("SiteSettingValueQuality")
@@ -355,6 +359,8 @@ model SiteSetting {
   hrGovernanceImage          Media?   @relation("SiteSettingHrGovernance", fields: [hrGovernanceImageId], references: [id])
   ceoImageId                 Int?
   ceoImage                   Media?   @relation("SiteSettingCeo", fields: [ceoImageId], references: [id])
+  purposeImageId             Int?
+  purposeImage               Media?   @relation("SiteSettingPurpose", fields: [purposeImageId], references: [id])
   valuePeopleImageId         Int?
   valuePeopleImage           Media?   @relation("SiteSettingValuePeople", fields: [valuePeopleImageId], references: [id])
   valueSatisfactionImageId   Int?

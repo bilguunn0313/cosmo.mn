@@ -29,8 +29,7 @@
     "brands": "品牌",
     "careers": "人才招聘",
     "media": "新闻中心",
-    "contact": "联系我们",
-    "breadcrumb": "页面路径"
+    "contact": "联系我们"
   },
   "header": {
     "menu": "菜单",
@@ -65,7 +64,6 @@
     "slideIndicators": "幻灯片",
     "areas": {
       "eyebrow": "我们做什么",
-      "text": "我们在每一个环节全面负责众多品牌的产品。",
       "items": {
         "import": {
           "title": "进口",
@@ -115,25 +113,19 @@
     },
     "retail": {
       "title": "我们的合作范围",
-      "text": "我们通过零售和批发、超市、大卖场以及酒店餐饮业等多种销售渠道，将产品送达消费者。",
       "partners": "销售网络合作伙伴"
     },
     "channels": {
       "eyebrow": "零售渠道",
-      "title": "<count></count>+ 个销售网点，覆盖所有主要渠道",
-      "titlePlain": "覆盖所有主要零售渠道",
-      "text": "我们的产品从大型超市、超市一直送达社区杂货店。",
       "hub": "Cosmo Trade",
       "items": {
-        "supermarket": "超市",
-        "hypermarket": "大型超市",
-        "pharmacy": "药店",
-        "wholesale": "零售批发",
-        "convenience": "24小时便利店",
-        "grocery": "食品杂货店"
+        "modernTrade": "连锁店和超市",
+        "traditionalTrade": "食品杂货及日用品店",
+        "wholesale": "批发贸易",
+        "horeca": "酒店、餐厅和咖啡馆",
+        "ecommerce": "网上零售"
       }
     },
-    "newsEyebrow": "新闻中心",
     "cta": {
       "title": "携手在蒙古发展您的品牌",
       "text": "如果您计划进入蒙古市场或扩大销售，欢迎与我们联系。"
@@ -200,7 +192,14 @@
     "partnerTitle": "想将您的品牌引入蒙古吗？",
     "partnerText": "如果您有意将品牌推向蒙古市场，请联系我们的业务拓展部门。",
     "partnerButton": "洽谈合作",
-    "marqueeLabel": "我们的品牌"
+    "marqueeLabel": "我们的品牌",
+    "pager": {
+      "label": "浏览品牌",
+      "previous": "上一个品牌",
+      "next": "下一个品牌",
+      "position": "第 {position} 个，共 {total} 个品牌",
+      "all": "全部品牌"
+    }
   },
   "catalog": {
     "title": "产品目录",
@@ -212,15 +211,11 @@
   },
   "media": {
     "title": "新闻与动态",
-    "description": "公司新闻、活动及新品发布。",
-    "featured": "精选新闻",
     "empty": "暂无新闻。",
     "pagination": "分页",
     "previous": "上一页",
     "next": "下一页",
     "pageOf": "第 {page} 页，共 {total} 页",
-    "followTitle": "关注我们的 Facebook 主页",
-    "followButton": "Facebook 主页",
     "newsNavigation": "上一篇和下一篇新闻",
     "previousNews": "上一篇",
     "nextNews": "下一篇",
@@ -232,7 +227,7 @@
     "description": "欢迎与我们洽谈合作或提出建议。",
     "address": "地址",
     "hours": "工作时间",
-    "directions": "获取路线",
+    "directions": "Google 地图",
     "mapTitle": "Cosmo Trade 在 Google 地图上的位置",
     "formTitle": "发送咨询",
     "nameLabel": "姓名",
@@ -260,9 +255,10 @@
     "heroTitle": "Cosmo Trade",
     "ceo": {
       "title": "总经理致辞",
-      "quote": "我们相信，企业的成功不仅体现在数字的增长上，更在于为消费者的生活创造真正的价值，并长期赢得合作伙伴的信任。",
-      "body1": "我们的历程始于1993年，如今已发展成为将国际一流食品和家居品牌带给蒙古消费者的综合业务。依托专业的团队、符合标准的物流和广泛的分销网络，我们全面保障产品质量与安全，致力于稳步提升合作品牌的市场地位。",
-      "body2": "在此，谨向重视长期合作、信任我们并与我们共同成长的所有合作伙伴、客户和同事致以诚挚的谢意。",
+      "body1": "我们衡量企业的成功，不仅看经济指标，更看我们为消费者创造的价值，以及与客户和合作伙伴建立的长期信任。",
+      "body2": "自1993年起步以来，我们不仅将国际知名品牌带给蒙古的消费者，还根据区域市场需求和消费者特点培育品牌，不断扩大业务规模，持续稳健发展。",
+      "body3": "同时，我们不断建设专业团队，完善符合标准的物流与分销网络，特别重视产品的质量、安全与可及性，致力于提供满足消费者和客户需求的可靠服务。",
+      "body4": "谨向以长期合作和相互信任为基础、与我们共同创造价值的尊贵消费者、客户、商业伙伴和全体同事致以衷心的感谢。",
       "name": "Yaasim Maigul",
       "role": "总经理"
     },
@@ -273,19 +269,13 @@
       "imageAlt": "Cosmo Trade 总部办公楼与仓库鸟瞰"
     },
     "missionText": "让顾客满意与快乐是我们的目标。",
-    "historyTitle": "发展历程",
     "historyHeading": "<highlight>我们的</highlight>发展历程",
-    "historyIndexLabel": "跳转到年份",
-    "historyHint": "滑动",
     "partnerTitle": "期待与您合作",
     "partnerText": "如果您希望将品牌引入蒙古市场，或有意销售我们的产品，欢迎与我们联系。",
     "visionText": "成为蒙古消费品分销领域最值得信赖的合作伙伴。",
     "values": {
       "missionTitle": "我们的<highlight>使命</highlight>",
       "visionTitle": "我们的<highlight>愿景</highlight>",
-      "missionArt": "房子、一家人、Cosmo购物袋和一颗心",
-      "art": "团队、Cosmo购物袋、带品质标记的箱子和一棵树",
-      "visionArt": "Cosmo货车沿着路线驶向山顶的旗帜",
       "items": {
         "people": {
           "title": "团队",
@@ -320,41 +310,36 @@
       "it": "信息技术部"
     },
     "benefits": {
-      "lead": "我们为员工提供",
-      "title": "福利与奖励",
+      "title": "额外福利",
       "items": {
         "health": "健康支持",
         "bonus": "奖金与津贴",
         "perks": "福利与优惠",
         "paidLeave": "带薪休假",
-        "lifeMoments": "人生重要时刻的关怀",
         "gifts": "节日与纪念日礼物",
         "events": "集体与社区活动"
       }
     },
     "policy": {
       "title": "人力资源政策",
-      "principlesLabel": "我们的政策：",
-      "principles": {
-        "open": "公开透明",
-        "accessible": "普惠可及",
-        "clear": "明确清晰"
-      },
-      "body": "Cosmo Trade 有限责任公司视每一位员工为公司最宝贵的财富，切实认可每个人的能力与付出，营造良好的工作环境，并推行透明的人力资源政策。",
-      "benefits": {
-        "pay": {
-          "title": "有竞争力的薪酬与奖励体系",
+      "items": {
+        "open": {
+          "title": "公开透明",
+          "text": "Cosmo Trade 有限责任公司视每一位员工为公司最宝贵的财富，切实认可每个人的能力与付出，营造良好的工作环境，并推行透明的人力资源政策。"
+        },
+        "accessible": {
+          "title": "普惠可及",
           "text": "我们为每位员工提供平等的机会，以基于工作表现和成果的有竞争力的薪酬和切实的奖励机制来认可您的付出。"
         },
-        "career": {
-          "title": "职业发展",
+        "clear": {
+          "title": "明确清晰",
           "text": "我们优先培养内部人才，为凭借能力和主动性脱颖而出的员工提供晋升和走上管理岗位的开放机会。"
         }
       },
       "imageAlt": "团队会议"
     },
     "culture": {
-      "title": "工作环境与企业文化",
+      "title": "企业文化",
       "items": {
         "team": {
           "title": "积极开放的团队氛围",

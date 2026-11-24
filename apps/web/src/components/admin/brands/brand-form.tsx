@@ -13,6 +13,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
+import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { PrefixedInput } from "@/components/admin/prefixed-input";
 import { SaveBar } from "@/components/admin/save-bar";
@@ -380,6 +381,7 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
                   onChange={field.onChange}
                   pickerTitle="Бүх бүтээгдэхүүний зураг сонгох"
                   removable
+                  framePreviews={DEFAULT_FRAME_PREVIEWS}
                 />
                 {field.value && isLowResolution(field.value) && (
                   <p className="text-sm text-amber-700">

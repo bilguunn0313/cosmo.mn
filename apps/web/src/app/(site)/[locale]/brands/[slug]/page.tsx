@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { BrandIntro } from "@/components/site/brands/brand-intro";
+import { BrandPager } from "@/components/site/brands/brand-pager";
 import {
   ProductCard,
   ProductFeature,
 } from "@/components/site/brands/product-card";
-import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
-import { fetchBrand } from "@/lib/public-api";
+import { brandNeighbors } from "@/lib/brand-neighbors";
+import { fetchBrand, fetchBrands } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 import { brandPath } from "@/lib/site-links";
 
@@ -44,11 +45,16 @@ export default async function BrandPage({
   const locale = await getPageLocale(params);
   const { slug } = await params;
   const t = await getTranslations();
-  const brand = await fetchBrand(slug, locale);
+  const [brand, brands] = await Promise.all([
+    fetchBrand(slug, locale),
+    fetchBrands(locale),
+  ]);
 
   if (!brand) {
     notFound();
   }
+
+  const neighbors = brandNeighbors(brands, brand.slug);
 
   return (
     <>
@@ -57,6 +63,7 @@ export default async function BrandPage({
       {brand.products.length > 0 && (
         <section
           aria-labelledby="brand-products-title"
+          data-flush-footer
           className="pt-4 pb-18 md:pb-26"
         >
           <div className="site-container">
@@ -95,11 +102,7 @@ export default async function BrandPage({
         </div>
       )}
 
-      <PartnerCtaSection
-        title={t("brands.partnerTitle")}
-        text={t("brands.partnerText")}
-        isDark
-      />
+      {neighbors && <BrandPager {...neighbors} />}
     </>
   );
 }

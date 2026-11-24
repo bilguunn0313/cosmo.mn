@@ -6,7 +6,7 @@ const milestoneFields = z.object({
   imageId: optionalIdSchema,
   isVisible: z.boolean(),
   translations: translationsSchema({
-    title: z.string().trim().min(1).max(200),
+    title: z.string().trim().max(200).default(""),
     description: z.string().trim().max(1000).nullable().optional(),
   }),
 });

@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
-import { SectionEyebrow } from "@/components/site/section-eyebrow";
+import { imageFrameStyle } from "@/lib/image-frame";
 
-const BODY_KEYS = ["body1", "body2"] as const;
+const BODY_KEYS = ["body1", "body2", "body3", "body4"] as const;
 
 interface CeoMessageProps {
   photoUrl: string | null;
@@ -15,58 +15,55 @@ export async function CeoMessage({ photoUrl }: CeoMessageProps) {
 
   return (
     <section
-      aria-labelledby="ceo-title"
-      className="overflow-x-clip py-20 md:py-30"
+      aria-label={t("title")}
+      className="overflow-x-clip pt-10 pb-20 md:pt-16 md:pb-30 lg:pt-22"
     >
-      <div className="site-container grid items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-22">
-        <Reveal
-          from="left"
-          className="relative aspect-4/5 w-full max-w-90 overflow-hidden rounded-card bg-linear-160 from-brand to-brand-700 lg:max-w-none"
-        >
-          {photoUrl ? (
-            <Image
-              src={photoUrl}
-              alt={t("name")}
-              fill
-              unoptimized
-              sizes="(min-width: 1024px) 40vw, 360px"
-              className="object-cover"
-            />
-          ) : (
-            <LogoMark className="absolute inset-0 m-auto w-[38%] text-white/14" />
-          )}
-        </Reveal>
-
-        <Reveal from="right" delay={0.09} className="flex flex-col">
-          <SectionEyebrow as="h2" id="ceo-title">
-            {t("title")}
-          </SectionEyebrow>
-          <span
-            aria-hidden
-            className="mt-8 block h-9 font-display text-[88px] leading-[0.85] font-semibold text-brand"
+      <div className="site-container">
+        <div className="grid gap-4 xl:grid-cols-2 xl:gap-8">
+          <Reveal
+            from="left"
+            className="relative aspect-4/5 overflow-hidden rounded-card bg-linear-160 from-brand to-brand-700 sm:aspect-4/3 xl:aspect-2/3 xl:self-stretch min-[90rem]:aspect-4/5"
           >
-            “
-          </span>
-          <blockquote className="mt-4 font-display text-[clamp(22px,1.6vw_+_8px,29px)] leading-[1.4] font-medium tracking-[-0.01em] text-balance text-ink">
-            {t("quote")}
-          </blockquote>
-          <div className="mt-8 flex max-w-[66ch] flex-col gap-4">
-            {BODY_KEYS.map((key) => (
-              <p
-                key={key}
-                className="text-[17px] leading-[1.75] text-pretty text-even text-ink-2"
-              >
-                {t(key)}
-              </p>
-            ))}
-          </div>
-          <div className="mt-9 flex max-w-[66ch] flex-col gap-1 border-t border-rule pt-6">
-            <span className="font-display text-lg font-semibold text-ink">
+            {photoUrl ? (
+              <Image
+                src={photoUrl}
+                style={imageFrameStyle(photoUrl)}
+                alt={t("name")}
+                fill
+                priority
+                unoptimized
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+            ) : (
+              <LogoMark className="absolute inset-0 m-auto w-[38%] text-white/14" />
+            )}
+          </Reveal>
+
+          <Reveal
+            from="right"
+            delay={0.09}
+            className="ceo-card relative isolate flex flex-col justify-center overflow-hidden rounded-card px-5.5 py-8 text-white sm:p-10 xl:p-14"
+          >
+            <LogoMark className="absolute -right-20 -bottom-18 -z-10 w-65 text-white/6 lg:-right-28 lg:-bottom-30 lg:w-105" />
+            <h3 className="type-h2 font-bold tracking-normal text-balance uppercase">
               {t("name")}
-            </span>
-            <span className="text-[15px] text-ink-3">{t("role")}</span>
-          </div>
-        </Reveal>
+            </h3>
+            <p className="mt-2 font-display text-[13px] font-medium tracking-[0.08em] text-brand-300 uppercase md:mt-2.5 md:text-[15px]">
+              {t("role")}
+            </p>
+            <div className="mt-6 flex flex-col gap-3.5 md:mt-9 md:gap-4.5">
+              {BODY_KEYS.map((key) => (
+                <p
+                  key={key}
+                  className="indent-[2em] text-base leading-[1.75] text-night-text md:text-[17px]"
+                >
+                  {t(key)}
+                </p>
+              ))}
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

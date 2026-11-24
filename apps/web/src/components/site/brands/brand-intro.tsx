@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
+import { imageFrameStyle } from "@/lib/image-frame";
 import type { PublicBrandDetail } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "./brand-logo";
@@ -37,15 +37,6 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
     >
       <div className="site-container grid items-center gap-10 lg:grid-cols-[5fr_6fr] lg:gap-16">
         <div className="grid justify-items-start gap-4.5">
-          <Breadcrumbs
-            items={[
-              { label: t("nav.home"), href: "/" },
-              { label: t("nav.brands"), href: "/brands" },
-              { label: brand.name },
-            ]}
-            className="hero-rise mb-3 [--rise-delay:0ms]"
-          />
-
           <SectionEyebrow className="hero-rise [--rise-delay:100ms]">
             {categoryNames}
           </SectionEyebrow>
@@ -72,6 +63,7 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
             >
               <Image
                 src={brand.coverUrl}
+                style={imageFrameStyle(brand.coverUrl)}
                 alt={t("brands.coverAlt", { name: brand.name })}
                 fill
                 priority

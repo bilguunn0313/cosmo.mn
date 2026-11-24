@@ -7,7 +7,8 @@ const VIEW_WIDTH = 1200;
 const VIEW_HEIGHT = 440;
 const HUB = { x: 600, y: 372 };
 const ARC_RADIUS = { x: 500, y: 290 };
-const ARC_ANGLES = [165, 135, 105, 75, 45, 15];
+const ARC_START = 165;
+const ARC_END = 15;
 const BADGE_RADIUS = 42;
 const LINE_STEP_MS = 140;
 const DOT_SECONDS = 2.6;
@@ -16,8 +17,14 @@ const VISIBLE_SHARE = 0.3;
 
 export interface Channel {
   key: string;
-  label: string;
+  name: string;
   icon: React.ReactNode;
+}
+
+function arcAngles(count: number) {
+  const step = (ARC_START - ARC_END) / (count - 1);
+
+  return Array.from({ length: count }, (_, index) => ARC_START - index * step);
 }
 
 function arcPoint(degrees: number) {
@@ -52,7 +59,7 @@ interface ChannelNetworkProps {
 
 export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const points = ARC_ANGLES.map(arcPoint);
+  const points = arcAngles(channels.length).map(arcPoint);
 
   useEffect(() => {
     const element = ref.current;
@@ -171,7 +178,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
           {points.map((point, index) => (
             <li
               key={channels[index].key}
-              className="channel-node absolute flex w-40 flex-col-reverse items-center gap-3 text-center"
+              className="channel-node absolute flex w-48 flex-col-reverse items-center gap-3 text-center"
               style={{
                 left: `${(point.x / VIEW_WIDTH) * 100}%`,
                 top: `${(point.y / VIEW_HEIGHT) * 100}%`,
@@ -181,8 +188,8 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
               <span className="grid size-21 place-items-center rounded-full bg-white shadow-[0_12px_28px_-10px_rgb(11_31_51/0.55)] [&_svg]:size-11">
                 {channels[index].icon}
               </span>
-              <span className="font-display text-[17px] leading-snug font-medium text-balance">
-                {channels[index].label}
+              <span className="font-display text-lg leading-snug font-semibold text-balance">
+                {channels[index].name}
               </span>
             </li>
           ))}
@@ -215,8 +222,8 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
               <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_20px_-8px_rgb(11_31_51/0.55)] [&_svg]:size-7">
                 {channel.icon}
               </span>
-              <span className="font-display text-base leading-snug font-medium">
-                {channel.label}
+              <span className="font-display text-base leading-snug font-semibold">
+                {channel.name}
               </span>
             </li>
           ))}

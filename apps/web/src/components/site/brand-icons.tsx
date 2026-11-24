@@ -266,30 +266,28 @@ function StrokeIcon({
   );
 }
 
-export function BasketIcon({ className }: BrandIconProps) {
+export function ServingIcon({ className }: BrandIconProps) {
   return (
     <StrokeIcon className={className}>
-      <path
-        className="stroke-brand"
-        d="M12 40H84L76.6 78.4A6 6 0 0 1 70.7 83H25.3A6 6 0 0 1 19.4 78.4Z"
-      />
-      <path className="stroke-brand" d="M38 54V69M58 54V69" />
-      <path
-        className="stroke-coral"
-        d="M28 40C28 24 37 13 48 13C59 13 68 24 68 40"
-      />
+      <path className="stroke-brand" d="M6 72H90M12 72A36 36 0 0 1 84 72" />
+      <path className="stroke-brand" d="M48 36V25" />
+      <path className="stroke-coral" d="M24.4 61A26 26 0 0 1 37 48.4" />
     </StrokeIcon>
   );
 }
 
-export function PharmacyIcon({ className }: BrandIconProps) {
+export function OnlineShopIcon({ className }: BrandIconProps) {
   return (
     <StrokeIcon className={className}>
       <path
         className="stroke-brand"
-        d="M30 12H66A18 18 0 0 1 84 30V66A18 18 0 0 1 66 84H30A18 18 0 0 1 12 66V30A18 18 0 0 1 30 12Z"
+        d="M31 8H65A9 9 0 0 1 74 17V79A9 9 0 0 1 65 88H31A9 9 0 0 1 22 79V17A9 9 0 0 1 31 8Z"
       />
-      <path className="stroke-coral" d="M48 31V65M31 48H65" />
+      <path className="stroke-brand" d="M42 77H54" />
+      <path
+        className="stroke-coral"
+        d="M35 39H61L59 61H37ZM41 39V34A7 7 0 0 1 55 34V39"
+      />
     </StrokeIcon>
   );
 }
@@ -303,18 +301,6 @@ export function WarehouseIcon({ className }: BrandIconProps) {
       />
       <path className="stroke-brand" d="M30 84V54H66V84" />
       <path className="stroke-coral" d="M38 65H58M38 75H58" />
-    </StrokeIcon>
-  );
-}
-
-export function ClockIcon({ className }: BrandIconProps) {
-  return (
-    <StrokeIcon className={className}>
-      <path
-        className="stroke-brand"
-        d="M48 12A36 36 0 1 1 48 84A36 36 0 1 1 48 12Z"
-      />
-      <path className="stroke-coral" d="M48 29V48L61 57" />
     </StrokeIcon>
   );
 }

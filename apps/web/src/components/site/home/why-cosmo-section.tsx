@@ -73,7 +73,7 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
               >
                 <span
                   aria-hidden
-                  className="font-display text-[38px] leading-none font-normal tracking-[-0.02em] text-brand tabular-nums md:text-[52px]"
+                  className="font-sans text-[38px] leading-none font-normal tracking-[-0.02em] text-brand md:text-[52px]"
                 >
                   {index + 1}
                 </span>
@@ -81,7 +81,7 @@ export async function WhyCosmoSection({ stats }: WhyCosmoSectionProps) {
                   <h3 className="mt-1 mb-2.5 type-h4 font-semibold text-ink">
                     {reason.title}
                   </h3>
-                  <p className="text-base leading-relaxed text-pretty text-ink-2">
+                  <p className="text-base leading-relaxed text-balance text-ink-2">
                     {reason.text}
                   </p>
                 </div>

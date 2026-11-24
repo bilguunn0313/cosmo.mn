@@ -1,11 +1,13 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Delete,
   Get,
   HttpCode,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UploadedFile,
@@ -24,10 +26,12 @@ import {
   adminMediaQuerySchema,
   MAX_VIDEO_SIZE_BYTES,
   MEDIA_TYPES,
+  updateMediaFrameSchema,
 } from '@cosmo/shared';
-import type { AdminMediaQuery } from '@cosmo/shared';
+import type { AdminMediaQuery, UpdateMediaFrameInput } from '@cosmo/shared';
 import { ACCESS_TOKEN_COOKIE } from '../auth/auth.constants';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiZodBody } from '../common/api-zod-body';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
 import { MediaService } from './media.service';
 import type { UploadedFileData } from './media.service';
@@ -67,6 +71,16 @@ export class AdminMediaController {
     }
 
     return this.mediaService.upload(file);
+  }
+
+  @Patch(':id')
+  @ApiZodBody(updateMediaFrameSchema)
+  updateFrame(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodValidationPipe(updateMediaFrameSchema))
+    body: UpdateMediaFrameInput,
+  ) {
+    return this.mediaService.updateFrame(id, body);
   }
 
   @Get(':id/usages')

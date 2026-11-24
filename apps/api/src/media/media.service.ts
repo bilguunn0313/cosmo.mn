@@ -10,7 +10,7 @@ import {
   MAX_VIDEO_SIZE_BYTES,
   VIDEO_MIME_TYPES,
 } from '@cosmo/shared';
-import type { AdminMediaQuery } from '@cosmo/shared';
+import type { AdminMediaQuery, UpdateMediaFrameInput } from '@cosmo/shared';
 import { randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { Prisma } from '../generated/prisma/client';
@@ -80,6 +80,11 @@ export class MediaService {
     throw new BadRequestException(
       'Зөвхөн JPG, PNG, WEBP зураг эсвэл MP4, WEBM видео оруулна уу',
     );
+  }
+
+  async updateFrame(id: number, input: UpdateMediaFrameInput) {
+    await this.findOne(id);
+    return this.prisma.media.update({ where: { id }, data: input });
   }
 
   async findUsages(id: number) {

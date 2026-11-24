@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { useSlideCarousel } from "@/components/site/use-slide-carousel";
+import { imageFrameStyle } from "@/lib/image-frame";
 import { cn } from "@/lib/utils";
 
 const SLIDE_DURATION_MS = 5000;
@@ -93,6 +94,7 @@ export function BrandsHeroCarousel({
               >
                 <Image
                   src={slide.imageUrl}
+                  style={imageFrameStyle(slide.imageUrl)}
                   alt=""
                   fill
                   unoptimized

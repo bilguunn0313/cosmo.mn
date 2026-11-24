@@ -1,6 +1,5 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
@@ -11,14 +10,12 @@ interface NewsSlideProps {
   news: PublicNewsItem;
   priority?: boolean;
   titleTag?: "h2" | "h3";
-  eyebrow?: string;
 }
 
 export async function NewsSlide({
   news,
   priority = false,
   titleTag = "h2",
-  eyebrow,
 }: NewsSlideProps) {
   const t = await getTranslations("home");
   const Title = titleTag;
@@ -36,7 +33,6 @@ export async function NewsSlide({
       />
 
       <div className="grid justify-items-start gap-4 lg:col-span-5">
-        {eyebrow && <SectionEyebrow className="mb-1">{eyebrow}</SectionEyebrow>}
         <NewsMeta news={news} />
         <Title className="line-clamp-4 type-h2 text-balance text-ink transition-colors duration-150 group-hover:text-brand-700">
           {news.title}

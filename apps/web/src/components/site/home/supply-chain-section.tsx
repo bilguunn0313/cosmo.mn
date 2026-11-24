@@ -81,7 +81,7 @@ export async function SupplyChainSection() {
                 <h3 className="mt-1.5 type-h4 font-semibold text-balance text-ink">
                   {step.title}
                 </h3>
-                <p className="text-[15px] leading-relaxed text-pretty text-ink-2">
+                <p className="text-[15px] leading-relaxed text-balance text-ink-2">
                   {step.text}
                 </p>
               </li>

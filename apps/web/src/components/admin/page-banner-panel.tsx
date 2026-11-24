@@ -3,6 +3,10 @@
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  DEFAULT_FRAME_PREVIEWS,
+  type FramePreview,
+} from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { PanelHeader } from "@/components/admin/panel-header";
 import { Button } from "@/components/ui/button";
@@ -21,9 +25,27 @@ const BANNER_FIELDS = {
   contact: { id: "contactBannerImageId", media: "contactBannerImage" },
   hrGovernance: { id: "hrGovernanceImageId", media: "hrGovernanceImage" },
   ceo: { id: "ceoImageId", media: "ceoImage" },
+  purpose: { id: "purposeImageId", media: "purposeImage" },
 } as const;
 
 type BannerPage = keyof typeof BANNER_FIELDS;
+
+const SIDE_BY_SIDE_PREVIEWS: FramePreview[] = [
+  { label: "Том дэлгэц", ratio: 4 / 5 },
+  { label: "Компьютер", ratio: 2 / 3 },
+  { label: "Таблет", ratio: 4 / 3 },
+  { label: "Утас", ratio: 4 / 5 },
+];
+
+const FRAME_PREVIEWS: Partial<Record<BannerPage, FramePreview[]>> = {
+  about: [
+    { label: "Компьютер", ratio: 1.26 },
+    { label: "Таблет", ratio: 16 / 9 },
+    { label: "Утас", ratio: 4 / 3 },
+  ],
+  ceo: SIDE_BY_SIDE_PREVIEWS,
+  purpose: SIDE_BY_SIDE_PREVIEWS,
+};
 
 interface PageBannerFormProps {
   page: BannerPage;
@@ -61,6 +83,7 @@ function PageBannerForm({
         onChange={setImage}
         pickerTitle={pickerTitle}
         removable
+        framePreviews={FRAME_PREVIEWS[page] ?? DEFAULT_FRAME_PREVIEWS}
       />
       <p className="text-sm text-muted-foreground">{emptyHint}</p>
       <Button

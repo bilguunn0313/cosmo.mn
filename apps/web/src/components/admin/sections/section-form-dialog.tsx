@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
 import { LinkPicker } from "@/components/admin/link-picker";
+import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { RichTextEditor } from "@/components/admin/rich-text/rich-text-editor";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
@@ -245,6 +246,7 @@ function SectionForm({
               onChange={field.onChange}
               invalid={Boolean(errors.image)}
               removable
+              framePreviews={DEFAULT_FRAME_PREVIEWS}
             />
           )}
         />

@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { DEFAULT_LOCALE } from '@cosmo/shared';
 import type {
   CreateMilestoneInput,
   Locale,
@@ -85,11 +86,12 @@ export class MilestonesService {
 
     return milestones.map((milestone) => {
       const translation = pickTranslation(milestone.translations, locale);
+      const fallback = pickTranslation(milestone.translations, DEFAULT_LOCALE);
 
       return {
         id: milestone.id,
         year: milestone.year,
-        title: translation?.title ?? '',
+        title: translation?.title || fallback?.title || '',
         description: translation?.description ?? null,
         imageUrl: milestone.image?.url ?? null,
       };

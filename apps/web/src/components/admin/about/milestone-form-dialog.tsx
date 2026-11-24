@@ -41,7 +41,7 @@ const EMPTY_TRANSLATION: MilestoneTranslationValues = {
 };
 
 const translationSchema = z.object({
-  title: z.string().trim().max(200),
+  title: z.string().trim().max(200, "200 тэмдэгтээс ихгүй"),
   description: z.string().trim().max(1000, "1000 тэмдэгтээс ихгүй"),
 });
 
@@ -53,26 +53,11 @@ const milestoneFormSchema = z.object({
     .max(2100, "2100-аас өмнөх он"),
   image: z.custom<Media | null>(),
   isVisible: z.boolean(),
-  translations: z
-    .object({
-      mn: translationSchema,
-      en: translationSchema,
-      zh: translationSchema,
-    })
-    .superRefine((translations, context) => {
-      for (const locale of ["mn", "en", "zh"] as const) {
-        const values = translations[locale];
-        const isRequired = locale === "mn" || isTranslationFilled(values);
-
-        if (isRequired && values.title.trim() === "") {
-          context.addIssue({
-            code: "custom",
-            path: [locale, "title"],
-            message: locale === "mn" ? "Гарчиг заавал" : "Гарчиг бичнэ үү",
-          });
-        }
-      }
-    }),
+  translations: z.object({
+    mn: translationSchema,
+    en: translationSchema,
+    zh: translationSchema,
+  }),
 });
 
 type MilestoneFormInput = z.input<typeof milestoneFormSchema>;
@@ -169,10 +154,9 @@ function MilestoneForm({ milestone, onDone }: MilestoneFormProps) {
             <FormField
               label="Гарчиг"
               htmlFor={`milestone-title-${locale}`}
-              required={locale === "mn"}
               hint={
                 locale === "mn"
-                  ? "Жишээ нь: Компани байгуулагдав, Шинэ агуулахаа ашиглалтад орууллаа"
+                  ? "Заавал биш. Жишээ нь: Компани байгуулагдав, Шинэ агуулахаа ашиглалтад орууллаа"
                   : undefined
               }
               error={errors.translations?.[locale]?.title?.message}

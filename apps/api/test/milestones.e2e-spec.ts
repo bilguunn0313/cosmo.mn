@@ -60,6 +60,41 @@ describe('Milestones', () => {
     );
   });
 
+  it('гарчиггүй үйл явдлыг хүлээж авна, орчуулгад гарчиг байхгүй бол монголыг харуулна', async () => {
+    await context.admin
+      .post('/admin/milestones')
+      .send({
+        year: 2031,
+        translations: [{ locale: 'mn', description: 'Зөвхөн лого' }],
+      })
+      .expect(201);
+    await context.admin
+      .post('/admin/milestones')
+      .send({
+        year: 2032,
+        translations: [
+          { locale: 'mn', title: 'Монгол гарчиг' },
+          { locale: 'en', description: 'English only' },
+        ],
+      })
+      .expect(201);
+
+    const response = await context.guest
+      .get('/public/milestones?locale=en')
+      .expect(200);
+
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ year: 2031, title: '' }),
+        expect.objectContaining({
+          year: 2032,
+          title: 'Монгол гарчиг',
+          description: 'English only',
+        }),
+      ]),
+    );
+  });
+
   it('буруу оныг хүлээж авахгүй', async () => {
     await context.admin
       .post('/admin/milestones')

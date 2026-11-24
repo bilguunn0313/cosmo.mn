@@ -6,6 +6,7 @@ import {
   SustainabilityIcon,
 } from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
+import { imageFrameStyle } from "@/lib/image-frame";
 
 const CULTURE_ITEMS = [
   { key: "team", icon: NetworkIcon },
@@ -33,6 +34,7 @@ export async function HrCultureSection({ imageUrl }: HrCultureSectionProps) {
         >
           <Image
             src={imageUrl}
+            style={imageFrameStyle(imageUrl)}
             alt={t("imageAlt")}
             fill
             unoptimized
@@ -63,7 +65,7 @@ export async function HrCultureSection({ imageUrl }: HrCultureSectionProps) {
                   <h3 className="type-h4 font-semibold text-ink">
                     {t(`items.${key}.title`)}
                   </h3>
-                  <p className="text-[17px] leading-[1.7] text-pretty text-even text-ink-2">
+                  <p className="text-[17px] leading-[1.7] text-pretty text-ink-2">
                     {t(`items.${key}.text`)}
                   </p>
                 </div>

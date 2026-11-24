@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { ContactDetails } from "@/components/site/contact/contact-details";
 import { ContactForm } from "@/components/site/contact/contact-form";
 import { Reveal } from "@/components/site/reveal";
@@ -43,17 +42,8 @@ export default async function ContactPage({
 
   return (
     <>
-      <div className="site-container pt-6 md:pt-8">
-        <Breadcrumbs
-          items={[
-            { label: t("nav.home"), href: "/" },
-            { label: t("nav.contact") },
-          ]}
-        />
-      </div>
-
       {setting?.mapEmbedUrl && (
-        <div className="site-container pt-4 md:pt-5">
+        <div className="site-container pt-8 md:pt-14">
           <div className="relative h-60 overflow-hidden rounded-card bg-brand-100 md:h-[clamp(280px,40vh,420px)]">
             <iframe
               src={setting.mapEmbedUrl}
@@ -71,7 +61,7 @@ export default async function ContactPage({
         <Reveal>
           <section
             aria-labelledby="contact-title"
-            className="grid justify-items-start gap-4.5"
+            className="flex h-full flex-col gap-4.5"
           >
             <h1
               id="contact-title"
@@ -79,10 +69,7 @@ export default async function ContactPage({
             >
               {t("nav.contact")}
             </h1>
-            <p className="text-[17px] leading-relaxed text-pretty text-ink-2">
-              {t("contact.description")}
-            </p>
-            <div className="mt-3 w-full">
+            <div className="mt-3 flex w-full flex-1 flex-col">
               <ContactDetails setting={setting} />
             </div>
           </section>

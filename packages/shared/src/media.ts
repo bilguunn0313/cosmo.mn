@@ -15,3 +15,13 @@ export const adminMediaQuerySchema = paginationSchema.extend({
 });
 
 export type AdminMediaQuery = z.infer<typeof adminMediaQuerySchema>;
+
+export const MAX_MEDIA_ZOOM = 3;
+
+export const updateMediaFrameSchema = z.object({
+  focusX: z.number().min(0).max(100),
+  focusY: z.number().min(0).max(100),
+  zoom: z.number().min(1).max(MAX_MEDIA_ZOOM),
+});
+
+export type UpdateMediaFrameInput = z.infer<typeof updateMediaFrameSchema>;

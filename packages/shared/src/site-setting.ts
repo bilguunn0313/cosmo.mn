@@ -42,6 +42,7 @@ export const updateSiteSettingSchema = z.object({
   contactBannerImageId: optionalIdSchema,
   hrGovernanceImageId: optionalIdSchema,
   ceoImageId: optionalIdSchema,
+  purposeImageId: optionalIdSchema,
   valuePeopleImageId: optionalIdSchema,
   valueSatisfactionImageId: optionalIdSchema,
   valueQualityImageId: optionalIdSchema,

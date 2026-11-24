@@ -29,8 +29,7 @@
     "brands": "Brands",
     "careers": "Careers",
     "media": "Media",
-    "contact": "Contact",
-    "breadcrumb": "Breadcrumb"
+    "contact": "Contact"
   },
   "header": {
     "menu": "Menu",
@@ -65,7 +64,6 @@
     "slideIndicators": "Slides",
     "areas": {
       "eyebrow": "What we do",
-      "text": "We manage a wide range of branded products at every stage of the way.",
       "items": {
         "import": {
           "title": "Import",
@@ -115,25 +113,19 @@
     },
     "retail": {
       "title": "The reach of our partnerships",
-      "text": "We deliver our products to consumers through a wide range of sales channels, including retail and wholesale, supermarkets, hypermarkets and the hospitality sector.",
       "partners": "Retail network partners"
     },
     "channels": {
       "eyebrow": "Retail channels",
-      "title": "<count></count>+ points of sale across every major channel",
-      "titlePlain": "Across every major retail channel",
-      "text": "Our products reach shoppers everywhere from hypermarkets and supermarkets to neighbourhood grocery stores.",
       "hub": "Cosmo Trade",
       "items": {
-        "supermarket": "Supermarkets",
-        "hypermarket": "Hypermarkets",
-        "pharmacy": "Pharmacies",
-        "wholesale": "Retail & wholesale",
-        "convenience": "24/7 stores",
-        "grocery": "Grocery stores"
+        "modernTrade": "Modern Trade",
+        "traditionalTrade": "Traditional Trade",
+        "wholesale": "Wholesale",
+        "horeca": "HoReCa",
+        "ecommerce": "E-commerce"
       }
     },
-    "newsEyebrow": "Media",
     "cta": {
       "title": "Let's grow your brand in Mongolia together",
       "text": "Planning to enter the Mongolian market or grow your sales? Get in touch with us."
@@ -200,7 +192,14 @@
     "partnerTitle": "Bring your brand to Mongolia?",
     "partnerText": "If you want to launch your brand in the Mongolian market, contact our business development team.",
     "partnerButton": "Partner with us",
-    "marqueeLabel": "Our brands"
+    "marqueeLabel": "Our brands",
+    "pager": {
+      "label": "Browse brands",
+      "previous": "Previous brand",
+      "next": "Next brand",
+      "position": "Brand {position} of {total}",
+      "all": "All brands"
+    }
   },
   "catalog": {
     "title": "Catalog",
@@ -212,15 +211,11 @@
   },
   "media": {
     "title": "News and events",
-    "description": "Company news, events and new product launches.",
-    "featured": "Featured story",
     "empty": "No news yet.",
     "pagination": "Pagination",
     "previous": "Previous",
     "next": "Next",
     "pageOf": "{page} of {total}",
-    "followTitle": "Follow our Facebook page",
-    "followButton": "Facebook page",
     "newsNavigation": "Previous and next story",
     "previousNews": "Previous story",
     "nextNews": "Next story",
@@ -232,7 +227,7 @@
     "description": "Send us your partnership ideas, questions or feedback.",
     "address": "Address",
     "hours": "Working hours",
-    "directions": "Get directions",
+    "directions": "Google Maps",
     "mapTitle": "Cosmo Trade location on Google Maps",
     "formTitle": "Send a request",
     "nameLabel": "Name",
@@ -260,9 +255,10 @@
     "heroTitle": "Cosmo Trade",
     "ceo": {
       "title": "Message from the CEO",
-      "quote": "We believe that business success is measured not only by numerical growth, but by creating real value in our consumers' lives and keeping our partners' trust over the long term.",
-      "body1": "Our journey, which began in 1993, has grown into a complete operation that brings leading international food and household brands to consumers in Mongolia. Building on our skilled team, standards-compliant logistics and wide distribution network, we fully ensure product quality and safety and strive to steadily strengthen our partner brands' position in the market.",
-      "body2": "I would like to express my deep gratitude to all our partners, customers and colleagues who value lasting cooperation, place their trust in us and grow together with us.",
+      "body1": "We measure business success not only by economic indicators, but by the value we create for consumers and the long-term trust we build with our customers and partners.",
+      "body2": "Since 1993, our business has grown to bring internationally recognised brands to consumers across Mongolia, while also developing brands that meet the needs of the regional market and the preferences of local consumers. We continue to expand the scope of our operations and grow steadily.",
+      "body3": "We have also continuously developed our professional team and our standards-compliant logistics and distribution network. We pay particular attention to product quality, safety and availability, and strive to deliver reliable service that meets the needs of our consumers and customers.",
+      "body4": "I would like to express my sincere gratitude to our valued consumers, customers, business partners and colleagues, with whom we create shared value through lasting cooperation and mutual trust.",
       "name": "Yaasim Maigul",
       "role": "Chief Executive Officer"
     },
@@ -273,19 +269,13 @@
       "imageAlt": "Cosmo Trade head office and warehouse from above"
     },
     "missionText": "Our customers' satisfaction and happiness is our purpose.",
-    "historyTitle": "Our history",
     "historyHeading": "<highlight>Our</highlight> journey",
-    "historyIndexLabel": "Jump to a year",
-    "historyHint": "Scroll",
     "partnerTitle": "Let's work together",
     "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us.",
     "visionText": "To be the most trusted partner in Mongolia's consumer goods distribution.",
     "values": {
       "missionTitle": "Our <highlight>mission</highlight>",
       "visionTitle": "Our <highlight>vision</highlight>",
-      "missionArt": "A home, a family, a Cosmo shopping bag and a heart",
-      "art": "A team, a Cosmo shopping bag, a box with a quality check mark and a tree",
-      "visionArt": "A Cosmo truck heading along a route to a flag on a hilltop",
       "items": {
         "people": {
           "title": "Our people",
@@ -320,41 +310,36 @@
       "it": "Information technology"
     },
     "benefits": {
-      "lead": "What we offer our people",
-      "title": "Benefits and rewards",
+      "title": "Additional benefits",
       "items": {
         "health": "Health support",
         "bonus": "Bonuses and allowances",
         "perks": "Benefits and discounts",
         "paidLeave": "Paid leave",
-        "lifeMoments": "Support for life's important moments",
         "gifts": "Gifts for holidays and special occasions",
         "events": "Social and community events"
       }
     },
     "policy": {
       "title": "Human resources policy",
-      "principlesLabel": "Our policy is:",
-      "principles": {
-        "open": "Open and transparent",
-        "accessible": "Accessible",
-        "clear": "Clear"
-      },
-      "body": "Cosmo Trade LLC sees every employee as the company’s most valuable asset. We fairly recognise each person’s skills and effort, provide a good place to work and follow a transparent human resources policy.",
-      "benefits": {
-        "pay": {
-          "title": "Competitive pay and rewards",
+      "items": {
+        "open": {
+          "title": "Open and transparent",
+          "text": "Cosmo Trade LLC sees every employee as the company’s most valuable asset. We fairly recognise each person’s skills and effort, provide a good place to work and follow a transparent human resources policy."
+        },
+        "accessible": {
+          "title": "Accessible",
           "text": "We give every employee an equal opportunity and recognise your effort with competitive, performance-based pay and a real rewards system."
         },
-        "career": {
-          "title": "Career growth",
+        "clear": {
+          "title": "Clear",
           "text": "We develop our own people first, giving employees who lead with skill and initiative open opportunities to be promoted and move into management roles."
         }
       },
       "imageAlt": "A team meeting"
     },
     "culture": {
-      "title": "Work environment and company culture",
+      "title": "Company culture",
       "items": {
         "team": {
           "title": "A positive, open team",

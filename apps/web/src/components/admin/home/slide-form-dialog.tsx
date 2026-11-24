@@ -7,6 +7,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
+import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
 import { Button } from "@/components/ui/button";
 import {
@@ -106,6 +107,7 @@ function SlideForm({ slide, onDone }: SlideFormProps) {
               onChange={field.onChange}
               allowedTypes={["IMAGE", "VIDEO"]}
               invalid={Boolean(errors.media)}
+              framePreviews={DEFAULT_FRAME_PREVIEWS}
             />
           )}
         />

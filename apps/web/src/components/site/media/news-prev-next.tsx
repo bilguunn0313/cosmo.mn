@@ -22,7 +22,7 @@ function NeighborLink({ news, label, isNext, className }: NeighborLinkProps) {
       href={newsPath(news.slug)}
       className={cn(
         "group flex items-center gap-5 py-6 outline-offset-4 outline-brand focus-visible:outline-2 md:gap-6 md:py-8",
-        isNext && "md:flex-row-reverse md:text-right",
+        isNext && "md:flex-row-reverse md:text-right md:text-last-right",
         className,
       )}
     >

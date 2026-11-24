@@ -3,11 +3,9 @@ import { getTranslations } from "next-intl/server";
 import { BusinessAreasSection } from "@/components/site/home/business-areas-section";
 import { HomeHero } from "@/components/site/home/home-hero";
 import { LatestNewsSection } from "@/components/site/home/latest-news-section";
-import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { RetailChannelsSection } from "@/components/site/home/retail-channels-section";
 import { RetailPartnersSection } from "@/components/site/home/retail-partners-section";
 import { StatsSection } from "@/components/site/home/stats-section";
-import { SupplyChainSection } from "@/components/site/home/supply-chain-section";
 import { WhyCosmoSection } from "@/components/site/home/why-cosmo-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
@@ -22,7 +20,7 @@ import {
 } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
 
-const HOME_NEWS_COUNT = 3;
+const HOME_NEWS_COUNT = 4;
 
 export async function generateMetadata({
   params,
@@ -61,12 +59,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <WhyCosmoSection stats={stats} />
       <WorldMapSection countries={countries} locale={locale} />
       <RetailPartnersSection partners={partners} />
-      <RetailChannelsSection
-        salesPointCount={setting?.salesPointCount ?? null}
-      />
-      <SupplyChainSection />
+      <RetailChannelsSection />
       <LatestNewsSection news={news} />
-      <PartnerCtaSection />
     </>
   );
 }

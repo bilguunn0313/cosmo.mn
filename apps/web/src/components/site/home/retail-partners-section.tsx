@@ -29,11 +29,10 @@ export async function RetailPartnersSection({
       className="bg-brand-100 py-20 md:pt-26 md:pb-28"
     >
       <div className="site-container">
-        <Reveal className="mx-auto mb-10 flex max-w-190 flex-col items-center gap-4.5 text-center md:mb-12">
+        <Reveal className="mx-auto mb-10 flex max-w-190 flex-col items-center text-center md:mb-12">
           <h2 id="retail-title" className="type-section text-balance text-ink">
             {t("title")}
           </h2>
-          <p className="text-lg text-pretty text-ink-2">{t("text")}</p>
         </Reveal>
 
         <Reveal delay={0.1}>

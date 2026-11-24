@@ -9,6 +9,7 @@ import type {
   PublicBrandsQuery,
   UpdateBrandInput,
 } from '@cosmo/shared';
+import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
 import { isCutoutImage } from '../media/image-background';
@@ -147,7 +148,7 @@ export class BrandsService {
         logoUrl: brand.logo?.url ?? null,
         logoWidth: brand.logo?.width ?? null,
         logoHeight: brand.logo?.height ?? null,
-        coverUrl: brand.cover?.url ?? null,
+        coverUrl: framedImageUrl(brand.cover),
         coverWidth: brand.cover?.width ?? null,
         coverHeight: brand.cover?.height ?? null,
         showcaseImageUrl: brand.showcaseImage?.url ?? null,
@@ -202,7 +203,7 @@ export class BrandsService {
       logoUrl: brand.logo?.url ?? null,
       logoWidth: brand.logo?.width ?? null,
       logoHeight: brand.logo?.height ?? null,
-      coverUrl: brand.cover?.url ?? null,
+      coverUrl: framedImageUrl(brand.cover),
       coverWidth: brand.cover?.width ?? null,
       coverHeight: brand.cover?.height ?? null,
       showcaseImageUrl: brand.showcaseImage?.url ?? null,
@@ -217,7 +218,7 @@ export class BrandsService {
           id: section.id,
           title: sectionTranslation?.title ?? '',
           body: sectionTranslation?.body ?? '',
-          imageUrl: section.image?.url ?? null,
+          imageUrl: framedImageUrl(section.image),
         };
       }),
       products: await Promise.all(
@@ -231,7 +232,7 @@ export class BrandsService {
             id: product.id,
             name: productTranslation?.name ?? '',
             description: productTranslation?.description ?? null,
-            imageUrl: product.image.url,
+            imageUrl: framedImageUrl(product.image),
             imageIsCutout: await isCutoutImage(product.image.url),
           };
         }),

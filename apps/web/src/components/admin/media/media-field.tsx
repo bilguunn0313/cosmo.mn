@@ -1,9 +1,10 @@
 "use client";
 
-import { ImagePlus, X } from "lucide-react";
+import { Crop, ImagePlus, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Media, MediaType } from "@/lib/types";
+import { type FramePreview, ImageFrameDialog } from "./image-frame-dialog";
 import { MediaPicker } from "./media-picker";
 import { MediaThumbnail } from "./media-thumbnail";
 
@@ -14,6 +15,7 @@ interface MediaFieldProps {
   pickerTitle?: string;
   removable?: boolean;
   invalid?: boolean;
+  framePreviews?: FramePreview[];
 }
 
 function chooseLabelFor(allowedTypes: MediaType[]) {
@@ -33,8 +35,17 @@ export function MediaField({
   pickerTitle,
   removable = false,
   invalid = false,
+  framePreviews,
 }: MediaFieldProps) {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [isFrameOpen, setIsFrameOpen] = useState(false);
+  const [frameSession, setFrameSession] = useState(0);
+  const canAdjustFrame = Boolean(framePreviews) && value?.type === "IMAGE";
+
+  const openFrameEditor = () => {
+    setFrameSession((session) => session + 1);
+    setIsFrameOpen(true);
+  };
   const chooseLabel = chooseLabelFor(allowedTypes);
 
   return (
@@ -55,6 +66,12 @@ export function MediaField({
               >
                 Солих
               </Button>
+              {canAdjustFrame && (
+                <Button variant="outline" size="sm" onClick={openFrameEditor}>
+                  <Crop />
+                  Тохируулах
+                </Button>
+              )}
               {removable && (
                 <Button
                   variant="ghost"
@@ -87,6 +104,17 @@ export function MediaField({
         allowedTypes={allowedTypes}
         title={pickerTitle ?? chooseLabel}
       />
+
+      {value && framePreviews && (
+        <ImageFrameDialog
+          key={frameSession}
+          open={isFrameOpen}
+          media={value}
+          previews={framePreviews}
+          onClose={() => setIsFrameOpen(false)}
+          onSaved={onChange}
+        />
+      )}
     </>
   );
 }

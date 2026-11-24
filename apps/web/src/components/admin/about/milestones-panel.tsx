@@ -87,7 +87,9 @@ export function MilestonesPanel({ step }: MilestonesPanelProps) {
 
           return {
             thumbnail: <MilestoneThumbnail milestone={milestone} />,
-            title: `${milestone.year} · ${translation?.title ?? "Гарчиггүй"}`,
+            title: translation?.title
+              ? `${milestone.year} · ${translation.title}`
+              : String(milestone.year),
             subtitle: translation?.description ?? undefined,
             isVisible: milestone.isVisible,
           };

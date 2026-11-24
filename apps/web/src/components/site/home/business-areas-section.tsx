@@ -4,6 +4,7 @@ import { LogoMark } from "@/components/site/logo-mark";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { DEFAULT_BUSINESS_AREAS } from "@/lib/business-areas";
+import { imageFrameStyle } from "@/lib/image-frame";
 import { htmlToPlainText } from "@/lib/plain-text";
 import type { PublicSection } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
@@ -74,10 +75,9 @@ export async function BusinessAreasSection({
 
       <div className="site-container">
         <Reveal className="mx-auto mb-12 flex max-w-190 flex-col items-center gap-4 text-center md:mb-14">
-          <SectionEyebrow as="h2" id="areas-title" tone="white">
+          <SectionEyebrow as="h2" id="areas-title" tone="white" size="large">
             {t("eyebrow")}
           </SectionEyebrow>
-          <p className="text-lg text-pretty text-brand-200">{t("text")}</p>
         </Reveal>
 
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-6">
@@ -91,6 +91,7 @@ export async function BusinessAreasSection({
                 {area.imageUrl && (
                   <Image
                     src={area.imageUrl}
+                    style={imageFrameStyle(area.imageUrl)}
                     alt=""
                     fill
                     unoptimized
@@ -110,7 +111,7 @@ export async function BusinessAreasSection({
                   <h3 className="type-h3 leading-tight font-semibold">
                     {area.title}
                   </h3>
-                  <p className="text-[15px] leading-normal text-pretty text-white/88">
+                  <p className="text-[15px] leading-normal text-balance text-white/88">
                     {area.text}
                   </p>
                 </Reveal>
