@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import type {
+  BrandCategory,
   CreateBrandInput,
   Locale,
   PublicBrandsQuery,
@@ -131,7 +132,9 @@ export class BrandsService {
     const brands = await this.prisma.brand.findMany({
       where: {
         isPublished: true,
-        categories: query.category ? { has: query.category } : undefined,
+        categories: query.category
+          ? { array_contains: [query.category] }
+          : undefined,
       },
       orderBy: { order: 'asc' },
       include: brandInclude,
@@ -144,7 +147,7 @@ export class BrandsService {
 
         return {
           slug: brand.slug,
-          categories: brand.categories,
+          categories: brand.categories as BrandCategory[],
           name: translation?.name ?? '',
           summary: translation?.summary ?? null,
           productTypes: translation?.productTypes ?? null,
@@ -201,7 +204,7 @@ export class BrandsService {
 
     return {
       slug: brand.slug,
-      categories: brand.categories,
+      categories: brand.categories as BrandCategory[],
       name: translation?.name ?? '',
       summary: translation?.summary ?? null,
       productTypes: translation?.productTypes ?? null,

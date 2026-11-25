@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 export const TEST_DATABASE_URL =
   process.env.TEST_DATABASE_URL ??
-  'postgresql://cosmo:cosmo@localhost:5433/cosmo_test';
+  'mysql://cosmo:cosmo@localhost:3307/cosmo_test';
 
 export const TEST_UPLOADS_DIR = join(tmpdir(), 'cosmo-test-uploads');
 

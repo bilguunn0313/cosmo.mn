@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS cosmo_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON cosmo_test.* TO 'cosmo'@'%';
+FLUSH PRIVILEGES;

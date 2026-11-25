@@ -5,7 +5,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
 }
 
 enum Locale {
@@ -17,12 +17,6 @@ enum Locale {
 enum MediaType {
   IMAGE
   VIDEO
-}
-
-enum BrandCategory {
-  FOOD
-  BEAUTY
-  HOUSEHOLD
 }
 
 enum JobDepartment {
@@ -63,7 +57,7 @@ model Media {
   id           Int       @id @default(autoincrement())
   type         MediaType @default(IMAGE)
   url          String
-  originalName String
+  originalName String    @db.Text
   mimeType     String
   size         Int
   width        Int?
@@ -117,14 +111,14 @@ model Slide {
 model Brand {
   id              Int             @id @default(autoincrement())
   slug            String          @unique
-  categories      BrandCategory[]
+  categories      Json
   logoId          Int?
   logo            Media?          @relation("BrandLogo", fields: [logoId], references: [id])
   coverId         Int?
   cover           Media?          @relation("BrandCover", fields: [coverId], references: [id])
   showcaseImageId Int?
   showcaseImage   Media?          @relation("BrandShowcase", fields: [showcaseImageId], references: [id])
-  websiteUrl      String?
+  websiteUrl      String?         @db.Text
   originCountry   String?
   order           Int             @default(0)
   featuredOrder   Int?
@@ -144,9 +138,9 @@ model BrandTranslation {
   brandId      Int
   brand        Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
   locale       Locale
-  name         String
-  summary      String?
-  productTypes String?
+  name         String  @db.VarChar(255)
+  summary      String? @db.Text
+  productTypes String? @db.Text
 
   @@unique([brandId, locale])
 }
@@ -172,8 +166,8 @@ model BrandSectionTranslation {
   sectionId Int
   section   BrandSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   locale    Locale
-  title     String
-  body      String
+  title     String       @db.VarChar(255)
+  body      String       @db.MediumText
 
   @@unique([sectionId, locale])
 }
@@ -199,8 +193,8 @@ model ProductTranslation {
   productId   Int
   product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   locale      Locale
-  name        String
-  description String?
+  name        String  @db.VarChar(255)
+  description String? @db.Text
 
   @@unique([productId, locale])
 }
@@ -208,7 +202,7 @@ model ProductTranslation {
 model Section {
   id        Int      @id @default(autoincrement())
   page      String
-  linkUrl   String?
+  linkUrl   String?  @db.Text
   imageId   Int?
   image     Media?   @relation(fields: [imageId], references: [id])
   order     Int      @default(0)
@@ -226,8 +220,8 @@ model SectionTranslation {
   sectionId Int
   section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   locale    Locale
-  title     String
-  body      String
+  title     String  @db.VarChar(255)
+  body      String  @db.MediumText
 
   @@unique([sectionId, locale])
 }
@@ -251,15 +245,15 @@ model MilestoneTranslation {
   milestoneId Int
   milestone   Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
   locale      Locale
-  title       String
-  description String?
+  title       String    @db.VarChar(255)
+  description String?   @db.Text
 
   @@unique([milestoneId, locale])
 }
 
 model RetailPartner {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @db.VarChar(255)
   logoId    Int
   logo      Media    @relation(fields: [logoId], references: [id])
   order     Int      @default(0)
@@ -292,9 +286,9 @@ model NewsTranslation {
   newsId  Int
   news    News    @relation(fields: [newsId], references: [id], onDelete: Cascade)
   locale  Locale
-  title   String
-  summary String?
-  content String
+  title   String  @db.Text
+  summary String? @db.Text
+  content String  @db.MediumText
 
   @@unique([newsId, locale])
 }
@@ -321,13 +315,13 @@ model JobPostingTranslation {
   jobPostingId Int
   jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
   locale       Locale
-  title        String
-  location     String?
-  salary       String?
-  summary      String?
-  duties       String?
-  requirements String?
-  offers       String?
+  title        String     @db.VarChar(255)
+  location     String?    @db.VarChar(255)
+  salary       String?    @db.VarChar(255)
+  summary      String?    @db.Text
+  duties       String?    @db.Text
+  requirements String?    @db.Text
+  offers       String?    @db.Text
 
   @@unique([jobPostingId, locale])
 }
@@ -337,12 +331,12 @@ model SiteSetting {
   phone                      String?
   email                      String?
   hrEmail                    String?
-  facebookUrl                String?
-  instagramUrl               String?
-  youtubeUrl                 String?
-  linkedinUrl                String?
-  mapUrl                     String?
-  mapEmbedUrl                String?
+  facebookUrl                String?  @db.Text
+  instagramUrl               String?  @db.Text
+  youtubeUrl                 String?  @db.Text
+  linkedinUrl                String?  @db.Text
+  mapUrl                     String?  @db.Text
+  mapEmbedUrl                String?  @db.Text
   mapImageId                 Int?
   mapImage                   Media?   @relation("SiteSettingMap", fields: [mapImageId], references: [id])
   aboutBannerImageId         Int?
@@ -385,8 +379,8 @@ model SiteSettingTranslation {
   siteSettingId Int
   siteSetting   SiteSetting @relation(fields: [siteSettingId], references: [id], onDelete: Cascade)
   locale        Locale
-  address       String?
-  workingHours  String?
+  address       String?     @db.Text
+  workingHours  String?     @db.VarChar(255)
 
   @@unique([siteSettingId, locale])
 }
@@ -407,7 +401,7 @@ model ContactDepartmentTranslation {
   departmentId Int
   department   ContactDepartment @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   locale       Locale
-  name         String
+  name         String            @db.VarChar(255)
 
   @@unique([departmentId, locale])
 }

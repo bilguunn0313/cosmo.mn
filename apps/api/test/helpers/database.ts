@@ -1,14 +1,18 @@
 import { PrismaService } from '../../src/prisma/prisma.service';
 
 export async function resetDatabase(prisma: PrismaService) {
-  const tables = await prisma.$queryRaw<{ tablename: string }[]>`
-    SELECT tablename FROM pg_tables
-    WHERE schemaname = 'public' AND tablename <> '_prisma_migrations'
+  const tables = await prisma.$queryRaw<{ name: string }[]>`
+    SELECT table_name AS name FROM information_schema.tables
+    WHERE table_schema = DATABASE() AND table_name <> '_prisma_migrations'
   `;
 
-  const tableList = tables.map((table) => `"${table.tablename}"`).join(', ');
+  await prisma.$transaction(async (tx) => {
+    await tx.$executeRawUnsafe('SET FOREIGN_KEY_CHECKS = 0');
 
-  await prisma.$executeRawUnsafe(
-    `TRUNCATE TABLE ${tableList} RESTART IDENTITY CASCADE`,
-  );
+    for (const table of tables) {
+      await tx.$executeRawUnsafe(`TRUNCATE TABLE \`${table.name}\``);
+    }
+
+    await tx.$executeRawUnsafe('SET FOREIGN_KEY_CHECKS = 1');
+  });
 }

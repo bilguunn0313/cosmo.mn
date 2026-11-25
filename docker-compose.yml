@@ -1,4 +1,18 @@
 services:
+  mysql:
+    image: mysql:8.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: cosmo-root
+      MYSQL_DATABASE: cosmo
+      MYSQL_USER: cosmo
+      MYSQL_PASSWORD: cosmo
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./docker/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql:ro
+
   db:
     image: postgres:16
     restart: always
@@ -10,5 +24,7 @@ services:
       - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
 volumes:
+  mysqldata:
   pgdata:

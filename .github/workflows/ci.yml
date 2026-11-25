@@ -9,20 +9,21 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgresql://cosmo:cosmo@localhost:5432/cosmo_test
-      TEST_DATABASE_URL: postgresql://cosmo:cosmo@localhost:5432/cosmo_test
+      DATABASE_URL: mysql://cosmo:cosmo@localhost:3306/cosmo_test
+      TEST_DATABASE_URL: mysql://cosmo:cosmo@localhost:3306/cosmo_test
 
     services:
-      postgres:
-        image: postgres:16
+      mysql:
+        image: mysql:8.4
         env:
-          POSTGRES_USER: cosmo
-          POSTGRES_PASSWORD: cosmo
-          POSTGRES_DB: cosmo_test
+          MYSQL_ROOT_PASSWORD: cosmo-root
+          MYSQL_USER: cosmo
+          MYSQL_PASSWORD: cosmo
+          MYSQL_DATABASE: cosmo_test
         ports:
-          - 5432:5432
+          - 3306:3306
         options: >-
-          --health-cmd "pg_isready -U cosmo"
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -ucosmo -pcosmo"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
