@@ -7,4 +7,5 @@ generated
 uploads
 *.dump
 backups/
+dist-cpanel/
 des/*.pdf

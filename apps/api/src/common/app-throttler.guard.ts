@@ -11,7 +11,8 @@ export class AppThrottlerGuard extends ThrottlerGuard {
 
   protected getTracker(request: Request): Promise<string> {
     const clientIpHeader = process.env.CLIENT_IP_HEADER;
-    const clientIp = clientIpHeader ? request.get(clientIpHeader) : undefined;
+    const headerValue = clientIpHeader ? request.get(clientIpHeader) : undefined;
+    const clientIp = headerValue?.split(',').pop()?.trim();
 
     return clientIp ? Promise.resolve(clientIp) : super.getTracker(request);
   }

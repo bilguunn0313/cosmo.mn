@@ -1,143 +1,137 @@
-# Deploy: Vercel + Railway
+# Deploy: cPanel
 
 ```
-cosmo.mn      → Vercel   web (Next.js)
-api.cosmo.mn  → Railway  API (NestJS) + Postgres + зургийн volume
+cosmo.mn      → Node app «cosmo-web»   /home/wwwcosmo/cosmo-web
+api.cosmo.mn  → Node app «cosmo-api»   /home/wwwcosmo/cosmo-api
+                MySQL өгөгдлийн сан, зургууд: /home/wwwcosmo/cosmo-uploads
 ```
 
-Хөтөч админы хүсэлт, upload, маягтыг `api.cosmo.mn` руу шууд илгээнэ. Нэвтрэлтийн cookie нь `cosmo.mn`-ийн бүх subdomain дээр хүчинтэй. `main` руу push хийхэд хоёр платформ автоматаар deploy хийнэ.
+Код компьютер дээр build хийгдэж, cPanel руу бэлэн zip болж очно. Сервер дээр build хийхгүй.
 
-VPS дээр байршуулах заавар: [vps.md](vps.md).
+## 1. Компьютер дээр багц бэлдэх
 
-## 0. Бэлтгэл
-
-- [ ] Vercel ба Railway бүртгэл, компанийн имэйлээр. Туршилтын үед Vercel Hobby хангалттай. Сайтыг олон нийтэд нээхээс өмнө **Pro** руу шилжинэ, учир нь Hobby нь арилжааны хэрэглээг зөвшөөрдөггүй.
-- [ ] Домэйны DNS панелд нэвтрэх эрх
-- [ ] Docker Desktop асаалттай (local DB-г экспортлоход хэрэгтэй)
-- [ ] Railway CLI: `npm install -g @railway/cli`
-- [ ] Кодоо commit хийгээд `main` руу push хийсэн
-
-## 1. Railway: Postgres
-
-1. railway.com → **New Project** → **Deploy PostgreSQL**.
-2. Postgres service → **Settings** → Region: **Southeast Asia (Singapore)**.
-3. Postgres → **Variables**-аас `DATABASE_PUBLIC_URL`-ийг хуулж авна. Үүнийг 2-р алхамд хэрэглэнэ.
-
-## 2. Local өгөгдлийг Railway руу хуулах
-
-⚠️ Энэ алхмаас хойш local админаас юу ч бүү засаарай. Хуулсны дараах өөрчлөлт production-д орохгүй.
-
-Repo-гийн root хавтаснаас, PowerShell дээр:
+Node.js 24, git хэрэгтэй.
 
 ```powershell
-docker compose exec db pg_dump -U cosmo -Fc -f /tmp/cosmo.dump cosmo
-docker compose cp db:/tmp/cosmo.dump ./cosmo.dump
-docker run --rm -v "${PWD}:/backup" postgres:16 pg_restore --no-owner --no-acl -d "<DATABASE_PUBLIC_URL>" /backup/cosmo.dump
+git clone https://github.com/bilguunn0313/cosmo.mn.git
+cd cosmo.mn
+npm ci
 ```
 
-`cosmo.dump` файлд админы нууц үгийн hash байгаа тул сэргээж дууссаны дараа устгана. Git-д орохгүй (`.gitignore`-д нэмсэн).
+`apps/web/.env.production.local` файл үүсгэнэ:
 
-Migration-ий түүх хамт хуулагдана. Тиймээс API анх deploy хийгдэхэд шинэ migration ажиллахгүй.
-
-## 3. Railway: API
-
-1. Төсөл дотроо **New** → **GitHub Repo** → `cosmo.mn` repo.
-2. **Settings**:
-
-   | Талбар | Утга |
-   |---|---|
-   | Region | Southeast Asia (Singapore) |
-   | Custom Build Command | `npm run build:api` |
-   | Custom Start Command | `npm run start:prod -w apps/api` |
-   | Pre-deploy Command | `npm run prisma:migrate -w apps/api` |
-   | Healthcheck Path | `/health` |
-   | Watch Paths | `apps/api/**`, `packages/shared/**` |
-
-3. API service дээр **Volume** нэмнэ. Mount path нь `/data`.
-4. **Variables**:
-
-   | Хувьсагч | Утга |
-   |---|---|
-   | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` |
-   | `RAILPACK_NODE_VERSION` | `24` |
-   | `PORT` | `4000` |
-   | `WEB_URL` | `https://cosmo.mn` |
-   | `COOKIE_DOMAIN` | `cosmo.mn` |
-   | `CLIENT_IP_HEADER` | `x-real-ip` |
-   | `UPLOADS_DIR` | `/data/uploads` |
-   | `JWT_SECRET` | шинэ урт санамсаргүй тэмдэгт мөр |
-   | `RESEND_API_KEY`, `MAIL_FROM` | 6-р алхмын дараа |
-
-   `NODE_ENV`-г бүү нэмээрэй. Railway апп ажиллах үед үүнийг өөрөө `production` болгодог. Build хийх үед тохируулбал build эвдэрнэ.
-
-5. Deploy хийгдээд **Deployments** хэсэгт ногоон болсны дараа: **Settings** → **Networking** → **Custom Domain** → `api.cosmo.mn`, порт `4000`. Railway CNAME бичлэг өгнө. Үүнийг DNS панелд нэмнэ.
-6. `https://api.cosmo.mn/health` хөтөч дээр нээгдэх хүртэл хүлээнэ (DNS шинэчлэгдэхэд хэдэн минутаас хэдэн цаг шаардагдана).
-
-## 4. Зургуудыг volume руу хуулах
-
-Repo-гийн root хавтаснаас:
+```
+API_URL="https://api.cosmo.mn"
+NEXT_PUBLIC_API_URL="https://api.cosmo.mn"
+SITE_URL="https://cosmo.mn"
+```
 
 ```powershell
-railway login
-railway link
-railway volume files upload apps/api/uploads /uploads
+npm run package:cpanel
 ```
 
-`railway link` дээр төсөл болон API service-ийг сонгоно. API ажиллаж байх үед л upload хийгдэнэ.
+3 минут орчим болно. Дуусахад `dist-cpanel/` хавтсанд хоёр файл гарна:
 
-Шалгах: local `apps/api/uploads/images/` доторх аль нэг файлын нэрийг аваад `https://api.cosmo.mn/uploads/images/<файл>.webp` хаягийг нээнэ. Нээгдэхгүй бол `railway volume files browse /` командаар файлууд хаана очсоныг харна. Тэд `/data/uploads` доор байх ёстой.
+- `cosmo-api.zip`: API
+- `cosmo-web.zip`: вэбсайт
 
-## 5. Vercel: web
+Эдгээрээс гадна танд дараах хоёр файл ирсэн байх ёстой: өгөгдлийн сан (`cosmo-mysql-*.sql`) ба зургууд (`cosmo-uploads-*.zip`).
 
-1. vercel.com → **Add New** → **Project** → `cosmo.mn` repo.
-2. Тохиргоо:
+## 2. cPanel: анх удаа
 
-   | Талбар | Утга |
-   |---|---|
-   | Root Directory | `apps/web` |
-   | Install Command | `cd ../.. && npm ci` |
-   | Build Command | `cd ../.. && npm run build:web` |
-   | Node.js Version | 24.x |
+### 2.1 Subdomain ба SSL
 
-3. **Environment Variables**:
+1. **Domains** → `api.cosmo.mn` үүсгэнэ.
+2. **SSL/TLS Status** → **Run AutoSSL**. `cosmo.mn` болон `api.cosmo.mn` хоёулаа ногоон түгжээтэй болох ёстой. HTTPS-гүйгээр админ нэвтрэлт ажиллахгүй.
 
-   | Хувьсагч | Утга |
-   |---|---|
-   | `API_URL` | `https://api.cosmo.mn` |
-   | `NEXT_PUBLIC_API_URL` | `https://api.cosmo.mn` |
-   | `SITE_URL` | `https://cosmo.mn` |
+### 2.2 Өгөгдлийн сан
 
-4. **Deploy**. Build хийх үед хуудсууд API-аас өгөгдөл татдаг тул 3-р алхмын `api.cosmo.mn` ажиллаж байх ёстой.
-5. **Settings** → **Functions** → Function Region: **Singapore (sin1)**. Дараа нь дахин deploy хийнэ.
-6. **Settings** → **Domains** → `cosmo.mn` болон `www.cosmo.mn` нэмж, `www`-ийг `cosmo.mn` руу redirect хийнэ. Vercel-ийн заасан бичлэгүүдийг DNS панелд нэмнэ.
+1. **MySQL Databases** хэсэгт:
+   - `wwwcosmo_cosmo` өгөгдлийн сан үүсгэнэ.
+   - `wwwcosmo_cosmo` хэрэглэгч үүсгэнэ. Нууц үг нь **зөвхөн үсэг, тооноос** бүрдсэн урт нууц үг байна. `@ # % / :` зэрэг тэмдэгт холбогдох хаягийг эвдэнэ.
+   - Хэрэглэгчийг өгөгдлийн санд **ALL PRIVILEGES** эрхтэй нэмнэ.
+2. **phpMyAdmin** → зүүн талаас `wwwcosmo_cosmo` → **Import** → `cosmo-mysql-*.sql` → **Go**. 23 хүснэгт гарч ирнэ.
 
-`cosmo.mn` дээр одоо хуучин сайт ажиллаж байгаа бөгөөд шинэ сайтыг шалгаж дуустал түүнийг хэвээр үлдээх бол: эхлээд `new.cosmo.mn`-ийг нэмж, Railway-ийн `WEB_URL`-ийг `https://new.cosmo.mn` болгоно. Шалгаж дууссаны дараа `cosmo.mn` руу шилжүүлж, `WEB_URL`-ийг буцааж өөрчилнө.
+### 2.3 Файлууд
 
-`*.vercel.app` хаяг дээр нийтийн хуудсууд ажиллана. Харин cookie нь `cosmo.mn`-д хамаарах тул админ нэвтрэлт ажиллахгүй.
+**File Manager**-аар `/home/wwwcosmo` дотор гурван хавтас үүсгэнэ. Zip бүрийг өөрийн хавтсанд **Upload** хийгээд, баруун товч → **Extract** хийнэ. Дараа нь zip файлыг устгана.
 
-## 6. Имэйл (Resend)
+| Хавтас | Zip |
+|---|---|
+| `cosmo-api` | `cosmo-api.zip` |
+| `cosmo-web` | `cosmo-web.zip` |
+| `cosmo-uploads` | `cosmo-uploads-*.zip` (дотор нь `images/` хавтас гарна) |
 
-1. resend.com → **Domains** → `cosmo.mn` нэмнэ. Resend-ийн өгсөн DNS бичлэгүүдийг нэмээд **Verify** дарна.
-2. API key үүсгээд Railway-д `RESEND_API_KEY`, `MAIL_FROM` (`cosmo.mn <noreply@cosmo.mn>`) гэж нэмнэ.
+### 2.4 API app
 
-Энэ алхмыг хийхээс өмнө contact маягт болон анкет «илгээж чадсангүй» гэсэн алдаа өгнө.
+**Setup Node.js App** → **CREATE**:
 
-⚠️ DNS панелд байгаа хуучин MX, TXT бичлэгүүдэд хүрэхгүй. Тэд компанийн одоогийн имэйлийн бичлэгүүд.
+| Талбар | Утга |
+|---|---|
+| Node.js version | **20.19** (анхдагч 10.24-ийг заавал солино) |
+| Application mode | **Production** |
+| Application root | `cosmo-api` |
+| Application URL | `api.cosmo.mn` |
+| Application startup file | `dist/main.js` |
+| Passenger log file | `/home/wwwcosmo/logs/cosmo-api.log` |
 
-## 7. Шалгах
+**Environment variables** → **ADD VARIABLE**:
 
-- [ ] Нүүр, Бидний тухай, Брэндүүд, Медиа, Холбоо барих хуудсууд MN / EN / ZH хэлээр контент, зурагтайгаа харагдаж байна
-- [ ] `https://cosmo.mn/admin/login`-оор нэвтэрч чадаж байна
-- [ ] **Админы нууц үгийг шууд сольсон.** Local DB-ээс хуулагдсан тул хуучин нууц үг хэвээр байгаа.
-- [ ] Утсаар авсан том (5MB+) зураг upload хийгдэж байна
-- [ ] Админаас өөрчилсөн зүйл сайт дээр гарч байна
-- [ ] Contact маягт имэйл хүргэж байна
+| Нэр | Утга |
+|---|---|
+| `DATABASE_URL` | `mysql://wwwcosmo_cosmo:НУУЦҮГ@localhost:3306/wwwcosmo_cosmo` |
+| `WEB_URL` | `https://cosmo.mn` |
+| `JWT_SECRET` | шинэ, 64 тэмдэгттэй санамсаргүй мөр (үсэг, тоо) |
+| `UPLOADS_DIR` | `/home/wwwcosmo/cosmo-uploads` |
+| `COOKIE_DOMAIN` | `cosmo.mn` |
+| `CLIENT_IP_HEADER` | `x-forwarded-for` |
+| `RESEND_API_KEY` | Resend-ийн түлхүүр |
+| `MAIL_FROM` | `info@cosmo.mn` |
 
-## Өдөр тутам
+**CREATE** → **Run NPM Install** (1–3 минут) → **RESTART**.
 
-- `git push` хийхэд Vercel web-ийг, Railway API-г дахин deploy хийнэ. Шинэ migration байвал Railway апп асахаас өмнө ажиллуулна.
-- **Нөөц:** Сард нэг удаа ч гэсэн DB-ээ өөрийн компьютер руу татаж авна. Docker image-ийн хувилбар Railway-ийн Postgres-ийн хувилбартай ижил буюу түүнээс шинэ байх ёстой (Postgres service-ийн логоос хувилбарыг нь харна):
+Шалгах: `https://api.cosmo.mn/health` → `{"status":"ok","database":"up"}`
 
-  ```powershell
-  docker run --rm -v "${PWD}:/backup" postgres:17 pg_dump -Fc -f /backup/cosmo-backup.dump "<DATABASE_PUBLIC_URL>"
-  ```
+### 2.5 Вэбсайт app
+
+**Setup Node.js App** → **CREATE**:
+
+| Талбар | Утга |
+|---|---|
+| Node.js version | **20.19** |
+| Application mode | **Production** |
+| Application root | `cosmo-web` |
+| Application URL | `cosmo.mn` (замын хэсэг хоосон) |
+| Application startup file | `app.js` |
+| Passenger log file | `/home/wwwcosmo/logs/cosmo-web.log` |
+
+Environment variables хэрэггүй, учир нь тохиргоо нь zip дотор байгаа. **Run NPM Install хийхгүй.** **CREATE** → **RESTART**.
+
+⚠️ Энэ app `cosmo.mn`-д `public_html`-ийн оронд ажиллана. Хуучин сайт байвал түүнийг орлоно.
+
+Шалгах:
+- `https://cosmo.mn`: Эхний 5 минутад зарим хэсэг хоосон харагдаж магадгүй. Багцыг API ажиллаж эхлэхээс өмнө build хийсэн учраас ийм байна. 5 минутын дараа refresh хийхэд бүрэн харагдана.
+- `https://cosmo.mn/admin/login`: Local-д хэрэглэдэг имэйл, нууц үгээрээ нэвтэрнэ.
+
+## 3. Шинэчлэх
+
+1. Компьютер дээр: `git pull` → `npm ci` → `npm run package:cpanel`.
+2. File Manager дээр:
+   - `cosmo-api` доторх `dist` хавтсыг устгаад шинэ `cosmo-api.zip`-ийг Extract хийнэ.
+   - `cosmo-web` доторх `standalone` хавтсыг устгаад шинэ `cosmo-web.zip`-ийг Extract хийнэ.
+   - `node_modules` болон `cosmo-uploads`-д хүрэхгүй.
+3. `package.json` өөрчлөгдсөн бол, өөрөөр хэлбэл шинэ сан нэмэгдсэн бол API дээр **Run NPM Install** хийнэ.
+4. Repo-гийн `apps/api/prisma/migrations/` хавтсанд шинэ хавтас нэмэгдсэн бол түүний `migration.sql`-ийг phpMyAdmin → **SQL** табд ажиллуулна.
+5. Хоёр app-ыг **RESTART** хийнэ.
+
+Админаас оруулсан контент, зургууд шинэчлэлтэд хамаарахгүй, хэвээр үлдэнэ.
+
+## 4. Алдаа гарвал
+
+| Шинж тэмдэг | Хаана харах вэ |
+|---|---|
+| Хуудас нээгдэхгүй, 503 | `/home/wwwcosmo/logs/cosmo-api.log` эсвэл `cosmo-web.log`. Ихэвчлэн хувьсагчийн нэрийн алдаа эсвэл NPM Install хийгдээгүйгээс болдог. |
+| `/health` дээр `database` нь `up` биш | `DATABASE_URL`-ийн нэр, нууц үг, хэрэглэгчийн эрх |
+| Зураг харагдахгүй | `UPLOADS_DIR` зөв эсэх, `cosmo-uploads/images/` дотор файлууд байгаа эсэх |
+| Админ нэвтэрсний дараа дахин нэвтрэх хуудас руу буцдаг | HTTPS (AutoSSL) болон `COOKIE_DOMAIN=cosmo.mn` |
+| Холбоо барих маягт «илгээж чадсангүй» | `RESEND_API_KEY`, Resend дээр cosmo.mn домэйн баталгаажсан эсэх |
