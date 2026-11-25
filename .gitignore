@@ -6,4 +6,5 @@ generated
 *.tsbuildinfo
 uploads
 *.dump
+backups/
 des/*.pdf
