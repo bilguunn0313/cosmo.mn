@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import * as mariadb from 'mariadb';
 import { Client, types } from 'pg';
+import { adapterConnectionString } from '../src/prisma/adapter-connection-string';
 
 const TIMESTAMP_WITHOUT_TIME_ZONE = 1114;
 const POSTGRES_URL =
@@ -45,7 +46,7 @@ async function main() {
 
   const source = new Client({ connectionString: POSTGRES_URL });
   const target = await mariadb.createConnection(
-    mysqlUrl.replace(/^mysql:/, 'mariadb:'),
+    adapterConnectionString(mysqlUrl).replace(/^mysql:/, 'mariadb:'),
   );
   await source.connect();
 

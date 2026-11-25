@@ -1,6 +1,7 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../generated/prisma/client';
+import { adapterConnectionString } from './adapter-connection-string';
 
 @Injectable()
 export class PrismaService
@@ -9,7 +10,9 @@ export class PrismaService
 {
   constructor() {
     super({
-      adapter: new PrismaMariaDb(process.env.DATABASE_URL!),
+      adapter: new PrismaMariaDb(
+        adapterConnectionString(process.env.DATABASE_URL!),
+      ),
     });
   }
 

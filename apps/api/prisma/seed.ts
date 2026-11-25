@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import * as bcrypt from 'bcrypt';
 import { PrismaClient } from '../src/generated/prisma/client';
+import { adapterConnectionString } from '../src/prisma/adapter-connection-string';
 
 const PASSWORD_SALT_ROUNDS = 12;
 
@@ -15,7 +16,9 @@ async function main() {
   }
 
   const prisma = new PrismaClient({
-    adapter: new PrismaMariaDb(process.env.DATABASE_URL!),
+    adapter: new PrismaMariaDb(
+      adapterConnectionString(process.env.DATABASE_URL!),
+    ),
   });
 
   try {
