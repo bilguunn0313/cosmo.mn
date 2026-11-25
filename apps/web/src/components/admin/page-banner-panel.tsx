@@ -24,8 +24,8 @@ const BANNER_FIELDS = {
   brands: { id: "brandsBannerImageId", media: "brandsBannerImage" },
   contact: { id: "contactBannerImageId", media: "contactBannerImage" },
   hrGovernance: { id: "hrGovernanceImageId", media: "hrGovernanceImage" },
+  hrJobs: { id: "hrJobsImageId", media: "hrJobsImage" },
   ceo: { id: "ceoImageId", media: "ceoImage" },
-  purpose: { id: "purposeImageId", media: "purposeImage" },
 } as const;
 
 type BannerPage = keyof typeof BANNER_FIELDS;
@@ -44,7 +44,10 @@ const FRAME_PREVIEWS: Partial<Record<BannerPage, FramePreview[]>> = {
     { label: "Утас", ratio: 4 / 3 },
   ],
   ceo: SIDE_BY_SIDE_PREVIEWS,
-  purpose: SIDE_BY_SIDE_PREVIEWS,
+  hrJobs: [
+    { label: "Компьютер", ratio: 9 / 8 },
+    { label: "Таблет, утас", ratio: 4 / 3 },
+  ],
 };
 
 interface PageBannerFormProps {

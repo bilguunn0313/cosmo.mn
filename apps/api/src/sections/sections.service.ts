@@ -9,6 +9,8 @@ import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { sanitizeRichText } from '../common/sanitize-rich-text';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
+import { uploadUrlsIn } from '../media/upload-urls';
 import { PrismaService } from '../prisma/prisma.service';
 
 const sectionInclude = {
@@ -27,7 +29,22 @@ function sanitizeTranslations(translations: SectionTranslations) {
 
 @Injectable()
 export class SectionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
+
+  private removeUnusedMedia(section: {
+    imageId: number | null;
+    translations: { body: string }[];
+  }) {
+    return this.mediaService.removeUnused(
+      [section.imageId],
+      section.translations.flatMap((translation) =>
+        uploadUrlsIn(translation.body),
+      ),
+    );
+  }
 
   findAll(page: SectionPage) {
     return this.prisma.section.findMany({
@@ -71,7 +88,7 @@ export class SectionsService {
   }
 
   async update(id: number, input: UpdateSectionInput) {
-    await this.findOne(id);
+    const section = await this.findOne(id);
 
     const { translations, ...fields } = input;
     const data: Prisma.SectionUncheckedUpdateInput = { ...fields };
@@ -83,11 +100,14 @@ export class SectionsService {
       };
     }
 
-    return this.prisma.section.update({
+    const updated = await this.prisma.section.update({
       where: { id },
       data,
       include: sectionInclude,
     });
+
+    await this.removeUnusedMedia(section);
+    return updated;
   }
 
   async reorder(ids: number[]) {
@@ -99,8 +119,9 @@ export class SectionsService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const section = await this.findOne(id);
     await this.prisma.section.delete({ where: { id } });
+    await this.removeUnusedMedia(section);
   }
 
   async findVisible(query: PublicSectionsQuery) {

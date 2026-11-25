@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import {
@@ -47,6 +48,8 @@ function decodeFileName(name: string) {
 
 @Injectable()
 export class MediaService {
+  private readonly logger = new Logger(MediaService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly storage: StorageService,
@@ -105,7 +108,52 @@ export class MediaService {
       });
     }
 
-    await this.prisma.media.delete({ where: { id } });
+    await this.deleteMedia(media);
+  }
+
+  async removeUnused(ids: Array<number | null>, urls: string[] = []) {
+    const mediaWithUrls =
+      urls.length === 0
+        ? []
+        : await this.prisma.media.findMany({
+            where: { url: { in: urls } },
+            select: { id: true },
+          });
+    const candidateIds = new Set([
+      ...ids,
+      ...mediaWithUrls.map((media) => media.id),
+    ]);
+
+    for (const id of candidateIds) {
+      if (id === null) {
+        continue;
+      }
+
+      try {
+        await this.removeIfUnused(id);
+      } catch (error) {
+        this.logger.warn(`Ашиглагдахгүй болсон файлыг (${id}) устгаж чадсангүй`);
+        this.logger.warn(error);
+      }
+    }
+  }
+
+  private async removeIfUnused(id: number) {
+    const media = await this.prisma.media.findUnique({ where: { id } });
+
+    if (!media) {
+      return;
+    }
+
+    const usages = await this.mediaUsageService.findUsages(media);
+
+    if (usages.length === 0) {
+      await this.deleteMedia(media);
+    }
+  }
+
+  private async deleteMedia(media: { id: number; url: string; type: string }) {
+    await this.prisma.media.delete({ where: { id: media.id } });
     await this.storage.remove(media.url);
 
     if (media.type === 'IMAGE') {

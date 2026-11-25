@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { HrBenefitsSection } from "@/components/site/careers/hr-benefits-section";
 import { HrCultureSection } from "@/components/site/careers/hr-culture-section";
+import { HrJobsSection } from "@/components/site/careers/hr-jobs-section";
 import { HrPolicySection } from "@/components/site/careers/hr-policy-section";
 import { HrSelectionSection } from "@/components/site/careers/hr-selection-section";
-import { PartnerCtaSection } from "@/components/site/home/partner-cta-section";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
 import { Link } from "@/i18n/navigation";
@@ -40,6 +40,9 @@ export default async function HumanResourcesPage({
     fetchSiteSetting(locale),
     fetchJobs(locale),
   ]);
+  const hasStories = sections.length > 0;
+  const jobsSpacing = hasStories ? "mt-20 md:mt-32" : undefined;
+  const jobsImageUrl = pageBannerUrl(setting, "hrJobs");
 
   return (
     <>
@@ -48,22 +51,23 @@ export default async function HumanResourcesPage({
       <HrBenefitsSection />
       <HrSelectionSection />
 
-      {sections.length > 0 && (
+      {hasStories && (
         <div className="site-container pt-20 md:pt-32">
           <StorySections sections={sections} />
         </div>
       )}
 
       {jobs.length > 0 ? (
-        <PartnerCtaSection
-          eyebrow={t("jobs.title")}
+        <HrJobsSection
           title={t("jobs.bandTitle", { count: jobs.length })}
           text={t("jobs.bandText")}
           href={JOBS_PATH}
           buttonLabel={t("jobs.bandButton")}
-          className="mt-20 md:mt-32"
+          imageUrl={jobsImageUrl}
+          imageAlt={t("jobs.imageAlt")}
+          className={jobsSpacing}
         >
-          <ul className="flex flex-wrap justify-center gap-2.5">
+          <ul className="flex flex-wrap gap-2.5">
             {jobs.slice(0, MAX_BAND_JOBS).map((job) => (
               <li key={job.slug}>
                 <Link
@@ -76,16 +80,17 @@ export default async function HumanResourcesPage({
               </li>
             ))}
           </ul>
-        </PartnerCtaSection>
+        </HrJobsSection>
       ) : (
         setting?.facebookUrl && (
-          <PartnerCtaSection
-            eyebrow={t("jobs.title")}
+          <HrJobsSection
             title={t("jobs.emptyTitle")}
             text={`${t("jobs.emptyText")} ${t("jobs.followText")}`}
             href={setting.facebookUrl}
             buttonLabel={t("jobs.followButton")}
-            className="mt-20 md:mt-32"
+            imageUrl={jobsImageUrl}
+            imageAlt={t("jobs.imageAlt")}
+            className={jobsSpacing}
           />
         )
       )}

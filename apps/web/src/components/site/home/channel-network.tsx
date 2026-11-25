@@ -4,9 +4,11 @@ import { useEffect, useRef } from "react";
 import { LogoMark } from "@/components/site/logo-mark";
 
 const VIEW_WIDTH = 1200;
-const VIEW_HEIGHT = 440;
-const HUB = { x: 600, y: 372 };
-const ARC_RADIUS = { x: 500, y: 290 };
+const VIEW_HEIGHT = 480;
+const HUB = { x: 600, y: 96 };
+const ARC_RADIUS = { x: 500, y: 200 };
+const ARC_DROP = 90;
+const HUB_RADIUS = 46;
 const ARC_START = 165;
 const ARC_END = 15;
 const BADGE_RADIUS = 42;
@@ -32,14 +34,16 @@ function arcPoint(degrees: number) {
 
   return {
     x: Math.round(HUB.x + ARC_RADIUS.x * Math.cos(radians)),
-    y: Math.round(HUB.y - ARC_RADIUS.y * Math.sin(radians)),
+    y: Math.round(HUB.y + ARC_DROP + ARC_RADIUS.y * Math.sin(radians)),
   };
 }
 
 function spokePath(to: { x: number; y: number }) {
-  const middleY = (HUB.y + to.y) / 2;
+  const startY = HUB.y + HUB_RADIUS;
+  const endY = to.y - BADGE_RADIUS;
+  const middleY = (startY + endY) / 2;
 
-  return `M${HUB.x} ${HUB.y - 46}C${HUB.x} ${middleY} ${to.x} ${middleY + 30} ${to.x} ${to.y + BADGE_RADIUS}`;
+  return `M${HUB.x} ${startY}C${HUB.x} ${middleY} ${to.x} ${middleY} ${to.x} ${endY}`;
 }
 
 function dotStart(index: number, round: number) {
@@ -97,7 +101,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
 
   return (
     <div ref={ref} className="channel-network mt-12 md:mt-16">
-      <div className="relative mx-auto aspect-[1200/440] max-w-275 max-lg:hidden">
+      <div className="relative mx-auto aspect-[1200/480] max-w-275 max-lg:hidden">
         <svg
           viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
           aria-hidden
@@ -158,7 +162,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
         </svg>
 
         <div
-          className="channel-hub absolute flex flex-col items-center gap-3"
+          className="channel-hub absolute flex flex-col-reverse items-center gap-3"
           style={{
             left: `${(HUB.x / VIEW_WIDTH) * 100}%`,
             top: `${(HUB.y / VIEW_HEIGHT) * 100}%`,
@@ -178,7 +182,7 @@ export function ChannelNetwork({ channels, hubLabel }: ChannelNetworkProps) {
           {points.map((point, index) => (
             <li
               key={channels[index].key}
-              className="channel-node absolute flex w-48 flex-col-reverse items-center gap-3 text-center"
+              className="channel-node absolute flex w-48 flex-col items-center gap-3 text-center"
               style={{
                 left: `${(point.x / VIEW_WIDTH) * 100}%`,
                 top: `${(point.y / VIEW_HEIGHT) * 100}%`,

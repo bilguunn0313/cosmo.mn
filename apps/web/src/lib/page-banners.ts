@@ -11,6 +11,7 @@ const STOCK_BANNERS: Record<BannerPage, string> = {
   brands: unsplashUrl("photo-1578916171728-46686eac8d58"),
   contact: unsplashUrl("photo-1653380550474-56f0b47da4cf"),
   hrGovernance: unsplashUrl("photo-1786719664257-1bc47a776f4c"),
+  hrJobs: unsplashUrl("photo-1600880292203-757bb62b4baf"),
 };
 
 export function pageBannerUrl(

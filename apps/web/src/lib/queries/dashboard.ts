@@ -15,15 +15,13 @@ export interface DashboardStats {
   publishedBrands: number;
   totalBrands: number;
   totalNews: number;
-  totalMedia: number;
 }
 
 async function fetchDashboardStats(): Promise<DashboardStats> {
-  const [slides, brands, news, media] = await Promise.all([
+  const [slides, brands, news] = await Promise.all([
     api<(ToggleItem & { isActive: boolean })[]>("/admin/slides"),
     api<(ToggleItem & { isPublished: boolean })[]>("/admin/brands"),
     api<PaginatedTotal>("/admin/news", { searchParams: { limit: 1 } }),
-    api<PaginatedTotal>("/admin/media", { searchParams: { limit: 1 } }),
   ]);
 
   return {
@@ -32,7 +30,6 @@ async function fetchDashboardStats(): Promise<DashboardStats> {
     publishedBrands: brands.filter((brand) => brand.isPublished).length,
     totalBrands: brands.length,
     totalNews: news.total,
-    totalMedia: media.total,
   };
 }
 

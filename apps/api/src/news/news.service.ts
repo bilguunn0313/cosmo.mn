@@ -10,6 +10,8 @@ import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { sanitizeRichText } from '../common/sanitize-rich-text';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
+import { uploadUrlsIn } from '../media/upload-urls';
 import { PrismaService } from '../prisma/prisma.service';
 
 const newsInclude = {
@@ -63,7 +65,23 @@ function resolvePublishedAt(
 
 @Injectable()
 export class NewsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
+
+  private removeUnusedMedia(news: {
+    coverImageId: number | null;
+    videoId: number | null;
+    translations: { content: string }[];
+  }) {
+    return this.mediaService.removeUnused(
+      [news.coverImageId, news.videoId],
+      news.translations.flatMap((translation) =>
+        uploadUrlsIn(translation.content),
+      ),
+    );
+  }
 
   async findAll(query: AdminNewsQuery) {
     const [items, total] = await Promise.all([
@@ -130,16 +148,20 @@ export class NewsService {
       };
     }
 
-    return this.prisma.news.update({
+    const updated = await this.prisma.news.update({
       where: { id },
       data,
       include: newsInclude,
     });
+
+    await this.removeUnusedMedia(existing);
+    return updated;
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const news = await this.findOne(id);
     await this.prisma.news.delete({ where: { id } });
+    await this.removeUnusedMedia(news);
   }
 
   async findPublished(query: PublicNewsQuery) {

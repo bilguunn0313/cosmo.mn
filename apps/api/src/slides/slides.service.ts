@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateSlideInput, UpdateSlideInput } from '@cosmo/shared';
 import { framedImageUrl } from '../common/framed-image-url';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 const slideInclude = {
@@ -11,7 +12,10 @@ const slideInclude = {
 
 @Injectable()
 export class SlidesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   findAll() {
     return this.prisma.slide.findMany({
@@ -66,13 +70,16 @@ export class SlidesService {
   }
 
   async update(id: number, input: UpdateSlideInput) {
-    await this.findOne(id);
+    const slide = await this.findOne(id);
 
-    return this.prisma.slide.update({
+    const updated = await this.prisma.slide.update({
       where: { id },
       data: input,
       include: slideInclude,
     });
+
+    await this.mediaService.removeUnused([slide.mediaId, slide.posterId]);
+    return updated;
   }
 
   async reorder(ids: number[]) {
@@ -84,7 +91,8 @@ export class SlidesService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const slide = await this.findOne(id);
     await this.prisma.slide.delete({ where: { id } });
+    await this.mediaService.removeUnused([slide.mediaId, slide.posterId]);
   }
 }

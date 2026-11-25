@@ -87,8 +87,8 @@ model Media {
   siteSettingBrands              SiteSetting[]   @relation("SiteSettingBrandsBanner")
   siteSettingContacts            SiteSetting[]   @relation("SiteSettingContactBanner")
   siteSettingHrGovernances       SiteSetting[]   @relation("SiteSettingHrGovernance")
+  siteSettingHrJobs              SiteSetting[]   @relation("SiteSettingHrJobs")
   siteSettingCeos                SiteSetting[]   @relation("SiteSettingCeo")
-  siteSettingPurposes            SiteSetting[]   @relation("SiteSettingPurpose")
   siteSettingValuePeople         SiteSetting[]   @relation("SiteSettingValuePeople")
   siteSettingValueSatisfaction   SiteSetting[]   @relation("SiteSettingValueSatisfaction")
   siteSettingValueQuality        SiteSetting[]   @relation("SiteSettingValueQuality")
@@ -351,10 +351,10 @@ model SiteSetting {
   contactBannerImage         Media?   @relation("SiteSettingContactBanner", fields: [contactBannerImageId], references: [id])
   hrGovernanceImageId        Int?
   hrGovernanceImage          Media?   @relation("SiteSettingHrGovernance", fields: [hrGovernanceImageId], references: [id])
+  hrJobsImageId              Int?
+  hrJobsImage                Media?   @relation("SiteSettingHrJobs", fields: [hrJobsImageId], references: [id])
   ceoImageId                 Int?
   ceoImage                   Media?   @relation("SiteSettingCeo", fields: [ceoImageId], references: [id])
-  purposeImageId             Int?
-  purposeImage               Media?   @relation("SiteSettingPurpose", fields: [purposeImageId], references: [id])
   valuePeopleImageId         Int?
   valuePeopleImage           Media?   @relation("SiteSettingValuePeople", fields: [valuePeopleImageId], references: [id])
   valueSatisfactionImageId   Int?

@@ -7,6 +7,7 @@ import type {
 } from '@cosmo/shared';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 const milestoneInclude = {
@@ -21,7 +22,10 @@ const chronologicalOrder = [
 
 @Injectable()
 export class MilestonesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   findAll() {
     return this.prisma.milestone.findMany({
@@ -56,7 +60,7 @@ export class MilestonesService {
   }
 
   async update(id: number, input: UpdateMilestoneInput) {
-    await this.findOne(id);
+    const milestone = await this.findOne(id);
 
     const { translations, ...fields } = input;
     const data: Prisma.MilestoneUncheckedUpdateInput = { ...fields };
@@ -65,16 +69,20 @@ export class MilestonesService {
       data.translations = { deleteMany: {}, create: translations };
     }
 
-    return this.prisma.milestone.update({
+    const updated = await this.prisma.milestone.update({
       where: { id },
       data,
       include: milestoneInclude,
     });
+
+    await this.mediaService.removeUnused([milestone.imageId]);
+    return updated;
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const milestone = await this.findOne(id);
     await this.prisma.milestone.delete({ where: { id } });
+    await this.mediaService.removeUnused([milestone.imageId]);
   }
 
   async findVisible(locale: Locale) {

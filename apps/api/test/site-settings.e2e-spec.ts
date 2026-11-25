@@ -156,30 +156,6 @@ describe('Site settings', () => {
     ]);
   });
 
-  it('эрхэм зорилго, алсын харааны зургийг хадгалж нийтэд өгнө', async () => {
-    const purposeImageId = await uploadTestImage(context);
-
-    await context.admin
-      .put('/admin/site-settings')
-      .send({ purposeImageId })
-      .expect(200);
-
-    const response = await context.guest
-      .get('/public/site-settings')
-      .expect(200);
-    expect(response.body.purposeImageUrl).toMatch(/^\/uploads\//);
-
-    const deletion = await context.admin
-      .delete(`/admin/media/${purposeImageId}`)
-      .expect(409);
-    expect(deletion.body.usages).toEqual([
-      expect.objectContaining({
-        type: 'siteSetting',
-        title: 'Эрхэм зорилго, алсын харааны зураг',
-      }),
-    ]);
-  });
-
   it('тоон үзүүлэлтүүдийг хадгалж нийтэд өгнө', async () => {
     await context.admin
       .put('/admin/site-settings')

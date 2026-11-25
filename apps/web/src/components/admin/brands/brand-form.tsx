@@ -8,14 +8,12 @@ import {
   slugSchema,
   type CreateBrandInput,
 } from "@cosmo/shared";
-import { useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
 import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
-import { PrefixedInput } from "@/components/admin/prefixed-input";
 import { SaveBar } from "@/components/admin/save-bar";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -151,7 +149,6 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
   const createBrand = useCreateBrand();
   const updateBrand = useUpdateBrand();
   const isPending = createBrand.isPending || updateBrand.isPending;
-  const [isSlugEdited, setIsSlugEdited] = useState(brand !== null);
   const {
     control,
     register,
@@ -170,7 +167,7 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
 
   const onError = (error: Error) => {
     if (error instanceof ApiError && error.status === 409) {
-      setError("slug", { message: "Энэ хаяг өөр брэндэд ашиглагдсан байна" });
+      setError("slug", { message: "Ийм нэртэй брэнд аль хэдийн байна" });
     }
 
     toast.error(error.message);
@@ -205,7 +202,10 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
   return (
     <form onSubmit={submit} noValidate className="grid max-w-3xl gap-8">
       <TranslationTabs
-        hasError={(locale) => Boolean(errors.translations?.[locale])}
+        hasError={(locale) =>
+          Boolean(errors.translations?.[locale]) ||
+          (locale === "mn" && Boolean(errors.slug))
+        }
         isFilled={(locale) => isTranslationFilled(translations[locale])}
       >
         {(locale) => (
@@ -214,14 +214,17 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
               label="Брэндийн нэр"
               htmlFor={`brand-name-${locale}`}
               required={locale === "mn"}
-              error={errors.translations?.[locale]?.name?.message}
+              error={
+                errors.translations?.[locale]?.name?.message ??
+                (locale === "mn" ? errors.slug?.message : undefined)
+              }
             >
               <Input
                 id={`brand-name-${locale}`}
                 aria-invalid={Boolean(errors.translations?.[locale]?.name)}
                 {...register(`translations.${locale}.name`, {
                   onChange: (event) => {
-                    if (locale === "mn" && !isSlugEdited) {
+                    if (locale === "mn" && brand === null) {
                       setValue("slug", slugify(event.target.value));
                     }
                   },
@@ -258,25 +261,6 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
           </>
         )}
       </TranslationTabs>
-
-      <FormField
-        label="Хуудасны хаяг"
-        htmlFor="brand-slug"
-        required
-        hint={
-          brand
-            ? "Өөрчилбөл хуучин хаягаар орж ирэх холбоосууд ажиллахаа болино"
-            : "Монгол нэрээс автоматаар үүснэ. Хүсвэл өөрчилж болно"
-        }
-        error={errors.slug?.message}
-      >
-        <PrefixedInput
-          id="brand-slug"
-          prefix="cosmo.mn/brands/"
-          aria-invalid={Boolean(errors.slug)}
-          {...register("slug", { onChange: () => setIsSlugEdited(true) })}
-        />
-      </FormField>
 
       <FormField
         label="Ангилал"

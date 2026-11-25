@@ -9,7 +9,6 @@ import { StatsSection } from "@/components/site/home/stats-section";
 import { WhyCosmoSection } from "@/components/site/home/why-cosmo-section";
 import { WorldMapSection } from "@/components/site/home/world-map-section";
 import { getPageLocale } from "@/i18n/locale";
-import { homeStats } from "@/lib/home-stats";
 import {
   fetchLatestNews,
   fetchOriginCountries,
@@ -49,14 +48,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       fetchLatestNews(locale, HOME_NEWS_COUNT),
     ],
   );
-  const stats = homeStats(setting, locale);
 
   return (
     <>
       <HomeHero slides={slides} />
       <StatsSection setting={setting} />
       <BusinessAreasSection sections={areas} />
-      <WhyCosmoSection stats={stats} />
+      <WhyCosmoSection />
       <WorldMapSection countries={countries} locale={locale} />
       <RetailPartnersSection partners={partners} />
       <RetailChannelsSection />

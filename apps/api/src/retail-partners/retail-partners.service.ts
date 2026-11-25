@@ -3,13 +3,17 @@ import type {
   CreateRetailPartnerInput,
   UpdateRetailPartnerInput,
 } from '@cosmo/shared';
+import { MediaService } from '../media/media.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 const retailPartnerInclude = { logo: true };
 
 @Injectable()
 export class RetailPartnersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   findAll() {
     return this.prisma.retailPartner.findMany({
@@ -58,13 +62,16 @@ export class RetailPartnersService {
   }
 
   async update(id: number, input: UpdateRetailPartnerInput) {
-    await this.findOne(id);
+    const partner = await this.findOne(id);
 
-    return this.prisma.retailPartner.update({
+    const updated = await this.prisma.retailPartner.update({
       where: { id },
       data: input,
       include: retailPartnerInclude,
     });
+
+    await this.mediaService.removeUnused([partner.logoId]);
+    return updated;
   }
 
   async reorder(ids: number[]) {
@@ -79,7 +86,8 @@ export class RetailPartnersService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const partner = await this.findOne(id);
     await this.prisma.retailPartner.delete({ where: { id } });
+    await this.mediaService.removeUnused([partner.logoId]);
   }
 }

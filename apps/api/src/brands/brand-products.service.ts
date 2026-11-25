@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateProductInput, UpdateProductInput } from '@cosmo/shared';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 const productInclude = {
@@ -10,7 +11,10 @@ const productInclude = {
 
 @Injectable()
 export class BrandProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   findAll(brandId: number) {
     return this.prisma.product.findMany({
@@ -61,7 +65,7 @@ export class BrandProductsService {
   }
 
   async update(brandId: number, id: number, input: UpdateProductInput) {
-    await this.findOne(brandId, id);
+    const product = await this.findOne(brandId, id);
 
     const { translations, ...fields } = input;
     const data: Prisma.ProductUncheckedUpdateInput = { ...fields };
@@ -73,11 +77,14 @@ export class BrandProductsService {
       };
     }
 
-    return this.prisma.product.update({
+    const updated = await this.prisma.product.update({
       where: { id },
       data,
       include: productInclude,
     });
+
+    await this.mediaService.removeUnused([product.imageId]);
+    return updated;
   }
 
   async reorder(brandId: number, ids: number[]) {
@@ -92,7 +99,8 @@ export class BrandProductsService {
   }
 
   async remove(brandId: number, id: number) {
-    await this.findOne(brandId, id);
+    const product = await this.findOne(brandId, id);
     await this.prisma.product.delete({ where: { id } });
+    await this.mediaService.removeUnused([product.imageId]);
   }
 }

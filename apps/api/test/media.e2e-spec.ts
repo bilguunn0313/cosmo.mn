@@ -266,7 +266,7 @@ describe('Media', () => {
       expect(notUsed.body).toEqual([]);
     });
 
-    it('ашиглалтаас хассаны дараа устгаж болно', async () => {
+    it('ашиглалтаас хассан файл автоматаар устна', async () => {
       const image = await uploadImage();
       const brand = await context.admin
         .post('/admin/brands')
@@ -283,7 +283,7 @@ describe('Media', () => {
         .send({ logoId: null })
         .expect(200);
 
-      await context.admin.delete(`/admin/media/${image.id}`).expect(204);
+      await context.admin.get(`/admin/media/${image.id}/usages`).expect(404);
     });
   });
 });

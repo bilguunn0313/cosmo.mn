@@ -41,17 +41,23 @@ export async function createTestApp(): Promise<TestContext> {
   await app.init();
 
   const prisma = app.get(PrismaService);
-  await resetDatabase(prisma);
-  await createAdmin(prisma);
 
-  const guest = request.agent(app.getHttpServer());
-  const admin = request.agent(app.getHttpServer());
-  await admin
-    .post('/auth/login')
-    .send({ email: TEST_ADMIN.email, password: TEST_ADMIN.password })
-    .expect(200);
+  try {
+    await resetDatabase(prisma);
+    await createAdmin(prisma);
 
-  return { app, prisma, sentEmails, guest, admin };
+    const guest = request.agent(app.getHttpServer());
+    const admin = request.agent(app.getHttpServer());
+    await admin
+      .post('/auth/login')
+      .send({ email: TEST_ADMIN.email, password: TEST_ADMIN.password })
+      .expect(200);
+
+    return { app, prisma, sentEmails, guest, admin };
+  } catch (error) {
+    await app.close();
+    throw error;
+  }
 }
 
 async function createAdmin(prisma: PrismaService) {

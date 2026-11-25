@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { enableMongolianZodErrors } from "@cosmo/shared";
 import { ApiError } from "@/lib/api";
+import { mediaQueryKey } from "@/lib/queries/media";
 
 enableMongolianZodErrors();
 
@@ -48,11 +49,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
       router.replace(`${LOGIN_PATH}?next=${encodeURIComponent(currentPath)}`);
     };
 
+    const handleSuccess = () => {
+      refreshPublicSite();
+      void client.invalidateQueries({ queryKey: mediaQueryKey });
+    };
+
     const client = new QueryClient({
       queryCache: new QueryCache({ onError: handleError }),
       mutationCache: new MutationCache({
         onError: handleError,
-        onSuccess: refreshPublicSite,
+        onSuccess: handleSuccess,
       }),
       defaultOptions: {
         queries: { staleTime: 60 * 1000, retry: shouldRetry },

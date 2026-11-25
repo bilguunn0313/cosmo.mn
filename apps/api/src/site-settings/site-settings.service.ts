@@ -3,9 +3,27 @@ import type { Locale, UpdateSiteSettingInput } from '@cosmo/shared';
 import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 const SITE_SETTING_ID = 1;
+
+const SITE_SETTING_IMAGE_FIELDS = [
+  'mapImageId',
+  'aboutBannerImageId',
+  'careersBannerImageId',
+  'mediaBannerImageId',
+  'brandsBannerImageId',
+  'contactBannerImageId',
+  'hrGovernanceImageId',
+  'hrJobsImageId',
+  'ceoImageId',
+  'valuePeopleImageId',
+  'valueSatisfactionImageId',
+  'valueQualityImageId',
+  'valueResponsibilityImageId',
+  'homeAboutImageId',
+] as const;
 
 const siteSettingInclude = {
   mapImage: true,
@@ -15,8 +33,8 @@ const siteSettingInclude = {
   brandsBannerImage: true,
   contactBannerImage: true,
   hrGovernanceImage: true,
+  hrJobsImage: true,
   ceoImage: true,
-  purposeImage: true,
   valuePeopleImage: true,
   valueSatisfactionImage: true,
   valueQualityImage: true,
@@ -27,7 +45,10 @@ const siteSettingInclude = {
 
 @Injectable()
 export class SiteSettingsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   get() {
     return this.prisma.siteSetting.upsert({
@@ -39,7 +60,7 @@ export class SiteSettingsService {
   }
 
   async update(input: UpdateSiteSettingInput) {
-    await this.get();
+    const setting = await this.get();
 
     const { translations, ...fields } = input;
     const data: Prisma.SiteSettingUncheckedUpdateInput = { ...fields };
@@ -51,11 +72,16 @@ export class SiteSettingsService {
       };
     }
 
-    return this.prisma.siteSetting.update({
+    const updated = await this.prisma.siteSetting.update({
       where: { id: SITE_SETTING_ID },
       data,
       include: siteSettingInclude,
     });
+
+    await this.mediaService.removeUnused(
+      SITE_SETTING_IMAGE_FIELDS.map((field) => setting[field]),
+    );
+    return updated;
   }
 
   async getPublic(locale: Locale) {
@@ -83,6 +109,7 @@ export class SiteSettingsService {
         brands: framedImageUrl(setting.brandsBannerImage),
         contact: framedImageUrl(setting.contactBannerImage),
         hrGovernance: framedImageUrl(setting.hrGovernanceImage),
+        hrJobs: framedImageUrl(setting.hrJobsImage),
       },
       valueImages: {
         people: framedImageUrl(setting.valuePeopleImage),
@@ -92,7 +119,6 @@ export class SiteSettingsService {
       },
       homeAboutImageUrl: framedImageUrl(setting.homeAboutImage),
       ceoImageUrl: framedImageUrl(setting.ceoImage),
-      purposeImageUrl: framedImageUrl(setting.purposeImage),
       address: translation?.address ?? null,
       workingHours: translation?.workingHours ?? null,
     };

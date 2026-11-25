@@ -37,12 +37,12 @@ export async function WorldMapSection({
         countryNames={countryNames}
         mongoliaName={displayNames.of(MONGOLIA_REGION) ?? MONGOLIA_REGION}
       >
-        <h2 id="world-map-title" className="type-section text-balance">
+        <h2
+          id="world-map-title"
+          className="type-display font-medium text-balance"
+        >
           {t("mapTitle")}
         </h2>
-        <p className="text-lg leading-relaxed text-balance text-night-text">
-          {t("mapDescription")}
-        </p>
       </WorldMapInteractive>
     </section>
   );

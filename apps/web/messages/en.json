@@ -47,7 +47,6 @@
     "featured": "Featured",
     "heroTitle": "<line><accent>Unique</accent></line> <line>everyday</line> <line>essentials</line>",
     "officialDistributor": "Official distributor",
-    "partnerEyebrow": "Partnership",
     "contactUs": "Get in touch",
     "mute": "Mute",
     "unmute": "Unmute",
@@ -57,7 +56,6 @@
     "goToSlide": "Go to slide {number}",
     "previous": "Previous",
     "next": "Next",
-    "mapDescription": "We work with brands from more than 10 countries and bring global quality and standards to the Mongolian market.",
     "newsTitle": "Latest news",
     "allNews": "All news",
     "video": "Video",
@@ -88,31 +86,28 @@
       }
     },
     "why": {
-      "eyebrow": "Why Cosmo Trade",
-      "title": "A trusted partner to global brands",
+      "title": "Why you can trust us",
       "reasons": {
         "experience": {
           "title": "An experienced team",
-          "text": "{years}+ years of experience in import, sales and distribution since we started in {foundedYear}.",
-          "textPlain": "Many years of experience in import, sales and distribution."
+          "text": "A professional team that brings together years of knowledge, skills and work experience, learning from one another and working together to make a real contribution."
         },
         "brands": {
-          "title": "A wide choice of international brands",
-          "text": "We import more than {products} branded products from over 10 countries, successfully bring them to market and keep growing them.",
-          "textPlain": "We import a wide range of branded products from over 10 countries, successfully bring them to market and keep growing them."
+          "title": "A well-chosen range",
+          "text": "We choose brands against a wide range of criteria, based on consumer research and analysis."
         },
         "network": {
-          "title": "A wide distribution network",
-          "text": "We reach every corner of Mongolia."
+          "title": "Distribution network",
+          "text": "A strategic system that delivers products reliably, at the right time, to the right place and in the right quantity, widening consumer access and supporting business growth."
         },
         "products": {
-          "title": "Products that meet consumer needs",
-          "text": "Just as consumer habits change over time, our brands grow together with our customers."
+          "title": "Product development",
+          "text": "In these fast-changing times, we keep developing our products to meet consumer needs."
         }
       }
     },
     "retail": {
-      "title": "The reach of our partnerships",
+      "title": "Points of sale",
       "partners": "Retail network partners"
     },
     "channels": {
@@ -125,10 +120,6 @@
         "horeca": "HoReCa",
         "ecommerce": "E-commerce"
       }
-    },
-    "cta": {
-      "title": "Let's grow your brand in Mongolia together",
-      "text": "Planning to enter the Mongolian market or grow your sales? Get in touch with us."
     },
     "mapTitle": "International partnerships",
     "supplyChain": {
@@ -160,10 +151,10 @@
     },
     "stats": {
       "label": "Key figures",
-      "years": "Years in business",
+      "years": "Experience",
       "yearsUnit": "yrs",
       "products": "Products",
-      "salesPoints": "Points of sale reached",
+      "salesPoints": "Points of sale",
       "team": "Team members"
     }
   },
@@ -510,6 +501,7 @@
       "bandTitle": "{count, plural, one {# position is open now} other {# positions are open now}}",
       "bandText": "Choose a position and apply online.",
       "bandButton": "All positions",
+      "imageAlt": "Colleagues working together",
       "location": "Location",
       "workType": "Work type",
       "salary": "Salary",

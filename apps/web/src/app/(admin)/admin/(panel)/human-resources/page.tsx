@@ -37,7 +37,14 @@ export default function HumanResourcesPageAdmin() {
         bodyMode="rich"
       />
 
-      <JobsPanel step={4} />
+      <PageBannerPanel
+        page="hrJobs"
+        step={4}
+        title="Нээлттэй ажлын байрны зураг"
+        description="Хуудасны хамгийн доод «Нээлттэй ажлын байр» хэсгийн баруун талд гарах зураг. Хамт олон, ажлын орчны 1600×1400 орчим зураг тохиромжтой."
+      />
+
+      <JobsPanel step={5} />
     </div>
   );
 }

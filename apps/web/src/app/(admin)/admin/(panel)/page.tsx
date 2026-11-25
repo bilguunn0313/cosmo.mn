@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, House, Images, Newspaper, Tags } from "lucide-react";
+import { ArrowUpRight, House, Newspaper, Tags } from "lucide-react";
 import Link from "next/link";
 import { PageHeader } from "@/components/admin/page-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,9 +54,9 @@ const QUICK_LINKS = [
     description: "Медиа хэсэгт шинэ мэдээ нийтлэх",
   },
   {
-    title: "Зураг, видео оруулах",
-    href: "/admin/media",
-    description: "Зургийн санд файл нэмэх",
+    title: "Брэнд нэмэх",
+    href: "/admin/brands/new",
+    description: "Шинэ брэнд, лого, бүтээгдэхүүн",
   },
   {
     title: "Нүүр хуудсыг засах",
@@ -77,7 +77,7 @@ export default function DashboardPage() {
         description={todayFormatter.format(new Date())}
       />
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-3">
         <StatCard
           title="Carousel"
           value={data?.totalSlides}
@@ -97,12 +97,6 @@ export default function DashboardPage() {
           value={data?.totalNews}
           href="/admin/news"
           icon={Newspaper}
-        />
-        <StatCard
-          title="Зургийн сан"
-          value={data?.totalMedia}
-          href="/admin/media"
-          icon={Images}
         />
       </section>
 

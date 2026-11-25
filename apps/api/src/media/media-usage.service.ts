@@ -28,9 +28,9 @@ interface SiteSettingImageIds {
   brandsBannerImageId: number | null;
   contactBannerImageId: number | null;
   hrGovernanceImageId: number | null;
+  hrJobsImageId: number | null;
   homeAboutImageId: number | null;
   ceoImageId: number | null;
-  purposeImageId: number | null;
 }
 
 function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
@@ -46,10 +46,6 @@ function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
     return 'Гүйцэтгэх захирлын зураг';
   }
 
-  if (setting.purposeImageId === id) {
-    return 'Эрхэм зорилго, алсын харааны зураг';
-  }
-
   const bannerIds = [
     setting.aboutBannerImageId,
     setting.careersBannerImageId,
@@ -57,6 +53,7 @@ function siteSettingUsageTitle(setting: SiteSettingImageIds, id: number) {
     setting.brandsBannerImageId,
     setting.contactBannerImageId,
     setting.hrGovernanceImageId,
+    setting.hrJobsImageId,
   ];
 
   return bannerIds.includes(id) ? 'Хуудасны баннер' : 'Үнэт зүйлсийн зураг';
@@ -136,13 +133,13 @@ export class MediaUsageService {
             { brandsBannerImageId: id },
             { contactBannerImageId: id },
             { hrGovernanceImageId: id },
+            { hrJobsImageId: id },
             { valuePeopleImageId: id },
             { valueSatisfactionImageId: id },
             { valueQualityImageId: id },
             { valueResponsibilityImageId: id },
             { homeAboutImageId: id },
             { ceoImageId: id },
-            { purposeImageId: id },
           ],
         },
       }),

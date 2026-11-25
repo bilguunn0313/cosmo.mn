@@ -631,8 +631,8 @@
   }
 
   .channel-hub {
-    translate: -50% -3.5rem;
-    transform-origin: 50% 3.5rem;
+    translate: -50% calc(-100% + 3.5rem);
+    transform-origin: 50% calc(100% - 3.5rem);
   }
 
   .channel-ring {
@@ -640,8 +640,8 @@
   }
 
   .channel-node {
-    translate: -50% calc(-100% + 2.625rem);
-    transform-origin: 50% 100%;
+    translate: -50% -2.625rem;
+    transform-origin: 50% 0;
   }
 
   .channel-trunk {

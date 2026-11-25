@@ -5,6 +5,8 @@ import type {
 } from '@cosmo/shared';
 import { sanitizeRichText } from '../common/sanitize-rich-text';
 import { Prisma } from '../generated/prisma/client';
+import { MediaService } from '../media/media.service';
+import { uploadUrlsIn } from '../media/upload-urls';
 import { PrismaService } from '../prisma/prisma.service';
 
 const sectionInclude = {
@@ -23,7 +25,22 @@ function sanitizeTranslations(translations: SectionTranslations) {
 
 @Injectable()
 export class BrandSectionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
+
+  private removeUnusedMedia(section: {
+    imageId: number | null;
+    translations: { body: string }[];
+  }) {
+    return this.mediaService.removeUnused(
+      [section.imageId],
+      section.translations.flatMap((translation) =>
+        uploadUrlsIn(translation.body),
+      ),
+    );
+  }
 
   findAll(brandId: number) {
     return this.prisma.brandSection.findMany({
@@ -74,7 +91,7 @@ export class BrandSectionsService {
   }
 
   async update(brandId: number, id: number, input: UpdateBrandSectionInput) {
-    await this.findOne(brandId, id);
+    const section = await this.findOne(brandId, id);
 
     const { translations, ...fields } = input;
     const data: Prisma.BrandSectionUncheckedUpdateInput = { ...fields };
@@ -86,11 +103,14 @@ export class BrandSectionsService {
       };
     }
 
-    return this.prisma.brandSection.update({
+    const updated = await this.prisma.brandSection.update({
       where: { id },
       data,
       include: sectionInclude,
     });
+
+    await this.removeUnusedMedia(section);
+    return updated;
   }
 
   async reorder(brandId: number, ids: number[]) {
@@ -105,7 +125,8 @@ export class BrandSectionsService {
   }
 
   async remove(brandId: number, id: number) {
-    await this.findOne(brandId, id);
+    const section = await this.findOne(brandId, id);
     await this.prisma.brandSection.delete({ where: { id } });
+    await this.removeUnusedMedia(section);
   }
 }

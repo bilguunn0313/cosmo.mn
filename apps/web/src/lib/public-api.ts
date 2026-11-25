@@ -28,7 +28,13 @@ export async function fetchPublic<T>(path: string, locale: Locale): Promise<T> {
 }
 
 export type BannerPage =
-  "about" | "careers" | "media" | "brands" | "contact" | "hrGovernance";
+  | "about"
+  | "careers"
+  | "media"
+  | "brands"
+  | "contact"
+  | "hrGovernance"
+  | "hrJobs";
 
 export interface PublicSiteSetting {
   phone: string | null;
@@ -46,7 +52,6 @@ export interface PublicSiteSetting {
   pageBanners: Record<BannerPage, string | null>;
   homeAboutImageUrl: string | null;
   ceoImageUrl: string | null;
-  purposeImageUrl: string | null;
   address: string | null;
   workingHours: string | null;
 }

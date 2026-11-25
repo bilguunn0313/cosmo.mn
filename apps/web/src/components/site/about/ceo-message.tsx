@@ -46,13 +46,7 @@ export async function CeoMessage({ photoUrl }: CeoMessageProps) {
             className="ceo-card relative isolate flex flex-col justify-center overflow-hidden rounded-card px-5.5 py-8 text-white sm:p-10 xl:p-14"
           >
             <LogoMark className="absolute -right-20 -bottom-18 -z-10 w-65 text-white/6 lg:-right-28 lg:-bottom-30 lg:w-105" />
-            <h3 className="type-h2 font-bold tracking-normal text-balance uppercase">
-              {t("name")}
-            </h3>
-            <p className="mt-2 font-display text-[13px] font-medium tracking-[0.08em] text-brand-300 uppercase md:mt-2.5 md:text-[15px]">
-              {t("role")}
-            </p>
-            <div className="mt-6 flex flex-col gap-3.5 md:mt-9 md:gap-4.5">
+            <div className="flex flex-col gap-3.5 md:gap-4.5">
               {BODY_KEYS.map((key) => (
                 <p
                   key={key}
@@ -61,6 +55,14 @@ export async function CeoMessage({ photoUrl }: CeoMessageProps) {
                   {t(key)}
                 </p>
               ))}
+            </div>
+            <div className="mt-7 border-t border-white/15 pt-6 md:mt-9 md:pt-7">
+              <p className="font-display text-[22px] leading-tight font-bold text-balance uppercase md:text-[26px]">
+                {t("name")}
+              </p>
+              <p className="mt-1.5 font-display text-[13px] font-medium tracking-[0.08em] text-brand-300 uppercase md:mt-2 md:text-[15px]">
+                {t("role")}
+              </p>
             </div>
           </Reveal>
         </div>

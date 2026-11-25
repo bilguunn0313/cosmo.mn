@@ -36,7 +36,7 @@ export default async function AboutPage({
     <>
       <h1 className="sr-only">{t("nav.about")}</h1>
       <CeoMessage photoUrl={setting?.ceoImageUrl ?? null} />
-      <PurposeSection imageUrl={setting?.purposeImageUrl ?? null} />
+      <PurposeSection />
       <ValuesSection />
       <HistoryTimeline milestones={milestones} />
     </>

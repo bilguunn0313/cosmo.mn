@@ -1,6 +1,5 @@
 import {
   House,
-  Images,
   Info,
   LayoutDashboard,
   Mail,
@@ -45,10 +44,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: "Ерөнхий",
-    items: [
-      { title: "Зургийн сан", href: "/admin/media", icon: Images },
-      { title: "Админууд", href: "/admin/admins", icon: UserCog },
-    ],
+    items: [{ title: "Админууд", href: "/admin/admins", icon: UserCog }],
   },
 ];
 

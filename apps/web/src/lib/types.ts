@@ -205,10 +205,10 @@ export interface SiteSetting {
   contactBannerImage: Media | null;
   hrGovernanceImageId: number | null;
   hrGovernanceImage: Media | null;
+  hrJobsImageId: number | null;
+  hrJobsImage: Media | null;
   ceoImageId: number | null;
   ceoImage: Media | null;
-  purposeImageId: number | null;
-  purposeImage: Media | null;
   valuePeopleImageId: number | null;
   valuePeopleImage: Media | null;
   valueSatisfactionImageId: number | null;

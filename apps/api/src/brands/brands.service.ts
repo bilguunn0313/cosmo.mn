@@ -15,6 +15,8 @@ import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
 import { isCutoutImage } from '../media/image-background';
 import { clearLogo } from '../media/logo-image';
+import { MediaService } from '../media/media.service';
+import { uploadUrlsIn } from '../media/upload-urls';
 import { PrismaService } from '../prisma/prisma.service';
 
 const brandInclude = {
@@ -26,7 +28,10 @@ const brandInclude = {
 
 @Injectable()
 export class BrandsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mediaService: MediaService,
+  ) {}
 
   findAll() {
     return this.prisma.brand.findMany({
@@ -72,7 +77,7 @@ export class BrandsService {
   }
 
   async update(id: number, input: UpdateBrandInput) {
-    await this.findOne(id);
+    const brand = await this.findOne(id);
 
     const { translations, ...fields } = input;
     const data: Prisma.BrandUncheckedUpdateInput = { ...fields };
@@ -84,11 +89,18 @@ export class BrandsService {
       };
     }
 
-    return this.prisma.brand.update({
+    const updated = await this.prisma.brand.update({
       where: { id },
       data,
       include: brandInclude,
     });
+
+    await this.mediaService.removeUnused([
+      brand.logoId,
+      brand.coverId,
+      brand.showcaseImageId,
+    ]);
+    return updated;
   }
 
   async reorder(ids: number[]) {
@@ -124,8 +136,31 @@ export class BrandsService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const brand = await this.findOne(id);
+    const [sections, products] = await Promise.all([
+      this.prisma.brandSection.findMany({
+        where: { brandId: id },
+        include: { translations: true },
+      }),
+      this.prisma.product.findMany({ where: { brandId: id } }),
+    ]);
+
     await this.prisma.brand.delete({ where: { id } });
+
+    await this.mediaService.removeUnused(
+      [
+        brand.logoId,
+        brand.coverId,
+        brand.showcaseImageId,
+        ...sections.map((section) => section.imageId),
+        ...products.map((product) => product.imageId),
+      ],
+      sections.flatMap((section) =>
+        section.translations.flatMap((translation) =>
+          uploadUrlsIn(translation.body),
+        ),
+      ),
+    );
   }
 
   async findPublished(query: PublicBrandsQuery) {
