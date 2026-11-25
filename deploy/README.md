@@ -8,6 +8,8 @@ api.cosmo.mn  → Node app «cosmo-api»   /home/wwwcosmo/cosmo-api
 
 Код компьютер дээр build хийгдэж, cPanel руу бэлэн zip болж очно. Сервер дээр build хийхгүй.
 
+cPanel бэлэн болтол ашиглах түр туршилтын орчин: [vercel-railway.md](vercel-railway.md).
+
 ## 1. Компьютер дээр багц бэлдэх
 
 Node.js 24, git хэрэгтэй.
