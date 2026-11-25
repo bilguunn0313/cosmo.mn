@@ -26,6 +26,7 @@ import {
 import { LineSelect } from "@/components/site/line-select";
 import { siteButtonClass } from "@/components/site/site-button";
 import { Link } from "@/i18n/navigation";
+import { apiUrl } from "@/lib/api";
 import { JOBS_PATH } from "@/lib/site-links";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -348,7 +349,7 @@ function ApplicationFormContent({
     body.append("photo", photo.blob, "photo.jpg");
 
     const response = await fetch(
-      `/api/public/jobs/${encodeURIComponent(jobSlug)}/apply`,
+      apiUrl(`/public/jobs/${encodeURIComponent(jobSlug)}/apply`),
       { method: "POST", body },
     ).catch(() => null);
 

@@ -14,7 +14,7 @@ export function BrandLogoCard({ brand }: BrandLogoCardProps) {
   return (
     <Link
       href={brandPath(brand.slug)}
-      className="group flex h-full flex-col gap-3 rounded-card outline-offset-6 outline-brand focus-visible:outline-2 md:gap-3.5"
+      className="group flex h-full flex-col rounded-card outline-offset-6 outline-brand focus-visible:outline-2"
     >
       <span
         className={cn(
@@ -35,9 +35,7 @@ export function BrandLogoCard({ brand }: BrandLogoCardProps) {
         />
       </span>
 
-      <h3 className="px-1 font-display text-base leading-snug font-medium text-ink transition-colors duration-200 group-hover:text-brand-700 md:text-lg">
-        {brand.name}
-      </h3>
+      <h3 className="sr-only">{brand.name}</h3>
     </Link>
   );
 }

@@ -1,5 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { PublicNewsItem } from "@/lib/public-api";
 import { newsPath } from "@/lib/site-links";
@@ -13,13 +11,11 @@ interface NewsCardProps {
   priority?: boolean;
 }
 
-export async function NewsCard({
+export function NewsCard({
   news,
   isCompact = false,
   priority = false,
 }: NewsCardProps) {
-  const t = await getTranslations("home");
-
   return (
     <Link
       href={newsPath(news.slug)}
@@ -46,7 +42,7 @@ export async function NewsCard({
       <div
         className={cn(
           "flex flex-col gap-2",
-          isCompact ? "mt-4 max-md:mt-0 max-md:min-w-0 max-md:gap-1.5" : "mt-5 mb-5",
+          isCompact ? "mt-4 max-md:mt-0 max-md:min-w-0 max-md:gap-1.5" : "mt-5",
         )}
       >
         <NewsMeta news={news} className={cn(isCompact && "max-md:text-xs")} />
@@ -61,13 +57,6 @@ export async function NewsCard({
           {news.title}
         </h3>
       </div>
-
-      {!isCompact && (
-        <span className="mt-auto flex items-center gap-1.5 border-t border-rule pt-4 text-sm font-semibold text-brand-700">
-          {t("learnMore")}
-          <ArrowUpRight className="size-4 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </span>
-      )}
     </Link>
   );
 }

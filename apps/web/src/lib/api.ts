@@ -25,6 +25,12 @@ export class ApiError extends Error {
   }
 }
 
+const BROWSER_API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+
+export function apiUrl(path: string) {
+  return `${BROWSER_API_URL}${path}`;
+}
+
 function buildUrl(path: string, searchParams: RequestOptions["searchParams"]) {
   const params = new URLSearchParams();
 
@@ -35,7 +41,7 @@ function buildUrl(path: string, searchParams: RequestOptions["searchParams"]) {
   }
 
   const query = params.toString();
-  return query ? `/api${path}?${query}` : `/api${path}`;
+  return query ? `${apiUrl(path)}?${query}` : apiUrl(path);
 }
 
 function buildBody(body: unknown) {
@@ -71,7 +77,7 @@ export async function api<T>(
 
   const response = await fetch(buildUrl(path, options.searchParams), {
     method: options.method ?? "GET",
-    credentials: "same-origin",
+    credentials: "include",
     headers,
     body,
   });

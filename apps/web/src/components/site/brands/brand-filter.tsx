@@ -69,7 +69,7 @@ export function BrandFilter({ label, options, items }: BrandFilterProps) {
 
       <ul
         key={selected}
-        className="mt-8 grid grid-cols-2 gap-x-3 gap-y-7 md:mt-10 md:grid-cols-3 md:gap-x-5 md:gap-y-10 lg:grid-cols-4 xl:grid-cols-5"
+        className="mt-8 grid grid-cols-2 gap-3 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-4 xl:grid-cols-5"
       >
         {visibleItems.map((item, index) => (
           <li

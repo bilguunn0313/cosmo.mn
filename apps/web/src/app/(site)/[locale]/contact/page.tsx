@@ -65,7 +65,7 @@ export default async function ContactPage({
           >
             <h1
               id="contact-title"
-              className="type-section text-balance text-ink"
+              className="type-h3 font-semibold text-balance text-ink"
             >
               {t("nav.contact")}
             </h1>
@@ -79,7 +79,7 @@ export default async function ContactPage({
           <section aria-labelledby="contact-form-title" className="grid gap-8">
             <h2
               id="contact-form-title"
-              className="type-h2 pt-2 text-ink md:pt-3"
+              className="type-h3 font-semibold text-balance text-ink"
             >
               {t("contact.formTitle")}
             </h2>

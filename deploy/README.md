@@ -1,161 +1,143 @@
-# Deploy
-
-Сервер дээрх бүтэц:
+# Deploy: Vercel + Railway
 
 ```
-/srv/cosmo.mn            git repo (энэ төсөл)
-/srv/cosmo-data/uploads  админаас оруулсан зураг, видео (UPLOADS_DIR)
-/srv/cosmo-data/backups  өгөгдлийн сан болон uploads-ийн нөөц
+cosmo.mn      → Vercel   web (Next.js)
+api.cosmo.mn  → Railway  API (NestJS) + Postgres + зургийн volume
 ```
 
-pm2 хоёр процесс ажиллуулна: `cosmo-api` (NestJS, 4000 порт) ба `cosmo-web` (Next.js, 3000 порт). Nginx гаднаас ирсэн хүсэлтийг хуваарилна: `/api/*` → Nest, `/uploads/*` → дискнээс шууд, бусад нь → Next.
+Хөтөч админы хүсэлт, upload, маягтыг `api.cosmo.mn` руу шууд илгээнэ. Нэвтрэлтийн cookie нь `cosmo.mn`-ийн бүх subdomain дээр хүчинтэй. `main` руу push хийхэд хоёр платформ автоматаар deploy хийнэ.
 
-## Өдөр тутмын deploy
+VPS дээр байршуулах заавар: [vps.md](vps.md).
+
+## 0. Бэлтгэл
+
+- [ ] Vercel ба Railway бүртгэл, компанийн имэйлээр. Туршилтын үед Vercel Hobby хангалттай. Сайтыг олон нийтэд нээхээс өмнө **Pro** руу шилжинэ, учир нь Hobby нь арилжааны хэрэглээг зөвшөөрдөггүй.
+- [ ] Домэйны DNS панелд нэвтрэх эрх
+- [ ] Docker Desktop асаалттай (local DB-г экспортлоход хэрэгтэй)
+- [ ] Railway CLI: `npm install -g @railway/cli`
+- [ ] Кодоо commit хийгээд `main` руу push хийсэн
+
+## 1. Railway: Postgres
+
+1. railway.com → **New Project** → **Deploy PostgreSQL**.
+2. Postgres service → **Settings** → Region: **Southeast Asia (Singapore)**.
+3. Postgres → **Variables**-аас `DATABASE_PUBLIC_URL`-ийг хуулж авна. Үүнийг 2-р алхамд хэрэглэнэ.
+
+## 2. Local өгөгдлийг Railway руу хуулах
+
+⚠️ Энэ алхмаас хойш local админаас юу ч бүү засаарай. Хуулсны дараах өөрчлөлт production-д орохгүй.
+
+Repo-гийн root хавтаснаас, PowerShell дээр:
 
 ```powershell
-git push
-ssh cosmo "bash /srv/cosmo.mn/scripts/deploy.sh"
+docker compose exec db pg_dump -U cosmo -Fc -f /tmp/cosmo.dump cosmo
+docker compose cp db:/tmp/cosmo.dump ./cosmo.dump
+docker run --rm -v "${PWD}:/backup" postgres:16 pg_restore --no-owner --no-acl -d "<DATABASE_PUBLIC_URL>" /backup/cosmo.dump
 ```
 
-Скрипт дарааллаар: нөөц авна → `origin/main`-ийг татна → `npm ci` → migration → API build ба restart → web build ба restart. Алхам бүтэлгүйтвэл тэр дороо зогсоно.
+`cosmo.dump` файлд админы нууц үгийн hash байгаа тул сэргээж дууссаны дараа устгана. Git-д орохгүй (`.gitignore`-д нэмсэн).
 
-### Буцаах
+Migration-ий түүх хамт хуулагдана. Тиймээс API анх deploy хийгдэхэд шинэ migration ажиллахгүй.
 
-Deploy-ийн төгсгөлд өмнөх commit хэвлэгдэнэ. Буцаахдаа:
+## 3. Railway: API
+
+1. Төсөл дотроо **New** → **GitHub Repo** → `cosmo.mn` repo.
+2. **Settings**:
+
+   | Талбар | Утга |
+   |---|---|
+   | Region | Southeast Asia (Singapore) |
+   | Custom Build Command | `npm run build:api` |
+   | Custom Start Command | `npm run start:prod -w apps/api` |
+   | Pre-deploy Command | `npm run prisma:migrate -w apps/api` |
+   | Healthcheck Path | `/health` |
+   | Watch Paths | `apps/api/**`, `packages/shared/**` |
+
+3. API service дээр **Volume** нэмнэ. Mount path нь `/data`.
+4. **Variables**:
+
+   | Хувьсагч | Утга |
+   |---|---|
+   | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` |
+   | `RAILPACK_NODE_VERSION` | `24` |
+   | `PORT` | `4000` |
+   | `WEB_URL` | `https://cosmo.mn` |
+   | `COOKIE_DOMAIN` | `cosmo.mn` |
+   | `CLIENT_IP_HEADER` | `x-real-ip` |
+   | `UPLOADS_DIR` | `/data/uploads` |
+   | `JWT_SECRET` | шинэ урт санамсаргүй тэмдэгт мөр |
+   | `RESEND_API_KEY`, `MAIL_FROM` | 6-р алхмын дараа |
+
+   `NODE_ENV`-г бүү нэмээрэй. Railway апп ажиллах үед үүнийг өөрөө `production` болгодог. Build хийх үед тохируулбал build эвдэрнэ.
+
+5. Deploy хийгдээд **Deployments** хэсэгт ногоон болсны дараа: **Settings** → **Networking** → **Custom Domain** → `api.cosmo.mn`, порт `4000`. Railway CNAME бичлэг өгнө. Үүнийг DNS панелд нэмнэ.
+6. `https://api.cosmo.mn/health` хөтөч дээр нээгдэх хүртэл хүлээнэ (DNS шинэчлэгдэхэд хэдэн минутаас хэдэн цаг шаардагдана).
+
+## 4. Зургуудыг volume руу хуулах
+
+Repo-гийн root хавтаснаас:
 
 ```powershell
-ssh cosmo "bash /srv/cosmo.mn/scripts/deploy.sh <commit>"
+railway login
+railway link
+railway volume files upload apps/api/uploads /uploads
 ```
 
-Код буцдаг ч migration буцдаггүй. Migration өгөгдлийг эвдсэн бол deploy-ийн өмнө авсан нөөцөөс сэргээнэ:
+`railway link` дээр төсөл болон API service-ийг сонгоно. API ажиллаж байх үед л upload хийгдэнэ.
 
-```bash
-pg_restore --clean --if-exists -d "<DATABASE_URL>" /srv/cosmo-data/backups/db/cosmo-<огноо>.dump
-```
+Шалгах: local `apps/api/uploads/images/` доторх аль нэг файлын нэрийг аваад `https://api.cosmo.mn/uploads/images/<файл>.webp` хаягийг нээнэ. Нээгдэхгүй бол `railway volume files browse /` командаар файлууд хаана очсоныг харна. Тэд `/data/uploads` доор байх ёстой.
 
-## Серверийг анх тохируулах (нэг удаа)
+## 5. Vercel: web
 
-Ubuntu 24.04 LTS, root эрхээр эхэлнэ.
+1. vercel.com → **Add New** → **Project** → `cosmo.mn` repo.
+2. Тохиргоо:
 
-### 1. Хэрэглэгч, SSH, firewall
+   | Талбар | Утга |
+   |---|---|
+   | Root Directory | `apps/web` |
+   | Install Command | `cd ../.. && npm ci` |
+   | Build Command | `cd ../.. && npm run build:web` |
+   | Node.js Version | 24.x |
 
-```bash
-apt update && apt upgrade -y
-adduser deploy
-usermod -aG sudo deploy
-rsync --archive --chown=deploy:deploy ~/.ssh /home/deploy
-```
+3. **Environment Variables**:
 
-Шинэ терминалаас `ssh deploy@<IP>` орж чадаж байгааг шалгасны **дараа** л `/etc/ssh/sshd_config`-д:
+   | Хувьсагч | Утга |
+   |---|---|
+   | `API_URL` | `https://api.cosmo.mn` |
+   | `NEXT_PUBLIC_API_URL` | `https://api.cosmo.mn` |
+   | `SITE_URL` | `https://cosmo.mn` |
 
-```
-PermitRootLogin no
-PasswordAuthentication no
-```
+4. **Deploy**. Build хийх үед хуудсууд API-аас өгөгдөл татдаг тул 3-р алхмын `api.cosmo.mn` ажиллаж байх ёстой.
+5. **Settings** → **Functions** → Function Region: **Singapore (sin1)**. Дараа нь дахин deploy хийнэ.
+6. **Settings** → **Domains** → `cosmo.mn` болон `www.cosmo.mn` нэмж, `www`-ийг `cosmo.mn` руу redirect хийнэ. Vercel-ийн заасан бичлэгүүдийг DNS панелд нэмнэ.
 
-```bash
-sudo systemctl restart ssh
-sudo apt install -y fail2ban
-sudo ufw allow OpenSSH
-sudo ufw enable
-```
+`cosmo.mn` дээр одоо хуучин сайт ажиллаж байгаа бөгөөд шинэ сайтыг шалгаж дуустал түүнийг хэвээр үлдээх бол: эхлээд `new.cosmo.mn`-ийг нэмж, Railway-ийн `WEB_URL`-ийг `https://new.cosmo.mn` болгоно. Шалгаж дууссаны дараа `cosmo.mn` руу шилжүүлж, `WEB_URL`-ийг буцааж өөрчилнө.
 
-Өөрийн компьютерийн `~/.ssh/config`-д:
+`*.vercel.app` хаяг дээр нийтийн хуудсууд ажиллана. Харин cookie нь `cosmo.mn`-д хамаарах тул админ нэвтрэлт ажиллахгүй.
 
-```
-Host cosmo
-    HostName <IP>
-    User deploy
-```
+## 6. Имэйл (Resend)
 
-### 2. Программ суулгах
+1. resend.com → **Domains** → `cosmo.mn` нэмнэ. Resend-ийн өгсөн DNS бичлэгүүдийг нэмээд **Verify** дарна.
+2. API key үүсгээд Railway-д `RESEND_API_KEY`, `MAIL_FROM` (`cosmo.mn <noreply@cosmo.mn>`) гэж нэмнэ.
 
-```bash
-sudo apt install -y git nginx postgresql rsync certbot python3-certbot-nginx
-curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
-sudo apt install -y nodejs
-sudo npm install -g pm2
-sudo ufw allow "Nginx Full"
-```
+Энэ алхмыг хийхээс өмнө contact маягт болон анкет «илгээж чадсангүй» гэсэн алдаа өгнө.
 
-`node -v` нь 24.9 буюу түүнээс дээш байх ёстой.
+⚠️ DNS панелд байгаа хуучин MX, TXT бичлэгүүдэд хүрэхгүй. Тэд компанийн одоогийн имэйлийн бичлэгүүд.
 
-### 3. Өгөгдлийн сан
+## 7. Шалгах
 
-```bash
-sudo -u postgres createuser --pwprompt cosmo
-sudo -u postgres createdb --owner=cosmo cosmo
-```
+- [ ] Нүүр, Бидний тухай, Брэндүүд, Медиа, Холбоо барих хуудсууд MN / EN / ZH хэлээр контент, зурагтайгаа харагдаж байна
+- [ ] `https://cosmo.mn/admin/login`-оор нэвтэрч чадаж байна
+- [ ] **Админы нууц үгийг шууд сольсон.** Local DB-ээс хуулагдсан тул хуучин нууц үг хэвээр байгаа.
+- [ ] Утсаар авсан том (5MB+) зураг upload хийгдэж байна
+- [ ] Админаас өөрчилсөн зүйл сайт дээр гарч байна
+- [ ] Contact маягт имэйл хүргэж байна
 
-### 4. Хавтас ба repo
+## Өдөр тутам
 
-```bash
-sudo mkdir -p /srv/cosmo.mn /srv/cosmo-data/uploads /srv/cosmo-data/backups
-sudo chown -R deploy:deploy /srv/cosmo.mn /srv/cosmo-data
-git clone https://github.com/bilguunn0313/cosmo.mn.git /srv/cosmo.mn
-```
+- `git push` хийхэд Vercel web-ийг, Railway API-г дахин deploy хийнэ. Шинэ migration байвал Railway апп асахаас өмнө ажиллуулна.
+- **Нөөц:** Сард нэг удаа ч гэсэн DB-ээ өөрийн компьютер руу татаж авна. Docker image-ийн хувилбар Railway-ийн Postgres-ийн хувилбартай ижил буюу түүнээс шинэ байх ёстой (Postgres service-ийн логоос хувилбарыг нь харна):
 
-Repo private бол серверт тусдаа түлхүүр үүсгээд (`ssh-keygen -t ed25519`), `~/.ssh/id_ed25519.pub`-ийг GitHub → Settings → Deploy keys-д (read-only) нэмж, `git@github.com:bilguunn0313/cosmo.mn.git` хаягаар clone хийнэ.
-
-### 5. `.env` файлууд
-
-Dev-ийн утгыг дахин бүү ашигла. Шинэ нууц үгсийг password manager-т хадгална.
-
-`apps/api/.env`:
-
-| Хувьсагч | Утга |
-|---|---|
-| `DATABASE_URL` | `postgresql://cosmo:<3-р алхмын нууц үг>@localhost:5432/cosmo` |
-| `WEB_URL` | `https://cosmo.mn` |
-| `PORT` | `4000` |
-| `JWT_SECRET` | `openssl rand -hex 32` командын гаралт |
-| `UPLOADS_DIR` | `/srv/cosmo-data/uploads` (Nginx-ийн тохиргоотой ижил байх ёстой) |
-| `RESEND_API_KEY`, `MAIL_FROM` | Resend дээр cosmo.mn-ийг баталгаажуулсны дараа |
-| `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` | анхны админ, хүчтэй нууц үгтэй |
-
-`apps/web/.env.local`:
-
-| Хувьсагч | Утга |
-|---|---|
-| `API_URL` | `http://127.0.0.1:4000` |
-| `SITE_URL` | `https://cosmo.mn` |
-
-### 6. Анхны deploy
-
-```bash
-cd /srv/cosmo.mn
-bash scripts/deploy.sh
-npm run db:seed -w apps/api
-pm2 startup
-pm2 install pm2-logrotate
-```
-
-`pm2 startup` хэвлэсэн `sudo ...` командыг хуулж ажиллуулна. Ингэснээр сервер дахин асахад сайт өөрөө асна.
-
-### 7. Nginx ба SSL
-
-Домэйны `A` бичлэгүүд (`cosmo.mn`, `www`) серверийн IP руу заасны дараа:
-
-```bash
-sudo cp deploy/nginx/cosmo.mn.conf /etc/nginx/sites-available/cosmo.mn
-sudo ln -s /etc/nginx/sites-available/cosmo.mn /etc/nginx/sites-enabled/
-sudo rm /etc/nginx/sites-enabled/default
-sudo nginx -t && sudo systemctl reload nginx
-sudo certbot --nginx -d cosmo.mn -d www.cosmo.mn --redirect
-```
-
-Админы нэвтрэлт HTTPS дээр л ажиллана (cookie нь `secure`).
-
-### 8. Өдөр бүрийн нөөц
-
-`crontab -e`:
-
-```
-0 3 * * * bash /srv/cosmo.mn/scripts/backup.sh >> /srv/cosmo-data/backups/backup.log 2>&1
-```
-
-Өгөгдлийн сангийн нөөц 14 хоног хадгалагдана. Uploads-ийн нөөцөөс файл устдаггүй. Нөөц нэг сервер дээр байгаа тул үе үе өөрийн компьютер руу татаж авна:
-
-```powershell
-scp -r cosmo:/srv/cosmo-data/backups ./cosmo-backups
-```
+  ```powershell
+  docker run --rm -v "${PWD}:/backup" postgres:17 pg_dump -Fc -f /backup/cosmo-backup.dump "<DATABASE_PUBLIC_URL>"
+  ```

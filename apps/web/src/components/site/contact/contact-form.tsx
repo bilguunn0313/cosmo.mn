@@ -17,6 +17,7 @@ import {
   textareaClass,
 } from "@/components/site/form-styles";
 import { LineSelect } from "@/components/site/line-select";
+import { apiUrl } from "@/lib/api";
 import type { PublicDepartment } from "@/lib/public-api";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -125,7 +126,7 @@ export function ContactForm({ departments }: ContactFormProps) {
   const onSubmit = handleSubmit(async (values) => {
     setSubmitError(null);
 
-    const response = await fetch("/api/public/contact", {
+    const response = await fetch(apiUrl("/public/contact"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(toInput(values, locale)),

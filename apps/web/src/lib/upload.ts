@@ -4,7 +4,7 @@ import {
   MAX_VIDEO_SIZE_BYTES,
   VIDEO_MIME_TYPES,
 } from "@cosmo/shared";
-import { ApiError } from "./api";
+import { ApiError, apiUrl } from "./api";
 import type { Media, MediaType } from "./types";
 
 export const ACCEPTED_FILE_TYPES: Record<MediaType, readonly string[]> = {
@@ -90,7 +90,8 @@ export function uploadMedia(
       reject(new ApiError(0, "Сервертэй холбогдож чадсангүй", null));
     });
 
-    request.open("POST", "/api/admin/media");
+    request.open("POST", apiUrl("/admin/media"));
+    request.withCredentials = true;
     request.send(formData);
   });
 }

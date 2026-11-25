@@ -5,4 +5,5 @@ dist
 generated
 *.tsbuildinfo
 uploads
+*.dump
 des/*.pdf
