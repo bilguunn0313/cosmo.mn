@@ -1,3 +1,5 @@
+import { join } from 'node:path';
+import sharp from 'sharp';
 import { uploadTestImage } from './helpers/fixtures';
 import { createTestApp, TestContext } from './helpers/test-app';
 
@@ -123,6 +125,58 @@ describe('Brands', () => {
     expect(english.body.name).toBe('Test brand');
     expect(chinese.body.name).toBe('Тест брэнд');
     expect(english.body.logoUrl).toMatch(/^\/uploads\//);
+  });
+
+  async function uploadImage(image: Buffer, filename: string) {
+    const response = await context.admin
+      .post('/admin/media')
+      .attach('file', image, { filename, contentType: 'image/png' })
+      .expect(201);
+
+    return response.body.id as number;
+  }
+
+  async function alphaAt(url: string, x: number, y: number) {
+    const filePath = join(
+      process.env.UPLOADS_DIR ?? '',
+      url.replace(/^\/uploads\//, ''),
+    );
+    const { data, info } = await sharp(filePath)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+
+    return data[(y * info.width + x) * 4 + 3];
+  }
+
+  it('логоны гадна талын цагааныг тайрч тунгалаг болгоод, доторх цагааныг үлдээнэ', async () => {
+    const ringLogo = await sharp(
+      Buffer.from(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="400" height="300" fill="#ffffff"/><circle cx="200" cy="150" r="60" fill="none" stroke="#1b4d7f" stroke-width="16"/></svg>',
+      ),
+    )
+      .png()
+      .toBuffer();
+    const ringLogoId = await uploadImage(ringLogo, 'ring-logo.png');
+    await createBrand('brand-clear-logo', { logoId: ringLogoId }).expect(201);
+
+    const list = await context.guest.get('/public/brands').expect(200);
+    const detail = await context.guest
+      .get('/public/brands/brand-clear-logo')
+      .expect(200);
+    const listed = list.body.find(
+      (brand: { slug: string }) => brand.slug === 'brand-clear-logo',
+    );
+
+    for (const brand of [listed, detail.body]) {
+      expect(brand.logoUrl).toMatch(/\.clear\.webp$/);
+      expect(brand.logoWidth).toBeLessThan(150);
+    }
+
+    const center = Math.floor(detail.body.logoWidth / 2);
+    expect(await alphaAt(detail.body.logoUrl, 0, 0)).toBe(0);
+    expect(await alphaAt(detail.body.logoUrl, center, center)).toBe(255);
+    await context.guest.get(detail.body.logoUrl).expect(200);
   });
 
   it('засахад нийтлэгдсэн төлөв өөрчлөгдөхгүй', async () => {

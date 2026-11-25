@@ -17,6 +17,7 @@ import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { MediaUsageService } from './media-usage.service';
 import { StorageService } from './storage.service';
+import { clearLogoUrl } from './logo-image';
 
 export interface UploadedFileData {
   buffer: Buffer;
@@ -106,6 +107,10 @@ export class MediaService {
 
     await this.prisma.media.delete({ where: { id } });
     await this.storage.remove(media.url);
+
+    if (media.type === 'IMAGE') {
+      await this.storage.remove(clearLogoUrl(media.url));
+    }
   }
 
   private async findOne(id: number) {

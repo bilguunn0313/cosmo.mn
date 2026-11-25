@@ -3,7 +3,6 @@
 import { BackLink } from "@/components/admin/back-link";
 import { PageHeader } from "@/components/admin/page-header";
 import { PanelHeader } from "@/components/admin/panel-header";
-import { SectionsPanel } from "@/components/admin/sections/sections-panel";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBrand } from "@/lib/queries/brands";
@@ -65,15 +64,6 @@ export function BrandEditor({ brandId }: BrandEditorProps) {
       </section>
 
       <ProductsPanel brandId={brandId} step={2} />
-
-      <SectionsPanel
-        source={{ brandId }}
-        step={3}
-        title="Дэлгэрэнгүй хэсгүүд"
-        description="Брэндийн түүх, онцлог зэрэг зурагтай текст хэсгүүд. Бүтээгдэхүүний доор гарна."
-        emptyText="Одоогоор хэсэг алга. Жишээ нь «Брэндийн түүх» хэсгээс эхэлнэ үү."
-        bodyMode="rich"
-      />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { framedImageUrl } from '../common/framed-image-url';
 import { pickTranslation } from '../common/pick-translation';
 import { Prisma } from '../generated/prisma/client';
 import { isCutoutImage } from '../media/image-background';
+import { clearLogo } from '../media/logo-image';
 import { PrismaService } from '../prisma/prisma.service';
 
 const brandInclude = {
@@ -136,25 +137,28 @@ export class BrandsService {
       include: brandInclude,
     });
 
-    return brands.map((brand) => {
-      const translation = pickTranslation(brand.translations, query.locale);
+    return Promise.all(
+      brands.map(async (brand) => {
+        const translation = pickTranslation(brand.translations, query.locale);
+        const logo = await clearLogo(brand.logo);
 
-      return {
-        slug: brand.slug,
-        categories: brand.categories,
-        name: translation?.name ?? '',
-        summary: translation?.summary ?? null,
-        productTypes: translation?.productTypes ?? null,
-        logoUrl: brand.logo?.url ?? null,
-        logoWidth: brand.logo?.width ?? null,
-        logoHeight: brand.logo?.height ?? null,
-        coverUrl: framedImageUrl(brand.cover),
-        coverWidth: brand.cover?.width ?? null,
-        coverHeight: brand.cover?.height ?? null,
-        showcaseImageUrl: brand.showcaseImage?.url ?? null,
-        featuredOrder: brand.featuredOrder,
-      };
-    });
+        return {
+          slug: brand.slug,
+          categories: brand.categories,
+          name: translation?.name ?? '',
+          summary: translation?.summary ?? null,
+          productTypes: translation?.productTypes ?? null,
+          logoUrl: logo?.url ?? null,
+          logoWidth: logo?.width ?? null,
+          logoHeight: logo?.height ?? null,
+          coverUrl: framedImageUrl(brand.cover),
+          coverWidth: brand.cover?.width ?? null,
+          coverHeight: brand.cover?.height ?? null,
+          showcaseImageUrl: brand.showcaseImage?.url ?? null,
+          featuredOrder: brand.featuredOrder,
+        };
+      }),
+    );
   }
 
   async findOriginCountries() {
@@ -193,6 +197,7 @@ export class BrandsService {
     }
 
     const translation = pickTranslation(brand.translations, locale);
+    const logo = await clearLogo(brand.logo);
 
     return {
       slug: brand.slug,
@@ -200,9 +205,9 @@ export class BrandsService {
       name: translation?.name ?? '',
       summary: translation?.summary ?? null,
       productTypes: translation?.productTypes ?? null,
-      logoUrl: brand.logo?.url ?? null,
-      logoWidth: brand.logo?.width ?? null,
-      logoHeight: brand.logo?.height ?? null,
+      logoUrl: logo?.url ?? null,
+      logoWidth: logo?.width ?? null,
+      logoHeight: logo?.height ?? null,
       coverUrl: framedImageUrl(brand.cover),
       coverWidth: brand.cover?.width ?? null,
       coverHeight: brand.cover?.height ?? null,

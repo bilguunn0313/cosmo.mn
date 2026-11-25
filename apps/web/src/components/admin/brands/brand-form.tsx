@@ -26,7 +26,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ApiError } from "@/lib/api";
 import { BRAND_CATEGORY_LABELS } from "@/lib/brand-categories";
 import { useCreateBrand, useUpdateBrand } from "@/lib/queries/brands";
-import { isExternalUrl, isValidLink } from "@/lib/site-links";
 import {
   emptyTranslations,
   formToTranslations,
@@ -60,10 +59,6 @@ const translationSchema = z.object({
   summary: z.string().trim().max(1000),
 });
 
-function isValidWebsite(value: string) {
-  return value === "" || (isExternalUrl(value) && isValidLink(value));
-}
-
 const brandFormSchema = z.object({
   slug: slugSchema,
   categories: z
@@ -71,13 +66,7 @@ const brandFormSchema = z.object({
     .min(1, "Дор хаяж нэг ангилал сонгоно уу"),
   logo: z.custom<Media | null>(),
   cover: z.custom<Media | null>(),
-  showcaseImage: z.custom<Media | null>(),
   originCountry: z.union([z.literal(""), z.enum(COUNTRY_CODES)]),
-  websiteUrl: z
-    .string()
-    .trim()
-    .max(500)
-    .refine(isValidWebsite, "https://-ээр эхэлсэн бүтэн хаяг оруулна уу"),
   isPublished: z.boolean(),
   translations: z
     .object({
@@ -110,9 +99,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
       categories: [],
       logo: null,
       cover: null,
-      showcaseImage: null,
       originCountry: "",
-      websiteUrl: "",
       isPublished: false,
       translations: emptyTranslations(EMPTY_TRANSLATION),
     };
@@ -123,9 +110,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
     categories: brand.categories,
     logo: brand.logo,
     cover: brand.cover,
-    showcaseImage: brand.showcaseImage,
     originCountry: brand.originCountry ?? "",
-    websiteUrl: brand.websiteUrl ?? "",
     isPublished: brand.isPublished,
     translations: translationsToForm(brand.translations, EMPTY_TRANSLATION),
   };
@@ -137,9 +122,7 @@ function toInput(values: BrandFormValues): CreateBrandInput {
     categories: values.categories,
     logoId: values.logo?.id ?? null,
     coverId: values.cover?.id ?? null,
-    showcaseImageId: values.showcaseImage?.id ?? null,
     originCountry: values.originCountry || null,
-    websiteUrl: values.websiteUrl === "" ? null : values.websiteUrl,
     isPublished: values.isPublished,
     translations: formToTranslations(
       values.translations,
@@ -347,7 +330,7 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
         />
       </FormField>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2">
         <FormField
           label="Лого"
           htmlFor="brand-logo"
@@ -394,40 +377,7 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
             )}
           />
         </FormField>
-        <FormField
-          label="Картын зураг"
-          htmlFor="brand-showcase"
-          hint="Брэндүүд хуудасны картанд логоны оронд гарна. Нэг бүтээгдэхүүний тунгалаг дэвсгэртэй PNG тохиромжтой"
-        >
-          <Controller
-            control={control}
-            name="showcaseImage"
-            render={({ field }) => (
-              <MediaField
-                value={field.value}
-                onChange={field.onChange}
-                pickerTitle="Бүтээгдэхүүний зураг сонгох"
-                removable
-              />
-            )}
-          />
-        </FormField>
       </div>
-
-      <FormField
-        label="Брэндийн албан ёсны вэбсайт"
-        htmlFor="brand-website"
-        hint="Заавал биш. Жишээ нь https://www.nivea.com"
-        error={errors.websiteUrl?.message}
-      >
-        <Input
-          id="brand-website"
-          type="url"
-          placeholder="https://"
-          aria-invalid={Boolean(errors.websiteUrl)}
-          {...register("websiteUrl")}
-        />
-      </FormField>
 
       <Controller
         control={control}

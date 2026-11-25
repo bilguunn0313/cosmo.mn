@@ -1,12 +1,9 @@
-import { BRAND_CATEGORIES } from "@cosmo/shared";
-import { ArrowDown } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BrandChapter } from "@/components/site/brands/brand-chapter";
+import { BrandCatalogue } from "@/components/site/brands/brand-catalogue";
 import { BrandsHero } from "@/components/site/brands/brands-hero";
 import { CatalogBook } from "@/components/site/brands/catalog-book";
 import { Reveal } from "@/components/site/reveal";
-import { siteButtonClass } from "@/components/site/site-button";
 import { getPageLocale } from "@/i18n/locale";
 import { CATALOG } from "@/lib/catalog";
 import { fetchBrands } from "@/lib/public-api";
@@ -32,38 +29,13 @@ export default async function BrandsPage({
   const locale = await getPageLocale(params);
   const t = await getTranslations();
   const brands = await fetchBrands(locale);
-
-  const chapters = BRAND_CATEGORIES.map((category) => ({
-    category,
-    brands: brands.filter((brand) => brand.categories.includes(category)),
-  })).filter((chapter) => chapter.brands.length > 0);
   const hasCatalog = CATALOG.pages.length > 0;
 
   return (
     <>
-      <BrandsHero brands={brands}>
-        {hasCatalog && (
-          <a href="#catalog" className={siteButtonClass("white", "min-w-52.5")}>
-            {t("catalog.view")}
-            <ArrowDown className="size-4.5" />
-          </a>
-        )}
-      </BrandsHero>
+      <BrandsHero brands={brands} />
 
-      {chapters.length === 0 && (
-        <p className="site-container py-24 text-lg text-ink-2 md:py-32">
-          {t("brands.empty")}
-        </p>
-      )}
-
-      {chapters.map((chapter, index) => (
-        <BrandChapter
-          key={chapter.category}
-          category={chapter.category}
-          brands={chapter.brands}
-          isAlternate={index % 2 === 1}
-        />
-      ))}
+      <BrandCatalogue brands={brands} />
 
       {hasCatalog && (
         <section

@@ -6,6 +6,7 @@ import type { BrandNeighbors } from "@/lib/brand-neighbors";
 import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
+import { BRAND_LIST_ID } from "./brand-catalogue";
 import { BrandLogo } from "./brand-logo";
 import { BRAND_TILE_BACKGROUND } from "./brand-tile-background";
 
@@ -102,7 +103,7 @@ export async function BrandPager({
               </span>
             )}
             <Link
-              href="/brands#catalog"
+              href={`/brands#${BRAND_LIST_ID}`}
               className="text-sm text-ink-2 underline-offset-4 transition-colors duration-150 hover:text-brand hover:underline"
             >
               {t("all")}

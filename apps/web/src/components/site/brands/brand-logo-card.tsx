@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { PublicBrand } from "@/lib/public-api";
 import { brandPath } from "@/lib/site-links";
@@ -10,71 +10,34 @@ interface BrandLogoCardProps {
   brand: PublicBrand;
 }
 
-interface ShowcaseVisualProps {
-  brand: PublicBrand;
-  imageUrl: string;
-}
-
-function ShowcaseVisual({ brand, imageUrl }: ShowcaseVisualProps) {
-  return (
-    <>
-      <Image
-        src={imageUrl}
-        alt={brand.name}
-        fill
-        unoptimized
-        sizes="(min-width: 1280px) 300px, (min-width: 768px) 33vw, 50vw"
-        className="object-contain px-[16%] pt-[8%] pb-[14%] transition-[scale] duration-500 ease-(--ease-out) group-hover:scale-[1.05] motion-reduce:transition-none"
-      />
-      {brand.logoUrl && (
-        <span className="absolute bottom-3 left-3 size-11 overflow-hidden rounded-full bg-white shadow-[0_4px_16px_color-mix(in_srgb,var(--color-brand-900)_14%,transparent)] md:size-13">
-          <Image
-            src={brand.logoUrl}
-            alt=""
-            fill
-            unoptimized
-            sizes="52px"
-            className="object-contain p-2"
-          />
-        </span>
-      )}
-    </>
-  );
-}
-
 export function BrandLogoCard({ brand }: BrandLogoCardProps) {
   return (
     <Link
       href={brandPath(brand.slug)}
-      className="group flex h-full flex-col gap-3.5 rounded-card outline-offset-4 outline-brand focus-visible:outline-2"
+      className="group flex h-full flex-col gap-3 rounded-card outline-offset-6 outline-brand focus-visible:outline-2 md:gap-3.5"
     >
       <span
         className={cn(
-          "relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-card transition-[translate] duration-400 ease-(--ease-out) group-hover:-translate-y-1 motion-reduce:transition-none",
+          "relative grid aspect-4/3 place-items-center rounded-card transition-[translate,box-shadow,scale] duration-450 ease-(--ease-out) group-hover:-translate-y-1 group-hover:shadow-[0_22px_40px_-26px_rgb(19_54_89/0.45)] group-active:scale-[0.98] motion-reduce:transition-none",
           BRAND_TILE_BACKGROUND,
         )}
       >
-        {brand.showcaseImageUrl ? (
-          <ShowcaseVisual brand={brand} imageUrl={brand.showcaseImageUrl} />
-        ) : (
-          <BrandLogo
-            brand={brand}
-            baseWidth={30}
-            nameClassName="text-xl transition-[scale] duration-500 ease-(--ease-out) group-hover:scale-[1.05] motion-reduce:transition-none md:text-[22px]"
-          />
-        )}
+        <BrandLogo
+          brand={brand}
+          baseWidth={34}
+          maxWidth={66}
+          nameClassName="text-lg md:text-xl"
+          className="max-h-[48%] group-hover:scale-100"
+        />
+        <ArrowUpRight
+          aria-hidden
+          className="absolute top-3.5 right-3.5 size-4.5 text-brand-700 opacity-0 transition-[opacity,translate] duration-300 ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 max-md:hidden"
+        />
       </span>
 
-      <span className="grid gap-1.5">
-        <h3 className="type-h4 font-semibold text-ink transition-colors duration-150 group-hover:text-brand-700">
-          {brand.name}
-        </h3>
-        {brand.productTypes && (
-          <span className="text-sm leading-normal text-ink-2">
-            {brand.productTypes}
-          </span>
-        )}
-      </span>
+      <h3 className="px-1 font-display text-base leading-snug font-medium text-ink transition-colors duration-200 group-hover:text-brand-700 md:text-lg">
+        {brand.name}
+      </h3>
     </Link>
   );
 }

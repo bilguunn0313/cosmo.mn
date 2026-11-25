@@ -11,7 +11,7 @@ import { MobileMenu } from "./mobile-menu";
 import { PAGE_BANNER_ID, SITE_NAV, isNavItemActive } from "./site-nav";
 import { Wordmark } from "./wordmark";
 
-const HERO_PATHS = ["/", "/brands"];
+const HERO_PATHS = ["/"];
 
 interface SiteHeaderProps {
   facebookUrl: string | null;

@@ -173,18 +173,15 @@
     "chapters": {
       "FOOD": {
         "label": "Food",
-        "title": "Food products",
-        "text": "We supply food products for households as well as restaurants, lounges, fast-food outlets and other food-service businesses. We value choice, quality and reliable supply, and work to meet our partners’ everyday needs. Our share of the total canned food market is 30%."
+        "title": "Food products"
       },
       "BEAUTY": {
         "label": "Beauty and hygiene",
-        "title": "Beauty and hygiene products",
-        "text": "We have brought more than 10 international beauty, oral care and hygiene brands to the Mongolian market, and we keep growing our range to match consumers’ everyday needs and preferences."
+        "title": "Beauty and hygiene products"
       },
       "HOUSEHOLD": {
         "label": "Household",
-        "title": "Household products",
-        "text": "We supply household products for the everyday needs of families and organisations. We value the right choice for customers, reliable supply and lasting partnerships."
+        "title": "Household products"
       }
     },
     "productsTitle": "Our products",
@@ -199,11 +196,16 @@
       "next": "Next brand",
       "position": "Brand {position} of {total}",
       "all": "All brands"
+    },
+    "listTitle": "Brand list",
+    "filter": {
+      "label": "Filter by category",
+      "all": "All",
+      "result": "{count, plural, one {# brand} other {# brands}}"
     }
   },
   "catalog": {
     "title": "Catalog",
-    "view": "View catalog",
     "hint": "Turn the pages to see all our products",
     "previous": "Previous page",
     "next": "Next page",

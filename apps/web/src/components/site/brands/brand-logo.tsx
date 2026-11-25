@@ -2,16 +2,34 @@ import Image from "next/image";
 import type { PublicBrand } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 
-const MAX_WIDTH_PERCENT = 66;
+const DEFAULT_MAX_WIDTH = 66;
 
-function logoWidth(brand: PublicBrand, baseWidth: number) {
-  if (!brand.logoWidth || !brand.logoHeight) {
+interface LogoSource {
+  url: string;
+  width: number | null;
+  height: number | null;
+}
+
+function logoSource(brand: PublicBrand): LogoSource | null {
+  if (brand.logoUrl) {
+    return {
+      url: brand.logoUrl,
+      width: brand.logoWidth,
+      height: brand.logoHeight,
+    };
+  }
+
+  return null;
+}
+
+function logoWidth(logo: LogoSource, baseWidth: number, maxWidth: number) {
+  if (!logo.width || !logo.height) {
     return `${baseWidth}%`;
   }
 
-  const ratio = brand.logoWidth / brand.logoHeight;
+  const ratio = logo.width / logo.height;
   const width = Math.min(
-    MAX_WIDTH_PERCENT,
+    maxWidth,
     Math.max(baseWidth * 0.7, baseWidth * Math.sqrt(ratio)),
   );
 
@@ -21,11 +39,21 @@ function logoWidth(brand: PublicBrand, baseWidth: number) {
 interface BrandLogoProps {
   brand: PublicBrand;
   baseWidth: number;
+  maxWidth?: number;
   nameClassName?: string;
+  className?: string;
 }
 
-export function BrandLogo({ brand, baseWidth, nameClassName }: BrandLogoProps) {
-  if (!brand.logoUrl) {
+export function BrandLogo({
+  brand,
+  baseWidth,
+  maxWidth = DEFAULT_MAX_WIDTH,
+  nameClassName,
+  className,
+}: BrandLogoProps) {
+  const logo = logoSource(brand);
+
+  if (!logo) {
     return (
       <span
         aria-hidden
@@ -41,13 +69,16 @@ export function BrandLogo({ brand, baseWidth, nameClassName }: BrandLogoProps) {
 
   return (
     <Image
-      src={brand.logoUrl}
+      src={logo.url}
       alt=""
-      width={brand.logoWidth ?? 400}
-      height={brand.logoHeight ?? 300}
+      width={logo.width ?? 400}
+      height={logo.height ?? 300}
       unoptimized
-      style={{ width: logoWidth(brand, baseWidth) }}
-      className="h-auto max-h-[52%] object-contain mix-blend-multiply transition-[scale] duration-500 ease-(--ease-out) group-hover:scale-[1.05] motion-reduce:transition-none"
+      style={{ width: logoWidth(logo, baseWidth, maxWidth) }}
+      className={cn(
+        "h-auto max-h-[52%] object-contain mix-blend-multiply transition-[scale] duration-500 ease-(--ease-out) group-hover:scale-[1.05] motion-reduce:transition-none",
+        className,
+      )}
     />
   );
 }
