@@ -52,13 +52,10 @@ export async function BrandsHero({ brands }: BrandsHeroProps) {
   const slides = brandSlides(brands);
 
   return (
-    <section aria-labelledby="brands-title" className="pt-8 md:pt-14">
-      <div className="site-container flex flex-col items-center gap-3 text-center md:gap-4">
-        <h1 id="brands-title" className="type-section text-balance text-ink">
-          {t("nav.brands")}
-        </h1>
-        <p className="text-lg text-ink-2">{t("brands.description")}</p>
-      </div>
+    <section aria-labelledby="brands-title">
+      <h1 id="brands-title" className="sr-only">
+        {t("nav.brands")}
+      </h1>
       {slides.length > 0 && <BrandsStrip slides={slides} />}
     </section>
   );

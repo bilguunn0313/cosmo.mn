@@ -137,7 +137,7 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
     : {};
 
   return (
-    <div className="mt-8 md:mt-10">
+    <div className="mt-8 md:mt-14">
       <div
         ref={viewRef}
         aria-roledescription="carousel"
