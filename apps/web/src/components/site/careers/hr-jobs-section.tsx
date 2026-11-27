@@ -7,6 +7,9 @@ import { SmartLink } from "@/components/site/smart-link";
 import { imageFrameStyle } from "@/lib/image-frame";
 import { cn } from "@/lib/utils";
 
+const PANEL_CLASS =
+  "ceo-card relative isolate flex h-full flex-col items-center justify-center overflow-hidden px-6 py-12 text-center text-white md:min-h-100 lg:min-h-125";
+
 const PANEL_TEXT_CLASS =
   "font-display text-lg leading-snug font-medium tracking-[0.08em] text-balance uppercase md:text-2xl";
 
@@ -14,8 +17,8 @@ interface HrJobsSectionProps {
   title: string;
   lead: string;
   count?: number;
-  label: string;
-  href: string;
+  label?: string;
+  href?: string;
   imageUrl: string;
   imageAlt: string;
   className?: string;
@@ -33,6 +36,29 @@ export function HrJobsSection({
 }: HrJobsSectionProps) {
   const hasCount = count !== undefined;
 
+  const panelContent = (
+    <>
+      <LogoMark className="absolute -right-16 -bottom-14 -z-10 w-60 text-white/6 lg:-right-24 lg:-bottom-24 lg:w-100" />
+      <span className={PANEL_TEXT_CLASS}>{lead}</span>
+      {hasCount && (
+        <span className="my-1 font-sans text-[120px] leading-none font-light tracking-[-0.03em] md:my-2 md:text-[160px] lg:text-[200px]">
+          {count}
+        </span>
+      )}
+      {label && (
+        <span
+          className={cn(
+            hasCount
+              ? PANEL_TEXT_CLASS
+              : "mt-4 max-w-[34ch] text-base leading-relaxed text-night-text md:text-[17px]",
+          )}
+        >
+          {label}
+        </span>
+      )}
+    </>
+  );
+
   return (
     <section
       aria-labelledby="hr-jobs-title"
@@ -48,33 +74,19 @@ export function HrJobsSection({
 
         <div className="mt-6 grid overflow-hidden rounded-card md:mt-8 md:grid-cols-2">
           <Reveal from="left">
-            <SmartLink
-              href={href}
-              className="group ceo-card relative isolate flex h-full flex-col items-center justify-center overflow-hidden px-6 py-12 text-center text-white md:min-h-100 lg:min-h-125"
-            >
-              <LogoMark className="absolute -right-16 -bottom-14 -z-10 w-60 text-white/6 lg:-right-24 lg:-bottom-24 lg:w-100" />
-              <span className={PANEL_TEXT_CLASS}>{lead}</span>
-              {hasCount && (
-                <span className="my-1 font-sans text-[120px] leading-none font-light tracking-[-0.03em] md:my-2 md:text-[160px] lg:text-[200px]">
-                  {count}
+            {href ? (
+              <SmartLink href={href} className={cn("group", PANEL_CLASS)}>
+                {panelContent}
+                <span
+                  aria-hidden
+                  className="mt-8 grid size-12 place-items-center rounded-full bg-white text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-1 md:mt-10 md:size-14"
+                >
+                  <ArrowRight className="size-5" />
                 </span>
-              )}
-              <span
-                className={cn(
-                  hasCount
-                    ? PANEL_TEXT_CLASS
-                    : "mt-4 max-w-[34ch] text-base leading-relaxed text-night-text md:text-[17px]",
-                )}
-              >
-                {label}
-              </span>
-              <span
-                aria-hidden
-                className="mt-8 grid size-12 place-items-center rounded-full bg-white text-brand transition-[translate] duration-200 ease-out group-hover:translate-x-1 md:mt-10 md:size-14"
-              >
-                <ArrowRight className="size-5" />
-              </span>
-            </SmartLink>
+              </SmartLink>
+            ) : (
+              <div className={PANEL_CLASS}>{panelContent}</div>
+            )}
           </Reveal>
 
           <Reveal

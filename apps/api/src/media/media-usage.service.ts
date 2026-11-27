@@ -82,7 +82,12 @@ export class MediaUsageService {
       }),
       this.prisma.brand.findMany({
         where: {
-          OR: [{ logoId: id }, { coverId: id }, { showcaseImageId: id }],
+          OR: [
+            { logoId: id },
+            { coverId: id },
+            { showcaseImageId: id },
+            { images: { some: { mediaId: id } } },
+          ],
         },
         include: { translations: true },
       }),

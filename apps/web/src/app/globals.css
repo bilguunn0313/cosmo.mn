@@ -369,9 +369,17 @@
     animation-fill-mode: both;
   }
 
+  .brands-strip-enter {
+    animation: brands-strip-enter 900ms var(--ease-out) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .brands-strip-progress {
       animation: none;
+    }
+
+    .brands-strip-enter {
+      animation-name: brands-strip-fade;
     }
   }
 
@@ -1455,6 +1463,19 @@
 @keyframes brands-strip-progress {
   from {
     scale: 0 1;
+  }
+}
+
+@keyframes brands-strip-enter {
+  from {
+    opacity: 0;
+    transform: translateX(6rem);
+  }
+}
+
+@keyframes brands-strip-fade {
+  from {
+    opacity: 0;
   }
 }
 

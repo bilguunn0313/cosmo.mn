@@ -386,14 +386,53 @@ export function BanknoteIcon({ className }: BrandIconProps) {
   );
 }
 
-export function DiscountIcon({ className }: BrandIconProps) {
+export function TrophyIcon({ className }: BrandIconProps) {
   return (
     <Grid24StrokeIcon className={className}>
       <path
         className="stroke-brand"
-        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+        d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zM10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2M4 22h16"
       />
-      <path className="stroke-coral" d="m15 9-6 6M9 9h.01M15 15h.01" />
+      <path
+        className="stroke-coral"
+        d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"
+      />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function VolleyballIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <circle className="stroke-brand" cx="12" cy="12" r="10" />
+      <path
+        className="stroke-coral"
+        d="M11 7a16 16 20 0 1 10.98 4.362M12 12a13 13 0 0 1-8.66 5M16.83 13.634a16 16 0 0 1-9.267 7.328M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10M8.17 15.366a16 16 0 0 1-1.713-11.69"
+      />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function ClockIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <circle className="stroke-brand" cx="12" cy="12" r="10" />
+      <path className="stroke-coral" d="M12 6v6l4 2" />
+    </Grid24StrokeIcon>
+  );
+}
+
+export function SoupIcon({ className }: BrandIconProps) {
+  return (
+    <Grid24StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9ZM7 21h10M19.5 12 22 6"
+      />
+      <path
+        className="stroke-coral"
+        d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"
+      />
     </Grid24StrokeIcon>
   );
 }

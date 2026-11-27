@@ -3,19 +3,25 @@ import {
   BanknoteIcon,
   CalendarCheckIcon,
   CelebrationIcon,
-  DiscountIcon,
+  ClockIcon,
   GiftIcon,
   HealthIcon,
+  SoupIcon,
+  TrophyIcon,
+  VolleyballIcon,
 } from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
 
 const BENEFITS = [
   { key: "health", icon: HealthIcon },
-  { key: "bonus", icon: BanknoteIcon },
-  { key: "perks", icon: DiscountIcon },
+  { key: "salary", icon: BanknoteIcon },
+  { key: "performance", icon: TrophyIcon },
   { key: "paidLeave", icon: CalendarCheckIcon },
-  { key: "gifts", icon: GiftIcon },
+  { key: "holidays", icon: GiftIcon },
+  { key: "sports", icon: VolleyballIcon },
   { key: "events", icon: CelebrationIcon },
+  { key: "flexibleHours", icon: ClockIcon },
+  { key: "mealTransport", icon: SoupIcon },
 ] as const;
 
 export async function HrBenefitsSection() {
@@ -34,14 +40,14 @@ export async function HrBenefitsSection() {
             </h2>
           </Reveal>
 
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 xl:grid-cols-6">
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
             {BENEFITS.map(({ key, icon: Icon }, index) => (
-              <li key={key} className="flex">
+              <li key={key} className="flex last:col-span-2 sm:last:col-span-1">
                 <Reveal
                   index={index}
-                  className="flex w-full flex-col items-center gap-4 rounded-card bg-white px-4 pt-7 pb-6 text-center md:gap-5 md:px-5 md:pt-9 md:pb-7"
+                  className="flex w-full flex-col items-center gap-4 rounded-card bg-white px-4 pt-7 pb-6 text-center md:gap-5 md:px-5 md:pt-9 md:pb-7 lg:flex-row lg:p-6 lg:text-left"
                 >
-                  <Icon className="size-12 md:size-14" />
+                  <Icon className="size-12 shrink-0 md:size-14" />
                   <h3 className="text-[15px] leading-snug font-medium text-balance text-ink md:text-base">
                     {t(`items.${key}`)}
                   </h3>

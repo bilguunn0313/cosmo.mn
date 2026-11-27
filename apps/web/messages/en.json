@@ -90,24 +90,24 @@
       "reasons": {
         "experience": {
           "title": "An experienced team",
-          "text": "A professional team that brings together years of knowledge, skills and work experience, learning from one another and working together to make a real contribution."
+          "text": "A professional team that brings together years of knowledge, skills and work experience, learning from one another and working together to make a real contribution to the company's growth and our partners' success."
         },
         "brands": {
           "title": "A well-chosen range",
-          "text": "We choose brands against a wide range of criteria, based on consumer research and analysis."
+          "text": "Based on consumer needs and market research and analysis, we select brands and products against a wide range of criteria, including quality, price, demand and competitiveness, to offer consumers choices of real value."
         },
         "network": {
           "title": "Distribution network",
-          "text": "A strategic system that delivers products reliably, at the right time, to the right place and in the right quantity, widening consumer access and supporting business growth."
+          "text": "A strategic system that delivers products reliably, at the right time, to the right place and in the right quantity, widening consumer access and supporting the sustainable growth of our partners' businesses."
         },
         "products": {
           "title": "Product development",
-          "text": "In these fast-changing times, we keep developing our products to meet consumer needs."
+          "text": "We continuously develop our product range in line with consumer needs, market trends and changing times, aiming to bring consumers more valuable and innovative solutions."
         }
       }
     },
     "retail": {
-      "title": "Points of sale",
+      "title": "Partner organizations",
       "partners": "Retail network partners"
     },
     "channels": {
@@ -305,12 +305,15 @@
     "benefits": {
       "title": "Additional benefits",
       "items": {
-        "health": "Health support",
-        "bonus": "Bonuses and allowances",
-        "perks": "Benefits and discounts",
+        "health": "Medical check-ups and insurance",
+        "salary": "Competitive salary",
+        "performance": "Performance bonuses",
         "paidLeave": "Paid leave",
-        "gifts": "Gifts for holidays and special occasions",
-        "events": "Social and community events"
+        "holidays": "Holiday bonuses",
+        "sports": "Sports events",
+        "events": "Community events",
+        "flexibleHours": "Flexible working hours",
+        "mealTransport": "Meal and transport allowance"
       }
     },
     "policy": {

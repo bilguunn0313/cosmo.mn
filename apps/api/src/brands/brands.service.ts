@@ -23,8 +23,15 @@ const brandInclude = {
   logo: true,
   cover: true,
   showcaseImage: true,
+  images: { orderBy: { order: 'asc' }, include: { media: true } },
   translations: true,
 } satisfies Prisma.BrandInclude;
+
+function brandImagesData(imageIds: number[]) {
+  return {
+    create: imageIds.map((mediaId, order) => ({ mediaId, order })),
+  };
+}
 
 @Injectable()
 export class BrandsService {
@@ -71,6 +78,7 @@ export class BrandsService {
         isPublished: input.isPublished,
         order: nextOrder,
         translations: { create: input.translations },
+        images: brandImagesData(input.imageIds),
       },
       include: brandInclude,
     });
@@ -79,7 +87,7 @@ export class BrandsService {
   async update(id: number, input: UpdateBrandInput) {
     const brand = await this.findOne(id);
 
-    const { translations, ...fields } = input;
+    const { translations, imageIds, ...fields } = input;
     const data: Prisma.BrandUncheckedUpdateInput = { ...fields };
 
     if (translations) {
@@ -87,6 +95,10 @@ export class BrandsService {
         deleteMany: {},
         create: translations,
       };
+    }
+
+    if (imageIds) {
+      data.images = { deleteMany: {}, ...brandImagesData(imageIds) };
     }
 
     const updated = await this.prisma.brand.update({
@@ -99,6 +111,7 @@ export class BrandsService {
       brand.logoId,
       brand.coverId,
       brand.showcaseImageId,
+      ...brand.images.map((image) => image.mediaId),
     ]);
     return updated;
   }
@@ -152,6 +165,7 @@ export class BrandsService {
         brand.logoId,
         brand.coverId,
         brand.showcaseImageId,
+        ...brand.images.map((image) => image.mediaId),
         ...sections.map((section) => section.imageId),
         ...products.map((product) => product.imageId),
       ],
@@ -250,6 +264,11 @@ export class BrandsService {
       coverWidth: brand.cover?.width ?? null,
       coverHeight: brand.cover?.height ?? null,
       showcaseImageUrl: brand.showcaseImage?.url ?? null,
+      images: brand.images.map((image) => ({
+        url: framedImageUrl(image.media),
+        width: image.media.width,
+        height: image.media.height,
+      })),
       websiteUrl: brand.websiteUrl,
       sections: brand.sections.map((section) => {
         const sectionTranslation = pickTranslation(

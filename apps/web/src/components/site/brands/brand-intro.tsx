@@ -1,10 +1,9 @@
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 import { Reveal } from "@/components/site/reveal";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
-import { imageFrameStyle } from "@/lib/image-frame";
-import type { PublicBrandDetail } from "@/lib/public-api";
+import type { PublicBrandDetail, PublicBrandImage } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
+import { BrandGallery } from "./brand-gallery";
 import { BrandLogo } from "./brand-logo";
 import { BRAND_TILE_BACKGROUND } from "./brand-tile-background";
 
@@ -20,6 +19,20 @@ function coverRatio(width: number | null, height: number | null) {
   return Math.min(MAX_COVER_RATIO, Math.max(MIN_COVER_RATIO, width / height));
 }
 
+function galleryImages(brand: PublicBrandDetail): PublicBrandImage[] {
+  const cover = brand.coverUrl
+    ? [
+        {
+          url: brand.coverUrl,
+          width: brand.coverWidth,
+          height: brand.coverHeight,
+        },
+      ]
+    : [];
+
+  return [...cover, ...brand.images];
+}
+
 interface BrandIntroProps {
   brand: PublicBrandDetail;
 }
@@ -29,6 +42,8 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
   const categoryNames = brand.categories
     .map((category) => t(`brands.chapters.${category}.label`))
     .join(", ");
+  const images = galleryImages(brand);
+  const firstImage = images[0];
 
   return (
     <section
@@ -54,24 +69,12 @@ export async function BrandIntro({ brand }: BrandIntroProps) {
         </div>
 
         <Reveal from="zoom">
-          {brand.coverUrl ? (
-            <div
-              className="relative overflow-hidden rounded-[28px] bg-surface"
-              style={{
-                aspectRatio: coverRatio(brand.coverWidth, brand.coverHeight),
-              }}
-            >
-              <Image
-                src={brand.coverUrl}
-                style={imageFrameStyle(brand.coverUrl)}
-                alt={t("brands.coverAlt", { name: brand.name })}
-                fill
-                priority
-                unoptimized
-                sizes="(min-width: 1024px) 55vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+          {firstImage ? (
+            <BrandGallery
+              imageUrls={images.map((image) => image.url)}
+              alt={t("brands.coverAlt", { name: brand.name })}
+              ratio={coverRatio(firstImage.width, firstImage.height)}
+            />
           ) : (
             <div
               className={cn(

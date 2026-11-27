@@ -146,7 +146,14 @@ export function fetchMilestones(locale: Locale) {
   );
 }
 
+export interface PublicBrandImage {
+  url: string;
+  width: number | null;
+  height: number | null;
+}
+
 export interface PublicBrandDetail extends PublicBrand {
+  images: PublicBrandImage[];
   websiteUrl: string | null;
   sections: PublicSection[];
   products: PublicProduct[];

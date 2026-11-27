@@ -73,6 +73,7 @@ model Media {
   brandLogos                     Brand[]         @relation("BrandLogo")
   brandCovers                    Brand[]         @relation("BrandCover")
   brandShowcases                 Brand[]         @relation("BrandShowcase")
+  brandImages                    BrandImage[]
   brandSections                  BrandSection[]
   products                       Product[]
   sections                       Section[]
@@ -109,28 +110,40 @@ model Slide {
 }
 
 model Brand {
-  id              Int             @id @default(autoincrement())
-  slug            String          @unique
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
   categories      Json
   logoId          Int?
-  logo            Media?          @relation("BrandLogo", fields: [logoId], references: [id])
+  logo            Media?   @relation("BrandLogo", fields: [logoId], references: [id])
   coverId         Int?
-  cover           Media?          @relation("BrandCover", fields: [coverId], references: [id])
+  cover           Media?   @relation("BrandCover", fields: [coverId], references: [id])
   showcaseImageId Int?
-  showcaseImage   Media?          @relation("BrandShowcase", fields: [showcaseImageId], references: [id])
-  websiteUrl      String?         @db.Text
+  showcaseImage   Media?   @relation("BrandShowcase", fields: [showcaseImageId], references: [id])
+  websiteUrl      String?  @db.Text
   originCountry   String?
-  order           Int             @default(0)
+  order           Int      @default(0)
   featuredOrder   Int?
-  isPublished     Boolean         @default(false)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  isPublished     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   translations BrandTranslation[]
   sections     BrandSection[]
   products     Product[]
+  images       BrandImage[]
 
   @@index([isPublished, order])
+}
+
+model BrandImage {
+  id      Int   @id @default(autoincrement())
+  brandId Int
+  brand   Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  mediaId Int
+  media   Media @relation(fields: [mediaId], references: [id])
+  order   Int   @default(0)
+
+  @@index([brandId, order])
 }
 
 model BrandTranslation {

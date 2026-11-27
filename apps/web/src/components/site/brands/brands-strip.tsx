@@ -2,8 +2,8 @@
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
+import { FadeInImage } from "@/components/site/fade-in-image";
 import { Link } from "@/i18n/navigation";
 import { brandPath } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ const SLIDE_DURATION_MS = 5000;
 export interface BrandSlide {
   slug: string;
   name: string;
+  productType: string | null;
   imageUrl: string;
   ratio: number;
 }
@@ -42,7 +43,10 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
   const [translate, setTranslate] = useState<number | null>(null);
   const [isSnapping, setIsSnapping] = useState(true);
   const [drag, setDrag] = useState<DragState | null>(null);
+  const [isFirstImageLoaded, setIsFirstImageLoaded] = useState(false);
 
+  const isReady = translate !== null && isFirstImageLoaded;
+  const showFirstImage = () => setIsFirstImageLoaded(true);
   const index = position % count;
   const items = Array.from(
     { length: hasMany ? count * COPIES : count },
@@ -133,7 +137,7 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
     : {};
 
   return (
-    <div className="mt-8 md:mt-14">
+    <div className="mt-8 md:mt-10">
       <div
         ref={viewRef}
         aria-roledescription="carousel"
@@ -153,10 +157,10 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
           }}
           className={cn(
             "flex h-full gap-3 md:gap-6",
-            translate === null && "opacity-0",
+            isReady ? "brands-strip-enter" : "opacity-0",
             !isSnapping &&
               !isDragging &&
-              "transition-[translate,opacity] duration-900 ease-(--ease-drawer) motion-reduce:transition-none",
+              "transition-[translate] duration-900 ease-(--ease-drawer) motion-reduce:transition-none",
           )}
         >
           {items.map(({ slide, itemIndex }) => {
@@ -190,16 +194,40 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
                     : "scale-90 cursor-pointer opacity-40",
                 )}
               >
-                <Image
+                <FadeInImage
                   src={slide.imageUrl}
                   alt=""
                   fill
                   unoptimized
                   draggable={false}
                   priority={itemIndex === firstPosition}
+                  onLoad={
+                    itemIndex === firstPosition ? showFirstImage : undefined
+                  }
+                  onError={
+                    itemIndex === firstPosition ? showFirstImage : undefined
+                  }
                   sizes="(min-width: 1024px) 70vw, 90vw"
                   className="object-cover"
                 />
+                <div
+                  aria-hidden
+                  className={cn(
+                    "pointer-events-none absolute inset-0 flex flex-col justify-end gap-0.5 bg-linear-to-t from-brand-night/65 via-brand-night/28 via-20% to-transparent to-45% px-5 pb-4 text-white [text-shadow:0_1px_12px_rgb(11_31_51/0.35)] md:via-16% md:to-32% md:px-7 md:pb-6",
+                    !isSnapping &&
+                      "transition-opacity duration-500 ease-out motion-reduce:transition-none",
+                    isActive ? "opacity-100" : "opacity-0",
+                  )}
+                >
+                  <span className="type-h4 leading-tight font-semibold md:type-h3">
+                    {slide.name}
+                  </span>
+                  {slide.productType && (
+                    <span className="text-sm leading-snug text-white/90 md:text-[15px]">
+                      {slide.productType}
+                    </span>
+                  )}
+                </div>
                 {isActive && (
                   <Link
                     href={brandPath(slide.slug)}
@@ -257,7 +285,7 @@ export function BrandsStrip({ slides }: BrandsStripProps) {
                   isActive ? "w-9" : "w-2",
                 )}
               >
-                {isActive && drag === null && (
+                {isActive && isReady && drag === null && (
                   <span
                     key={position}
                     aria-hidden

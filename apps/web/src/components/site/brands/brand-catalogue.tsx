@@ -1,6 +1,5 @@
 import { BRAND_CATEGORIES } from "@cosmo/shared";
 import { getTranslations } from "next-intl/server";
-import { Reveal } from "@/components/site/reveal";
 import type { PublicBrand } from "@/lib/public-api";
 import { BrandFilter, type BrandFilterOption } from "./brand-filter";
 import { BrandLogoCard } from "./brand-logo-card";
@@ -48,7 +47,7 @@ export async function BrandCatalogue({ brands }: BrandCatalogueProps) {
       id={BRAND_LIST_ID}
       aria-labelledby="brand-list-title"
       data-flush-footer
-      className="site-container scroll-mt-20 py-20 md:py-32 lg:scroll-mt-24"
+      className="site-container scroll-mt-20 pt-10 pb-20 md:pt-14 md:pb-32 lg:scroll-mt-24"
     >
       <h2 id="brand-list-title" className="sr-only">
         {t("listTitle")}
@@ -57,17 +56,15 @@ export async function BrandCatalogue({ brands }: BrandCatalogueProps) {
       {brands.length === 0 ? (
         <p className="text-lg text-ink-2">{t("empty")}</p>
       ) : (
-        <Reveal>
-          <BrandFilter
-            label={t("filter.label")}
-            options={options}
-            items={brands.map((brand) => ({
-              slug: brand.slug,
-              categories: brand.categories,
-              card: <BrandLogoCard brand={brand} />,
-            }))}
-          />
-        </Reveal>
+        <BrandFilter
+          label={t("filter.label")}
+          options={options}
+          items={brands.map((brand) => ({
+            slug: brand.slug,
+            categories: brand.categories,
+            card: <BrandLogoCard brand={brand} />,
+          }))}
+        />
       )}
     </section>
   );

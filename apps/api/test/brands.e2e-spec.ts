@@ -179,6 +179,53 @@ describe('Brands', () => {
     await context.guest.get(detail.body.logoUrl).expect(200);
   });
 
+  it('нэмэлт зургуудыг дарааллаар нь хадгалж нийтэд харуулна', async () => {
+    const firstId = await uploadTestImage(context);
+    const secondId = await uploadTestImage(context);
+    const created = await createBrand('brand-gallery', {
+      imageIds: [firstId, secondId],
+    }).expect(201);
+    const mediaIds = (body: { images: { mediaId: number }[] }) =>
+      body.images.map((image) => image.mediaId);
+    expect(mediaIds(created.body)).toEqual([firstId, secondId]);
+
+    const reordered = await context.admin
+      .patch(`/admin/brands/${created.body.id}`)
+      .send({ imageIds: [secondId, firstId] })
+      .expect(200);
+    expect(mediaIds(reordered.body)).toEqual([secondId, firstId]);
+
+    const untouched = await context.admin
+      .patch(`/admin/brands/${created.body.id}`)
+      .send({ websiteUrl: 'https://example.com' })
+      .expect(200);
+    expect(mediaIds(untouched.body)).toEqual([secondId, firstId]);
+
+    const detail = await context.guest
+      .get('/public/brands/brand-gallery')
+      .expect(200);
+    expect(
+      detail.body.images.map((image: { url: string }) => image.url),
+    ).toEqual(
+      reordered.body.images.map(
+        (image: { media: { url: string } }) => image.media.url,
+      ),
+    );
+    const firstMedia = reordered.body.images[0].media;
+    expect(detail.body.images[0]).toMatchObject({
+      width: firstMedia.width,
+      height: firstMedia.height,
+    });
+  });
+
+  it('нэмэлт зураг давхардвал хүлээж авахгүй', async () => {
+    const imageId = await uploadTestImage(context);
+
+    await createBrand('brand-gallery-dup', {
+      imageIds: [imageId, imageId],
+    }).expect(400);
+  });
+
   it('засахад нийтлэгдсэн төлөв өөрчлөгдөхгүй', async () => {
     const brand = await createBrand('brand-edit').expect(201);
 

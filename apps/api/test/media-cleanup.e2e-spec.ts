@@ -89,6 +89,27 @@ describe('Ашиглагдахгүй болсон файлыг автомата�
     expect(await mediaExists(sharedLogo)).toBe(true);
   });
 
+  it('брэндийн нэмэлт зургаас хассан зураг устна', async () => {
+    const logo = await uploadImage();
+    const kept = await uploadImage();
+    const removed = await uploadImage();
+    const brandId = await createBrand('cleanup-gallery', logo.id);
+
+    await context.admin
+      .patch(`/admin/brands/${brandId}`)
+      .send({ imageIds: [kept.id, removed.id] })
+      .expect(200);
+    await context.admin
+      .patch(`/admin/brands/${brandId}`)
+      .send({ imageIds: [kept.id] })
+      .expect(200);
+
+    expect(await mediaExists(removed)).toBe(false);
+    expect(fileExists(removed)).toBe(false);
+    expect(await mediaExists(kept)).toBe(true);
+    expect(fileExists(kept)).toBe(true);
+  });
+
   it('зураггүй засвар нь зургийг хөндөхгүй', async () => {
     const logo = await uploadImage();
     const brandId = await createBrand('unchanged-logo', logo.id);

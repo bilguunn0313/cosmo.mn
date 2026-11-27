@@ -12,6 +12,17 @@ import { localeSchema } from "./locales";
 export const BRAND_CATEGORIES = ["FOOD", "BEAUTY", "HOUSEHOLD"] as const;
 export type BrandCategory = (typeof BRAND_CATEGORIES)[number];
 
+export const MAX_BRAND_IMAGES = 10;
+
+const brandImageIdsSchema = z
+  .array(idSchema)
+  .max(MAX_BRAND_IMAGES, {
+    message: `Хамгийн ихдээ ${MAX_BRAND_IMAGES} зураг оруулна`,
+  })
+  .refine((list) => new Set(list).size === list.length, {
+    message: "Зураг давхардсан байна",
+  });
+
 const brandFields = z.object({
   slug: slugSchema,
   categories: z
@@ -23,6 +34,7 @@ const brandFields = z.object({
   logoId: optionalIdSchema,
   coverId: optionalIdSchema,
   showcaseImageId: optionalIdSchema,
+  imageIds: brandImageIdsSchema,
   websiteUrl: optionalUrlSchema,
   originCountry: z.enum(COUNTRY_CODES).nullable().optional(),
   isPublished: z.boolean(),
@@ -34,6 +46,7 @@ const brandFields = z.object({
 });
 
 export const createBrandSchema = brandFields.extend({
+  imageIds: brandImageIdsSchema.default([]),
   isPublished: z.boolean().default(false),
 });
 

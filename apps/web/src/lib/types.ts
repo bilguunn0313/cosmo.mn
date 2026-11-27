@@ -127,12 +127,20 @@ export interface Brand {
   cover: Media | null;
   showcaseImageId: number | null;
   showcaseImage: Media | null;
+  images: BrandImage[];
   websiteUrl: string | null;
   originCountry: CountryCode | null;
   order: number;
   featuredOrder: number | null;
   isPublished: boolean;
   translations: BrandTranslation[];
+}
+
+export interface BrandImage {
+  id: number;
+  mediaId: number;
+  order: number;
+  media: Media;
 }
 
 export interface ProductTranslation {

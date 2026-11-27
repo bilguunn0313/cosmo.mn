@@ -65,17 +65,13 @@ export default async function HumanResourcesPage({
           className={jobsSpacing}
         />
       ) : (
-        setting?.facebookUrl && (
-          <HrJobsSection
-            title={t("jobs.bandTitle")}
-            lead={t("jobs.emptyTitle")}
-            label={t("jobs.followText")}
-            href={setting.facebookUrl}
-            imageUrl={jobsImageUrl}
-            imageAlt={t("jobs.imageAlt")}
-            className={jobsSpacing}
-          />
-        )
+        <HrJobsSection
+          title={t("jobs.bandTitle")}
+          lead={t("jobs.emptyTitle")}
+          imageUrl={jobsImageUrl}
+          imageAlt={t("jobs.imageAlt")}
+          className={jobsSpacing}
+        />
       )}
     </>
   );

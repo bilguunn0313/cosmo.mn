@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BRAND_CATEGORIES,
   COUNTRY_CODES,
+  MAX_BRAND_IMAGES,
   slugify,
   slugSchema,
   type CreateBrandInput,
@@ -14,6 +15,7 @@ import { z } from "zod";
 import { FormField } from "@/components/admin/form-field";
 import { DEFAULT_FRAME_PREVIEWS } from "@/components/admin/media/image-frame-dialog";
 import { MediaField } from "@/components/admin/media/media-field";
+import { MediaListField } from "@/components/admin/media/media-list-field";
 import { SaveBar } from "@/components/admin/save-bar";
 import { TranslationTabs } from "@/components/admin/translation-tabs";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -64,6 +66,7 @@ const brandFormSchema = z.object({
     .min(1, "Дор хаяж нэг ангилал сонгоно уу"),
   logo: z.custom<Media | null>(),
   cover: z.custom<Media | null>(),
+  images: z.custom<Media[]>(),
   originCountry: z.union([z.literal(""), z.enum(COUNTRY_CODES)]),
   isPublished: z.boolean(),
   translations: z
@@ -97,6 +100,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
       categories: [],
       logo: null,
       cover: null,
+      images: [],
       originCountry: "",
       isPublished: false,
       translations: emptyTranslations(EMPTY_TRANSLATION),
@@ -108,6 +112,7 @@ function defaultValues(brand: Brand | null): BrandFormValues {
     categories: brand.categories,
     logo: brand.logo,
     cover: brand.cover,
+    images: brand.images.map((image) => image.media),
     originCountry: brand.originCountry ?? "",
     isPublished: brand.isPublished,
     translations: translationsToForm(brand.translations, EMPTY_TRANSLATION),
@@ -120,6 +125,7 @@ function toInput(values: BrandFormValues): CreateBrandInput {
     categories: values.categories,
     logoId: values.logo?.id ?? null,
     coverId: values.cover?.id ?? null,
+    imageIds: values.images.map((media) => media.id),
     originCountry: values.originCountry || null,
     isPublished: values.isPublished,
     translations: formToTranslations(
@@ -362,6 +368,25 @@ export function BrandForm({ brand, onCreated }: BrandFormProps) {
           />
         </FormField>
       </div>
+
+      <FormField
+        label="Нэмэлт зургууд"
+        htmlFor="brand-images"
+        hint={`Брэндийн хуудсанд «Бүх бүтээгдэхүүний зураг»-ийн дараа хажуу тийш гулсаж харагдана. Тэр зурагтай ижил харьцаатай зураг оруулбал тайрагдахгүй. Хамгийн ихдээ ${MAX_BRAND_IMAGES} зураг, сумаар дарааллыг нь солино`}
+      >
+        <Controller
+          control={control}
+          name="images"
+          render={({ field }) => (
+            <MediaListField
+              value={field.value}
+              onChange={field.onChange}
+              max={MAX_BRAND_IMAGES}
+              pickerTitle="Нэмэлт зураг сонгох"
+            />
+          )}
+        />
+      </FormField>
 
       <Controller
         control={control}
