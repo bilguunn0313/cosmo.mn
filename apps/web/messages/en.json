@@ -114,11 +114,11 @@
       "eyebrow": "Retail channels",
       "hub": "Cosmo Trade",
       "items": {
-        "modernTrade": "Modern Trade",
-        "traditionalTrade": "Traditional Trade",
+        "retail": "Retail and chain stores",
         "wholesale": "Wholesale",
-        "horeca": "HoReCa",
-        "ecommerce": "E-commerce"
+        "business": "Businesses, institutions and other services",
+        "horeca": "Food service and hospitality",
+        "ecommerce": "Online retail and e-services"
       }
     },
     "mapTitle": "International partnerships",
@@ -261,11 +261,11 @@
       "body": "Since our founding in 1993, for more than 30 years we have successfully supplied the Mongolian FMCG market with brands from Europe and Southeast Asia that compete on quality and standards. At the same time we develop our own brands, steadily broadening the range, reach and value of our products and services and making a real contribution to the growth of our industry.",
       "imageAlt": "Cosmo Trade head office and warehouse from above"
     },
-    "missionText": "Our customers' satisfaction and happiness is our purpose.",
+    "missionText": "Our customers' satisfaction and happiness is our purpose",
     "historyHeading": "<highlight>Our</highlight> journey",
     "partnerTitle": "Let's work together",
     "partnerText": "If you want to bring your brand to the Mongolian market or sell our products, get in touch with us.",
-    "visionText": "To be a reliable and trusted partner in Mongolia's consumer goods and distribution sector.",
+    "visionText": "To be a reliable and trusted partner in Mongolia's consumer goods and distribution sector",
     "values": {
       "missionTitle": "Our <highlight>mission</highlight>",
       "visionTitle": "Our <highlight>vision</highlight>",
@@ -320,12 +320,12 @@
           "title": "Open and transparent",
           "text": "Cosmo Trade LLC sees every employee as the company’s most valuable asset. We fairly recognise each person’s skills and effort, provide a good place to work and follow a transparent human resources policy."
         },
-        "accessible": {
-          "title": "Accessible",
+        "salary": {
+          "title": "Competitive pay and rewards",
           "text": "We give every employee an equal opportunity and recognise your effort with competitive, performance-based pay and a real rewards system."
         },
-        "clear": {
-          "title": "Clear",
+        "career": {
+          "title": "Career growth",
           "text": "We develop our own people first, giving employees who lead with skill and initiative open opportunities to be promoted and move into management roles."
         }
       },
@@ -498,9 +498,9 @@
       "followText": "Follow our Facebook page to hear about them first.",
       "followButton": "Facebook page",
       "aboutTeam": "About our team",
-      "bandTitle": "{count, plural, one {# position is open now} other {# positions are open now}}",
-      "bandText": "Choose a position and apply online.",
-      "bandButton": "All positions",
+      "bandTitle": "Job listings",
+      "countLead": "Currently",
+      "countLabel": "{count, plural, one {open position} other {open positions}}",
       "imageAlt": "Colleagues working together",
       "location": "Location",
       "workType": "Work type",

@@ -1,4 +1,4 @@
-import { access } from 'node:fs/promises';
+import { access, rename } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import { UPLOADS_DIR, UPLOADS_URL_PREFIX } from './storage.service';
@@ -23,6 +23,13 @@ interface Box {
 }
 
 const cache = new Map<string, Promise<LogoImage>>();
+let queue: Promise<unknown> = Promise.resolve();
+
+function runInQueue<T>(task: () => Promise<T>): Promise<T> {
+  const result = queue.then(task);
+  queue = result.catch(() => undefined);
+  return result;
+}
 
 export function clearLogoUrl(url: string) {
   return url.replace(/\.webp$/, CLEAR_SUFFIX);
@@ -157,11 +164,13 @@ async function writeClearCopy(source: string, target: string) {
 
   clearOuterBackground(data, info.width, info.height);
 
+  const temporary = `${target}.tmp`;
   await sharp(data, {
     raw: { width: info.width, height: info.height, channels: 4 },
   })
     .webp({ quality: 90, alphaQuality: 100 })
-    .toFile(target);
+    .toFile(temporary);
+  await rename(temporary, target);
 }
 
 async function createClearLogo(logo: LogoImage): Promise<LogoImage> {
@@ -192,7 +201,7 @@ export function clearLogo(logo: LogoImage | null) {
   let pending = cache.get(logo.url);
 
   if (!pending) {
-    pending = createClearLogo(logo);
+    pending = runInQueue(() => createClearLogo(logo));
     cache.set(logo.url, pending);
   }
 

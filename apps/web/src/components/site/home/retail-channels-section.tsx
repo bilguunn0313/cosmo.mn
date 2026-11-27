@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import {
+  OfficeIcon,
   OnlineShopIcon,
   ServingIcon,
-  ShoppingIcon,
   StoreIcon,
   WarehouseIcon,
 } from "@/components/site/brand-icons";
@@ -12,9 +12,9 @@ import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { ChannelNetwork } from "./channel-network";
 
 const CHANNELS = [
-  { key: "modernTrade", icon: ShoppingIcon },
-  { key: "traditionalTrade", icon: StoreIcon },
+  { key: "retail", icon: StoreIcon },
   { key: "wholesale", icon: WarehouseIcon },
+  { key: "business", icon: OfficeIcon },
   { key: "horeca", icon: ServingIcon },
   { key: "ecommerce", icon: OnlineShopIcon },
 ] as const;

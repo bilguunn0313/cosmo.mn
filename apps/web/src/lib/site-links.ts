@@ -4,8 +4,8 @@ export const SITE_PAGES = [
   { path: "/", label: "Нүүр хуудас" },
   { path: "/about", label: "Бидний тухай" },
   { path: "/brands", label: "Брэндүүд" },
-  { path: "/human-resources", label: "Хүний нөөц" },
   { path: "/media", label: "Медиа" },
+  { path: "/human-resources", label: "Хүний нөөц" },
   { path: "/contact", label: "Холбоо барих" },
 ];
 

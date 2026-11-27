@@ -1,17 +1,17 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import {
+  BanknoteIcon,
   BulletPointIcon,
-  GlobalSourcingIcon,
-  QualityIcon,
+  GrowthIcon,
 } from "@/components/site/brand-icons";
 import { Reveal } from "@/components/site/reveal";
 import { imageFrameStyle } from "@/lib/image-frame";
 
 const POLICY_ITEMS = [
   { key: "open", icon: BulletPointIcon },
-  { key: "accessible", icon: GlobalSourcingIcon },
-  { key: "clear", icon: QualityIcon },
+  { key: "salary", icon: BanknoteIcon },
+  { key: "career", icon: GrowthIcon },
 ] as const;
 
 interface HrPolicySectionProps {

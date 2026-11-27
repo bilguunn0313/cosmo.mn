@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { HrBenefitsSection } from "@/components/site/careers/hr-benefits-section";
@@ -8,13 +7,10 @@ import { HrPolicySection } from "@/components/site/careers/hr-policy-section";
 import { HrSelectionSection } from "@/components/site/careers/hr-selection-section";
 import { StorySections } from "@/components/site/story-sections";
 import { getPageLocale } from "@/i18n/locale";
-import { Link } from "@/i18n/navigation";
 import { pageBannerUrl } from "@/lib/page-banners";
 import { fetchJobs, fetchSections, fetchSiteSetting } from "@/lib/public-api";
 import { pageMetadata } from "@/lib/seo";
-import { JOBS_PATH, jobPath } from "@/lib/site-links";
-
-const MAX_BAND_JOBS = 4;
+import { JOBS_PATH } from "@/lib/site-links";
 
 export async function generateMetadata({
   params,
@@ -59,35 +55,22 @@ export default async function HumanResourcesPage({
 
       {jobs.length > 0 ? (
         <HrJobsSection
-          title={t("jobs.bandTitle", { count: jobs.length })}
-          text={t("jobs.bandText")}
+          title={t("jobs.bandTitle")}
+          lead={t("jobs.countLead")}
+          count={jobs.length}
+          label={t("jobs.countLabel", { count: jobs.length })}
           href={JOBS_PATH}
-          buttonLabel={t("jobs.bandButton")}
           imageUrl={jobsImageUrl}
           imageAlt={t("jobs.imageAlt")}
           className={jobsSpacing}
-        >
-          <ul className="flex flex-wrap gap-2.5">
-            {jobs.slice(0, MAX_BAND_JOBS).map((job) => (
-              <li key={job.slug}>
-                <Link
-                  href={jobPath(job.slug)}
-                  className="group inline-flex h-11.5 items-center gap-2.5 rounded-full bg-white px-5 text-[15px] font-medium text-brand-700 shadow-[0_0_0_1px_var(--color-brand-200)] transition-shadow duration-200 hover:shadow-[0_0_0_1px_var(--color-brand)]"
-                >
-                  {job.title}
-                  <ArrowRight className="size-4 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </HrJobsSection>
+        />
       ) : (
         setting?.facebookUrl && (
           <HrJobsSection
-            title={t("jobs.emptyTitle")}
-            text={`${t("jobs.emptyText")} ${t("jobs.followText")}`}
+            title={t("jobs.bandTitle")}
+            lead={t("jobs.emptyTitle")}
+            label={t("jobs.followText")}
             href={setting.facebookUrl}
-            buttonLabel={t("jobs.followButton")}
             imageUrl={jobsImageUrl}
             imageAlt={t("jobs.imageAlt")}
             className={jobsSpacing}

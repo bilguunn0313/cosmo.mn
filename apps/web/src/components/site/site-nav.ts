@@ -2,8 +2,8 @@ export const SITE_NAV = [
   { href: "/", key: "home" },
   { href: "/about", key: "about" },
   { href: "/brands", key: "brands" },
-  { href: "/human-resources", key: "careers" },
   { href: "/media", key: "media" },
+  { href: "/human-resources", key: "careers" },
   { href: "/contact", key: "contact" },
 ] as const;
 

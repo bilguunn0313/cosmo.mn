@@ -321,6 +321,22 @@ export function StoreIcon({ className }: BrandIconProps) {
   );
 }
 
+export function OfficeIcon({ className }: BrandIconProps) {
+  return (
+    <StrokeIcon className={className}>
+      <path
+        className="stroke-brand"
+        d="M10 86H86M22 86V16A6 6 0 0 1 28 10H68A6 6 0 0 1 74 16V86"
+      />
+      <path className="stroke-brand" d="M41 86V71H55V86" />
+      <path
+        className="stroke-coral"
+        d="M36 27H40M56 27H60M36 42H40M56 42H60M36 57H40M56 57H60"
+      />
+    </StrokeIcon>
+  );
+}
+
 export function ApplicationIcon({ className }: BrandIconProps) {
   return (
     <StrokeIcon className={className}>

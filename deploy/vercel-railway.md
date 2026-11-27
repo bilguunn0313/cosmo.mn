@@ -14,26 +14,39 @@ new-api.cosmo.mn  → Railway  API + MySQL + зургийн volume
 - [ ] Код GitHub-ийн `main` дээр push хийгдсэн
 - [ ] Railway бүртгэл. Эхний 30 хоногийн $5 туршилтын кредит хангалттай. Үнэгүй ($1/сар) багц хүрэлцэхгүй.
 - [ ] Vercel бүртгэл (Hobby)
-- [ ] Railway CLI: `npm install -g @railway/cli`
+- [ ] Railway CLI: `npm.cmd install -g @railway/cli`
 - [ ] Docker Desktop асаалттай
-- [ ] `cosmo-mysql-2026-11-25.sql` ба `cosmo-uploads-2026-11-25.zip` файлууд
+- [ ] `cosmo-mysql-2026-11-27.sql` ба `cosmo-uploads-2026-11-27.zip` файлууд
 - [ ] cPanel → **Zone Editor** (cosmo.mn-ийн DNS) руу нэвтрэх эрх
+
+PowerShell скрипт ажиллуулахыг хориглосон компьютер дээр `npm`, `railway`-ийн оронд `npm.cmd`, `railway.cmd` гэж бичнэ.
 
 ## 1. Railway: MySQL
 
 1. railway.com → **New Project** → **Deploy MySQL**.
 2. MySQL service → **Settings** → Region: **Southeast Asia (Singapore)**.
-3. MySQL → **Variables** → `MYSQL_PUBLIC_URL`-ийг хуулна. Хэлбэр нь `mysql://root:НУУЦҮГ@ХОСТ:ПОРТ/railway`.
 
 ## 2. Өгөгдөл оруулах
 
-SQL файл байгаа хавтаснаас, PowerShell дээр. `MYSQL_PUBLIC_URL`-ийн хэсгүүдийг орлуулна:
+Оффисын сүлжээ MySQL-ийн порт (3306, Railway-ийн proxy порт)-ыг хаадаг тул **Public Access ашиглахгүй**, SSH tunnel-ээр (22-р порт) оруулна.
 
 ```powershell
-docker run --rm -v "${PWD}:/backup" mysql:8.4 sh -c "mysql --default-character-set=utf8mb4 -h ХОСТ -P ПОРТ -u root -pНУУЦҮГ railway < /backup/cosmo-mysql-2026-11-25.sql"
+railway.cmd login
+cd C:\Users\User\Desktop\cosmo.mn
+railway.cmd link
+railway.cmd ssh keys add
+railway.cmd connect MySQL --tunnel-only --port 3310
 ```
 
-SQL-ийг `Get-Content ... |`-ээр бүү дамжуулаарай. PowerShell 5.1 кирилл үсгийг эвдэнэ.
+`link` дээр төсөл, `production` environment-ийг сонгоно. `ssh keys add` нь `~/.ssh`-ийн түлхүүрийг Railway-д бүртгэнэ. Сүүлийн команд нууц үгийг хэвлээд tunnel-ийг нээлттэй барина: цонхыг бүү хаа.
+
+**Өөр** PowerShell цонхонд, SQL файл байгаа хавтаснаас (`НУУЦҮГ` нь tunnel-ийн хэвлэсэн `Password`):
+
+```powershell
+docker run --rm -v "${PWD}:/backup" mysql:8.4 sh -c "mysql --default-character-set=utf8mb4 -h host.docker.internal -P 3310 -u root -pНУУЦҮГ railway < /backup/cosmo-mysql-2026-11-27.sql"
+```
+
+Дуусмагц tunnel-ийн цонхонд **Ctrl+C**. SQL-ийг `Get-Content ... |`-ээр бүү дамжуулаарай. PowerShell 5.1 кирилл үсгийг эвдэнэ.
 
 ## 3. Railway: API
 
@@ -71,17 +84,16 @@ SQL-ийг `Get-Content ... |`-ээр бүү дамжуулаарай. PowerShel
 
 ## 4. Зургууд
 
-`cosmo-uploads-2026-11-25.zip`-ийг `cosmo-uploads` хавтсанд задлаад, тэр хавтсыг агуулсан хавтаснаас:
+`cosmo-uploads-2026-11-27.zip`-ийг `cosmo-uploads` хавтсанд задлаад, тэр хавтсыг агуулсан хавтаснаас:
 
 ```powershell
-railway login
-railway link
-railway volume files upload .\cosmo-uploads /uploads
+railway.cmd service
+railway.cmd volume files upload .\cosmo-uploads /uploads
 ```
 
-`railway link` дээр төсөл болон API service-ийг сонгоно. API ажиллаж байх үед л upload хийгдэнэ.
+`railway.cmd service` дээр API service-ийг сонгоно (2-р алхмын `link` MySQL дээр байж болно). API ажиллаж байх үед л upload хийгдэнэ.
 
-Шалгах: `https://new-api.cosmo.mn/uploads/images/<аль нэг файл>.webp`. Нээгдэхгүй бол `railway volume files browse /` командаар файлууд `/uploads/images/` дотор байгаа эсэхийг харна.
+Шалгах: `https://new-api.cosmo.mn/uploads/images/<аль нэг файл>.webp`. Нээгдэхгүй бол `railway.cmd volume files browse /` командаар файлууд `/uploads/images/` дотор байгаа эсэхийг харна.
 
 ## 5. Vercel: вэбсайт
 
